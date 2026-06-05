@@ -326,15 +326,9 @@ async function handleApi(req, res, pathname) {
     return sendJson(res, 200, { authenticated: Boolean(session), user: session });
   }
 
-async function readAllUsersForLeaderboard() {
-  if (!useFirestore) return readUsers();
-  const snapshot = await db.collection(COLLECTIONS.USERS).get();
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-}
-
   if (pathname === "/api/leaderboard" && req.method === "GET") {
     const session = getSession(req);
-    const users = await readAllUsersForLeaderboard();
+    const users = await readUsers();
     return sendJson(res, 200, {
       leaders: leaderboardRows(users),
       currentUserId: session?.sub || null,

@@ -112,6 +112,7 @@
       if (location.protocol !== "file:") {
         await fetch("/api/logout", { method: "POST", credentials: "include" });
       }
+      localStorage.removeItem("algoInfinityVerse");
       location.href = authUrl("/login");
     });
   }

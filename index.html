@@ -362,6 +362,10 @@
                 <span class="profile-stat-label">Day Streak</span>
               </div>
               <div class="profile-stat">
+                <span class="profile-stat-value" id="profileFreezes">0</span>
+                <span class="profile-stat-label">Freezes</span>
+              </div>
+              <div class="profile-stat">
                 <span class="profile-stat-value" id="profileBadges">0</span>
                 <span class="profile-stat-label">Badges</span>
               </div>
@@ -390,6 +394,10 @@
                 <span class="stat-desc">Day Streak</span>
               </div>
               <div class="stat-item">
+                <span class="stat-value" id="currentFreezes">0</span>
+                <span class="stat-desc">Freezes</span>
+              </div>
+              <div class="stat-item">
                 <span class="stat-value" id="totalXP">0</span>
                 <span class="stat-desc">Total XP</span>
               </div>
@@ -399,6 +407,12 @@
             <h3>Recent Activity</h3>
             <div class="activity-list" id="activityList">
               <p class="empty-state">No recent activity. Start solving problems!</p>
+            </div>
+          </div>
+          <div class="dashboard-card">
+            <h3>Freeze Usage History</h3>
+            <div class="freeze-history-list" id="freezeHistoryList">
+              <p class="empty-state">No freezes used yet.</p>
             </div>
           </div>
           <div class="dashboard-card">
@@ -728,8 +742,12 @@
               <span class="profile-stat-label">Problems</span>
             </div>
             <div class="profile-stat">
-              <span class="profile-stat-value" id="profileStreak">0</span>
+              <span class="profile-stat-value" id="profileSectionStreak">0</span>
               <span class="profile-stat-label">Day Streak</span>
+            </div>
+            <div class="profile-stat">
+              <span class="profile-stat-value" id="profileSectionFreezes">0</span>
+              <span class="profile-stat-label">Freezes</span>
             </div>
             <div class="profile-stat">
               <span class="profile-stat-value" id="profileBadges">0</span>

@@ -1046,6 +1046,8 @@ let userProgress = {
   xp: 0,
   level: 1,
   streak: 0,
+  freezes: 0,
+  freezeHistory: [],
   badges: [],
   lastActive: null,
   quizScores: {}, // topic -> { bestScore, attempts, totalXP }
@@ -2361,10 +2363,16 @@ function updateProfile() {
   var profileStreak = document.getElementById("profileStreak");
   if (profileStreak) profileStreak.textContent = userProgress.streak;
 
-  // Profile Section Streak
-  var profileStreakSection = document.getElementById("profileStreakSection");
-  if (profileStreakSection)
-    profileStreakSection.textContent = userProgress.streak;
+  var profileFreezes = document.getElementById("profileFreezes");
+  if (profileFreezes) profileFreezes.textContent = userProgress.freezes || 0;
+
+  var profileSectionStreak = document.getElementById("profileSectionStreak");
+  if (profileSectionStreak)
+    profileSectionStreak.textContent = userProgress.streak;
+    
+  var profileSectionFreezes = document.getElementById("profileSectionFreezes");
+  if (profileSectionFreezes)
+    profileSectionFreezes.textContent = userProgress.freezes || 0;
 
   var profileBadges = document.getElementById("profileBadges");
 
@@ -2456,10 +2464,15 @@ function updateDashboard() {
   document.getElementById("completedProblems").textContent =
     userProgress.completedProblems.length;
   document.getElementById("currentStreak").textContent = userProgress.streak;
+  var currentFreezes = document.getElementById("currentFreezes");
+  if (currentFreezes) currentFreezes.textContent = userProgress.freezes || 0;
   document.getElementById("totalXP").textContent = userProgress.xp;
 
   updateCurrentDate();
   updateActivityList();
+  if (typeof updateFreezeHistoryList === "function") {
+    updateFreezeHistoryList();
+  }
   updateBadges();
   updateRecentProblems(); // Recently Viewed Problems
   updateLeaderboard();
@@ -2508,6 +2521,31 @@ function updateActivityList() {
     `,
     )
     .join("");
+}
+
+function updateFreezeHistoryList() {
+  const freezeHistoryList = document.getElementById("freezeHistoryList");
+  if (!freezeHistoryList) return;
+
+  const history = userProgress.freezeHistory || [];
+  if (history.length === 0) {
+    freezeHistoryList.innerHTML = '<p class="empty-state">No freezes used yet.</p>';
+    return;
+  }
+
+  const historyItems = history.slice(-5).reverse().map(h => {
+    return `
+      <div class="activity-item">
+        <div class="activity-type">
+            <span class="activity-icon"><i class="fas fa-snowflake" style="color: #00d2ff;"></i></span>
+            <span>${h.reason}</span>
+        </div>
+        <span class="activity-time">${new Date(h.date).toLocaleDateString()}</span>
+      </div>
+    `;
+  });
+
+  freezeHistoryList.innerHTML = historyItems.join("");
 }
 // ===== RECENTLY VIEWED PROBLEMS ===== //
 function updateRecentProblems() {
@@ -2691,7 +2729,10 @@ function buildLeaderboardRows(leaders = [], currentUserId = getCurrentUserId()) 
   });
 
   const currentEntry = getCurrentLeaderboardEntry(currentUserId);
-  rowsById.set(currentEntry.id, currentEntry);
+  // Prevent duplicate 'You' entries for guests unless they've actually earned XP locally
+  if (currentUserId !== "local-user" || userProgress.xp > 350 || leaders.length === 0) {
+    rowsById.set(currentEntry.id, currentEntry);
+  }
 
   const rankedRows = Array.from(rowsById.values())
     .sort((a, b) => b.xp - a.xp || a.name.localeCompare(b.name))
@@ -3141,6 +3182,15 @@ async function syncUserProgress() {
     avatar: userProgress.avatar,
   };
 
+  try {
+    const response = await fetch("/api/progress", {
+      method: "PUT",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) throw new Error("Progress sync failed.");
+    updateLeaderboard();
   progressSyncInFlight = (async () => {
     try {
       const response = await fetch("/api/progress", {
@@ -3209,10 +3259,25 @@ function loadUserData() {
 
         if (diffDays === 0) {
           // Already active today
-        } else if (diffDays === 1) {
-          userProgress.streak += 1;
         } else {
-          userProgress.streak = 0;
+          let daysMissed = diffDays > 0 ? diffDays - 1 : 0;
+          while (daysMissed > 0 && userProgress.freezes > 0) {
+            userProgress.freezes -= 1;
+            daysMissed -= 1;
+            userProgress.freezeHistory.push({
+              date: new Date(today.getTime() - (daysMissed + 1) * 24 * 60 * 60 * 1000).toISOString(),
+              reason: "Missed day automatically frozen"
+            });
+          }
+          if (daysMissed > 0) {
+            userProgress.streak = 0;
+          } else {
+            userProgress.streak += 1;
+            if (userProgress.streak > 0 && userProgress.streak % 7 === 0) {
+              userProgress.freezes += 1;
+              showNotification("Milestone reached! You earned a Streak Freeze!", "success");
+            }
+          }
         }
         saveUserData();
       }
@@ -3238,6 +3303,8 @@ function loadUserData() {
       xp: 0,
       level: 1,
       streak: 0,
+      freezes: 0,
+      freezeHistory: [],
       favoriteProblems: [],
       problemNotes: {},
       badges: [],
@@ -3249,6 +3316,15 @@ function loadUserData() {
   }
   // Update profile display after loading
   updateProfile();
+  
+  // Also fetch session to get real name
+  getAuthenticatedSession().then(session => {
+    if (session && session.user && session.user.name) {
+      userProgress.name = session.user.name;
+      updateProfile();
+      saveUserData();
+    }
+  });
 }
 
 // ===== QUIZ EDITOR =====
@@ -3576,12 +3652,27 @@ function updateStreak() {
 
   if (lastActive) {
     const diffDays = getDaysDifference(lastActive, today);
-    if (diffDays > 1) {
-      userProgress.streak = 1;
-    } else if (diffDays === 0) {
+    if (diffDays === 0) {
       // Already active today, don't increment streak
     } else {
-      userProgress.streak += 1;
+      let daysMissed = diffDays > 0 ? diffDays - 1 : 0;
+      while (daysMissed > 0 && userProgress.freezes > 0) {
+        userProgress.freezes -= 1;
+        daysMissed -= 1;
+        userProgress.freezeHistory.push({
+          date: new Date(today.getTime() - (daysMissed + 1) * 24 * 60 * 60 * 1000).toISOString(),
+          reason: "Missed day automatically frozen"
+        });
+      }
+      if (daysMissed > 0) {
+        userProgress.streak = 1;
+      } else {
+        userProgress.streak += 1;
+        if (userProgress.streak > 0 && userProgress.streak % 7 === 0) {
+          userProgress.freezes += 1;
+          showNotification("Milestone reached! You earned a Streak Freeze!", "success");
+        }
+      }
     }
   } else {
     userProgress.streak = 1;

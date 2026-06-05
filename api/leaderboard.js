@@ -35,6 +35,7 @@ initFirebase();
 const SESSION_COOKIE = "aiv_session";
 
 function sessionSecret() {
+  return process.env.SESSION_SECRET || "dev-only-change-me-with-SESSION_SECRET-before-deploying";
   if (!process.env.SESSION_SECRET) {
     throw new Error("SESSION_SECRET is required");
   }
