@@ -715,6 +715,7 @@ const dsaTopics = [
       "Spiral Matrix",
       "Best Time to Buy and Sell Stock",
       "Move Zeroes",
+      "Check If Array Is Sorted",
     ],
   },
   {
@@ -800,6 +801,7 @@ const dsaTopics = [
       "Longest Increasing Subsequence",
       "Edit Distance",
       "House Robber",
+      "Fibonacci Number",
     ],
   },
 ];
@@ -1016,6 +1018,35 @@ const practiceProblems = [
       "Result must contain only unique elements",
     ],
     followUp: "What if the arrays are already sorted? What if one array is much larger than the other?",
+  },
+  {
+    id: 21,
+    title: "Check If Array Is Sorted",
+    difficulty: "easy",
+    tags: ["Arrays"],
+    acceptance: "78.5%",
+    category: "arrays",
+    description:
+      "Given an array of integers nums, return true if it is sorted in non-decreasing order, and false otherwise.",
+    constraints: [
+      "1 ≤ nums.length ≤ 10⁴",
+      "−10⁹ ≤ nums[i] ≤ 10⁹",
+    ],
+    followUp: "Can you solve it in O(n) time complexity and O(1) space complexity?",
+  },
+  {
+    id: 22,
+    title: "Fibonacci Number",
+    difficulty: "easy",
+    tags: ["Recursion", "Dynamic Programming"],
+    acceptance: "85.2%",
+    category: "dp",
+    description:
+      "Given n, return the nth Fibonacci number.",
+    constraints: [
+      "0 ≤ n ≤ 30",
+    ],
+    followUp: "Can you solve it using recursion, memoization, and bottom-up tabulation?",
   },
 ];
 
@@ -3752,6 +3783,17 @@ function generateExamples(problem) {
         <strong>Edge Cases:</strong><br>• No common elements → return []<br>• All elements in common → return unique elements of either array<br>• One array is empty → return []<br>• Both arrays identical → return unique elements of the array<br><br>
         <strong>Key Insight (Hash Set):</strong><br>• Convert nums1 into a Set for O(1) lookups<br>• Iterate nums2 and check membership in the Set<br>• Store matches in a result Set to avoid duplicates<br><br>
         <strong>Follow-up:</strong> Can you solve it in O(n + m) time using two Hash Sets? What changes if both arrays are pre-sorted?`,
+    21: `<strong>Example 1:</strong><br>Input: nums = [1,2,3,4]<br>Output: true<br>Explanation: The array is sorted in non-decreasing order: 1 ≤ 2 ≤ 3 ≤ 4.<br><br>
+        <strong>Example 2:</strong><br>Input: nums = [5,4,3,2,1]<br>Output: false<br>Explanation: The array is not sorted.<br><br>
+        <strong>Example 3:</strong><br>Input: nums = [1,1,2,2,3]<br>Output: true<br>Explanation: The array is sorted (duplicates are allowed and still sorted).<br><br>
+        <strong>Edge Cases:</strong><br>• Empty array or single element array → true by default<br>• Negative values<br><br>
+        <strong>Follow-up:</strong> Can you solve it in a single pass with O(n) time and O(1) space?`,
+    22: `<strong>Example 1:</strong><br>Input: n = 2<br>Output: 1<br>Explanation: F(2) = F(1) + F(0) = 1 + 0 = 1.<br><br>
+        <strong>Example 2:</strong><br>Input: n = 3<br>Output: 2<br>Explanation: F(3) = F(2) + F(1) = 1 + 1 = 2.<br><br>
+        <strong>Example 3:</strong><br>Input: n = 4<br>Output: 3<br>Explanation: F(4) = F(3) + F(2) = 2 + 1 = 3.<br><br>
+        <strong>Example 4:</strong><br>Input: n = 5<br>Output: 5<br>Explanation: F(5) = F(4) + F(3) = 3 + 2 = 5.<br><br>
+        <strong>Edge Cases:</strong><br>• F(0) = 0, F(1) = 1 (base cases)<br>• Large values of n<br><br>
+        <strong>Follow-up:</strong> Can you solve it in O(n) time and O(1) space using bottom-up tabulation?`,
   };
   return (
     examples[problem.id] || "<strong>Example:</strong><br>Solve this problem"
@@ -3759,6 +3801,20 @@ function generateExamples(problem) {
 }
 
 function generateTestCases(problem) {
+  if (problem.id === 21) {
+    return [
+      { input: "nums = [1, 2, 3, 4]", expected: "true", passed: true },
+      { input: "nums = [5, 4, 3, 2, 1]", expected: "false", passed: true },
+      { input: "nums = [1, 1, 2, 2, 3]", expected: "true", passed: true },
+    ];
+  }
+  if (problem.id === 22) {
+    return [
+      { input: "n = 2", expected: "1", passed: true },
+      { input: "n = 3", expected: "2", passed: true },
+      { input: "n = 5", expected: "5", passed: true },
+    ];
+  }
   return [
     { input: "Test input 1", expected: "Expected output", passed: true },
     { input: "Test input 2", expected: "Expected output", passed: true },
