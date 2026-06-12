@@ -569,6 +569,39 @@ function resolveStaticPath(pathname) {
   const filePath = path.resolve(ROOT, mapped);
   const rel = path.relative(ROOT, filePath);
   if (rel.startsWith("..") || path.isAbsolute(rel)) return null;
+
+  // ── Arbitrary File Disclosure Prevention ──────────────────────────────────
+  const fileName = path.basename(filePath);
+
+  // 1. Block hidden files and sensitive directories
+  if (
+    fileName.startsWith(".") ||
+    rel.startsWith("data" + path.sep) ||
+    rel.startsWith("api" + path.sep) ||
+    rel.startsWith("node_modules" + path.sep)
+  ) {
+    return null;
+  }
+
+  // 2. Block specific sensitive root files
+  const sensitiveFiles = [
+    "server.js",
+    "firebase.js",
+    "package.json",
+    "package-lock.json",
+    "vercel.json",
+  ];
+  if (sensitiveFiles.includes(fileName)) {
+    return null;
+  }
+
+  // 3. Extension whitelist (only serve files with known mime types)
+  const ext = path.extname(filePath);
+  if (!mimeTypes[ext]) {
+    return null;
+  }
+  // ──────────────────────────────────────────────────────────────────────────
+
   return filePath;
 }
 
