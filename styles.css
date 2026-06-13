@@ -3960,7 +3960,6 @@ body {
     pointer-events: none;
 
 
-
   color: var(--text-secondary);
   font-size: 0.95rem;
   margin-bottom: 1rem;
@@ -5452,6 +5451,7 @@ body.light-mode {
     position: relative;
 
 }
+
 }
 
 @media (max-width: 768px) {
