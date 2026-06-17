@@ -71,9 +71,13 @@ function initNavbar() {
    { line, vars, visual, explanation }
    ═══════════════════════════════════════════ */
 
-function genBinarySearchSteps() {
-  const arr    = [2, 5, 8, 12, 16, 23, 38, 45, 67, 72];
-  const target = 23;
+function genBinarySearchSteps(customArray = null, customTarget = null){
+
+  const arr =
+    customArray || [2, 5, 8, 12, 16, 23, 38, 45, 67, 72];
+
+  const target =
+    customTarget !== null ? customTarget : 23;
   const steps  = [];
 
   let lo = 0, hi = arr.length - 1;
@@ -99,8 +103,8 @@ function genBinarySearchSteps() {
   return steps;
 }
 
-function genBubbleSortSteps() {
-  const arr   = [64, 34, 25, 12, 22, 11, 90];
+function genBubbleSortSteps(customArray = null) {
+  const arr = customArray || [64,34,25,12,22,11,90];
   const steps = [];
   const a     = [...arr];
   const n     = a.length;
@@ -126,9 +130,108 @@ function genBubbleSortSteps() {
   return steps;
 }
 
-function genBFSSteps() {
+function genMergeSortSteps(customArray = null) {
+    const arr = customArray || [38, 27, 43, 3, 9, 82, 10];
+    const steps = [];
+
+    function mergeSort(a, depth = 0) {
+
+        steps.push({
+            line: 1,
+            vars: { depth },
+            visual: {
+                arr: [...a],
+                comparing: [],
+                swapped: [],
+                sorted: []
+            },
+            explanation: `Split array [${a.join(", ")}]`
+        });
+
+        if (a.length <= 1) return a;
+
+        const mid = Math.floor(a.length / 2);
+
+        const left = mergeSort(a.slice(0, mid), depth + 1);
+        const right = mergeSort(a.slice(mid), depth + 1);
+
+        const merged = merge(left, right);
+
+        steps.push({
+            line: 2,
+            vars: { depth },
+            visual: {
+                arr: [...merged],
+                comparing: [],
+                swapped: [],
+                sorted: []
+            },
+            explanation: `Merge result [${merged.join(", ")}]`
+        });
+        return merged;
+    }
+
+    function merge(left, right) {
+        const result = [];
+
+        while (left.length && right.length) {
+            result.push(
+                left[0] < right[0]
+                    ? left.shift()
+                    : right.shift()
+            );
+        }
+
+        return [
+            ...result,
+            ...left,
+            ...right
+        ];
+    }
+
+    mergeSort([...arr]);
+
+    return steps;
+}
+
+function parseGraph(input) {
+
+  if (!input || input.trim() === "") {
+    return null;
+  }
+
+  const graph = {};
+
+  input.split(";").forEach(part => {
+
+    const [node, neighbors] = part.split(":");
+
+    if (!node) return;
+
+    graph[Number(node.trim())] =
+      neighbors && neighbors.trim()
+        ? neighbors
+            .split(",")
+            .map(n => Number(n.trim()))
+            .filter(n => !isNaN(n))
+        : [];
+  });
+
+  return graph;
+}
+
+function genBFSSteps(customGraph = null) {
   // Graph: adjacency list, nodes 0-6
-  const graph = { 0: [1, 2], 1: [3, 4], 2: [5, 6], 3: [], 4: [], 5: [], 6: [] };
+ const graph =
+  customGraph || {
+    0:[1,2],
+    1:[3,4],
+    2:[5,6],
+    3:[],
+    4:[],
+    5:[],
+    6:[]
+  };
   const steps = [];
   const visited = new Set();
   const queue   = [0];
@@ -138,9 +241,8 @@ function genBFSSteps() {
 
   while (queue.length > 0) {
     const node = queue.shift();
-    steps.push({ line: 2, vars: { queue: `[${queue.join(",")}]`, visited: `{${[...visited].join(",")}}`, current: node }, visual: { visited: [...visited], current: node, queue: [...queue] }, explanation: `Dequeue node ${node}. Process it. Neighbors: [${graph[node].join(", ") || "none"}].` });
-
-    for (const neighbor of graph[node]) {
+    steps.push({ line: 2, vars: { queue: `[${queue.join(",")}]`, visited: `{${[...visited].join(",")}}`, current: node }, visual: { visited: [...visited], current: node, queue: [...queue] }, explanation: `Dequeue node ${node}. Process it. Neighbors: [${(graph[node] || []).join(", ") || "none"}].` });
+    for (const neighbor of (graph[node] || [])) {
       if (!visited.has(neighbor)) {
         visited.add(neighbor);
         queue.push(neighbor);
@@ -153,8 +255,17 @@ function genBFSSteps() {
   return steps;
 }
 
-function genDFSSteps() {
-  const graph   = { 0: [1, 2], 1: [3, 4], 2: [5, 6], 3: [], 4: [], 5: [], 6: [] };
+function genDFSSteps(customGraph = null) {
+  const graph =
+  customGraph || {
+    0:[1,2],
+    1:[3,4],
+    2:[5,6],
+    3:[],
+    4:[],
+    5:[],
+    6:[]
+  };
   const steps   = [];
   const visited = new Set();
   const order   = [];
@@ -164,7 +275,7 @@ function genDFSSteps() {
     order.push(node);
     steps.push({ line: 1, vars: { node, depth, visited: `{${[...visited].join(",")}}`, order: `[${order.join(",")}]` }, visual: { visited: [...visited], current: node, stack: [...order] }, explanation: `Visit node ${node} (depth ${depth}). Mark visited. Order so far: [${order.join(" → ")}].` });
 
-    for (const neighbor of graph[node]) {
+    for (const neighbor of (graph[node] || [])) {
       if (!visited.has(neighbor)) {
         steps.push({ line: 3, vars: { node, neighbor, visited: `{${[...visited].join(",")}}` }, visual: { visited: [...visited], current: node, stack: [...order] }, explanation: `From node ${node}: neighbor ${neighbor} not visited. Recurse into it.` });
         dfs(neighbor, depth + 1);
@@ -212,6 +323,22 @@ const ALGO_META = {
       { text: `}` },
     ]
   },
+
+  mergeSort: {
+    time: "O(n log n)",
+    space: "O(n)",
+    desc: "Divide array into halves, recursively sort them, and merge the sorted halves.",
+    code: [
+      { text: `<span class="drs-kw">function</span> <span class="drs-fn">mergeSort</span>(arr) {` },
+      { text: `  <span class="drs-kw">if</span> (arr.length &lt;= 1) <span class="drs-kw">return</span> arr;` },
+      { text: `  mid = Math.floor(arr.length / 2);` },
+      { text: `  left = mergeSort(arr.slice(0, mid));` },
+      { text: `  right = mergeSort(arr.slice(mid));` },
+      { text: `  <span class="drs-kw">return</span> merge(left, right);` },
+      { text: `} <span class="drs-cmt">// divide and conquer</span>` },
+    ]
+  },
+
   bfs: {
     time: "O(V + E)", space: "O(V)",
     desc: "Explore all neighbors level by level using a queue. Guarantees shortest path on unweighted graphs.",
@@ -282,7 +409,9 @@ function renderArray(visual, algoKey) {
       </div>`;
     }).join("");
 
-  } else if (algoKey === "bubbleSort") {
+  } else if (
+    algoKey === "bubbleSort" ||
+    algoKey === "mergeSort"){
     const { arr, comparing, swapped, sorted } = visual;
     container.innerHTML = arr.map((val, i) => {
       let cls = "drs-cell";
@@ -359,6 +488,43 @@ function applyStep(step, algoKey, meta) {
    MAIN INIT
    ═══════════════════════════════════════════ */
 function initDryRun() {
+
+    let userArray = null;
+    let userTarget = null;
+
+    let userGraph = null;
+
+    const generateBtn =
+    document.getElementById("drsGenerateBtn");
+
+    generateBtn?.addEventListener("click", () => {
+
+      const input =
+        document.getElementById("drsArrayInput").value;
+
+      userArray = input
+          .split(",")
+          .map(x => parseInt(x.trim()))
+          .filter(x => !isNaN(x));
+
+      const targetInput =
+          document.getElementById("drsTargetInput");
+
+      userTarget =
+          parseInt(targetInput.value);
+
+      const graphInput =
+        document.getElementById("drsGraphInput");
+
+      userGraph =
+        parseGraph(graphInput.value);
+
+      if (isNaN(userTarget))
+          userTarget = null;
+
+      loadAlgo(currentAlgo);
+    });
+
   const playBtn   = document.getElementById("drsPlayBtn");
   const nextBtn   = document.getElementById("drsNextBtn");
   const prevBtn   = document.getElementById("drsPrevBtn");
@@ -383,11 +549,21 @@ function initDryRun() {
     currentAlgo = key;
     const meta = ALGO_META[key];
 
+    if (currentAlgo === "binarySearch" &&
+    Array.isArray(userArray)) {
+    userArray.sort((a, b) => a - b);
+    }
+
     steps = {
-      binarySearch: genBinarySearchSteps,
-      bubbleSort:   genBubbleSortSteps,
-      bfs:          genBFSSteps,
-      dfs:          genDFSSteps,
+      binarySearch: () =>
+      genBinarySearchSteps(
+          userArray,
+          userTarget
+      ),
+      bubbleSort: () => genBubbleSortSteps(userArray),
+      mergeSort: () => genMergeSortSteps(userArray),
+      bfs: () => genBFSSteps(userGraph),
+      dfs: () => genDFSSteps(userGraph),
     }[key]();
 
     stepIndex = 0;

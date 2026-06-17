@@ -319,3 +319,12 @@
   .drs-algo-btn { font-size: 0.8rem; padding: 0.5rem 0.9rem; }
   .drs-cell { width: 40px; height: 40px; font-size: 0.85rem; }
 }
+
+.custom-input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--glass-border);
+  background:rgba(255,255,255,0.05);
+  color:white;
+}
