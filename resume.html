@@ -139,21 +139,32 @@
   </div>
 
 
-  <div id="resumeAnalysisResult" style="display:none;">
+  <div
+    id="resumeAnalysisResult"
+    style="display:none;"
+    class="analysis-results-container"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+    <div class="ats-score-wrapper">
+      <div class="ats-circle">
+        <span id="atsScore" class="gradient-text"></span>
+      </div>
+      <div class="ats-label">ATS Score</div>
+    </div>
+    
+    <div class="analysis-details">
+      <div class="analysis-section">
+        <h4 class="analysis-title"><i class="fas fa-exclamation-circle"></i> Missing Skills</h4>
+        <ul id="missingSkills" class="analysis-list skills-list"></ul>
+      </div>
 
-    <h4>
-      ATS Score:
-      <span id="atsScore"></span>
-    </h4>
-
-
-    <h4>Missing Skills</h4>
-    <ul id="missingSkills"></ul>
-
-
-    <h4>Suggestions</h4>
-    <ul id="resumeSuggestions"></ul>
-
+      <div class="analysis-section">
+        <h4 class="analysis-title"><i class="fas fa-lightbulb"></i> Suggestions</h4>
+        <ul id="resumeSuggestions" class="analysis-list suggestions-list"></ul>
+      </div>
+    </div>
   </div>
 
 </div>

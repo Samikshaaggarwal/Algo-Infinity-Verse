@@ -4,6 +4,17 @@ import http from "http";
 import path from "path";
 import { fileURLToPath } from "url";
 import { initializeFirebase, getDb, COLLECTIONS } from "./firebase.js";
+import multer from "multer";
+import { extractResumeText } from "./resume-analyzer/parser.js";
+import { calculateATS } from "./resume-analyzer/atsScore.js";
+import { findMissingSkills } from "./resume-analyzer/skills.js";
+import { getSuggestions } from "./resume-analyzer/suggestions.js";
+
+const MAX_RESUME_FILE_SIZE_BYTES = 5 * 1024 * 1024;
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: MAX_RESUME_FILE_SIZE_BYTES, files: 1 },
+}).single("resume");
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -560,6 +571,35 @@ function validateRequest(req) {
 }
 
 async function handleApi(req, res, pathname) {
+  if (pathname === "/api/analyze-resume" && req.method === "POST") {
+    try {
+      await new Promise((resolve, reject) => {
+        upload(req, res, (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      if (!req.file) {
+        return sendJson(res, 400, { error: "No resume file uploaded." });
+      }
+
+      const text = await extractResumeText(req.file);
+      const atsScore = calculateATS(text);
+      const missingSkills = findMissingSkills(text);
+      const suggestions = getSuggestions(atsScore);
+
+      return sendJson(res, 200, {
+        atsScore,
+        missingSkills,
+        suggestions,
+      });
+    } catch (error) {
+      console.error("Resume analysis error:", error);
+      return sendJson(res, 500, { error: error.message || "Failed to analyze resume." });
+    }
+  }
+
   if (pathname === "/api/session" && req.method === "GET") {
     const session = getSession(req);
 

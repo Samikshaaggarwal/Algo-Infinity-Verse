@@ -262,7 +262,7 @@ async function initResumeAnalyzer(){
 
 
       const response = await fetch(
-        "http://localhost:5000/analyze-resume",
+        "/api/analyze-resume",
         {
           method:"POST",
           body:formData
@@ -271,6 +271,10 @@ async function initResumeAnalyzer(){
 
 
       const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to analyze resume");
+      }
 
 
 
@@ -284,19 +288,17 @@ async function initResumeAnalyzer(){
 
 
 
-      document.getElementById("missingSkills")
-      .innerHTML=
-      data.missingSkills
-      .map(skill=>`<li>${skill}</li>`)
-      .join("");
+      document.getElementById("missingSkills").innerHTML = 
+        data.missingSkills && data.missingSkills.length > 0
+          ? data.missingSkills.map(skill => `<li>${skill}</li>`).join("")
+          : `<li style="border-left-color: #9ca3af; color: #9ca3af; background: rgba(156, 163, 175, 0.1);">No missing skills found!</li>`;
 
 
 
-      document.getElementById("resumeSuggestions")
-      .innerHTML=
-      data.suggestions
-      .map(item=>`<li>${item}</li>`)
-      .join("");
+      document.getElementById("resumeSuggestions").innerHTML = 
+        data.suggestions && data.suggestions.length > 0
+          ? data.suggestions.map(item => `<li>${item}</li>`).join("")
+          : `<li style="border-left-color: #9ca3af; color: #9ca3af; background: rgba(156, 163, 175, 0.1);">Looking great! No suggestions.</li>`;
 
 
 
@@ -307,7 +309,7 @@ async function initResumeAnalyzer(){
     catch(error){
 
       console.error(error);
-      alert("Something went wrong");
+      alert(error.message || "Something went wrong");
 
       button.innerHTML="Analyze Resume";
 

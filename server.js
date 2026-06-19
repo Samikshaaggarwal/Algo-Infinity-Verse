@@ -4,6 +4,13 @@ import http from "http";
 import path from "path";
 import { fileURLToPath } from "url";
 import { initializeFirebase, getDb, COLLECTIONS } from "./firebase.js";
+import multer from "multer";
+import { extractResumeText } from "./backend/resume-analyzer/parser.js";
+import { calculateATS } from "./backend/resume-analyzer/atsScore.js";
+import { findMissingSkills } from "./backend/resume-analyzer/skills.js";
+import { getSuggestions } from "./backend/resume-analyzer/suggestions.js";
+
+const upload = multer({ storage: multer.memoryStorage() }).single("resume");
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -494,6 +501,41 @@ function validateRequest(req) {
 }
 
 async function handleApi(req, res, pathname) {
+  if (pathname === "/api/analyze-resume" && req.method === "POST") {
+    try {
+      await new Promise((resolve, reject) => {
+        upload(req, res, (err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+
+      if (!req.file) {
+        return sendJson(res, 400, { error: "No resume file uploaded." });
+      }
+
+      const text = await extractResumeText(req.file);
+      const atsScore = calculateATS(text);
+      const missingSkills = findMissingSkills(text);
+      const suggestions = getSuggestions(atsScore);
+
+      return sendJson(res, 200, {
+        atsScore,
+        missingSkills,
+        suggestions,
+      });
+    } catch (error) {
+      console.error("Resume analysis error:", error);
+      if (error instanceof multer.MulterError && error.code === "LIMIT_FILE_SIZE") {
+        return sendJson(res, 413, { error: "Resume file is too large." });
+      }
+      if (error?.message === "Unsupported file") {
+        return sendJson(res, 400, { error: "Unsupported file type. Upload PDF or DOCX." });
+      }
+      return sendJson(res, 500, { error: "Failed to analyze resume." });
+    }
+  }
+
   if (pathname === "/api/session" && req.method === "GET") {
     const session = getSession(req);
     return sendJson(res, 200, {
