@@ -547,6 +547,10 @@ body {
   color: var(--text-secondary);
 }
 
+.dropdown-item.nav-auth-link:not(:last-child) {
+  margin-bottom: 7.5px;
+}
+
 .dropdown-item.nav-auth-link:hover {
   background: var(--primary);
   color: var(--text-primary);
