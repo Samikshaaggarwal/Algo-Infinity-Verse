@@ -171,7 +171,7 @@
         </button>
         <div class="dropdown-menu" role="menu">
           <a href="/pages/community/community/community.html" class="dropdown-item" role="menuitem">Discussions</a>
-          <a href="/index.html#dashboard" class="dropdown-item" role="menuitem">Leaderboard</a>
+          <a href="/index.html#dashboard" class="dropdown-item" role="menuitem" data-auth-required>Leaderboard</a>
           <a href="/pages/community/support/index.html" class="dropdown-item" role="menuitem">Support</a>
           <a href="/pages/community/feedback/feedback.html" class="dropdown-item" role="menuitem">Feedback</a>
           <a href="/pages/resources/faq/faq.html" class="dropdown-item" role="menuitem">FAQ</a>
@@ -186,20 +186,23 @@
           <i class="fas fa-chevron-down dropdown-icon"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-end" role="menu">
-          <a href="/index.html#dashboard" class="dropdown-item" role="menuitem">
+          <a href="/index.html#dashboard" class="dropdown-item" role="menuitem" data-auth-required>
             <i class="fas fa-tachometer-alt"></i> Dashboard
           </a>
-          <a href="/index.html#profile" class="dropdown-item" role="menuitem">
+          <a href="/index.html#profile" class="dropdown-item" role="menuitem" data-auth-required>
             <i class="fas fa-user"></i> My Profile
           </a>
-          <a href="/pages/career/resume/resume.html" class="dropdown-item" role="menuitem">
+          <a href="/pages/career/resume/resume.html" class="dropdown-item" role="menuitem" data-auth-required>
             <i class="fas fa-file-alt"></i> Coding Resume
           </a>
-          <div class="dropdown-divider"></div>
-          <a href="/login" class="dropdown-item nav-auth-link" role="menuitem" id="navLoginBtn">
+          <div class="dropdown-divider" data-auth-required></div>
+          <button class="dropdown-item nav-auth-link" role="menuitem" data-auth-logout data-auth-required style="cursor: pointer; font-family: inherit; text-align: left; width: 100%;">
+            <i class="fas fa-right-from-bracket"></i> Logout
+          </button>
+          <a href="/login" class="dropdown-item nav-auth-link" role="menuitem" id="navLoginBtn" data-guest-only>
             <i class="fas fa-sign-in-alt"></i> Sign In
           </a>
-          <a href="/signup" class="dropdown-item nav-auth-link" role="menuitem" id="navSignupBtn">
+          <a href="/signup" class="dropdown-item nav-auth-link" role="menuitem" id="navSignupBtn" data-guest-only>
             <i class="fas fa-user-plus"></i> Sign Up
           </a>
         </div>

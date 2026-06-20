@@ -7294,3 +7294,15 @@ body.light-mode .nav-auth-link:hover {
     font-size: 0.8rem;
   }
 }
+
+/* ===== AUTH VISIBILITY AND GATING ===== */
+html.auth-unverified #dashboard,
+html.auth-unverified #gamification,
+html.auth-unverified [data-auth-required] {
+  display: none !important;
+}
+
+html.auth-verified [data-guest-only] {
+  display: none !important;
+}
+

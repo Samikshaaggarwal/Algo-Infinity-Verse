@@ -1,4 +1,5 @@
 (function () {
+  document.documentElement.classList.add("auth-unverified");
   const privateHashes = new Set(["#dashboard", "#profile"]);
   let currentSession = null;
   let authReady = false;
@@ -52,7 +53,29 @@
   }
 
   function updateProfileNames(user) {
-    if (!user) return;
+    if (!user) {
+      [
+        "profileName",
+        "profileSectionName",
+        "dashboardProfileName",
+        "profileNameInput",
+      ].forEach((id) => {
+        const element = document.getElementById(id);
+        if (!element) return;
+
+        if (element.tagName === "INPUT") element.value = "";
+        else element.textContent = "Learner";
+      });
+
+      document
+        .querySelectorAll("[data-auth-user-name]")
+        .forEach((el) => (el.textContent = "Learner"));
+
+      document
+        .querySelectorAll("[data-auth-user-email]")
+        .forEach((el) => (el.textContent = ""));
+      return;
+    }
 
     [
       "profileName",
@@ -64,10 +87,7 @@
       if (!element) return;
 
       if (element.tagName === "INPUT") element.value = user.name;
-      else if (
-        !element.textContent ||
-        element.textContent.trim() === "Learner"
-      ) {
+      else {
         element.textContent = user.name;
       }
     });
@@ -373,6 +393,8 @@ setFormMessage(form, "Working...", "info");
         authenticated: false,
         user: null,
       };
+      document.documentElement.classList.remove("auth-verified");
+      document.documentElement.classList.add("auth-unverified");
       authReady = true;
       window.algoAuth = currentSession;
 
@@ -392,6 +414,14 @@ setFormMessage(form, "Working...", "info");
     currentSession = await getSession();
     authReady = true;
     window.algoAuth = currentSession;
+
+    if (currentSession.authenticated) {
+      document.documentElement.classList.remove("auth-unverified");
+      document.documentElement.classList.add("auth-verified");
+    } else {
+      document.documentElement.classList.remove("auth-verified");
+      document.documentElement.classList.add("auth-unverified");
+    }
 
     if (currentSession.authenticated && isAuthPage()) {
       location.href = getNextDestination();

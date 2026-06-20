@@ -812,13 +812,21 @@ function showQuizResults(score, total, percentage, xpEarned, completionTime) {
 function showQuizReview() {
   if (!lastQuizReview || !lastQuizReview.questions || !lastQuizReview.answers) { showNotification("No review data found", "error"); return; }
   const resultEl = document.getElementById("topicQuizResult");
+  const escapeHtml = (value = "") =>
+    String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&`#39`;");
+
   // Ensure layout doesn't cut off items: keep scrollable container, and avoid nested flex issues.
   let html = `<div class="quiz-review"><h2>📖 Quiz Review</h2><div class="quiz-review-container"><div class="quiz-review-items">`;
   lastQuizReview.questions.forEach((q, index) => {
     const answer = lastQuizReview.answers[index] || {};
     const yourAnswerText = answer.selected !== undefined ? q.options[answer.selected] : "Not Answered";
     const correctnessIcon = answer.isCorrect ? "✅" : "❌";
-    html += `<div class="review-item"><h4>Q${index + 1}. ${q.question}</h4><p><strong>Your Answer:</strong> ${yourAnswerText} ${correctnessIcon}</p><p class="correct-answer"><strong>Correct Answer:</strong> ${q.options[q.correct]}</p><p><strong>Explanation:</strong> ${q.explanation}</p></div>`;
+    html += `<div class="review-item"><h4>Q${index + 1}. ${escapeHtml(q.question)}</h4><p><strong>Your Answer:</strong> ${escapeHtml(yourAnswerText)} ${correctnessIcon}</p><p class="correct-answer"><strong>Correct Answer:</strong> ${escapeHtml(q.options[q.correct])}</p><p><strong>Explanation:</strong> ${escapeHtml(q.explanation)}</p></div>`;
   });
   html += `</div></div><div class="quiz-actions" style="border-top:none; justify-content:space-between; padding-top:1.25rem; background:transparent;">
     <button class="btn btn-primary" onclick="restoreQuizResults()">Back</button>
@@ -1645,7 +1653,7 @@ function loadUserData() {
     else { userProgress = { name: "Learner", avatar: "🚀", completedProblems: [], completedDailyChallenges: [], codingPersonality: { type: "brute-force first", bruteForceCount: 1, slowAccurateCount: 0, greedyCount: 0, overOptimizerCount: 0 }, favoriteProblems: [], recentProblems: [], problemNotes: {}, xp: 0, level: 1, streak: 0, freezes: 0, freezeHistory: [], badges: [], completedRoadmapSteps: [], lastActive: null, quizScores: {}, bestQuizTimes: {}, activityData: {}, xpHistory: [], quizAttempts: [], practiceEvents: [], mistakeDna: { offByOneCount: 0, recursionBaseCaseCount: 0, wrongLogicCount: 0, recentLogs: [] }, revisionSchedule: { arrays: { currentStage: 0, nextReviewDate: null, history: [] }, strings: { currentStage: 0, nextReviewDate: null, history: [] }, linkedlist: { currentStage: 0, nextReviewDate: null, history: [] }, trees: { currentStage: 0, nextReviewDate: null, history: [] }, graphs: { currentStage: 0, nextReviewDate: null, history: [] }, dp: { currentStage: 0, nextReviewDate: null, history: [] } } }; saveUserData(); }
   } catch (e) { console.error("Error loading user data:", e); userProgress = { name: "Learner", avatar: "🚀", completedProblems: [], completedDailyChallenges: [], codingPersonality: { type: "brute-force first", bruteForceCount: 1, slowAccurateCount: 0, greedyCount: 0, overOptimizerCount: 0 }, favoriteProblems: [], recentProblems: [], problemNotes: {}, xp: 0, level: 1, streak: 0, freezes: 0, freezeHistory: [], badges: [], completedRoadmapSteps: [], lastActive: null, quizScores: {}, bestQuizTimes: {}, activityData: {}, xpHistory: [], quizAttempts: [], practiceEvents: [], mistakeDna: { offByOneCount: 0, recursionBaseCaseCount: 0, wrongLogicCount: 0, recentLogs: [] }, revisionSchedule: { arrays: { currentStage: 0, nextReviewDate: null, history: [] }, strings: { currentStage: 0, nextReviewDate: null, history: [] }, linkedlist: { currentStage: 0, nextReviewDate: null, history: [] }, trees: { currentStage: 0, nextReviewDate: null, history: [] }, graphs: { currentStage: 0, nextReviewDate: null, history: [] }, dp: { currentStage: 0, nextReviewDate: null, history: [] } } }; saveUserData(); }
   updateProfile();
-  getAuthenticatedSession().then(session => { if (session?.user?.name) { userProgress.name = session.user.name; updateProfile(); saveUserData(); } initProfile(); });
+  getAuthenticatedSession().then(session => { if (session?.user?.name) { userProgress.name = session.user.name; updateProfile(); saveUserData(); } else { userProgress.name = "Learner"; updateProfile(); saveUserData(); } initProfile(); });
 }
 
 // ============================================
