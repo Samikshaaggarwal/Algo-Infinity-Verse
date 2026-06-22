@@ -1,4 +1,5 @@
 import * as yaml from 'js-yaml';
+import { processInBatches } from '../utils/concurrency.js';
 
 /**
  * Validates a GitHub Actions workflow YAML to detect CI/CD practices.
@@ -89,18 +90,19 @@ export async function fetchWorkflows(repoUrl) {
     const files = await res.json();
     if (!Array.isArray(files)) return [];
 
-    const workflows = [];
-    for (const file of files) {
-      if (file.name.endsWith('.yml') || file.name.endsWith('.yaml')) {
-        const fileRes = await fetch(file.download_url);
-        if (fileRes.ok) {
-          const content = await fileRes.text();
-          workflows.push({ name: file.name, content });
-        }
+    const yamlFiles = files.filter(f => f.name.endsWith('.yml') || f.name.endsWith('.yaml'));
+    
+    // Process workflow files concurrently with a limit of 3
+    const workflows = await processInBatches(yamlFiles, async (file) => {
+      const fileRes = await fetch(file.download_url);
+      if (fileRes.ok) {
+        const content = await fileRes.text();
+        return { name: file.name, content };
       }
-    }
+      return null;
+    }, 3);
 
-    return workflows;
+    return workflows.filter(w => w !== null);
   } catch (err) {
     console.error("Failed to fetch workflows:", err.message);
     throw err;
