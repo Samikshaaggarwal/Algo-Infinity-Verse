@@ -27,7 +27,7 @@ try {
  Default demo data
 */
 
-if(!topicData){
+if(!topicData || Object.keys(topicData).length === 0){
 
 
 topicData = {
