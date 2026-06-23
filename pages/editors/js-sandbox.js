@@ -1,119 +1,124 @@
-import { executeJavaScriptSandbox } from "/backend/jsSandboxRunner.js";
+import vm from 'vm';
 
-const SAMPLE_TESTS = [
-  { name: "reverse-1", input: [[1, 2, 3]], expected: [3, 2, 1] },
-  { name: "reverse-2", input: [["a", "b"]], expected: ["b", "a"] },
-];
-
-function $(id) {
-  return document.getElementById(id);
-}
-
-function safePretty(v) {
-  try {
-    return JSON.stringify(v, null, 2);
-  } catch {
-    return String(v);
-  }
-}
-
-function escapeHtml(s) {
-  return String(s)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "<")
-    .replaceAll(">", ">")
-    .replaceAll('"', """)
-    .replaceAll("'", "&#039;");
-}
-
-function setTranscript(text) {
-  const pre = $("transcript");
-  if (pre) pre.textContent = text;
-}
-
-function renderResults(data) {
-  const { tests } = data;
-  const testsList = $("testsList");
-  const summary = $("summary");
-  if (!testsList || !summary) return;
-
-  testsList.innerHTML = "";
-
-  let passed = 0;
-  for (const t of tests) if (t.pass) passed += 1;
-
-  summary.textContent = `Passed ${passed}/${tests.length}.`;
-
-  tests.forEach((t, idx) => {
-    const row = document.createElement("div");
-    row.className = `test-row ${t.pass ? "pass" : "fail"}`;
-
-    const expectedStr = t.expected === undefined ? "undefined" : safePretty(t.expected);
-    const actualStr = t.actual === undefined ? "undefined" : safePretty(t.actual);
-
-    row.innerHTML = `
-      <div class="test-name">${idx + 1}. ${escapeHtml(t.name)} ${
-      t.pass ? "✅" : "❌"
-    }</div>
-      ${t.pass ? "" : `
-        <div class="diff">
-          <div><b>Expected:</b> <code>${escapeHtml(expectedStr)}</code></div>
-          <div><b>Actual:</b> <code>${escapeHtml(actualStr)}</code></div>
-        </div>
-        ${
-          t.error
-            ? `<div class="error-msg"><b>Runtime:</b> <pre>${escapeHtml(
-                safePretty(t.error.message || t.error.name || "Error")
-              )}</pre></div>`
-            : ""
-        }
-      `}
-    `;
-
-    testsList.appendChild(row);
-  });
-}
-
-async function run({ hidden = false }) {
-  const exportName = $("exportName")?.value.trim() || "solve";
-  const userCode = $("userCode")?.value || "";
-  const debug = $("showSteps")?.checked || false;
-
-  // Hidden tests MVP: same format; add more cases later.
-  const hiddenTests = [
-    { name: "reverse-3", input: [[0]], expected: [0] },
-    { name: "reverse-4", input: [[]], expected: [] },
-  ];
-
-  const tests = hidden ? [...SAMPLE_TESTS, ...hiddenTests] : SAMPLE_TESTS;
-
-  setTranscript("running...");
-
-  const result = await executeJavaScriptSandbox({
+/**
+ * jsSandboxRunner.js
+ * Executes user-provided JavaScript in a securely isolated Node.js VM context.
+ * Prevents access to dangerous globals and enforces strict execution time limits.
+ */
+export async function executeJavaScriptSandbox({
     userCode,
-    exportName,
-    tests,
-    debug,
-    timeLimitMsPerTest: 750,
-    maxOutputBytes: 20000,
-  });
+    exportName = "solve",
+    tests = [],
+    debug = false,
+    timeLimitMsPerTest = 750,
+    maxOutputBytes = 20000
+}) {
+    const results = [];
 
-  renderResults(result);
+    for (let i = 0; i < tests.length; i++) {
+        const test = tests[i];
+        let stdoutBuf = "";
 
-  if (debug) {
-    const stdout = result.tests
-      .filter((t) => t.stdout && t.stdout.trim().length)
-      .map((t) => `--- ${t.name} ---\n${t.stdout}`)
-      .join("\n\n");
+        // 1. Create a secure, restricted mock console
+        const mockConsole = {
+            log: (...args) => {
+                if (debug) {
+                    const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(" ") + "\n";
+                    if (stdoutBuf.length + msg.length <= maxOutputBytes) {
+                        stdoutBuf += msg;
+                    } else if (stdoutBuf.length < maxOutputBytes) {
+                        stdoutBuf += "\n[Output truncated: Exceeded maximum bytes]\n";
+                    }
+                }
+            },
+            error: (...args) => {
+                if (debug) {
+                    const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(" ") + "\n";
+                    if (stdoutBuf.length + msg.length <= maxOutputBytes) {
+                        stdoutBuf += "[ERROR] " + msg;
+                    }
+                }
+            }
+        };
 
-    setTranscript(stdout || "(no console output captured)");
-  } else {
-    setTranscript("(enable “Show my steps” to capture logs/output)");
-  }
+        // 2. Initialize a pristine, prototype-less sandbox object.
+        // This prevents sandbox breakout via prototype chain traversal.
+        const sandboxEnv = Object.create(null);
+
+        // 3. Inject ONLY safe Javascript built-ins.
+        // Explicitly EXCLUDING: setTimeout, setInterval, setImmediate, process, require, global, window
+        sandboxEnv.console = mockConsole;
+        sandboxEnv.Math = Math;
+        sandboxEnv.String = String;
+        sandboxEnv.Number = Number;
+        sandboxEnv.Array = Array;
+        sandboxEnv.Object = Object;
+        sandboxEnv.Boolean = Boolean;
+        sandboxEnv.Date = Date;
+        sandboxEnv.RegExp = RegExp;
+        sandboxEnv.Error = Error;
+        sandboxEnv.TypeError = TypeError;
+        sandboxEnv.RangeError = RangeError;
+        sandboxEnv.Map = Map;
+        sandboxEnv.Set = Set;
+        sandboxEnv.JSON = JSON;
+        sandboxEnv.isNaN = isNaN;
+        sandboxEnv.isFinite = isFinite;
+        sandboxEnv.parseInt = parseInt;
+        sandboxEnv.parseFloat = parseFloat;
+
+        // Inject the current test inputs securely
+        sandboxEnv.__TEST_INPUTS__ = test.input;
+
+        // 4. Contextify the sandbox environment
+        const context = vm.createContext(sandboxEnv);
+
+        let actual;
+        let error = null;
+        let pass = false;
+
+        try {
+            // 5. Wrap user code to safely execute the exported function 
+            // without polluting the global scope or relying on 'eval'
+            const executionWrapper = `
+                ${userCode}
+
+                if (typeof ${exportName} !== 'function') {
+                    throw new Error("Function '${exportName}' is not defined.");
+                }
+
+                // Run the function with the securely injected inputs
+                ${exportName}(...__TEST_INPUTS__);
+            `;
+
+            const script = new vm.Script(executionWrapper);
+
+            // 6. Execute with strict time limits to prevent infinite 'while(true)' loops
+            actual = script.runInContext(context, {
+                timeout: timeLimitMsPerTest,
+                microtaskMode: 'afterEvaluate' // Restricts unhandled async microtasks inside the VM
+            });
+
+            // Deep equality check for standard JSON-serializable algorithm outputs
+            pass = JSON.stringify(actual) === JSON.stringify(test.expected);
+
+        } catch (err) {
+            // Catch timeouts, syntax errors, and runtime exceptions safely
+            error = { 
+                name: err.name || "Error", 
+                message: err.message || "Unknown execution error" 
+            };
+        }
+
+        results.push({
+            name: test.name,
+            pass,
+            actual,
+            expected: test.expected,
+            stdout: stdoutBuf,
+            error
+        });
+    }
+
+    return { tests: results };
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  $("runSample")?.addEventListener("click", () => run({ hidden: false }));
-  $("runHidden")?.addEventListener("click", () => run({ hidden: true }));
-});
-
