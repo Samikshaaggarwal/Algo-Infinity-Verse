@@ -79,6 +79,14 @@
     </section>
 
     <section id="mlfq-section" class="section mlfq-section">
+      <div class="container">
+        <div class="print-export-bar">
+          <button id="exportPdfBtn" class="btn btn-primary print-export-btn" type="button" aria-label="Export current page as PDF">
+            <i class="fas fa-file-pdf"></i> Export to PDF
+          </button>
+        </div>
+      </div>
+
       <div class="container mlfq-container">
         <div class="mlfq-grid">
           <!-- Left: Controls & Process Builder -->
@@ -284,6 +292,12 @@
     <script src="/script.js"></script>
     <script src="/theme.js"></script>
     <script src="mlfq-scheduling-visualizer.js"></script>
+
+    <script type="module">
+      import { initPrint } from "/modules/print.js";
+      initPrint();
+    </script>
+
 
     <script>
       loadPartial('navbar-placeholder', '/partials/navbar.html');

@@ -23,6 +23,14 @@ let playbackTimer = null;
 let currentStepIdx = 0;
 let simulationSteps = [];
 
+// Sequence timeline UI
+let stepChips = [];
+let lastPlayedChipIdx = -1;
+
+// Visual sync
+let noteIndicatorTimeout = null;
+
+
 // Visualizer State data
 let activeVisualBars = [];
 let bfsGraphNodes = [];

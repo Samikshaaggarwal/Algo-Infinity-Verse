@@ -72,6 +72,14 @@
     </section>
 
     <section id="pp-section" class="section pp-section">
+      <div class="container">
+        <div class="print-export-bar">
+          <button id="exportPdfBtn" class="btn btn-primary print-export-btn" type="button" aria-label="Export current page as PDF">
+            <i class="fas fa-file-pdf"></i> Export to PDF
+          </button>
+        </div>
+      </div>
+
       <div class="container pp-container">
         <div class="pp-grid">
           <div class="pp-panel">
@@ -274,6 +282,12 @@
     <script src="/script.js"></script>
     <script src="/theme.js"></script>
     <script src="priority-preemptive-visualizer.js"></script>
+
+    <script type="module">
+      import { initPrint } from "/modules/print.js";
+      initPrint();
+    </script>
+
 
     <script>
       loadPartial('navbar-placeholder', '/partials/navbar.html');
