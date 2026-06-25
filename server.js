@@ -927,7 +927,47 @@ if (
     }
   );
 }
+if (pathname === "/api/forgot-password" && req.method === "POST") {
+    let payload;
+    try {
+      payload = await readJsonBody(req);
+    } catch {
+      return sendJson(res, 400, { error: "Invalid JSON body." });
+    }
 
+    const email = String(payload.email || "").trim().toLowerCase();
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return sendJson(res, 400, { error: "Valid email required." });
+    }
+
+    try {
+      const { initializeApp, getApps } = await import("firebase/app");
+      const { getAuth, sendPasswordResetEmail } = await import("firebase/auth");
+
+      const configRes = await fetch(`http://127.0.0.1:${process.env.PORT || 3000}/api/firebase-config`);
+      const firebaseConfig = await configRes.json();
+
+      if (firebaseConfig.configured) {
+        const existingApps = getApps();
+        const clientApp = existingApps.find(a => a.name === "reset-client") ||
+          initializeApp({
+            apiKey: firebaseConfig.apiKey,
+            authDomain: firebaseConfig.authDomain,
+            projectId: firebaseConfig.projectId,
+          }, "reset-client");
+
+        const auth = getAuth(clientApp);
+        await sendPasswordResetEmail(auth, email);
+      }
+    } catch (err) {
+      // Silently fail — don't expose whether email exists
+      console.warn("[forgot-password]", err.message);
+    }
+
+    // Always return success to prevent email enumeration
+    return sendJson(res, 200, { message: "Reset email sent if account exists." });
+  }
   if (pathname === "/api/logout" && req.method === "POST") {
     return sendJson(
       res,

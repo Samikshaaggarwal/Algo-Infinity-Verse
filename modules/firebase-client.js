@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged, getRedirectResult } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged, sendPasswordResetEmail } from "firebase/auth";
 
 let configPromise = null;
 let app = null;
@@ -105,8 +105,22 @@ export async function getIdToken() {
   return currentUser.getIdToken();
 }
 
+export async function sendPasswordReset(email) {
+  const authInstance = await ensureAuth();
+  await sendPasswordResetEmail(authInstance, email);
+}
+
 export function isConfigured() {
   return auth !== null;
 }
 
-window.__firebaseClient = { signInWithGoogle, getRedirectUser, signOutUser, getCurrentUser, onAuthChange, getIdToken, isConfigured };
+window.__firebaseClient = {
+  signInWithGoogle,
+  getRedirectUser,
+  signOutUser,
+  getCurrentUser,
+  onAuthChange,
+  getIdToken,
+  sendPasswordReset,
+  isConfigured
+};
