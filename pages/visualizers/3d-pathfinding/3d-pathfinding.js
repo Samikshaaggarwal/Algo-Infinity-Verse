@@ -5,11 +5,16 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-    if (typeof THREE === 'undefined') {
-        console.error("Three.js not loaded.");
-        return;
+    try {
+        if (typeof THREE === "undefined") {
+            throw new Error("Three.js not loaded.");
+        }
+
+        initPathfinder();
+    } catch (error) {
+        console.error("Failed to initialize visualizer:", error);
+        showError("3D visualization could not be loaded on this device.");
     }
-    initPathfinder();
 });
 
 // --- Config & Globals ---
@@ -51,6 +56,27 @@ const els = {
     statExplored: document.getElementById('statExplored'),
     statCost: document.getElementById('statCost')
 };
+
+function showError(message) {
+    if (els.container) {
+        els.container.innerHTML = `
+            <div style="
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                height:100%;
+                color:white;
+                text-align:center;
+                padding:20px;
+            ">
+                <div>
+                    <h3>Visualization Unavailable</h3>
+                    <p>${message}</p>
+                </div>
+            </div>
+        `;
+    }
+}
 
 // --- MinHeap Priority Queue for A* ---
 class MinHeap {
@@ -130,7 +156,8 @@ function initPathfinder() {
 }
 
 function setupScene() {
-    scene = new THREE.Scene();
+    try {
+        scene = new THREE.Scene();
     scene.background = new THREE.Color(0x020617);
     scene.fog = new THREE.FogExp2(0x020617, 0.015);
     
@@ -139,8 +166,11 @@ function setupScene() {
     // Position camera dynamically based on grid
     camera.position.set(GRID_SIZE * 0.8, GRID_SIZE * 0.8, GRID_SIZE * 0.8);
     
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(els.container.clientWidth, els.container.clientHeight);
+    renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+    });
+        renderer.setSize(els.container.clientWidth, els.container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for perf
     renderer.domElement.setAttribute('role', 'img');
     renderer.domElement.setAttribute('aria-label', '3D Pathfinding Visualization');
@@ -149,9 +179,14 @@ function setupScene() {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    controls.maxPolarAngle = Math.PI / 2.1; // Prevent going fully under the map
-}
+    controls.maxPolarAngle = Math.PI / 2.1;
 
+    } catch (error) {
+        console.error("Scene initialization failed:", error);
+        showError("WebGL is not supported or failed to initialize.");
+        throw error;
+    }
+}
 function setupLighting() {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
     scene.add(ambientLight);
