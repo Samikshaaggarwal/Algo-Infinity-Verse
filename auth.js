@@ -432,6 +432,11 @@
         });
 
         const payload = await response.json();
+        if (payload.requiresVerification) {
+          const emailEnc = encodeURIComponent(payload.email || "");
+          location.href = `/verify-email?email=${emailEnc}`;
+          return;
+        }
         if (!response.ok)
           throw new Error(payload.error || "Authentication failed.");
 

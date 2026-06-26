@@ -24,6 +24,7 @@ import {
   verifySessionToken, hashPassword, passwordMatches, validateSignup 
 } from "./backend/services/auth.service.js";
 import { applySM2 } from "./backend/services/memory.service.js";
+import { sendVerificationEmail } from "./backend/services/email.service.js";
 import {
   createBattle,
   joinBattle,
@@ -735,52 +736,25 @@ async function handleApi(req, res, pathname) {
   }
 
   if (pathname === "/api/signup" && req.method === "POST") {
-    // In serverless environments without Firestore, file-based storage won't work
-    if (!useFirestore) {
-      return sendJson(res, 503, {
-        error: "User accounts require Firebase Firestore in serverless mode. Please configure FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, and FIREBASE_PRIVATE_KEY environment variables."
-      });
-    }
-
-    // ── Rate limit check ─────────────────────────────────────────────────────
     const clientId = getClientIdentifier(req);
-
     if (isSignupRateLimited(clientId)) {
       await normalizeAuthDelay();
-      return sendJson(res, 429, {
-        error: "Too many signup attempts. Please try again later.",
-      });
+      return sendJson(res, 429, { error: "Too many signup attempts. Please try again later." });
     }
-
-    // Record the attempt before processing so every inbound request counts,
-    // including those that fail validation or find a duplicate email.
     recordSignupAttempt(clientId);
-    // ─────────────────────────────────────────────────────────────────────────
 
     const payload = await readJsonBody(req);
     const validationError = validateSignup(payload);
     if (validationError) return sendJson(res, 400, { error: validationError });
 
     const email = String(payload.email).trim().toLowerCase();
-    const existing = useFirestore
-      ? await getUserByEmail(email)
-      : (await readUsers()).find((user) => user.email === email);
+    const existing = await getUserByEmail(email);
     if (existing) {
-      // Normalize response time so a duplicate is indistinguishable from a
-      // real signup by timing — a real signup always runs PBKDF2 before
-      // responding, so we must delay here to match that latency profile.
       await normalizeAuthDelay();
-      console.warn("[signup] duplicate email attempt", {
-        email,
-        ip: clientId,
-        at: new Date().toISOString(),
-      });
-      // Return a generic 200 that is indistinguishable from a real signup
-      // success so callers cannot enumerate registered email addresses.
-      // No session cookie is issued — the submitter has not authenticated.
       return sendJson(res, 200, { ok: true });
     }
 
+    const verifyToken = crypto.randomBytes(32).toString("hex");
     const user = {
       id: crypto.randomUUID(),
       name: String(payload.name).trim(),
@@ -789,6 +763,9 @@ async function handleApi(req, res, pathname) {
       createdAt: new Date().toISOString(),
       isDeactivated: false,
       deactivatedAt: null,
+      emailVerified: false,
+      verifyToken,
+      verifyTokenExpiry: Date.now() + 24 * 60 * 60 * 1000,
     };
     try {
       await createUser(user);
@@ -797,52 +774,45 @@ async function handleApi(req, res, pathname) {
       return sendJson(res, 500, { error: "Failed to create user account." });
     }
 
-    const token = createSessionToken(user);
-    return sendJson(
-      res,
-      201,
-      { user: { id: user.id, name: user.name, email: user.email } },
-      { "Set-Cookie": authCookies(token, req) },
+    sendVerificationEmail(user.email, user.name, verifyToken).catch((err) =>
+      console.error("[email] Failed to send verification email:", err)
     );
+
+    return sendJson(res, 200, {
+      ok: true,
+      requiresVerification: true,
+      email: user.email,
+    });
   }
 
   if (pathname === "/api/login" && req.method === "POST") {
-    // In serverless environments without Firestore, file-based storage won't work
-    if (!useFirestore) {
-      return sendJson(res, 503, {
-        error: "User accounts require Firebase Firestore in serverless mode. Please configure FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, and FIREBASE_PRIVATE_KEY environment variables."
-      });
-    }
-
     const payload = await readJsonBody(req);
-    const email = String(payload.email || "")
-      .trim()
-      .toLowerCase();
+    const email = String(payload.email || "").trim().toLowerCase();
     const password = String(payload.password || "");
-    const user = useFirestore
-      ? await getUserByEmail(email)
-      : (await readUsers()).find((candidate) => candidate.email === email);
+    const user = await getUserByEmail(email);
     if (!user || !passwordMatches(password, user.password)) {
       return sendJson(res, 401, { error: "Invalid email or password." });
     }
 
+    if (!user.emailVerified) {
+      return sendJson(res, 403, {
+        error: "Please verify your email before logging in.",
+        requiresVerification: true,
+        email: user.email,
+      });
+    }
+
     if (user.isDeactivated) {
-  user.isDeactivated = false;
-  user.deactivatedAt = null;
-
-  const users = await readUsers();
-  const index = users.findIndex((u) => u.id === user.id);
-
-  if (index !== -1) {
-    users[index] = user;
-    await writeUsers(users);
-  }
-}
+      user.isDeactivated = false;
+      user.deactivatedAt = null;
+      const users = await readUsers();
+      const index = users.findIndex((u) => u.id === user.id);
+      if (index !== -1) { users[index] = user; await writeUsers(users); }
+    }
 
     const token = createSessionToken(user);
     return sendJson(
-      res,
-      200,
+      res, 200,
       { user: { id: user.id, name: user.name, email: user.email } },
       { "Set-Cookie": authCookies(token, req) },
     );
@@ -1787,6 +1757,47 @@ if (pathname === "/api/forgot-password" && req.method === "POST") {
   }
   // ── End battle routes ─────
 
+  if (pathname === "/api/verify-email" && req.method === "GET") {
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const token = url.searchParams.get("token");
+    if (!token) return sendJson(res, 400, { error: "Missing token." });
+
+    const users = await readUsers();
+    const idx = users.findIndex(
+      (u) => u.verifyToken === token && u.verifyTokenExpiry > Date.now()
+    );
+    if (idx === -1) return sendJson(res, 400, { error: "Link is invalid or expired." });
+
+    users[idx].emailVerified = true;
+    users[idx].verifyToken = null;
+    users[idx].verifyTokenExpiry = null;
+    await writeUsers(users);
+
+    const sessionToken = createSessionToken(users[idx]);
+    res.setHeader("Set-Cookie", authCookies(sessionToken, req));
+    return sendJson(res, 200, { ok: true });
+  }
+
+  if (pathname === "/api/resend-verification" && req.method === "POST") {
+    const body = await readJsonBody(req);
+    const email = String(body.email || "").trim().toLowerCase();
+    if (!email) return sendJson(res, 400, { error: "Email required." });
+
+    const users = await readUsers();
+    const idx = users.findIndex((u) => u.email === email);
+    if (idx === -1 || users[idx].emailVerified) return sendJson(res, 200, { ok: true });
+
+    const newToken = crypto.randomBytes(32).toString("hex");
+    users[idx].verifyToken = newToken;
+    users[idx].verifyTokenExpiry = Date.now() + 24 * 60 * 60 * 1000;
+    await writeUsers(users);
+
+    sendVerificationEmail(email, users[idx].name, newToken).catch((err) =>
+      console.error("[email] Resend failed:", err)
+    );
+    return sendJson(res, 200, { ok: true });
+  }
+
   return sendJson(res, 404, { error: "Not found." });
 }
 
@@ -1795,6 +1806,7 @@ const routes = {
   "/": "index.html",
   "/login": "pages/auth/login.html",
   "/signup": "pages/auth/signup.html",
+  "/verify-email": "pages/auth/verify-email.html",
     "/community": "community.html",
     "/python-learning": "python-learning.html",
     "/javascript-learning": "javascript-learning.html",
