@@ -503,7 +503,7 @@ const ALGO_NODES = {
       "  let openSet = new MinPriorityQueue();",
       "  let gScore = { [start]: 0 }, fScore = { [start]: h(start) };",
       "  openSet.insert(start, fScore[start]);",
-      "  # Traverses neighbors using f = g + h",
+      "  // Traverses neighbors using f = g + h",
       "}"
     ]
   },
