@@ -1,3 +1,6 @@
+let tQuiz = null;
+let currentFilter = 'all';
+let currentSearch = '';
 
 // ============================================
 // HASH CHANGE ROUTER
@@ -9,7 +12,7 @@ window.addEventListener('hashchange', () => {
       if (element.id?.toLowerCase().includes('quiz') || element.className?.toString().toLowerCase().includes('quiz') || element.id?.toLowerCase().includes('assistant')) element.style.display = 'none';
       else if (element.classList.contains('hidden') && element.id !== 'loading-screen') { element.classList.remove('hidden'); element.style.display = ''; }
     });
-    if (typeof tQuiz !== 'undefined') tQuiz = null;
+    if (typeof tQuiz !== 'undefined' && tQuiz !== null) tQuiz = null;
   }
   
   const path = window.location.pathname;
