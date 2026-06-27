@@ -503,7 +503,7 @@ const ALGO_NODES = {
       "  let openSet = new MinPriorityQueue();",
       "  let gScore = { [start]: 0 }, fScore = { [start]: h(start) };",
       "  openSet.insert(start, fScore[start]);",
-      "  # Traverses neighbors using f = g + h"
+      "  # Traverses neighbors using f = g + h",
       "}"
     ]
   },
@@ -522,7 +522,7 @@ const ALGO_NODES = {
       "function primsMST(graph) {",
       "  let mst = [], pq = new MinPriorityQueue();",
       "  // Sibling to Dijkstra's structure,",
-      "  // but relaxes edges directly to active MST."
+      "  // but relaxes edges directly to active MST.",
       "}"
     ]
   },
