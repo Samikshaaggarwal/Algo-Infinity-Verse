@@ -494,7 +494,7 @@ let currentProblem = null;
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOMContentLoaded fired, initializing app...');
   loadUserData();
-  initFlashcardsRevision();
+  //initFlashcardsRevision();
 
   initLoadingScreen();
   initNavbar();
@@ -2745,20 +2745,34 @@ const API_BASE = (location.hostname === 'localhost' || location.hostname === '12
   : '';
 
 async function executeViaApi(lang, code) {
-  const resp = await fetch(`${API_BASE}/api/execute`, {
+  // Make sure this points to your new secure Node.js route
+  const response = await fetch(`${API_BASE}/api/execute`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ source_code: code, language: lang, stdin: "" })
+    body: JSON.stringify({ 
+      sourceCode: code, 
+      language: lang, 
+      stdin: "" 
+    })
   });
-  if (!resp.ok) {
-    const err = await resp.json().catch(() => ({ error: "Execution API error (" + resp.status + ")" }));
-    throw new Error(err.error);
+  
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ message: "Execution API error (" + response.status + ")" }));
+    throw new Error(err.message || "Failed to execute code");
   }
-  const data = await resp.json();
-  if (data.code !== 0) {
-    throw new Error(data.stderr || "Execution failed");
+  
+  const result = await response.json();
+  if (!result.success) {
+    throw new Error(result.message || "Execution failed");
   }
-  return { stdout: data.stdout || "", stderr: data.stderr || "" };
+
+  // JDoodle returns output directly
+  return { 
+    stdout: result.data.output || "", 
+    stderr: "", // JDoodle merges stderr into output
+    memory: result.data.memory,
+    cpuTime: result.data.cpuTime
+  };
 }
 
 function parseTestResults(stdout, testCount) {
@@ -2782,29 +2796,35 @@ async function executeCode(code, lang, problem) {
   if (!testCases || testCases.length === 0) {
     return { allPassed: false, testResults: [], rawOutput: "This problem has no automated test cases." };
   }
+  
   const fnName = problem.functionName || "solution";
   const harnessCode = buildHarnessCode(code, lang, fnName, testCases, problem);
-  let stdout = "", stderr = "";
-  if (lang === "javascript") {
-    try {
-      const result = await runWorker(harnessCode, 5000);
-      if (!result.success) {
-        return { allPassed: false, testResults: testCases.map(() => ({ ran: false, passed: false, error: result.error })), rawOutput: (result.logs || []).join("\n") };
-      }
-      stdout = (result.logs || []).join("\n");
-    } catch (e) {
-      return { allPassed: false, testResults: testCases.map(() => ({ ran: false, passed: false, error: e.message })), rawOutput: e.message };
-    }
-  } else {
-    try {
-      const result = await executeViaApi(lang, harnessCode);
-      stdout = result.stdout;
-      stderr = result.stderr;
-    } catch (e) {
-      return { allPassed: false, testResults: testCases.map(() => ({ ran: false, passed: false, error: e.message })), rawOutput: e.message };
-    }
+  
+  let stdout = "", stderr = "", memory = "", cpuTime = "";
+  
+  // We now route ALL languages (including JS) through our real API for consistency and real limits
+  try {
+    const result = await executeViaApi(lang, harnessCode);
+    stdout = result.stdout;
+    memory = result.memory;
+    cpuTime = result.cpuTime;
+  } catch (e) {
+    return { 
+      allPassed: false, 
+      testResults: testCases.map(() => ({ ran: false, passed: false, error: e.message })), 
+      rawOutput: e.message 
+    };
   }
-  return parseTestResults(stdout, testCases.length);
+  
+  const parsedResults = parseTestResults(stdout, testCases.length);
+  
+  // Attach performance metrics to the result object
+  parsedResults.metrics = {
+    memory: memory || "N/A",
+    cpuTime: cpuTime || "N/A"
+  };
+  
+  return parsedResults;
 }
 
 function setOutput(text, type) {
@@ -2850,6 +2870,18 @@ async function runQuizCode() {
       const failMsg = failures.length + " / " + result.testResults.length + " tests failed";
       const out = result.rawOutput ? failMsg + "\n\nConsole output:\n" + result.rawOutput : failMsg;
       setOutput(out, "error");
+    }
+    if (result.metrics && result.metrics.cpuTime) {
+      const metricText = `\n\n⏱️ Execution Time: ${result.metrics.cpuTime} sec\n💾 Memory Used: ${result.metrics.memory} KB`;
+      const el = document.getElementById("quizOutputContent");
+      if (el) {
+        const metricsEl = document.createElement("pre");
+        metricsEl.style.color = "var(--accent)";
+        metricsEl.style.marginTop = "10px";
+        metricsEl.setAttribute("aria-label", "Execution metrics");
+        metricsEl.textContent = metricText;
+        el.appendChild(metricsEl);
+      }
     }
   } catch (e) {
     renderTestCases(testCases);
