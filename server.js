@@ -1265,11 +1265,120 @@ if (pathname === "/api/forgot-password" && req.method === "POST") {
         );
       }
 
+      if (pathname === "/api/feedback" && req.method === "POST") {
+    const session = getSession(req);
+    let payload;
+    try {
+      payload = await readJsonBody(req);
+    } catch (err) {
+      return sendJson(res, 400, { error: "Invalid JSON body." });
+    }
+
+    const { feedbackType, subject, message } = payload;
+    if (!feedbackType || !subject || !message) {
+      return sendJson(res, 400, {
+        error: "Feedback type, subject, and message are required.",
+      });
+    }
+
+    const allowedTypes = [
+      "Suggestion",
+      "Bug Report",
+      "Feature Request",
+      "General Feedback",
+    ];
+    if (!allowedTypes.includes(feedbackType)) {
+      return sendJson(res, 400, { error: "Invalid feedback type." });
+    }
+
+    if (subject.trim().length < 3) {
+      return sendJson(res, 400, {
+        error: "Subject must be at least 3 characters long.",
+      });
+    }
+
+    if (message.trim().length < 10) {
+      return sendJson(res, 400, {
+        error: "Message must be at least 10 characters long.",
+      });
+    }
+
+    const feedbackData = {
+      userId: session ? session.sub : null,
+      userName: session ? session.name : null,
+      userEmail: session ? session.email : null,
+      feedbackType,
+      subject: subject.trim(),
+      message: message.trim(),
+      status: "new",
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      if (useFirestore) {
+        const docRef = await db.collection("feedback").add(feedbackData);
+        feedbackData.id = docRef.id;
+      } else {
+        const feedbackFile = path.join(DATA_DIR, "feedback.json");
+        await fs.mkdir(DATA_DIR, { recursive: true });
+        let feedbackList = [];
+        try {
+          const raw = await fs.readFile(feedbackFile, "utf8");
+          feedbackList = JSON.parse(raw || "[]");
+        } catch (err) {
+          if (err.code !== "ENOENT") throw err;
+        }
+        feedbackData.id = crypto.randomUUID();
+        feedbackList.push(feedbackData);
+        await fs.writeFile(
+          feedbackFile,
+          JSON.stringify(feedbackList, null, 2) + "\n",
+        );
+      }
+
       return sendJson(res, 201, { success: true, feedback: feedbackData });
     } catch (err) {
       console.error("Error saving feedback:", err);
       return sendJson(res, 500, { error: "Failed to save feedback." });
     }
+  }
+
+  if (pathname === "/api/user/profile" && req.method === "GET") {
+    const session = getSession(req);
+    
+    const userData = {
+        user: {
+            name: session?.name || 'John Doe',
+            username: session?.email?.split('@')[0] || 'johndoe',
+            avatar: '🚀',
+            bio: 'Passionate about DSA and building cool stuff!',
+            joinedDate: '2024-01-15'
+        },
+        stats: {
+            totalSolved: 45,
+            xp: 2800,
+            streak: 7,
+            level: 4
+        },
+        badges: ['🌟 First Steps', '🔥 On Fire', '💎 Diamond'],
+        languages: [
+            { name: 'JavaScript', percentage: 80 },
+            { name: 'Python', percentage: 65 },
+            { name: 'Java', percentage: 50 },
+            { name: 'C++', percentage: 40 }
+        ],
+        projects: [
+            { name: 'Weather App', description: 'Real-time weather app', link: '#' },
+            { name: 'Task Manager', description: 'Manage tasks easily', link: '#' }
+        ],
+        recentActivity: [
+            { action: 'Solved Two Sum', date: '2026-06-26' },
+            { action: 'Completed Arrays Quiz', date: '2026-06-25' },
+            { action: 'Earned Diamond Badge', date: '2026-06-24' }
+        ]
+    };
+    
+    return sendJson(res, 200, { success: true, data: userData });
   }
 
   if (pathname === "/api/interview-experiences" && req.method === "POST") {
@@ -1813,6 +1922,7 @@ function resolveStaticPath(pathname) {
 const routes = {
   "/": "index.html",
   "/login": "pages/auth/login.html",
+  "/profile": "pages/profile/public-profile.html",
   "/signup": "pages/auth/signup.html",
   "/verify-email": "pages/auth/verify-email.html",
     "/community": "community.html",
