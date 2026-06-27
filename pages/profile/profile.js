@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Initial render
             applyFilters();
+
+            // Initialize Coding Identity Card
+            initIdentityCard();
         }
     }
 
@@ -182,5 +185,269 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo({ top: grid.offsetTop - 100, behavior: 'smooth' });
         }
     });
+
+    // ============================================
+    // CODING IDENTITY CARD UTILITIES
+    // ============================================
+
+    async function initIdentityCard() {
+        if (typeof userProgress === 'undefined') return;
+
+        // Populate details
+        const cardAvatar = document.getElementById("cardAvatar");
+        const cardUserName = document.getElementById("cardUserName");
+        const cardUserLevelBadge = document.getElementById("cardUserLevelBadge");
+        const cardUserTitle = document.getElementById("cardUserTitle");
+        const cardRank = document.getElementById("cardRank");
+        const cardXP = document.getElementById("cardXP");
+        const cardStreak = document.getElementById("cardStreak");
+        const cardSkills = document.getElementById("cardSkills");
+
+        const levelNames = ["Beginner", "Novice", "Intermediate", "Advanced", "Expert", "Master", "Grandmaster", "Legend"];
+        const levelTitle = levelNames[Math.min(userProgress.level - 1, levelNames.length - 1)] || "Beginner";
+
+        if (cardAvatar) cardAvatar.textContent = userProgress.avatar || "🚀";
+        if (cardUserName) cardUserName.textContent = userProgress.name || "Learner";
+        if (cardUserLevelBadge) cardUserLevelBadge.textContent = `Level ${userProgress.level || 1}`;
+        if (cardUserTitle) cardUserTitle.textContent = levelTitle;
+        if (cardXP) cardXP.textContent = (userProgress.xp || 0).toLocaleString();
+        if (cardStreak) cardStreak.textContent = userProgress.streak || 0;
+
+        // Fetch Leaderboard Rank
+        if (cardRank) {
+            cardRank.textContent = "...";
+            getLeaderboardRank().then(rank => {
+                cardRank.textContent = rank;
+            });
+        }
+
+        // Compute Top Skills
+        if (cardSkills) {
+            const skills = getTopSkills();
+            cardSkills.innerHTML = skills.map(skill => `<span class="skill-pill">${skill}</span>`).join("");
+        }
+
+        // Generate QR Code
+        const cardQrCode = document.getElementById("cardQrCode");
+        if (cardQrCode) {
+            cardQrCode.innerHTML = "";
+            const profileUrl = window.location.origin + window.location.pathname.replace("profile.html", "public-profile.html") + "?uid=" + getCurrentUserId();
+            try {
+                new QRCode(cardQrCode, {
+                    text: profileUrl,
+                    width: 120,
+                    height: 120,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.M
+                });
+            } catch (err) {
+                console.error("Error generating QR code:", err);
+            }
+        }
+    }
+
+    async function getLeaderboardRank() {
+        try {
+            let leaders = [];
+            let currentUserId = "local-user";
+            
+            if (typeof loadLeaderboard === 'function') {
+                const res = await loadLeaderboard();
+                leaders = res.leaders || [];
+                currentUserId = res.currentUserId || currentUserId;
+            }
+            
+            const resolvedCurrentUserId = typeof getCurrentUserId === 'function' ? getCurrentUserId() : currentUserId;
+            
+            if (typeof buildLeaderboardRows === 'function') {
+                const rows = buildLeaderboardRows(leaders, resolvedCurrentUserId);
+                const userRow = rows.find(r => r.id === resolvedCurrentUserId || (resolvedCurrentUserId === "local-user" && r.id === "local-user"));
+                if (userRow && userRow.rank) {
+                    return `#${userRow.rank}`;
+                }
+            }
+        } catch (e) {
+            console.warn("Failed to get rank from leaderboard:", e);
+        }
+        return "#1";
+    }
+
+    function getTopSkills() {
+        const solvedIds = userProgress.completedProblems || [];
+        if (solvedIds.length === 0 || typeof practiceProblems === 'undefined') {
+            return ["General"];
+        }
+        
+        const categoryCounts = {};
+        solvedIds.forEach(id => {
+            const problem = practiceProblems.find(p => p.id === id);
+            if (problem && problem.category) {
+                const cat = problem.category;
+                categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+            }
+        });
+        
+        const sortedCategories = Object.entries(categoryCounts)
+            .sort((a, b) => b[1] - a[1])
+            .map(entry => entry[0]);
+            
+        if (sortedCategories.length === 0) {
+            return ["General"];
+        }
+        
+        const formatCategoryName = (cat) => {
+            const mapping = {
+                'arrays': 'Arrays',
+                'strings': 'Strings',
+                'linkedlist': 'Linked List',
+                'graphs': 'Graphs',
+                'dp': 'Dynamic Programming',
+                'trees': 'Trees'
+            };
+            return mapping[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
+        };
+        
+        return sortedCategories.slice(0, 3).map(formatCategoryName);
+    }
+
+    // ============================================
+    // CARD INTERACTIVE ACTIONS
+    // ============================================
+
+    // Setup Theme Buttons
+    const themeButtons = document.querySelectorAll(".theme-btn");
+    themeButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            themeButtons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            
+            const theme = btn.getAttribute("data-theme");
+            const card = document.getElementById("codingIdentityCard");
+            if (card) {
+                card.className = `coding-card theme-${theme}`;
+            }
+        });
+    });
+
+    // Setup 3D Tilt Effect
+    const card = document.getElementById("codingIdentityCard");
+    if (card) {
+        card.addEventListener("mousemove", (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (centerY - y) / 15;
+            const rotateY = (x - centerX) / 15;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            
+            const glow = card.querySelector(".card-glow");
+            if (glow) {
+                const glowX = (x / rect.width) * 100;
+                const glowY = (y / rect.height) * 100;
+                glow.style.background = `radial-gradient(circle at ${glowX}% ${glowY}%, var(--card-glow-color) 0%, transparent 70%)`;
+            }
+        });
+        
+        card.addEventListener("mouseleave", () => {
+            card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+            const glow = card.querySelector(".card-glow");
+            if (glow) {
+                glow.style.background = `radial-gradient(circle at center, var(--card-glow-color) 0%, transparent 70%)`;
+            }
+        });
+    }
+
+    // Setup PNG Export
+    const downloadPngBtn = document.getElementById("downloadPngBtn");
+    if (downloadPngBtn) {
+        downloadPngBtn.addEventListener("click", async () => {
+            const idCard = document.getElementById("codingIdentityCard");
+            if (!idCard) return;
+            
+            const prevText = downloadPngBtn.innerHTML;
+            downloadPngBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Generating...`;
+            downloadPngBtn.disabled = true;
+            
+            try {
+                // Temporarily disable tilt transform
+                const prevTransform = idCard.style.transform;
+                idCard.style.transform = "none";
+                
+                const canvas = await html2canvas(idCard, {
+                    scale: 3,
+                    useCORS: true,
+                    backgroundColor: null,
+                    logging: false
+                });
+                
+                // Restore transform
+                idCard.style.transform = prevTransform;
+                
+                const image = canvas.toDataURL("image/png");
+                const link = document.createElement("a");
+                link.download = `${(typeof userProgress !== 'undefined' ? userProgress.name : 'learner')}_coding_card.png`;
+                link.href = image;
+                link.click();
+            } catch (e) {
+                console.error("Error generating PNG:", e);
+                alert("Failed to export PNG. Please try again.");
+            } finally {
+                downloadPngBtn.innerHTML = prevText;
+                downloadPngBtn.disabled = false;
+            }
+        });
+    }
+
+    // Setup PDF Export
+    const downloadPdfBtn = document.getElementById("downloadPdfBtn");
+    if (downloadPdfBtn) {
+        downloadPdfBtn.addEventListener("click", async () => {
+            const idCard = document.getElementById("codingIdentityCard");
+            if (!idCard) return;
+            
+            const prevText = downloadPdfBtn.innerHTML;
+            downloadPdfBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Generating...`;
+            downloadPdfBtn.disabled = true;
+            
+            try {
+                const prevTransform = idCard.style.transform;
+                idCard.style.transform = "none";
+                
+                const canvas = await html2canvas(idCard, {
+                    scale: 3,
+                    useCORS: true,
+                    backgroundColor: null,
+                    logging: false
+                });
+                
+                idCard.style.transform = prevTransform;
+                
+                const imgData = canvas.toDataURL("image/png");
+                const { jsPDF } = window.jspdf;
+                
+                const pdf = new jsPDF("l", "mm", "a4");
+                const imgWidth = 200;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                const x = (pdf.internal.pageSize.getWidth() - imgWidth) / 2;
+                const y = (pdf.internal.pageSize.getHeight() - imgHeight) / 2;
+                
+                pdf.addImage(imgData, "PNG", x, y, imgWidth, imgHeight);
+                pdf.save(`${(typeof userProgress !== 'undefined' ? userProgress.name : 'learner')}_coding_card.pdf`);
+            } catch (e) {
+                console.error("Error generating PDF:", e);
+                alert("Failed to export PDF. Please try again.");
+            } finally {
+                downloadPdfBtn.innerHTML = prevText;
+                downloadPdfBtn.disabled = false;
+            }
+        });
+    }
 
 });

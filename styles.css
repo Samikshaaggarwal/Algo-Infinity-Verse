@@ -3396,6 +3396,11 @@ section[id] {
 }
 
 /* ===== MODAL ===== */
+body.modal-open {
+  overflow: hidden !important;
+  padding-right: var(--scrollbar-width, 0px) !important;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -3424,10 +3429,24 @@ section[id] {
   width: 100%;
   max-width: 700px;
   max-height: 90vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   overscroll-behavior: contain;
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
+  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .modal-header {
@@ -3485,6 +3504,9 @@ section[id] {
 
 .modal-body {
   padding: 2rem;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  overscroll-behavior: contain;
 }
 
 /* ===== NOTES MODAL ===== */
@@ -3640,8 +3662,9 @@ section[id] {
   width: 95%;
   max-height: 95vh;
   border-radius: 20px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 #quizEditorModal ::-webkit-scrollbar {
@@ -3707,9 +3730,9 @@ section[id] {
 
 .quiz-modal-body {
   padding: 20px;
-  max-height: 75vh;
   overflow-y: auto;
   overflow-x: hidden;
+  flex: 1 1 auto;
 }
 
 .quiz-layout {
@@ -8321,6 +8344,51 @@ html.light-mode .report-issue-btn:hover {
   background: #6d28d9;
   box-shadow: 0 12px 30px rgba(124, 58, 237, 0.6);
 }
+
+/* Code Languages Badges */
+.code-block {
+    position: relative;
+    margin: 1rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #1e1e2e;
+}
+
+.code-block pre {
+    padding: 1rem;
+    margin: 0;
+    overflow-x: auto;
+    color: #e4e4e4;
+}
+
+.language-badge {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    padding: 2px 12px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: #333;
+    color: #fff;
+}
+
+.language-badge.javascript { background: #f7df1e; color: #000; }
+.language-badge.python { background: #3776ab; color: #fff; }
+.language-badge.java { background: #007396; color: #fff; }
+.language-badge.cpp { background: #00599c; color: #fff; }
+.language-badge.html { background: #e34f26; color: #fff; }
+.language-badge.css { background: #264de4; color: #fff; }
+.language-badge.sql { background: #4479a1; color: #fff; }
+.language-badge.php { background: #777bb4; color: #fff; }
+.language-badge.ruby { background: #cc342d; color: #fff; }
+.language-badge.go { background: #00add8; color: #000; }
+.language-badge.rust { background: #dea584; color: #000; }
+.language-badge.swift { background: #fa7343; color: #fff; }
+.language-badge.kotlin { background: #7f52ff; color: #fff; }
+.language-badge.kotlin { background: #7f52ff; color: #fff; }
 /* ===== BREADCRUMBS ===== */
 .breadcrumbs {
   padding: 1rem 2rem;

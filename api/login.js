@@ -19,8 +19,21 @@ initFirebase();
 
 const SESSION_COOKIE = "aiv_session";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
-const PBKDF2_ITERATIONS = 210000;
+const PBKDF2_ITERATIONS = 600000;
 const PASSWORD_KEY_LENGTH = 32;
+const PASSWORD_DIGEST = "sha256";
+
+const PASSWORD_PEPPER = process.env.PASSWORD_PEPPER || "";
+
+if (
+  process.env.NODE_ENV === "production" &&
+  !PASSWORD_PEPPER
+) {
+  throw new Error(
+    "PASSWORD_PEPPER environment variable is required."
+  );
+}
+
 const LOGIN_RATE_LIMIT = 5;
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 const loginAttempts = new Map();
@@ -36,7 +49,47 @@ function sign(v) { return crypto.createHmac("sha256", sessionSecret()).update(v)
 function b64u(i) { return Buffer.from(i).toString("base64").replace(/=/g,"").replace(/\+/g,"-").replace(/\//g,"_"); }
 function fromB64u(i) { return Buffer.from(i.replace(/-/g,"+").replace(/_/g,"/"),"base64").toString("utf8"); }
 function createSessionToken(u) { const h=b64u(JSON.stringify({alg:"HS256",typ:"JWT"})); const p=b64u(JSON.stringify({sub:u.id,name:u.name,email:u.email,exp:Math.floor(Date.now()/1000)+SESSION_MAX_AGE_SECONDS})); return `${h}.${p}.${sign(`${h}.${p}`)}`; }
-function passwordMatches(p, s) { const c=crypto.pbkdf2Sync(p,s.salt,s.iterations||PBKDF2_ITERATIONS,PASSWORD_KEY_LENGTH,s.digest||"sha256"); const b=Buffer.from(s.hash,"hex"); return b.length===c.length&&crypto.timingSafeEqual(b,c); }
+function isValidSalt(salt) {
+  return (
+    typeof salt === "string" &&
+    /^[a-fA-F0-9]+$/.test(salt) &&
+    salt.length === 32
+  );
+}
+function passwordMatches(p, s) {
+
+    if (!isValidSalt(s.salt)) {
+        return false;
+    }
+
+    if (
+        typeof s.hash !== "string" ||
+        !/^[a-fA-F0-9]+$/.test(s.hash)
+    ) {
+        return false;
+    }
+
+    const computed = crypto.pbkdf2Sync(
+        p + PASSWORD_PEPPER,
+        s.salt,
+        s.iterations || PBKDF2_ITERATIONS,
+        PASSWORD_KEY_LENGTH,
+        s.digest || PASSWORD_DIGEST
+    );
+
+    const stored = Buffer.from(
+        s.hash,
+        "hex"
+    );
+
+    return (
+        stored.length === computed.length &&
+        crypto.timingSafeEqual(
+            stored,
+            computed
+        )
+    );
+}
 function sessionCookie(t) { const sec=process.env.VERCEL==="1"; return [`${SESSION_COOKIE}=${encodeURIComponent(t)}`,"HttpOnly","SameSite=Lax","Path=/",`Max-Age=${SESSION_MAX_AGE_SECONDS}`,sec?"Secure":""].filter(Boolean).join("; "); }
 function createRememberToken() { return crypto.randomBytes(32).toString("hex"); }
 

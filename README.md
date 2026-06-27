@@ -141,7 +141,7 @@ Users can now:
 
 ### 🛡️ Authentication
 - Secure signup and login pages
-- PBKDF2 password hashing with per-user salts
+- PBKDF2 password hashing with per-user salts and a server-side pepper for enhanced password security
 - Signed JWT-style sessions stored in HTTP-only cookies
 - Logout endpoint that clears the session cookie
 - Protected community and support pages
@@ -220,10 +220,18 @@ Users can now:
    cp .env.example .env
    ```
 
-   Generate a session secret and paste it into `.env`:
-   ```bash
-   node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
-   ```
+   Generate secure secrets for your environment:
+
+    ```bash
+    node -e "console.log('SESSION_SECRET=' + require('crypto').randomBytes(64).toString('hex')); console.log('PASSWORD_PEPPER=' + require('crypto').randomBytes(32).toString('hex'));"
+    ```
+
+    Copy the generated values into your `.env` file:
+
+    ```env
+    SESSION_SECRET=your_generated_session_secret
+    PASSWORD_PEPPER=your_generated_password_pepper
+    ```
 
    Start the server:
    ```bash

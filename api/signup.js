@@ -42,8 +42,21 @@ initFirebase();
 
 const SESSION_COOKIE = "aiv_session";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
-const PBKDF2_ITERATIONS = 210000;
+
+const PBKDF2_ITERATIONS = 600000;
 const PASSWORD_KEY_LENGTH = 32;
+const PASSWORD_DIGEST = "sha256";
+
+const PASSWORD_PEPPER = process.env.PASSWORD_PEPPER || "";
+
+if (
+  process.env.NODE_ENV === "production" &&
+  !PASSWORD_PEPPER
+) {
+  throw new Error(
+    "PASSWORD_PEPPER environment variable is required."
+  );
+}
 
 // ── Rate limiting ────────────────────────────────────────────────────────────
 const SIGNUP_RATE_LIMIT = 5;
@@ -170,21 +183,21 @@ function createSessionToken(user) {
 
 function hashPassword(
   password,
-  salt = crypto.randomBytes(16).toString("hex")
+  salt = crypto.randomBytes(32).toString("hex")
 ) {
   return {
     salt,
     hash: crypto
-      .pbkdf2Sync(
-        password,
+    .pbkdf2Sync(
+        password + PASSWORD_PEPPER,
         salt,
         PBKDF2_ITERATIONS,
         PASSWORD_KEY_LENGTH,
-        "sha256"
-      )
+        PASSWORD_DIGEST
+    )
       .toString("hex"),
     iterations: PBKDF2_ITERATIONS,
-    digest: "sha256",
+    digest: PASSWORD_DIGEST,
   };
 }
 

@@ -1438,6 +1438,26 @@
                 maxlength="20"
               />
             </div>
+            <div class="languages-selector" style="margin-top: 1.5rem;">
+              <h4 style="margin-bottom: 0.5rem;">Programming Languages Known</h4>
+              <div class="languages-edit-options" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <label class="lang-edit-label" style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer; color: var(--text-light);">
+                  <input type="checkbox" class="lang-edit-checkbox" value="C++" /> C++
+                </label>
+                <label class="lang-edit-label" style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer; color: var(--text-light);">
+                  <input type="checkbox" class="lang-edit-checkbox" value="Java" /> Java
+                </label>
+                <label class="lang-edit-label" style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer; color: var(--text-light);">
+                  <input type="checkbox" class="lang-edit-checkbox" value="Python" /> Python
+                </label>
+                <label class="lang-edit-label" style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer; color: var(--text-light);">
+                  <input type="checkbox" class="lang-edit-checkbox" value="JavaScript" /> JavaScript
+                </label>
+                <label class="lang-edit-label" style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer; color: var(--text-light);">
+                  <input type="checkbox" class="lang-edit-checkbox" value="Rust" /> Rust
+                </label>
+              </div>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -1532,6 +1552,16 @@
     Delete Account
   </button>
 </div>
+            </div>
+          </div>
+          
+          <!-- Languages Section -->
+          <div class="profile-languages big-box" style="margin-top: 1.5rem; padding: 1.5rem; text-align: left; border-radius: var(--border-radius); border: 1px solid var(--glass-border); background: var(--dark-card);">
+            <h4 style="margin: 0 0 1rem 0; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--text-light); display: flex; align-items: center; gap: 0.5rem;">
+              <span>💻</span> Known Languages
+            </h4>
+            <div id="profileLanguagesSection" class="languages-list" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <!-- Dynamic chips -->
             </div>
           </div>
         </div>

@@ -3538,3 +3538,471 @@ function closeShortcutModal() {
     const modal = document.getElementById('shortcutModal');
     if (modal) modal.style.display = 'none';
 }
+
+// ==== CODE LANGUAGE BADGES ====
+function detectLanguage(code) {
+  const patterns = {
+        javascript: /function\s*\(|const\s+\w+\s*=|let\s+\w+\s*=|=>|console\.log/,
+        python: /def\s+\w+\s*\(|import\s+\w+|print\(|if\s+__name__\s*==/,
+        java: /public\s+class|System\.out\.println|public\s+static\s+void\s+main/,
+        cpp: /#include\s*<.*>|using\s+namespace\s+std|std::/,
+        html: /<!DOCTYPE\s+html|<html|<body|<div\s+class/,
+        css: /{[\s\S]*;[\s\S]*}/,
+        sql: /SELECT.*FROM|INSERT\s+INTO|UPDATE.*SET|DELETE\s+FROM/,
+        php: /<\?php|\$[a-zA-Z_]/,
+        ruby: /def\s+\w+|end|puts\s+/,
+        go: /package\s+main|func\s+main\(\)|import\s*\(/,
+        rust: /fn\s+main\(\)|let\s+mut|println!/
+    };
+
+    for(const[lang,pattern] of Object.entries(patterns)) {
+      if(pattern.test(code)) return lang;
+    }
+    return 'text';
+    }
+
+    function addLanguageBadges(){
+      document.querySelectorAll('pre code').forEach(codcodeBlock => {
+        const code = codcodeBlock.textContent;
+        const lang = detectLanguage(code);
+        const pre = codcodeBlock.closest('pre');
+        const container = pre.closest('.code-block')|| pre.parentElement;
+        container.style.position='relative';
+        container.sty;e.background='#1a1e2f';
+        container.style.borderRadius = '8px';
+        container.style.overflow = 'hidden';
+        
+
+        const badge = document.createElement('span');
+        badge.className = `language-badge ${lang}`;
+        badge.textContent = lang;
+        container.appendChild(badge);
+      });
+    }
+    
+
+// ===== RECENT ACTIVITY FEED =====
+
+// Get activities from localStorage
+function getRecentActivity() {
+    const activities = JSON.parse(localStorage.getItem('recentActivities') || '[]');
+    return activities.slice(0, 10);
+}
+
+// Add a new activity
+function addActivity(type, text) {
+    const activities = JSON.parse(localStorage.getItem('recentActivities') || '[]');
+    activities.unshift({
+        type: type, // 'solved', 'quiz', 'badge'
+        text: text,
+        date: new Date().toISOString()
+    });
+    // Keep only last 50
+    if (activities.length > 50) {
+        activities.length = 50;
+    }
+    localStorage.setItem('recentActivities', JSON.stringify(activities));
+    renderActivityFeed();
+}
+
+// Render activity feed on dashboard
+function renderActivityFeed() {
+    const container = document.getElementById('recentActivityFeed');
+    if (!container) return;
+
+    const activities = getRecentActivity();
+
+    if (activities.length === 0) {
+        container.innerHTML = `<p style="color: #6b7280; font-size: 0.9rem;">No recent activity. Start solving problems!</p>`;
+        return;
+    }
+
+    const icons = {
+        solved: '✅',
+        quiz: '📝',
+        badge: '🏆'
+    };
+
+    container.innerHTML = activities.map(activity => `
+        <div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <span style="font-size: 1.2rem;">${icons[activity.type] || '📌'}</span>
+            <span style="flex: 1; font-size: 0.9rem;">${activity.text}</span>
+            <span style="font-size: 0.7rem; color: #6b7280;">${timeAgo(activity.date)}</span>
+        </div>
+    `).join('');
+}
+
+// Time ago helper
+function timeAgo(date) {
+    const diff = Math.floor((new Date() - new Date(date)) / 1000);
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    return Math.floor(diff / 86400) + 'd ago';
+}
+
+// Call this when user solves a problem
+function trackProblemSolved(problemName) {
+    addActivity('solved', `Solved ${problemName}`);
+}
+
+// Call this when user completes a quiz
+function trackQuizCompleted(topic) {
+    addActivity('quiz', `Completed ${topic} quiz`);
+}
+
+// Call this when user earns a badge
+function trackBadgeEarned(badgeName) {
+    addActivity('badge', `Earned ${badgeName} badge`);
+}
+
+    //Run on page load
+    document.addEventListener('DOMContentLoaded' , addLanguageBadges);
+// ============================================
+// REUSABLE ACCESSIBLE MODAL ARCHITECTURE
+// ============================================
+(function() {
+    function initModalManager() {
+        const activeModals = new Set();
+        
+        function isModalElement(el) {
+            if (!el || el.nodeType !== Node.ELEMENT_NODE) return false;
+            const classes = el.className?.toString().toLowerCase() || "";
+            const id = el.id?.toLowerCase() || "";
+            return classes.includes('modal') || 
+                   id.includes('modal') || 
+                   el.getAttribute('role') === 'dialog' || 
+                   el.getAttribute('aria-modal') === 'true';
+        }
+        
+        function getFocusableElements(el) {
+            return el.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]');
+        }
+
+        function setupModalAccessibility(modal) {
+            if (!modal.getAttribute('role')) {
+                modal.setAttribute('role', 'dialog');
+            }
+            modal.setAttribute('aria-modal', 'true');
+            
+            const header = modal.querySelector('h2, h3, h4, .modal-title, .quiz-modal-header h3');
+            if (header && !modal.getAttribute('aria-labelledby')) {
+                if (!header.id) {
+                    header.id = 'modal-title-' + Math.random().toString(36).substr(2, 9);
+                }
+                modal.setAttribute('aria-labelledby', header.id);
+            }
+        }
+
+        function trapFocus(e, modal) {
+            if (e.key !== 'Tab') return;
+            const focusable = Array.from(getFocusableElements(modal)).filter(el => el.tabIndex !== -1);
+            if (focusable.length === 0) return;
+            
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    last.focus();
+                    e.preventDefault();
+                }
+            } else {
+                if (document.activeElement === last) {
+                    first.focus();
+                    e.preventDefault();
+                }
+            }
+        }
+
+        function handleModalOpen(modal) {
+            if (activeModals.has(modal)) return;
+            activeModals.add(modal);
+            
+            setupModalAccessibility(modal);
+            
+            const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+            document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
+            document.body.classList.add('modal-open');
+            
+            modal._trapFocusListener = (e) => trapFocus(e, modal);
+            modal.addEventListener('keydown', modal._trapFocusListener);
+            
+            const focusable = getFocusableElements(modal);
+            modal._previouslyFocused = document.activeElement;
+            if (focusable.length > 0) {
+                setTimeout(() => focusable[0].focus(), 50);
+            }
+            
+            if (!modal._overlayCloseBound) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal(modal);
+                    }
+                });
+                modal._overlayCloseBound = true;
+            }
+        }
+
+        function handleModalClose(modal) {
+            if (!activeModals.has(modal)) return;
+            activeModals.delete(modal);
+            
+            if (modal._trapFocusListener) {
+                modal.removeEventListener('keydown', modal._trapFocusListener);
+                modal._trapFocusListener = null;
+            }
+            
+            if (modal._previouslyFocused && modal._previouslyFocused.focus) {
+                modal._previouslyFocused.focus();
+                modal._previouslyFocused = null;
+            }
+            
+            if (activeModals.size === 0) {
+                document.body.classList.remove('modal-open');
+            }
+        }
+
+        function closeModal(modal) {
+            if (modal.classList.contains('active')) {
+                modal.classList.remove('active');
+            } else if (modal.style.display && modal.style.display !== 'none') {
+                modal.style.display = 'none';
+            } else if (modal.classList.contains('show')) {
+                modal.classList.remove('show');
+            } else if (!modal.classList.contains('hidden')) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function checkElement(element) {
+            if (!isModalElement(element)) return;
+            
+            const isVisible = element.classList.contains('active') || 
+                              element.classList.contains('show') || 
+                              element.style.display === 'flex' || 
+                              element.style.display === 'block' ||
+                              (element.style.display && element.style.display !== 'none' && !element.classList.contains('hidden')) ||
+                              (!element.classList.contains('hidden') && element.classList.contains('active')) ||
+                              (element.classList.contains('modal-overlay') && !element.classList.contains('hidden'));
+            
+            if (isVisible) {
+                handleModalOpen(element);
+            } else {
+                handleModalClose(element);
+            }
+        }
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes') {
+                    checkElement(mutation.target);
+                } else if (mutation.type === 'childList') {
+                    mutation.addedNodes.forEach(node => {
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            if (isModalElement(node)) {
+                                checkElement(node);
+                            }
+                            node.querySelectorAll && node.querySelectorAll('.modal, .modal-overlay, [class*="modal"]').forEach(checkElement);
+                        }
+                    });
+                }
+            });
+        });
+
+        observer.observe(document.body, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+            attributeFilter: ['class', 'style']
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                activeModals.forEach(modal => {
+                    closeModal(modal);
+                });
+            }
+        });
+
+        document.querySelectorAll('.modal, .modal-overlay, [class*="modal"]').forEach(checkElement);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initModalManager);
+    } else {
+        initModalManager();
+    }
+})();
+
+// ============================================
+// PROFILE EDITING & LANGUAGES MANAGER
+// ============================================
+(function() {
+    const PROFILE_AVATARS = ["🚀", "💻", "🧠", "🔥", "🦄", "⚡", "🤖", "🎨"];
+    let selectedProfileAvatar = "";
+
+    window.openProfileModal = function() {
+        const modal = document.getElementById("profileEditModal");
+        const nameInput = document.getElementById("profileNameInput");
+        
+        if (nameInput) nameInput.value = userProgress.name || "Learner";
+        selectedProfileAvatar = userProgress.avatar || "🚀";
+        
+        renderAvatarOptions();
+        
+        const userLangs = userProgress.languages || [];
+        const checkboxes = document.querySelectorAll(".lang-edit-checkbox");
+        checkboxes.forEach(cb => {
+            cb.checked = userLangs.includes(cb.value);
+        });
+        
+        if (modal) modal.classList.add("active");
+    };
+
+    window.closeProfileModal = function() {
+        const modal = document.getElementById("profileEditModal");
+        if (modal) modal.classList.remove("active");
+    };
+
+    window.selectProfileAvatar = function(av) {
+        selectedProfileAvatar = av;
+        renderAvatarOptions();
+    };
+
+    function renderAvatarOptions() {
+        const avatarOpts = document.getElementById("avatarOptions");
+        if (!avatarOpts) return;
+        avatarOpts.innerHTML = PROFILE_AVATARS.map(av => `
+            <span class="avatar-option ${selectedProfileAvatar === av ? 'selected' : ''}" 
+                  onclick="selectProfileAvatar('${av}')" 
+                  style="cursor: pointer; font-size: 2rem; padding: 0.25rem 0.5rem; border-radius: 8px; border: 2px solid ${selectedProfileAvatar === av ? 'var(--primary)' : 'transparent'}; transition: all 0.2s; display: inline-block;">
+                ${av}
+            </span>
+        `).join("");
+    }
+
+    window.saveProfileChanges = function() {
+        const nameInput = document.getElementById("profileNameInput");
+        const nameVal = nameInput ? nameInput.value.trim() : "";
+        
+        if (!nameVal) {
+            alert("Please enter a valid display name.");
+            return;
+        }
+        
+        const userLangs = [];
+        const checkboxes = document.querySelectorAll(".lang-edit-checkbox");
+        checkboxes.forEach(cb => {
+            if (cb.checked) userLangs.push(cb.value);
+        });
+        
+        userProgress.name = nameVal;
+        userProgress.avatar = selectedProfileAvatar;
+        userProgress.languages = userLangs;
+        
+        if (typeof saveUserData === 'function') {
+            saveUserData();
+        } else {
+            localStorage.setItem("algoInfinityVerse", JSON.stringify(userProgress));
+        }
+        
+        updateProfileViews();
+        window.closeProfileModal();
+        
+        if (typeof showNotification === 'function') {
+            showNotification("Profile updated successfully!", "success");
+        }
+    };
+
+    window.renderLanguageChips = function() {
+        if (typeof userProgress === 'undefined') return;
+        const userLangs = userProgress.languages || [];
+        const containers = [
+            document.getElementById("profileLanguagesSection"),
+            document.getElementById("profileLanguages")
+        ];
+        
+        const colors = {
+            "C++": "#f34b7d",
+            "Java": "#b07219",
+            "Python": "#3572A5",
+            "JavaScript": "#f1e05a",
+            "Rust": "#dea584"
+        };
+
+        const textColors = {
+            "JavaScript": "#000000"
+        };
+        
+        containers.forEach(container => {
+            if (!container) return;
+            if (userLangs.length === 0) {
+                container.innerHTML = `<span style="color: var(--text-secondary); font-size: 0.9rem; font-style: italic;">No languages added yet. Click edit to add!</span>`;
+                return;
+            }
+            
+            container.innerHTML = userLangs.map(lang => {
+                const bg = colors[lang] || "var(--primary)";
+                const color = textColors[lang] || "#ffffff";
+                return `
+                    <span class="lang-chip" style="
+                        display: inline-flex;
+                        align-items: center;
+                        background: ${bg};
+                        color: ${color};
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        padding: 0.3rem 0.8rem;
+                        border-radius: 20px;
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                    ">${lang}</span>
+                `;
+            }).join("");
+        });
+    };
+
+    function updateProfileViews() {
+        const profileName = document.getElementById("profileName");
+        if (profileName) profileName.textContent = userProgress.name;
+        const profileSectionName = document.getElementById("profileSectionName");
+        if (profileSectionName) profileSectionName.textContent = userProgress.name;
+        
+        const userNameEl = document.getElementById("userName");
+        if (userNameEl) userNameEl.textContent = userProgress.name;
+        const cardUserName = document.getElementById("cardUserName");
+        if (cardUserName) cardUserName.textContent = userProgress.name;
+        
+        document.querySelectorAll(".avatar-icon").forEach(el => el.textContent = userProgress.avatar || "🚀");
+        const cardAvatar = document.getElementById("cardAvatar");
+        if (cardAvatar) cardAvatar.textContent = userProgress.avatar || "🚀";
+        
+        if (typeof initIdentityCard === 'function') {
+            initIdentityCard();
+        }
+        
+        window.renderLanguageChips();
+    }
+
+    function setupProfileListeners() {
+        const mainEditBtn = document.getElementById("profileSectionEditBtn");
+        if (mainEditBtn) mainEditBtn.onclick = window.openProfileModal;
+        const pageEditBtn = document.getElementById("profilePageEditBtn");
+        if (pageEditBtn) pageEditBtn.onclick = window.openProfileModal;
+        
+        const closeCrossBtn = document.getElementById("profileModalClose");
+        if (closeCrossBtn) closeCrossBtn.onclick = window.closeProfileModal;
+        
+        window.renderLanguageChips();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupProfileListeners);
+    } else {
+        setupProfileListeners();
+    }
+    
+    setTimeout(setupProfileListeners, 200);
+})();

@@ -125,4 +125,132 @@ describe('server.js Utility Functions', () => {
       expect(validateSignup(input)).toBe('Enter a valid email address.');
     });
   });
+
+  describe('Centralized Rate Limiter', () => {
+    let RateLimiter, applyRateLimit;
+
+    beforeAll(async () => {
+      const rlModule = await import('../backend/utils/rateLimiter.js');
+      RateLimiter = rlModule.RateLimiter;
+      applyRateLimit = rlModule.applyRateLimit;
+    });
+
+    let rateLimiter;
+
+    beforeEach(() => {
+      rateLimiter = new RateLimiter({
+        windowMs: 1000, // 1 second
+        maxAttempts: 3,
+        cooldownMs: 2000, // 2 seconds
+        backoffType: 'fixed'
+      });
+    });
+
+    afterEach(() => {
+      rateLimiter.stopSweeper();
+    });
+
+    it('should allow requests within limit', () => {
+      const key = 'test-client-1';
+      expect(rateLimiter.check(key).allowed).toBe(true);
+      rateLimiter.record(key);
+      expect(rateLimiter.check(key).allowed).toBe(true);
+      rateLimiter.record(key);
+      expect(rateLimiter.check(key).allowed).toBe(true);
+      rateLimiter.record(key);
+    });
+
+    it('should block requests exceeding limit', () => {
+      const key = 'test-client-2';
+      for (let i = 0; i < 3; i++) {
+        expect(rateLimiter.check(key).allowed).toBe(true);
+        rateLimiter.record(key);
+      }
+      const check = rateLimiter.check(key);
+      expect(check.allowed).toBe(false);
+      expect(check.retryAfter).toBeGreaterThan(0);
+    });
+
+    it('should enforce fixed cooldown', () => {
+      const key = 'test-client-3';
+      for (let i = 0; i < 3; i++) {
+        rateLimiter.record(key);
+      }
+      expect(rateLimiter.check(key).allowed).toBe(false);
+      
+      const now = Date.now();
+      const realNow = Date.now;
+      try {
+        Date.now = () => now + 2500;
+        expect(rateLimiter.check(key).allowed).toBe(true);
+      } finally {
+        Date.now = realNow;
+      }
+    });
+
+    it('should enforce exponential backoff', () => {
+      const expLimiter = new RateLimiter({
+        windowMs: 1000,
+        maxAttempts: 2,
+        cooldownMs: 1000,
+        backoffType: 'exponential'
+      });
+
+      try {
+        const key = 'test-client-4';
+        
+        // Exceed limit 1st time -> cooldown should be 1s
+        expLimiter.record(key);
+        expLimiter.record(key);
+        let check = expLimiter.check(key);
+        expect(check.allowed).toBe(false);
+        expect(check.retryAfter).toBe(1);
+
+        // Exceed limit 2nd time (simulate 1.5s passes, then 2 new attempts)
+        const now = Date.now();
+        const realNow = Date.now;
+        
+        Date.now = () => now + 1500;
+        expLimiter.record(key);
+        expLimiter.record(key);
+        
+        check = expLimiter.check(key);
+        expect(check.allowed).toBe(false);
+        expect(check.retryAfter).toBe(2); // 1s * 2^1 = 2s
+        
+        Date.now = realNow;
+      } finally {
+        expLimiter.stopSweeper();
+      }
+    });
+
+    it('should reset limiter state', () => {
+      const key = 'test-client-5';
+      for (let i = 0; i < 3; i++) {
+        rateLimiter.record(key);
+      }
+      expect(rateLimiter.check(key).allowed).toBe(false);
+      rateLimiter.reset(key);
+      expect(rateLimiter.check(key).allowed).toBe(true);
+    });
+
+    it('should write 429 response on rate limit hit', () => {
+      const res = {
+        writeHead: jest.fn(),
+        end: jest.fn()
+      };
+      const req = {
+        socket: { remoteAddress: '127.0.0.1' }
+      };
+
+      for (let i = 0; i < 3; i++) {
+        rateLimiter.record('127.0.0.1');
+      }
+
+      const allowed = applyRateLimit(req, res, rateLimiter, 'Too many attempts.');
+      expect(allowed).toBe(false);
+      expect(res.writeHead).toHaveBeenCalledWith(429, expect.any(Object));
+      expect(res.end).toHaveBeenCalledWith(expect.stringContaining('Too many attempts.'));
+    });
+  });
 });
