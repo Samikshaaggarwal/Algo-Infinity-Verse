@@ -444,3 +444,104 @@
     max-height: 95vh;
   }
 }
+
+/* ==========================================================================
+   LIGHT THEME
+   ========================================================================== */
+
+html.light-mode .ft-hero {
+    background: #f8fafc;
+}
+
+html.light-mode .ft-controls-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+html.light-mode .canvas-card {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+}
+
+html.light-mode .tree-canvas-scroll {
+    background: radial-gradient(circle at center, #ffffff 0%, #f1f5f9 100%);
+}
+
+html.light-mode #node-inspector {
+    background: rgba(255,255,255,0.95);
+    border-color: rgba(0,0,0,0.1);
+}
+
+html.light-mode .ft-search-input {
+    background: white;
+    color: #111827;
+    border-color: #d1d5db;
+}
+
+html.light-mode .ft-search-input::placeholder {
+    color: #6b7280;
+}
+
+html.light-mode .search-icon,
+html.light-mode .clear-search-btn {
+    color: #6b7280;
+}
+
+html.light-mode .node-rect {
+    fill: #ffffff;
+    stroke: #cbd5e1;
+}
+
+html.light-mode .node-g:hover .node-rect {
+    fill: #f8fafc;
+    stroke: #94a3b8;
+}
+
+html.light-mode .node-text-title {
+    fill: #111827;
+}
+
+html.light-mode .node-text-subtitle {
+    fill: #64748b;
+}
+
+html.light-mode .section-title-sm {
+    color: #111827;
+    border-bottom-color: #d1d5db;
+}
+
+html.light-mode .trait-item {
+    background: #f8fafc;
+    border-color: #e5e7eb;
+}
+
+html.light-mode .trait-item label {
+    color: #64748b;
+}
+
+html.light-mode .evolution-box {
+    background: #f8fafc;
+}
+
+html.light-mode .insp-code-pre,
+html.light-mode .compare-code-pre {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+html.light-mode .insp-code-pre code,
+html.light-mode .compare-code-pre code {
+    color: #1f2937;
+}
+
+html.light-mode .compare-modal-content {
+    background: #ffffff;
+}
+
+html.light-mode .compare-table th {
+    background: #f3f4f6;
+}
+
+html.light-mode .compare-table td {
+    color: #111827;
+}
