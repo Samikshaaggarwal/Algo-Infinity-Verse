@@ -237,6 +237,11 @@ document.getElementById('btn-search').addEventListener('click', async () => {
     const target = parseInt(inputVal.value);
     if (isNaN(target)) return;
 
+    if (isDbgMode) {
+        startTreeDebugger('search', target);
+        return;
+    }
+
     isAnimating = true;
     let current = tree.root;
     let found = false;
@@ -271,6 +276,10 @@ document.getElementById('btn-reset').addEventListener('click', () => {
     statusMsg.innerText = "Tree reset.";
     outputMsg.innerText = "Output: []";
     updateVisualization();
+    if (isDbgMode) {
+        dbgPause();
+        addDbgStatus("Tree reset. Insert elements to start.");
+    }
 });
 
 /* ── Traversals ── */
@@ -326,11 +335,568 @@ function* levelorder(root) {
     }
 }
 
-document.getElementById('btn-inorder').addEventListener('click', () => animateTraversal(inorder, "In-order"));
-document.getElementById('btn-preorder').addEventListener('click', () => animateTraversal(preorder, "Pre-order"));
-document.getElementById('btn-postorder').addEventListener('click', () => animateTraversal(postorder, "Post-order"));
-document.getElementById('btn-levelorder').addEventListener('click', () => animateTraversal(levelorder, "Level-order"));
+document.getElementById('btn-inorder').addEventListener('click', () => {
+    if (isAnimating) return;
+    if (isDbgMode) {
+        startTreeDebugger('inorder');
+        return;
+    }
+    animateTraversal(inorder, "In-order");
+});
+
+document.getElementById('btn-preorder').addEventListener('click', () => {
+    if (isAnimating) return;
+    if (isDbgMode) {
+        startTreeDebugger('preorder');
+        return;
+    }
+    animateTraversal(preorder, "Pre-order");
+});
+
+document.getElementById('btn-postorder').addEventListener('click', () => {
+    if (isAnimating) return;
+    if (isDbgMode) {
+        startTreeDebugger('postorder');
+        return;
+    }
+    animateTraversal(postorder, "Post-order");
+});
+
+document.getElementById('btn-levelorder').addEventListener('click', () => {
+    if (isAnimating) return;
+    if (isDbgMode) {
+        startTreeDebugger('levelorder');
+        return;
+    }
+    animateTraversal(levelorder, "Level-order");
+});
 
 // Initialize empty canvas
 window.addEventListener('resize', updateVisualization);
 updateVisualization();
+
+// ==========================================================================
+// TREE VISUALIZER STEP DEBUGGER IMPLEMENTATION
+// ==========================================================================
+
+let isDbgMode = false;
+let dbgTrace = [];
+let dbgCurrentStep = -1;
+let dbgIsPlaying = false;
+let dbgPlayInterval = null;
+
+let audioCtx = null;
+function getAudioContext() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return audioCtx;
+}
+
+function playTone(val) {
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    const freq = 200 + (val % 100) * 6;
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    gain.gain.setValueAtTime(0.05, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.1);
+    
+    osc.start();
+    osc.stop(ctx.currentTime + 0.1);
+  } catch(e) {}
+}
+
+const treePseudoCodes = {
+  inorder: [
+    "inorder(node.left)",
+    "visit(node)",
+    "inorder(node.right)",
+    "return"
+  ],
+  preorder: [
+    "visit(node)",
+    "preorder(node.left)",
+    "preorder(node.right)",
+    "return"
+  ],
+  postorder: [
+    "postorder(node.left)",
+    "postorder(node.right)",
+    "visit(node)",
+    "return"
+  ],
+  levelorder: [
+    "queue.push(root)",
+    "while queue is not empty:",
+    "  curr = queue.pop()",
+    "  visit(curr)",
+    "  if curr.left queue.push(curr.left)",
+    "  if curr.right queue.push(curr.right)"
+  ],
+  search: [
+    "curr = root",
+    "while curr is not null:",
+    "  if target == curr.value: return curr",
+    "  if target < curr.value: curr = curr.left",
+    "  else: curr = curr.right",
+    "return null"
+  ]
+};
+
+document.getElementById("dbgToggle").addEventListener("change", (e) => {
+  isDbgMode = e.target.checked;
+  const dbgPanel = document.getElementById("debuggerPanel");
+  
+  canvas.querySelectorAll('.tree-node').forEach(nodeEl => {
+    nodeEl.classList.remove('highlight', 'found');
+  });
+  statusMsg.innerText = "Ready.";
+  outputMsg.innerText = "Output: []";
+
+  if (isDbgMode) {
+    dbgPanel.style.display = "block";
+    addDbgStatus("Debugger mode enabled. Select a traversal or search below to begin.");
+  } else {
+    dbgPanel.style.display = "none";
+    dbgPause();
+  }
+});
+
+function addDbgStatus(text) {
+  const expEl = document.getElementById("dbgExplanationText");
+  if (expEl) expEl.textContent = text;
+}
+
+function startTreeDebugger(type, target) {
+  dbgPause();
+  drawTreePseudoCode(type);
+
+  if (!tree.root) {
+    addDbgStatus("Tree is empty. Insert nodes first!");
+    return;
+  }
+
+  if (type === 'search') {
+    dbgTrace = generateSearchTrace(target);
+  } else if (type === 'inorder') {
+    dbgTrace = generateInorderTrace();
+  } else if (type === 'preorder') {
+    dbgTrace = generatePreorderTrace();
+  } else if (type === 'postorder') {
+    dbgTrace = generatePostorderTrace();
+  } else if (type === 'levelorder') {
+    dbgTrace = generateLevelorderTrace();
+  }
+
+  dbgCurrentStep = 0;
+  
+  const slider = document.getElementById("dbgStepSlider");
+  if (slider) {
+    slider.min = 0;
+    slider.max = dbgTrace.length - 1;
+    slider.value = 0;
+  }
+
+  renderTreeDbgStep(dbgCurrentStep);
+}
+
+function drawTreePseudoCode(type) {
+  const container = document.getElementById("dbgPseudoCode");
+  if (!container) return;
+  container.innerHTML = "";
+  const codeLines = treePseudoCodes[type] || [];
+  codeLines.forEach((line, idx) => {
+    const div = document.createElement("div");
+    div.className = "pseudo-code-line";
+    div.textContent = `${idx + 1}: ${line}`;
+    container.appendChild(div);
+  });
+}
+
+function generateSearchTrace(target) {
+  const trace = [];
+  let current = tree.root;
+  let found = false;
+
+  trace.push({
+    activeNode: null,
+    visited: [],
+    explanation: `Start searching for node ${target} from the root.`,
+    pseudoCodeLine: 0,
+    found: false
+  });
+
+  while (current) {
+    const currVal = current.value;
+    const visitedList = [...trace[trace.length - 1]?.visited || [], currVal];
+    
+    trace.push({
+      activeNode: currVal,
+      visited: visitedList,
+      explanation: `Currently examining node ${currVal}.`,
+      pseudoCodeLine: 1,
+      found: false
+    });
+
+    if (currVal === target) {
+      found = true;
+      trace.push({
+        activeNode: currVal,
+        visited: visitedList,
+        explanation: `Target node ${target} found!`,
+        pseudoCodeLine: 2,
+        found: true
+      });
+      break;
+    }
+
+    if (target < currVal) {
+      current = current.left;
+      trace.push({
+        activeNode: currVal,
+        visited: visitedList,
+        explanation: `Since ${target} < ${currVal}, move to the left child node.`,
+        pseudoCodeLine: 3,
+        found: false
+      });
+    } else {
+      current = current.right;
+      trace.push({
+        activeNode: currVal,
+        visited: visitedList,
+        explanation: `Since ${target} > ${currVal}, move to the right child node.`,
+        pseudoCodeLine: 4,
+        found: false
+      });
+    }
+  }
+
+  if (!found) {
+    trace.push({
+      activeNode: null,
+      visited: trace[trace.length - 1]?.visited || [],
+      explanation: `Target node ${target} not found in the BST.`,
+      pseudoCodeLine: 5,
+      found: false
+    });
+  }
+
+  return trace;
+}
+
+function generateInorderTrace() {
+  const trace = [];
+  const visited = [];
+  const output = [];
+
+  function traverse(node) {
+    if (!node) return;
+    
+    trace.push({
+      activeNode: node.value,
+      visited: [...visited],
+      output: [...output],
+      explanation: `Traverse left subtree of Node ${node.value}.`,
+      pseudoCodeLine: 0
+    });
+    traverse(node.left);
+
+    visited.push(node.value);
+    output.push(node.value);
+    trace.push({
+      activeNode: node.value,
+      visited: [...visited],
+      output: [...output],
+      explanation: `Visit Node ${node.value} and append it to output list.`,
+      pseudoCodeLine: 1
+    });
+
+    trace.push({
+      activeNode: node.value,
+      visited: [...visited],
+      output: [...output],
+      explanation: `Traverse right subtree of Node ${node.value}.`,
+      pseudoCodeLine: 2
+    });
+    traverse(node.right);
+  }
+
+  traverse(tree.root);
+  trace.push({
+    activeNode: null,
+    visited: [...visited],
+    output: [...output],
+    explanation: "In-order traversal is complete.",
+    pseudoCodeLine: 3
+  });
+  return trace;
+}
+
+function generatePreorderTrace() {
+  const trace = [];
+  const visited = [];
+  const output = [];
+
+  function traverse(node) {
+    if (!node) return;
+
+    visited.push(node.value);
+    output.push(node.value);
+    trace.push({
+      activeNode: node.value,
+      visited: [...visited],
+      output: [...output],
+      explanation: `Visit Node ${node.value} and append it to output list.`,
+      pseudoCodeLine: 0
+    });
+
+    trace.push({
+      activeNode: node.value,
+      visited: [...visited],
+      output: [...output],
+      explanation: `Traverse left child of Node ${node.value}.`,
+      pseudoCodeLine: 1
+    });
+    traverse(node.left);
+
+    trace.push({
+      activeNode: node.value,
+      visited: [...visited],
+      output: [...output],
+      explanation: `Traverse right child of Node ${node.value}.`,
+      pseudoCodeLine: 2
+    });
+    traverse(node.right);
+  }
+
+  traverse(tree.root);
+  trace.push({
+    activeNode: null,
+    visited: [...visited],
+    output: [...output],
+    explanation: "Pre-order traversal complete.",
+    pseudoCodeLine: 3
+  });
+  return trace;
+}
+
+function generatePostorderTrace() {
+  const trace = [];
+  const visited = [];
+  const output = [];
+
+  function traverse(node) {
+    if (!node) return;
+
+    trace.push({
+      activeNode: node.value,
+      visited: [...visited],
+      output: [...output],
+      explanation: `Traverse left subtree of Node ${node.value}.`,
+      pseudoCodeLine: 0
+    });
+    traverse(node.left);
+
+    trace.push({
+      activeNode: node.value,
+      visited: [...visited],
+      output: [...output],
+      explanation: `Traverse right subtree of Node ${node.value}.`,
+      pseudoCodeLine: 1
+    });
+    traverse(node.right);
+
+    visited.push(node.value);
+    output.push(node.value);
+    trace.push({
+      activeNode: node.value,
+      visited: [...visited],
+      output: [...output],
+      explanation: `Visit Node ${node.value} and append to output list.`,
+      pseudoCodeLine: 2
+    });
+  }
+
+  traverse(tree.root);
+  trace.push({
+    activeNode: null,
+    visited: [...visited],
+    output: [...output],
+    explanation: "Post-order traversal complete.",
+    pseudoCodeLine: 3
+  });
+  return trace;
+}
+
+function generateLevelorderTrace() {
+  const trace = [];
+  const visited = [];
+  const output = [];
+
+  if (!tree.root) return trace;
+  const queue = [tree.root];
+
+  trace.push({
+    activeNode: null,
+    visited: [],
+    output: [],
+    explanation: "Push root node to queue to start level-order BFS.",
+    pseudoCodeLine: 0
+  });
+
+  while (queue.length > 0) {
+    const node = queue.shift();
+    visited.push(node.value);
+    output.push(node.value);
+
+    trace.push({
+      activeNode: node.value,
+      visited: [...visited],
+      output: [...output],
+      explanation: `Pop Node ${node.value} from queue, visit it, and append to output.`,
+      pseudoCodeLine: 2
+    });
+
+    if (node.left) {
+      queue.push(node.left);
+      trace.push({
+        activeNode: node.value,
+        visited: [...visited],
+        output: [...output],
+        explanation: `Enqueue left child Node ${node.left.value}.`,
+        pseudoCodeLine: 4
+      });
+    }
+
+    if (node.right) {
+      queue.push(node.right);
+      trace.push({
+        activeNode: node.value,
+        visited: [...visited],
+        output: [...output],
+        explanation: `Enqueue right child Node ${node.right.value}.`,
+        pseudoCodeLine: 5
+      });
+    }
+  }
+
+  trace.push({
+    activeNode: null,
+    visited: [...visited],
+    output: [...output],
+    explanation: "Level-order traversal complete.",
+    pseudoCodeLine: 3
+  });
+
+  return trace;
+}
+
+function renderTreeDbgStep(stepIdx) {
+  if (stepIdx < 0 || stepIdx >= dbgTrace.length) return;
+  const step = dbgTrace[stepIdx];
+
+  canvas.querySelectorAll('.tree-node').forEach(nodeEl => {
+    nodeEl.classList.remove('highlight', 'found');
+  });
+
+  if (step.activeNode !== null) {
+    const activeEl = document.getElementById(`node-${step.activeNode}`);
+    if (activeEl) {
+      activeEl.classList.add(step.found ? 'found' : 'highlight');
+    }
+  }
+
+  statusMsg.innerText = step.explanation;
+
+  if (step.output) {
+    outputMsg.innerText = `Output: [${step.output.join(', ')}]`;
+  } else if (step.visited) {
+    outputMsg.innerText = `Visited: [${step.visited.join(', ')}]`;
+  }
+
+  const expEl = document.getElementById("dbgExplanationText");
+  if (expEl) expEl.innerHTML = step.explanation;
+
+  const counterEl = document.getElementById("dbgStepCounter");
+  if (counterEl) counterEl.textContent = `Step ${stepIdx + 1} / ${dbgTrace.length}`;
+
+  const sliderEl = document.getElementById("dbgStepSlider");
+  if (sliderEl) sliderEl.value = stepIdx;
+
+  const prevBtn = document.getElementById("dbgPrevBtn");
+  const nextBtn = document.getElementById("dbgNextBtn");
+  if (prevBtn) prevBtn.disabled = stepIdx <= 0;
+  if (nextBtn) nextBtn.disabled = stepIdx >= dbgTrace.length - 1;
+
+  const lines = document.querySelectorAll(".pseudo-code-line");
+  lines.forEach((line, idx) => {
+    if (idx === step.pseudoCodeLine) {
+      line.classList.add("active");
+    } else {
+      line.classList.remove("active");
+    }
+  });
+
+  if (step.activeNode !== null) {
+    playTone(step.activeNode);
+  }
+}
+
+function dbgPlay() {
+  if (dbgIsPlaying) return;
+  dbgIsPlaying = true;
+  document.getElementById("dbgPlayBtn").style.display = "none";
+  document.getElementById("dbgPauseBtn").style.display = "inline-block";
+
+  dbgPlayInterval = setInterval(() => {
+    if (dbgCurrentStep >= dbgTrace.length - 1) {
+      dbgPause();
+      return;
+    }
+    dbgCurrentStep++;
+    renderTreeDbgStep(dbgCurrentStep);
+  }, ANIMATION_SPEED);
+}
+
+function dbgPause() {
+  if (!dbgIsPlaying) return;
+  dbgIsPlaying = false;
+  document.getElementById("dbgPlayBtn").style.display = "inline-block";
+  document.getElementById("dbgPauseBtn").style.display = "none";
+  if (dbgPlayInterval) {
+    clearInterval(dbgPlayInterval);
+    dbgPlayInterval = null;
+  }
+}
+
+// Bind Debugger Controls Buttons
+document.getElementById("dbgPrevBtn").addEventListener("click", () => {
+  dbgPause();
+  if (dbgCurrentStep > 0) {
+    dbgCurrentStep--;
+    renderTreeDbgStep(dbgCurrentStep);
+  }
+});
+
+document.getElementById("dbgNextBtn").addEventListener("click", () => {
+  dbgPause();
+  if (dbgCurrentStep < dbgTrace.length - 1) {
+    dbgCurrentStep++;
+    renderTreeDbgStep(dbgCurrentStep);
+  }
+});
+
+document.getElementById("dbgPlayBtn").addEventListener("click", dbgPlay);
+document.getElementById("dbgPauseBtn").addEventListener("click", dbgPause);
+
+document.getElementById("dbgStepSlider").addEventListener("input", (e) => {
+  dbgPause();
+  dbgCurrentStep = parseInt(e.target.value);
+  renderTreeDbgStep(dbgCurrentStep);
+});

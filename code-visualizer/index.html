@@ -67,7 +67,10 @@
                     <span>📝 Code Editor</span>
                     <div class="panel-actions">
                         <button id="runBtn" class="btn btn-run">▶ Run</button>
+                        <button id="prevBtn" class="btn btn-step" style="background: #4b5563;" disabled>⏮ Prev</button>
                         <button id="stepBtn" class="btn btn-step">⏭ Step</button>
+                        <button id="playBtn" class="btn btn-step" style="background: #8b5cf6;">▶ Play</button>
+                        <button id="pauseBtn" class="btn btn-step" style="background: #ea580c; display: none;">⏸ Pause</button>
                         <button id="resetBtn" class="btn btn-reset">🔄 Reset</button>
                     </div>
                 </div>
@@ -89,8 +92,8 @@
             </div>
         </div>
 
-        <!-- Bottom: Output Console & Execution Trace -->
-        <div class="bottom-layout">
+        <!-- Bottom: Output Console, Execution Trace & Step Explanation -->
+        <div class="bottom-layout" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
             <div class="panel console-panel">
                 <div class="panel-header">
                     <span>🖥️ Output Console</span>
@@ -106,6 +109,15 @@
                 </div>
                 <div id="traceContainer" class="trace-container">
                     <div class="empty-state">Trace will appear here...</div>
+                </div>
+            </div>
+
+            <div class="panel explanation-panel">
+                <div class="panel-header">
+                    <span>💡 Step Explanation</span>
+                </div>
+                <div id="explanationContainer" class="variables-container" style="font-family: inherit; font-size: 0.95rem;">
+                    <div class="empty-state">No active execution step. Run or step through code to see explanations here.</div>
                 </div>
             </div>
         </div>

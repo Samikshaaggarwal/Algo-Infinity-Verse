@@ -82,11 +82,45 @@
             <button class="btn-vis btn-danger" id="btn-reset"><i class="fas fa-undo"></i> Reset Tree</button>
           </div>
 
+          <div class="control-group">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">Debugger Mode</span>
+              <label class="switch-custom" style="position: relative; display: inline-block; width: 44px; height: 22px;">
+                <input type="checkbox" id="dbgToggle">
+                <span class="slider-switch"></span>
+              </label>
+            </div>
+          </div>
+
           <div class="status-box" id="status-message">
             Ready. Enter a value to insert.
           </div>
           <div class="traversal-output" id="traversal-output">
             Output: []
+          </div>
+
+          <!-- Debugger Panel -->
+          <div id="debuggerPanel" class="debugger-panel" style="display: none; margin-top: 1.5rem;">
+            <div class="debugger-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <h3 style="margin: 0; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-bug" style="color: var(--accent);"></i> Step Debugger</h3>
+              <span id="dbgStepCounter" class="step-counter">Step 0 / 0</span>
+            </div>
+            <div class="debugger-controls" style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
+              <button id="dbgPrevBtn" class="btn btn-secondary btn-control-mini" disabled style="padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-step-backward"></i> Prev</button>
+              <button id="dbgPlayBtn" class="btn btn-primary btn-control-mini" style="padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-play"></i> Play</button>
+              <button id="dbgPauseBtn" class="btn btn-secondary btn-control-mini" style="display: none; padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-pause"></i> Pause</button>
+              <button id="dbgNextBtn" class="btn btn-secondary btn-control-mini" style="padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-step-forward"></i> Next</button>
+            </div>
+            <div class="debugger-slider-group" style="margin-bottom: 1.25rem;">
+              <input type="range" id="dbgStepSlider" min="0" max="0" value="0" class="slider-custom" style="width: 100%;">
+            </div>
+            <div class="debugger-explanation" style="background: rgba(255, 255, 255, 0.03); padding: 1rem; border-radius: 10px; border: 1px solid var(--glass-border);">
+              <h5 style="margin-top: 0; color: var(--accent); margin-bottom: 0.5rem;">Why this step happens:</h5>
+              <p id="dbgExplanationText" class="debugger-explanation-text" style="font-size: 0.88rem; line-height: 1.5; margin: 0;">Select an algorithm and click start to begin step debugging.</p>
+            </div>
+            <div class="pseudo-code-container" id="dbgPseudoCode">
+              <!-- Pseudo-code lines will be injected here -->
+            </div>
           </div>
         </aside>
 

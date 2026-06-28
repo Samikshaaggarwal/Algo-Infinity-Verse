@@ -8804,3 +8804,136 @@ mark.search-highlight {
 .offline-banner.hidden {
   display: none;
 }
+
+/* ==========================================================================
+   ALGORITHM STEP DEBUGGER STYLES
+   ========================================================================== */
+
+.debugger-panel {
+  margin-top: 1.5rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.debugger-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+}
+
+.debugger-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.debugger-header h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.step-counter {
+  font-family: "Fira Code", monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+}
+
+.debugger-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.btn-control-mini {
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.debugger-slider-group {
+  margin-bottom: 1.25rem;
+}
+
+.debugger-explanation {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+  margin-top: 1rem;
+}
+
+.debugger-explanation h5 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.debugger-explanation-text {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.pseudo-code-container {
+  margin-top: 1rem;
+  background: rgba(10, 10, 26, 0.5);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-family: "Fira Code", monospace;
+  font-size: 0.8rem;
+  overflow-x: auto;
+}
+
+.pseudo-code-line {
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  white-space: pre;
+}
+
+.pseudo-code-line.active {
+  background: rgba(167, 139, 250, 0.2);
+  color: #facc15;
+  font-weight: 600;
+  border-left: 3px solid var(--accent);
+  padding-left: calc(0.5rem - 3px);
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.1);
+}
+
+/* For toggle switches */
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: 0.88rem;
+}
+

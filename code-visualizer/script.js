@@ -15,6 +15,15 @@ class CodeExecutor {
         this.isPaused = false;
         this.isFinished = false;
         this.originalConsoleLog = console.log;
+        this.history = [{
+            currentLine: 0,
+            variables: {},
+            output: [],
+            trace: [],
+            explanation: "Ready to start execution."
+        }];
+        this.playInterval = null;
+        this.updateExplanationUI("Ready to start execution.");
     }
 
     // Step forward one line
@@ -23,6 +32,12 @@ class CodeExecutor {
             this.isFinished = true;
             this.addTrace('⏹️ Execution complete!');
             this.updateStatus('Finished');
+            this.updateExplanationUI("Execution complete! Click Reset to edit or run again.");
+            if (this.playInterval) {
+                clearInterval(this.playInterval);
+                this.playInterval = null;
+            }
+            if (typeof updateControlsUI === 'function') updateControlsUI();
             return false;
         }
 
@@ -53,12 +68,106 @@ class CodeExecutor {
                 this.updateStatus('Finished');
             }
 
+            // Generate step explanation
+            const explanation = this.generateExplanation(trimmed);
+            this.updateExplanationUI(explanation);
+
+            // Record snapshot in history
+            this.history.push({
+                currentLine: this.currentLine,
+                variables: JSON.parse(JSON.stringify(this.variables)),
+                output: [...this.output],
+                trace: [...this.trace],
+                explanation: explanation
+            });
+
+            if (typeof updateControlsUI === 'function') updateControlsUI();
             return true;
         } catch (error) {
             this.addTrace(`❌ Error: ${error.message}`);
             this.updateStatus('Error');
+            this.updateExplanationUI(`Runtime Error on line ${line.number}: ${error.message}`);
             this.isFinished = true;
+            if (this.playInterval) {
+                clearInterval(this.playInterval);
+                this.playInterval = null;
+            }
+            if (typeof updateControlsUI === 'function') updateControlsUI();
             return false;
+        }
+    }
+
+    // Step backward one line
+    stepBackward() {
+        if (this.history.length <= 1) {
+            this.reset();
+            return false;
+        }
+
+        // Pop the current step
+        this.history.pop();
+
+        // Restore state to previous step
+        const prevState = this.history[this.history.length - 1];
+        this.variables = JSON.parse(JSON.stringify(prevState.variables));
+        this.output = [...prevState.output];
+        this.trace = [...prevState.trace];
+        this.currentLine = prevState.currentLine;
+        this.isFinished = false;
+
+        this.highlightLine(this.currentLine);
+        this.updateVariables();
+        updateTraceUI(this.trace);
+        updateConsoleUI(this.output);
+        this.updateExplanationUI(prevState.explanation);
+        
+        if (this.currentLine === 0) {
+            this.updateStatus('Ready');
+        } else {
+            this.updateStatus(`Stepped back to Line ${this.currentLine}`);
+        }
+
+        if (typeof updateControlsUI === 'function') updateControlsUI();
+        return true;
+    }
+
+    // Generate readable explanations of what code does at runtime
+    generateExplanation(line) {
+        if (line.startsWith('console.log(')) {
+            const match = line.match(/console\.log\((.*)\)/);
+            if (match) {
+                const expr = match[1].trim();
+                const evaluatedVal = this.output[this.output.length - 1];
+                return `Line prints the expression <code>${expr}</code> to the console output.<br>Evaluated value printed: <strong style="color: var(--accent); font-family: monospace;">${evaluatedVal !== undefined ? evaluatedVal : 'undefined'}</strong>.`;
+            }
+            return "Executing <code>console.log</code> statement to output details.";
+        }
+
+        if (line.startsWith('let ')) {
+            const parts = line.replace('let ', '').split('=');
+            const varName = parts[0].trim();
+            const value = this.variables[varName];
+            const displayVal = typeof value === 'string' ? `"${value}"` : JSON.stringify(value);
+            return `Declaring local variable <code>${varName}</code> and initializing it to <strong style="color: #22c55e; font-family: monospace;">${displayVal !== undefined ? displayVal : 'undefined'}</strong>.`;
+        }
+
+        // Handle simple variable assignments
+        const assignmentMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*(.+)/);
+        if (assignmentMatch) {
+            const varName = assignmentMatch[1];
+            const value = this.variables[varName];
+            const displayVal = typeof value === 'string' ? `"${value}"` : JSON.stringify(value);
+            return `Updating variable <code>${varName}</code> to <strong style="color: #22c55e; font-family: monospace;">${displayVal !== undefined ? displayVal : 'undefined'}</strong>.`;
+        }
+
+        return `Executing line: <code style="color: #cbd5e1; font-family: monospace;">${line}</code>.`;
+    }
+
+    // Update explanation panel
+    updateExplanationUI(text) {
+        const container = document.getElementById('explanationContainer');
+        if (container) {
+            container.innerHTML = `<div class="explanation-step-text" style="line-height: 1.6; font-size: 0.95rem;">${text}</div>`;
         }
     }
 
@@ -165,20 +274,25 @@ class CodeExecutor {
 
     // Update status
     updateStatus(status) {
-        document.getElementById('statusText').textContent = `⏹️ ${status}`;
+        const el = document.getElementById('statusText');
+        if (el) el.textContent = `⏹️ ${status}`;
     }
 
     // Highlight current line
     highlightLine(lineNumber) {
+        const highlightLineEl = document.getElementById('highlightLine');
+        if (!highlightLineEl) return;
         if (lineNumber <= 0) {
-            highlightLine.style.display = 'none';
+            highlightLineEl.style.display = 'none';
             return;
         }
         const lineHeight = 1.6 * 16; // ~25.6px
         const top = (lineNumber - 1) * lineHeight;
-        highlightLine.style.top = `${top}px`;
-        highlightLine.style.display = 'block';
-        document.getElementById('lineStatus').textContent = `Line: ${lineNumber}`;
+        highlightLineEl.style.top = `${top}px`;
+        highlightLineEl.style.display = 'block';
+        
+        const lineStatusEl = document.getElementById('lineStatus');
+        if (lineStatusEl) lineStatusEl.textContent = `Line: ${lineNumber}`;
     }
 
     // Update variables UI
@@ -209,10 +323,23 @@ class CodeExecutor {
         this.isFinished = false;
         this.highlightLine(0);
         this.updateVariables();
+        this.history = [{
+            currentLine: 0,
+            variables: {},
+            output: [],
+            trace: [],
+            explanation: "Ready to start execution."
+        }];
+        this.updateExplanationUI("Ready to start execution.");
         updateTraceUI([]);
         updateConsoleUI([]);
         this.updateStatus('Ready');
         console.log = this.originalConsoleLog;
+        if (this.playInterval) {
+            clearInterval(this.playInterval);
+            this.playInterval = null;
+        }
+        if (typeof updateControlsUI === 'function') updateControlsUI();
     }
 
     // Get the code lines
@@ -334,6 +461,38 @@ function initExecutor() {
 
 // ====== BUTTON HANDLERS ======
 
+function updateControlsUI() {
+    const prevBtn = document.getElementById('prevBtn');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const stepBtn = document.getElementById('stepBtn');
+    const runBtn = document.getElementById('runBtn');
+
+    if (!executor) {
+        if (prevBtn) prevBtn.disabled = true;
+        if (playBtn) playBtn.disabled = false;
+        if (playBtn) playBtn.style.display = 'inline-block';
+        if (pauseBtn) pauseBtn.style.display = 'none';
+        return;
+    }
+
+    if (prevBtn) {
+        prevBtn.disabled = executor.history.length <= 1;
+    }
+
+    if (executor.playInterval) {
+        if (playBtn) playBtn.style.display = 'none';
+        if (pauseBtn) pauseBtn.style.display = 'inline-block';
+        if (stepBtn) stepBtn.disabled = true;
+        if (runBtn) runBtn.disabled = true;
+    } else {
+        if (playBtn) playBtn.style.display = 'inline-block';
+        if (pauseBtn) pauseBtn.style.display = 'none';
+        if (stepBtn) stepBtn.disabled = executor.isFinished;
+        if (runBtn) runBtn.disabled = executor.isFinished;
+    }
+}
+
 // Run
 document.getElementById('runBtn').addEventListener('click', () => {
     if (!executor) {
@@ -345,6 +504,7 @@ document.getElementById('runBtn').addEventListener('click', () => {
     try {
         executor.runAll();
         updateConsoleUI(executor.output);
+        updateVariablesUI(executor.variables);
     } catch (error) {
         console.error(error);
 
@@ -372,9 +532,9 @@ document.getElementById('stepBtn').addEventListener('click', () => {
     if (!executor) return;
 
     try {
-    executor.stepForward();
-    updateConsoleUI(executor.output);
-    updateVariablesUI(executor.variables);
+        executor.stepForward();
+        updateConsoleUI(executor.output);
+        updateVariablesUI(executor.variables);
     } catch (error) {
         console.error(error);
 
@@ -393,6 +553,48 @@ document.getElementById('stepBtn').addEventListener('click', () => {
     }
 });
 
+// Prev Step
+document.getElementById('prevBtn').addEventListener('click', () => {
+    if (!executor) return;
+    try {
+        executor.stepBackward();
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+// Play
+document.getElementById('playBtn').addEventListener('click', () => {
+    if (!executor) {
+        executor = initExecutor();
+    }
+    if (!executor) return;
+
+    if (executor.playInterval) return;
+
+    executor.playInterval = setInterval(() => {
+        if (executor.isFinished) {
+            clearInterval(executor.playInterval);
+            executor.playInterval = null;
+            updateControlsUI();
+            return;
+        }
+        executor.stepForward();
+        updateConsoleUI(executor.output);
+        updateVariablesUI(executor.variables);
+    }, 1000); // Step every 1000ms
+
+    updateControlsUI();
+});
+
+// Pause
+document.getElementById('pauseBtn').addEventListener('click', () => {
+    if (!executor || !executor.playInterval) return;
+    clearInterval(executor.playInterval);
+    executor.playInterval = null;
+    updateControlsUI();
+});
+
 // Reset
 document.getElementById('resetBtn').addEventListener('click', () => {
     if (!executor) {
@@ -402,9 +604,9 @@ document.getElementById('resetBtn').addEventListener('click', () => {
     if (!executor) return;
 
     try {
-    executor.reset();
-    updateConsoleUI([]);
-    updateVariablesUI({});
+        executor.reset();
+        updateConsoleUI([]);
+        updateVariablesUI({});
     } catch (error) {
         console.error(error);
 

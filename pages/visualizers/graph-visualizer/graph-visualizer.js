@@ -460,6 +460,11 @@ function initVisualizer() {
       structureTitleEl.textContent = "Stack (LIFO)";
     }
 
+    if (isDbgMode) {
+      initGraphDebugger();
+      return;
+    }
+
     // Enable control buttons
     if (startBtn) startBtn.disabled = false;
     if (pauseBtn) pauseBtn.disabled = true;
@@ -481,7 +486,8 @@ function initVisualizer() {
       nodeId: startId,
       log: `Enqueued starting Node ${startId}.`,
       queueState: [...queue],
-      visitedState: [...visited]
+      visitedState: [...visited],
+      pseudoCodeLine: 0
     });
 
     while (queue.length > 0) {
@@ -493,7 +499,8 @@ function initVisualizer() {
         nodeId: curr,
         log: `Dequeued and visiting Node ${curr}.`,
         queueState: [...queue],
-        visitedState: [...visited]
+        visitedState: [...visited],
+        pseudoCodeLine: 3
       });
 
       // Find neighbors
@@ -513,7 +520,8 @@ function initVisualizer() {
               nodeId: neighbor,
               log: `Traversing edge ${curr} → ${neighbor} to discover unvisited Node ${neighbor}.`,
               queueState: [...queue],
-              visitedState: [...visited]
+              visitedState: [...visited],
+              pseudoCodeLine: 5
             });
           }
 
@@ -523,7 +531,8 @@ function initVisualizer() {
             nodeId: neighbor,
             log: `Enqueued Node ${neighbor}.`,
             queueState: [...queue],
-            visitedState: [...visited]
+            visitedState: [...visited],
+            pseudoCodeLine: 7
           });
         }
       });
@@ -533,7 +542,8 @@ function initVisualizer() {
       type: 'done',
       log: 'BFS Traversal complete.',
       queueState: [],
-      visitedState: [...visited]
+      visitedState: [...visited],
+      pseudoCodeLine: 2
     });
   }
 
@@ -547,7 +557,8 @@ function initVisualizer() {
       nodeId: startId,
       log: `Pushed starting Node ${startId} onto Stack.`,
       queueState: [...stack],
-      visitedState: [...visited]
+      visitedState: [...visited],
+      pseudoCodeLine: 0
     });
 
     while (stack.length > 0) {
@@ -562,7 +573,8 @@ function initVisualizer() {
           nodeId: curr,
           log: `Popped and visiting Node ${curr}.`,
           queueState: [...stack],
-          visitedState: [...visited]
+          visitedState: [...visited],
+          pseudoCodeLine: 2
         });
 
         // Find neighbors
@@ -582,7 +594,8 @@ function initVisualizer() {
                 nodeId: neighbor,
                 log: `Traversing edge ${curr} → ${neighbor} to discover Node ${neighbor}.`,
                 queueState: [...stack],
-                visitedState: [...visited]
+                visitedState: [...visited],
+                pseudoCodeLine: 6
               });
             }
 
@@ -591,7 +604,8 @@ function initVisualizer() {
               nodeId: neighbor,
               log: `Pushed Node ${neighbor} onto Stack.`,
               queueState: [...stack],
-              visitedState: [...visited]
+              visitedState: [...visited],
+              pseudoCodeLine: 7
             });
           }
         });
@@ -602,7 +616,8 @@ function initVisualizer() {
       type: 'done',
       log: 'DFS Traversal complete.',
       queueState: [],
-      visitedState: [...visited]
+      visitedState: [...visited],
+      pseudoCodeLine: 1
     });
   }
 
@@ -808,19 +823,304 @@ function initVisualizer() {
     });
   }
 
-  // Log Entry logger
-  function addLogEntry(text, type = '') {
-    if (!logPanel) return;
+  // ==========================================================================
+  // GRAPH STEP DEBUGGER BACKEND
+  // ==========================================================================
+  
+  let isDbgMode = false;
+  let dbgIsPlaying = false;
+  let dbgPlayInterval = null;
+
+  const graphPseudoCodes = {
+    bfs: [
+      "queue.push(start_node)",
+      "mark start_node as visited",
+      "while queue is not empty:",
+      "  curr = queue.shift()",
+      "  for neighbor of curr:",
+      "    if neighbor not visited:",
+      "      mark neighbor as visited",
+      "      queue.push(neighbor)"
+    ],
+    dfs: [
+      "stack.push(start_node)",
+      "while stack is not empty:",
+      "  curr = stack.pop()",
+      "  if curr not visited:",
+      "    mark curr as visited",
+      "    for neighbor of curr:",
+      "      if neighbor not visited:",
+      "        stack.push(neighbor)"
+    ]
+  };
+
+  const dbgToggle = document.getElementById("dbgToggle");
+  const dbgPanel = document.getElementById("debuggerPanel");
+  
+  if (dbgToggle) {
+    dbgToggle.addEventListener("change", (e) => {
+      isDbgMode = e.target.checked;
+      stopAnimation();
+      resetVisualStates();
+      currentStepIdx = -1;
+      visitedOrder = [];
+      animationSteps = [];
+
+      if (isDbgMode) {
+        dbgPanel.style.display = "block";
+        if (startBtn) startBtn.disabled = true;
+        if (stepBtn) stepBtn.disabled = true;
+        drawGraphPseudoCode(algoSelect.value);
+        addLogEntry("Debugger Mode enabled. Select 'Run Algo' mode and click on a start node to generate trace.");
+      } else {
+        dbgPanel.style.display = "none";
+        if (startBtn) startBtn.disabled = false;
+        if (stepBtn) stepBtn.disabled = false;
+        dbgPause();
+      }
+    });
+  }
+
+  // Handle algorithm switch in debugger mode
+  if (algoSelect) {
+    algoSelect.addEventListener("change", () => {
+      if (isDbgMode) {
+        drawGraphPseudoCode(algoSelect.value);
+        resetVisualStates();
+        currentStepIdx = -1;
+        visitedOrder = [];
+        animationSteps = [];
+      }
+    });
+  }
+
+  function drawGraphPseudoCode(algo) {
+    const container = document.getElementById("dbgPseudoCode");
+    if (!container) return;
+    container.innerHTML = "";
+    const codeLines = graphPseudoCodes[algo] || [];
+    codeLines.forEach((line, idx) => {
+      const div = document.createElement("div");
+      div.className = "pseudo-code-line";
+      div.textContent = `${idx + 1}: ${line}`;
+      container.appendChild(div);
+    });
+  }
+
+  function initGraphDebugger() {
+    dbgPause();
+    drawGraphPseudoCode(algoSelect.value);
+
+    const slider = document.getElementById("dbgStepSlider");
+    if (slider) {
+      slider.min = 0;
+      slider.max = animationSteps.length - 1;
+      slider.value = 0;
+    }
+
+    currentStepIdx = 0;
+    applyStepStateDbg(currentStepIdx);
+  }
+
+  function applyStepStateDbg(stepIdx) {
+    if (stepIdx < 0 || stepIdx >= animationSteps.length) return;
+    const step = animationSteps[stepIdx];
+
+    // 1. Reset all visual properties
+    nodes.forEach(n => {
+      n.visited = false;
+      n.active = false;
+    });
+    edges.forEach(e => {
+      e.visited = false;
+      e.active = false;
+    });
+
+    // 2. Apply step state
+    const qState = step.queueState || [];
+    const vState = step.visitedState || [];
+    vState.forEach(id => {
+      const node = nodes.find(n => n.id === id);
+      if (node) node.visited = true;
+    });
+
+    if (step.type === 'discover') {
+      const node = nodes.find(n => n.id === step.nodeId);
+      if (node) node.active = true;
+    } else if (step.type === 'visit') {
+      const node = nodes.find(n => n.id === step.nodeId);
+      if (node) {
+        node.active = true;
+        node.visited = true;
+      }
+    } else if (step.type === 'traverse') {
+      const edge = edges.find(e => e.id === step.edgeId || (!isDirected && e.id === `${e.target}-${e.source}`));
+      if (edge) {
+        edge.visited = true;
+        edge.active = true;
+      }
+    }
+
+    renderGraph();
+
+    // Reconstruct visited badges up to this point
+    const visitedSoFar = [];
+    for (let i = 0; i <= stepIdx; i++) {
+      const s = animationSteps[i];
+      if (s.type === 'visit' && !visitedSoFar.includes(s.nodeId)) {
+        visitedSoFar.push(s.nodeId);
+      }
+    }
+
+    if (visitedOrderEl) {
+      visitedOrderEl.innerHTML = '';
+      visitedSoFar.forEach((nodeId, idx) => {
+        const box = document.createElement("div");
+        box.className = "structure-box visited";
+        box.textContent = nodeId;
+        visitedOrderEl.appendChild(box);
+
+        if (idx < visitedSoFar.length - 1) {
+          const arrow = document.createElement("div");
+          arrow.className = "structure-arrow";
+          arrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
+          visitedOrderEl.appendChild(arrow);
+        }
+      });
+    }
+
+    updateLiveStructureDisplay(qState);
     
-    const entry = document.createElement("div");
-    let classes = "log-entry";
-    if (type === 'discover') classes += " active";
-    if (type === 'visit') classes += " visited";
-    entry.className = classes;
-    entry.textContent = `> ${text}`;
+    if (logPanel) {
+      logPanel.innerHTML = "";
+      animationSteps.slice(0, stepIdx + 1).forEach((s) => {
+        const entry = document.createElement("div");
+        let classes = "log-entry";
+        if (s.type === 'discover') classes += " active";
+        if (s.type === 'visit') classes += " visited";
+        entry.className = classes;
+        entry.textContent = `> ${s.log}`;
+        logPanel.appendChild(entry);
+      });
+      logPanel.scrollTop = logPanel.scrollHeight;
+    }
+
+    const expEl = document.getElementById("dbgExplanationText");
+    if (expEl) {
+      expEl.innerHTML = generateGraphExplanation(step, stepIdx);
+    }
+
+    const counterEl = document.getElementById("dbgStepCounter");
+    if (counterEl) counterEl.textContent = `Step ${stepIdx + 1} / ${animationSteps.length}`;
+
+    const sliderEl = document.getElementById("dbgStepSlider");
+    if (sliderEl) sliderEl.value = stepIdx;
+
+    const prevBtn = document.getElementById("dbgPrevBtn");
+    const nextBtn = document.getElementById("dbgNextBtn");
+    if (prevBtn) prevBtn.disabled = stepIdx <= 0;
+    if (nextBtn) nextBtn.disabled = stepIdx >= animationSteps.length - 1;
+
+    const lines = document.querySelectorAll(".pseudo-code-line");
+    lines.forEach((line, idx) => {
+      if (idx === step.pseudoCodeLine) {
+        line.classList.add("active");
+      } else {
+        line.classList.remove("active");
+      }
+    });
+  }
+
+  function generateGraphExplanation(step, idx) {
+    const algo = algoSelect.value;
+    if (step.type === 'done') {
+      return `The ${algo.toUpperCase()} traversal has visited all reachable nodes. The traversal is complete.`;
+    }
     
-    logPanel.appendChild(entry);
-    logPanel.scrollTop = logPanel.scrollHeight;
+    if (step.type === 'discover') {
+      if (idx === 0) {
+        return `Initialize the traversal by placing the start node <strong>${step.nodeId}</strong> in the ${algo === 'bfs' ? 'Queue' : 'Stack'} and marking it as visited.`;
+      }
+      return `We discover node <strong>${step.nodeId}</strong> through traversal and place it in the ${algo === 'bfs' ? 'Queue' : 'Stack'} to explore later.`;
+    }
+    
+    if (step.type === 'visit') {
+      return algo === 'bfs'
+        ? `Dequeue the next node <strong>${step.nodeId}</strong> from the front of the Queue (FIFO) and mark it as visited. We will now explore its outgoing edges.`
+        : `Pop the next node <strong>${step.nodeId}</strong> from the Stack (LIFO) and mark it as visited. We will now explore its outgoing edges.`;
+    }
+    
+    if (step.type === 'traverse') {
+      return `We traverse the edge to reach <strong>${step.nodeId}</strong>. Since it is unvisited, we will enqueue/push it to the structure.`;
+    }
+    
+    return step.log;
+  }
+
+  function dbgPlay() {
+    if (dbgIsPlaying) return;
+    dbgIsPlaying = true;
+    document.getElementById("dbgPlayBtn").style.display = "none";
+    document.getElementById("dbgPauseBtn").style.display = "inline-block";
+
+    dbgPlayInterval = setInterval(() => {
+      if (currentStepIdx >= animationSteps.length - 1) {
+        dbgPause();
+        return;
+      }
+      currentStepIdx++;
+      applyStepStateDbg(currentStepIdx);
+    }, stepDelay);
+  }
+
+  // Pause
+  function dbgPause() {
+    if (!dbgIsPlaying) return;
+    dbgIsPlaying = false;
+    document.getElementById("dbgPlayBtn").style.display = "inline-block";
+    document.getElementById("dbgPauseBtn").style.display = "none";
+    if (dbgPlayInterval) {
+      clearInterval(dbgPlayInterval);
+      dbgPlayInterval = null;
+    }
+  }
+
+  // Bind Debugger Controls Buttons
+  const dbgPrevBtn = document.getElementById("dbgPrevBtn");
+  const dbgNextBtn = document.getElementById("dbgNextBtn");
+  const dbgPlayBtn = document.getElementById("dbgPlayBtn");
+  const dbgPauseBtn = document.getElementById("dbgPauseBtn");
+  const dbgStepSlider = document.getElementById("dbgStepSlider");
+
+  if (dbgPrevBtn) {
+    dbgPrevBtn.addEventListener("click", () => {
+      dbgPause();
+      if (currentStepIdx > 0) {
+        currentStepIdx--;
+        applyStepStateDbg(currentStepIdx);
+      }
+    });
+  }
+
+  if (dbgNextBtn) {
+    dbgNextBtn.addEventListener("click", () => {
+      dbgPause();
+      if (currentStepIdx < animationSteps.length - 1) {
+        currentStepIdx++;
+        applyStepStateDbg(currentStepIdx);
+      }
+    });
+  }
+
+  if (dbgPlayBtn) dbgPlayBtn.addEventListener("click", dbgPlay);
+  if (dbgPauseBtn) dbgPauseBtn.addEventListener("click", dbgPause);
+
+  if (dbgStepSlider) {
+    dbgStepSlider.addEventListener("input", (e) => {
+      dbgPause();
+      currentStepIdx = parseInt(e.target.value);
+      applyStepStateDbg(currentStepIdx);
+    });
   }
 
   // Initial draw
