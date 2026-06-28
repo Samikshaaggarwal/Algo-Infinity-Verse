@@ -131,12 +131,20 @@
                   <p id="visitedCount">0</p>
                 </div>
                 <div class="stat-card">
+                  <h5>Total Iterations</h5>
+                  <p id="iterationsCount">0</p>
+                </div>
+                <div class="stat-card">
                   <h5>Shortest Path Length</h5>
                   <p id="shortestPathLength">0</p>
                 </div>
                 <div class="stat-card">
                   <h5>Total Path Cost</h5>
                   <p id="shortestPathCost">0</p>
+                </div>
+                <div class="stat-card">
+                  <h5>Execution Time</h5>
+                  <p id="executionTimeMs">0ms</p>
                 </div>
                 <div class="stat-card">
                   <h5>Execution State</h5>
@@ -168,6 +176,23 @@
                 </button>
               </div>
 
+              <label style="font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 0.5rem; margin-top: 1rem;">Grid Configuration</label>
+              <div class="control-group">
+                <label for="mazeSelect">Maze Algorithm</label>
+                <select id="mazeSelect" class="control-input">
+                  <option value="random">Random Scatter (Density)</option>
+                  <option value="recursive">Recursive Division (Perfect Maze)</option>
+                </select>
+              </div>
+              <div class="control-group">
+                <label for="gridSizeRange">Grid Size (Rows & Cols)</label>
+                <input type="range" id="gridSizeRange" min="10" max="40" value="22" class="slider-custom">
+              </div>
+              <div class="control-group">
+                <label for="densityRange">Obstacle Density</label>
+                <input type="range" id="densityRange" min="0" max="100" value="25" class="slider-custom">
+              </div>
+
               <button id="generateMazeBtn" class="btn btn-secondary" style="width: 100%; margin-top: 1rem; justify-content: center; display: flex; align-items: center; gap: 0.5rem;">
                 <i class="fas fa-random"></i> Generate Maze
               </button>
@@ -184,7 +209,27 @@
                   <option value="bfs">Breadth First Search (BFS)</option>
                   <option value="dfs">Depth First Search (DFS)</option>
                   <option value="dijkstra">Dijkstra's Algorithm (Weighted)</option>
+                  <option value="astar">A* Search (Weighted + Heuristic)</option>
                 </select>
+              </div>
+
+              <div class="control-group" style="margin-top: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
+                <label for="diagonalToggle" style="margin-bottom: 0;">Allow Diagonal Movement</label>
+                <input type="checkbox" id="diagonalToggle" style="transform: scale(1.2);">
+              </div>
+
+              <div class="control-group" id="heuristicGroup" style="display: none;">
+                <label for="heuristicSelect">A* Heuristic</label>
+                <select id="heuristicSelect" class="control-input">
+                  <option value="manhattan">Manhattan Distance</option>
+                  <option value="euclidean">Euclidean Distance</option>
+                  <option value="chebyshev">Chebyshev Distance</option>
+                </select>
+              </div>
+
+              <div class="control-group" style="margin-top: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
+                <label for="compareModeToggle" style="margin-bottom: 0;">Compare Dijkstra vs A*</label>
+                <input type="checkbox" id="compareModeToggle" style="transform: scale(1.2);">
               </div>
 
               <!-- Speed/Delay -->
@@ -203,6 +248,9 @@
                 </button>
                 <button id="stepBtn" class="btn btn-secondary btn-control">
                   <i class="fas fa-step-forward"></i> Step
+                </button>
+                <button id="replayBtn" class="btn btn-secondary btn-control" style="display: none;">
+                  <i class="fas fa-redo"></i> Replay
                 </button>
               </div>
               <div class="btn-control-row" style="margin-top: 0.5rem;">
@@ -232,6 +280,28 @@
                 <span style="font-weight: 600; color: var(--text-primary);">Shortest Path Guarantee:</span> 
                 <span id="shortestPathGuarantee">Yes (Unweighted)</span>
               </div>
+            </div>
+
+            <!-- Comparison Stats Card -->
+            <div class="visualizer-card hidden" id="comparisonStatsCard" style="border-color: var(--primary-light);">
+              <h3 style="margin-bottom: 0.75rem;"><i class="fas fa-balance-scale" style="color: var(--primary-light); margin-right: 0.5rem;"></i>Comparison Results</h3>
+              <div class="complexity-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="complexity-card-mini" style="border-color: rgba(6, 182, 212, 0.4);">
+                  <h5 style="color: #06b6d4;">Dijkstra's Algorithm</h5>
+                  <div style="font-family: 'Fira Code', monospace; font-size: 0.85rem; margin-top: 0.5rem;">
+                    <div>Time: <span id="compDijkstraTime" style="color: white;">0ms</span></div>
+                    <div>Nodes: <span id="compDijkstraNodes" style="color: white;">0</span></div>
+                  </div>
+                </div>
+                <div class="complexity-card-mini" style="border-color: rgba(234, 179, 8, 0.4);">
+                  <h5 style="color: #eab308;">A* Search</h5>
+                  <div style="font-family: 'Fira Code', monospace; font-size: 0.85rem; margin-top: 0.5rem;">
+                    <div>Time: <span id="compAstarTime" style="color: white;">0ms</span></div>
+                    <div>Nodes: <span id="compAstarNodes" style="color: white;">0</span></div>
+                  </div>
+                </div>
+              </div>
+              <div id="compWinnerMsg" style="margin-top: 1rem; font-size: 0.85rem; color: #10b981; font-weight: 600; text-align: center;"></div>
             </div>
 
             <!-- Execution Logs -->
