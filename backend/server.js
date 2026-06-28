@@ -1504,6 +1504,22 @@ function resolveStaticPath(pathname) {
   return filePath;
 }
 
+function getCacheControlHeader(ext) {
+  if (ext === ".html") {
+    return "no-store, no-cache, must-revalidate, private";
+  }
+  if (ext === ".css" || ext === ".js" || ext === ".json") {
+    return "no-cache, public";
+  }
+  if ([".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp"].includes(ext)) {
+    return "public, max-age=86400";
+  }
+  if ([".woff", ".woff2", ".eot", ".ttf", ".otf"].includes(ext)) {
+    return "public, max-age=2592000, immutable";
+  }
+  return "no-cache";
+}
+
 async function serveStatic(req, res, pathname) {
   const filePath = resolveStaticPath(pathname);
   if (!filePath) {
@@ -1516,8 +1532,17 @@ async function serveStatic(req, res, pathname) {
     const target = stat.isDirectory()
       ? path.join(filePath, "index.html")
       : filePath;
+    
+    const fileStat = await fs.stat(target);
     const ext = path.extname(target);
-    let content = await fs.readFile(target);
+
+    // ETag generation based on file size and mtime
+    const mtimeMs = fileStat.mtime.getTime();
+    const size = fileStat.size;
+    const cacheControl = getCacheControlHeader(ext);
+    // HTML is rewritten per-request with a unique CSP nonce, so a size/mtime
+    // ETag is not a valid validator for it.
+    const etag = ext === ".html" ? null : `W/"${size}-${mtimeMs}"`;
 
     const headers = {
       "X-Content-Type-Options": "nosniff",
@@ -1525,7 +1550,19 @@ async function serveStatic(req, res, pathname) {
       "X-XSS-Protection": "1; mode=block",
       "Referrer-Policy": "strict-origin-when-cross-origin",
       "Permissions-Policy": "geolocation=(), camera=(), microphone=()",
+      "Cache-Control": cacheControl,
     };
+    if (etag) headers["ETag"] = etag;
+
+    // Handle If-None-Match conditional request
+    const clientEtag = req.headers["if-none-match"];
+    if (etag && clientEtag === etag) {
+      headers["Content-Type"] = mimeTypes[ext] || "application/octet-stream";
+      res.writeHead(304, headers);
+      return res.end();
+    }
+
+    let content = await fs.readFile(target);
 
     if (ext === ".html") {
       // Generate a dynamic nonce for CSP script elements
