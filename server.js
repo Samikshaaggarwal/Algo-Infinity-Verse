@@ -978,13 +978,13 @@ async function handleApi(req, res, pathname) {
   if (
     pathname === "/api/debug-env" &&
     req.method === "GET" &&
-    process.env.NODE_ENV !== "production"
+    process.env.ENABLE_DEBUG_ENV === "true"
   ) {
     const keys = ["FIREBASE_API_KEY","FIREBASE_AUTH_DOMAIN","FIREBASE_PROJECT_ID","FIREBASE_STORAGE_BUCKET","FIREBASE_MESSAGING_SENDER_ID","FIREBASE_APP_ID","FIREBASE_CLIENT_EMAIL","FIREBASE_PRIVATE_KEY","SESSION_SECRET"];
     const vars = {};
     keys.forEach(k => {
       const v = process.env[k];
-      vars[k] = v ? v.slice(0, 6) + "..." + v.slice(-4) : "(not set)";
+      vars[k] = Boolean(process.env[k]);
     });
     return sendJson(res, 200, vars);
   }
