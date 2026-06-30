@@ -8,6 +8,10 @@ let timeLeft = 0;
 let isTimerRunning = false;
 let quizDuration = 60; // Default duration in seconds
 
+// --- SCORE ANIMATION STATE ---
+let scoreAnimationId = null;
+let scoreInterval = null;
+
 export function initQuiz({ containerId, questions, duration = 60 }) {
   const container = document.getElementById(containerId);
   if (!container || !questions || questions.length === 0) return;
@@ -104,6 +108,239 @@ export function initQuiz({ containerId, questions, duration = 60 }) {
     }
     timeLeft = quizDuration;
     isTimerRunning = false;
+  }
+
+  // --- SCORE ANIMATION FUNCTIONS ---
+
+  /**
+   * Animate quiz score with smooth counter (2 seconds)
+   * @param {number} finalScore - Final score percentage (0-100)
+   * @param {number} duration - Animation duration in milliseconds
+   */
+  function animateScore(finalScore, duration = 2000) {
+    const scoreElement = document.querySelector('.percentage-number');
+    if (!scoreElement) {
+      // Fallback: try to find any score display
+      const altElement = document.querySelector('.score-number');
+      if (altElement) {
+        altElement.textContent = finalScore + '%';
+      }
+      return;
+    }
+    
+    // Clear any existing animation
+    if (scoreAnimationId) {
+      cancelAnimationFrame(scoreAnimationId);
+      scoreAnimationId = null;
+    }
+    
+    const startTime = performance.now();
+    const startScore = 0;
+    
+    // Easing function for smooth animation (ease-out cubic)
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+    
+    function updateScore(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutCubic(progress);
+      const currentScore = Math.round(startScore + (finalScore - startScore) * easedProgress);
+      
+      // Update the percentage number display
+      scoreElement.textContent = currentScore + '%';
+      
+      // Also update the score circle if it exists
+      const scoreCircle = document.querySelector('.score-number');
+      if (scoreCircle) {
+        scoreCircle.textContent = `${Math.round((currentScore / 100) * currentQuestions.length)}/${currentQuestions.length}`;
+      }
+      
+      // Add visual effects based on score
+      const scoreContainer = document.querySelector('.quiz-score-container');
+      if (scoreContainer) {
+        scoreContainer.classList.remove('score-low', 'score-medium', 'score-high', 'score-perfect');
+        
+        if (currentScore === 100) {
+          scoreContainer.classList.add('score-perfect');
+        } else if (currentScore >= 80) {
+          scoreContainer.classList.add('score-high');
+        } else if (currentScore >= 60) {
+          scoreContainer.classList.add('score-medium');
+        } else {
+          scoreContainer.classList.add('score-low');
+        }
+      }
+      
+      if (progress < 1) {
+        scoreAnimationId = requestAnimationFrame(updateScore);
+      } else {
+        // Final update to ensure correct value
+        scoreElement.textContent = finalScore + '%';
+        scoreAnimationId = null;
+        
+        // Trigger celebration for perfect score
+        if (finalScore === 100) {
+          triggerCelebration();
+        }
+      }
+    }
+    
+    scoreAnimationId = requestAnimationFrame(updateScore);
+  }
+
+  /**
+   * Alternative: Step-based animation for better compatibility
+   * @param {number} finalScore - Final score percentage (0-100)
+   */
+  function animateScoreStepBased(finalScore) {
+    const scoreElement = document.querySelector('.percentage-number');
+    if (!scoreElement) return;
+    
+    // Clear any existing interval
+    if (scoreInterval) {
+      clearInterval(scoreInterval);
+      scoreInterval = null;
+    }
+    
+    let currentScore = 0;
+    const totalSteps = 20;
+    const stepSize = Math.max(1, Math.ceil(finalScore / totalSteps));
+    const intervalTime = Math.max(50, Math.min(150, 1800 / totalSteps));
+    
+    scoreInterval = setInterval(() => {
+      currentScore += stepSize;
+      if (currentScore >= finalScore) {
+        currentScore = finalScore;
+        clearInterval(scoreInterval);
+        scoreInterval = null;
+        
+        if (finalScore === 100) {
+          triggerCelebration();
+        }
+      }
+      scoreElement.textContent = currentScore + '%';
+    }, intervalTime);
+  }
+
+  /**
+   * Trigger celebration effects for perfect score
+   */
+  function triggerCelebration() {
+    const container = document.querySelector('.quiz-score-container');
+    if (!container) return;
+    
+    // Add celebration class
+    container.classList.add('celebrating');
+    
+    // Create confetti
+    createConfetti();
+    
+    // Add sparkle effect
+    const scoreElement = document.querySelector('.percentage-number');
+    if (scoreElement) {
+      scoreElement.classList.add('perfect-score');
+    }
+  }
+
+  /**
+   * Create confetti effect for perfect score
+   */
+  function createConfetti() {
+    const container = document.querySelector('.quiz-score-container');
+    if (!container) return;
+    
+    const colors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff', '#5f27cd', '#22c55e', '#fbbf24'];
+    const confettiCount = 60;
+    
+    for (let i = 0; i < confettiCount; i++) {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti-piece';
+      confetti.style.left = (Math.random() * 90 + 5) + '%';
+      confetti.style.top = '-10px';
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.width = (Math.random() * 8 + 4) + 'px';
+      confetti.style.height = (Math.random() * 8 + 4) + 'px';
+      confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      confetti.style.position = 'absolute';
+      confetti.style.pointerEvents = 'none';
+      confetti.style.zIndex = '10';
+      confetti.style.animation = `confettiFall ${Math.random() * 2 + 2}s linear forwards`;
+      confetti.style.animationDelay = Math.random() * 0.8 + 's';
+      confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+      
+      container.appendChild(confetti);
+      
+      // Remove confetti after animation
+      setTimeout(() => {
+        if (confetti.parentNode) {
+          confetti.remove();
+        }
+      }, 4000);
+    }
+  }
+
+  /**
+   * Animate XP gained with counter
+   * @param {number} xpGained - XP amount
+   * @param {number} duration - Animation duration in milliseconds
+   */
+  function animateXP(xpGained, duration = 1500) {
+    // Look for XP display elements
+    const xpElements = document.querySelectorAll('.xp-gained, .xp-earned');
+    if (xpElements.length === 0) return;
+    
+    const xpElement = xpElements[0];
+    const startTime = performance.now();
+    const startXP = 0;
+    
+    function easeOutQuad(t) {
+      return 1 - (1 - t) * (1 - t);
+    }
+    
+    function updateXP(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutQuad(progress);
+      const currentXP = Math.round(startXP + (xpGained - startXP) * easedProgress);
+      
+      xpElement.textContent = '+' + currentXP + ' XP';
+      
+      if (progress < 1) {
+        requestAnimationFrame(updateXP);
+      } else {
+        xpElement.textContent = '+' + xpGained + ' XP ✨';
+      }
+    }
+    
+    requestAnimationFrame(updateXP);
+  }
+
+  /**
+   * Show performance message based on score
+   * @param {number} percentage - Score percentage
+   */
+  function showPerformanceMessage(percentage) {
+    const messageElement = document.querySelector('.score-message');
+    if (!messageElement) return;
+    
+    let message, emoji;
+    
+    if (percentage === 100) {
+      message = '🌟 Perfect Score! You\'re a DSA Master! 🏆';
+    } else if (percentage >= 80) {
+      message = '🎉 Excellent! You have a great understanding! 💪';
+    } else if (percentage >= 60) {
+      message = '📚 Good job! Keep up the great work! 📖';
+    } else if (percentage >= 40) {
+      message = '🔄 Keep learning! Practice makes perfect! 🎯';
+    } else {
+      message = '📝 Don\'t give up! Review and try again! 💪';
+    }
+    
+    messageElement.textContent = message;
+    messageElement.style.animation = 'fadeInUp 0.5s ease';
   }
 
   // Initialize and shuffle quiz data
@@ -260,47 +497,45 @@ export function initQuiz({ containerId, questions, duration = 60 }) {
     const scoreDiv = document.getElementById(`${containerId}-score`);
     scoreDiv.style.display = 'block';
     
-    const pct = Math.round((score / currentQuestions.length) * 100);
-    let message = '';
-    let emoji = '';
-    if (pct === 100) {
-      message = 'Perfect score! Outstanding! 🏆';
-      emoji = '🎉';
-    } else if (pct >= 80) {
-      message = 'Excellent! You have a great understanding! 🌟';
-      emoji = '💪';
-    } else if (pct >= 70) {
-      message = 'Great job! You have a solid understanding! 📚';
-      emoji = '📖';
-    } else if (pct >= 50) {
-      message = 'Good effort! Review the concepts and try again! 🎯';
-      emoji = '🔄';
-    } else {
-      message = 'Keep learning! Review the material and try again! 💪';
-      emoji = '📝';
-    }
+    const totalQuestions = currentQuestions.length;
+    const pct = Math.round((score / totalQuestions) * 100);
     
     // Check if time ran out
     const timeRanOut = timeLeft === 0;
     const timeMessage = timeRanOut ? '⏰ Time ran out! ' : '';
     
+    // Build score display with animation support
     scoreDiv.innerHTML = `
       <div class="score-header">
         <h3>${timeMessage}Quiz Results</h3>
         <div class="score-circle ${pct >= 70 ? 'good' : 'needs-work'}">
-          <span class="score-number">${score}/${currentQuestions.length}</span>
+          <span class="score-number">${score}/${totalQuestions}</span>
         </div>
       </div>
       <div class="score-percentage">
-        <span class="percentage-number">${pct}%</span>
+        <span class="percentage-number">0%</span>
         <span class="percentage-label">Score</span>
       </div>
-      <p class="score-message">${emoji} ${message}</p>
+      <div class="xp-gained">+0 XP</div>
+      <p class="score-message"></p>
       <button class="btn btn-secondary retake-quiz-btn" id="${containerId}-retake">
         <i class="fas fa-redo"></i> Retake Quiz
       </button>
     `;
     
+    // --- START ANIMATIONS ---
+    
+    // Animate score from 0 to final percentage (2 seconds)
+    animateScore(pct, 2000);
+    
+    // Animate XP (if available)
+    const xpEarned = Math.round((score / totalQuestions) * 50); // 50 XP max
+    animateXP(xpEarned, 1500);
+    
+    // Show performance message
+    showPerformanceMessage(pct);
+    
+    // Retake button handler
     document.getElementById(`${containerId}-retake`).addEventListener('click', () => {
       setupQuiz();
       // Scroll to top of quiz container
@@ -313,13 +548,18 @@ export function initQuiz({ containerId, questions, duration = 60 }) {
   setupQuiz();
 }
 
-// --- EXPORT TIMER FUNCTIONS ---
+// --- EXPORT FUNCTIONS ---
 export { 
   startQuizTimer, 
   stopQuizTimer, 
   resetQuizTimer, 
   updateTimerDisplay,
-  getTimerStatus 
+  getTimerStatus,
+  animateScore,
+  animateScoreStepBased,
+  animateXP,
+  triggerCelebration,
+  createConfetti
 };
 
 function getTimerStatus() {
