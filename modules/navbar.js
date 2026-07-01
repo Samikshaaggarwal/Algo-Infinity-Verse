@@ -215,7 +215,9 @@ function initDropdowns() {
       document.querySelectorAll(".has-dropdown.open").forEach((el) => {
         el.classList.remove("open");
       });
-      dropdownToggles.forEach((toggle) => {
+      // Re-query the live toggles: the ones captured above were replaced via
+      // cloneNode/replaceChild, so the original NodeList holds detached nodes.
+      document.querySelectorAll(".dropdown-toggle").forEach((toggle) => {
         toggle.setAttribute("aria-expanded", "false");
       });
     }
