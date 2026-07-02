@@ -25,8 +25,6 @@ const CodingPersonalityAnalyzer = require('./personalityAnalyzer.js');
 const MEMORY_FILE = path.join(DATA_DIR, "memory.json");
 const SESSION_COOKIE = "aiv_session";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
-const PBKDF2_ITERATIONS = 210000;
-const PASSWORD_KEY_LENGTH = 32;
 
 // ── Rate limiting ────────────────────────────────────────────────────────────
 const SIGNUP_RATE_LIMIT = 5;
@@ -432,34 +430,6 @@ function applySM2(card, quality) {
   };
 }
 // ──────────────────────────────────────────────────────────────────────────
-
-function hashPassword(password, salt = crypto.randomBytes(16).toString("hex")) {
-  const hash = crypto
-    .pbkdf2Sync(
-      password,
-      salt,
-      PBKDF2_ITERATIONS,
-      PASSWORD_KEY_LENGTH,
-      "sha256",
-    )
-    .toString("hex");
-  return { salt, hash, iterations: PBKDF2_ITERATIONS, digest: "sha256" };
-}
-
-function passwordMatches(password, stored) {
-  const calculated = crypto.pbkdf2Sync(
-    password,
-    stored.salt,
-    stored.iterations || PBKDF2_ITERATIONS,
-    PASSWORD_KEY_LENGTH,
-    stored.digest || "sha256",
-  );
-  const saved = Buffer.from(stored.hash, "hex");
-  return (
-    saved.length === calculated.length &&
-    crypto.timingSafeEqual(saved, calculated)
-  );
-}
 
 function validateSignup({ name, email, password, confirmPassword }) {
   const cleanName = String(name || "").trim();
