@@ -1594,6 +1594,14 @@ const roadmapSteps = [
 
 const advancedRoadmapSteps = [
   { id: 7, title: "Advanced Arrays & Optimization", icon: "fa-bolt", desc: "Master complex array manipulations, sliding window, and two-pointer techniques.", theory: `<p><strong>Advanced Array Optimization:</strong> Optimizing array operations from O(N²) to O(N) or O(N log N).</p><p><strong>Sliding Window:</strong> Used to track contiguous subarrays.</p><p><strong>Trapping Rain Water Pattern:</strong> Two-pointer technique to solve complex optimization problems.</p>`, type: "coding", problems: [9, 5], complexity: [{ op: "Trapping Rain Water (Two Pointers)", time: "O(N)", space: "O(1)" }, { op: "LRU Cache Get / Put Operations", time: "O(1)", space: "O(Capacity)" }] },
+];
+
+function initRoadmap() {
+  const basicTab = document.getElementById("roadmapBasicTab");
+  const advancedTab = document.getElementById("roadmapAdvancedTab");
+  const overviewTab = document.getElementById("roadmapOverviewTab");
+
+  if (!roadmapTabsInitialized) {
       const tabs = [basicTab, advancedTab, overviewTab];
       const containerIds = ["basicRoadmapContainer","advancedRoadmapContainer","overviewRoadmapContainer"];
       const activateTab = (tab, containerId) => {
@@ -1700,7 +1708,7 @@ const advancedRoadmapSteps = [
     }, 500);
   }
 }
-}
+
 
 function isRoadmapStepCompleted(step) {
   if (step.type === "quiz") return userProgress.completedRoadmapSteps.includes(step.id);
@@ -2036,7 +2044,6 @@ function updateBadges() {
     .join("");
     
   }
-  const badges = [{ id: 1, icon: "🌟", name: "First Steps", description: "Begin your journey", criteria: "Solve 1 problem", earned: userProgress.completedProblems.length >= 1 }, { id: 2, icon: "🔥", name: "On Fire", description: "Keep the momentum going", criteria: "Maintain a 7-day streak", earned: userProgress.streak >= 7 }, { id: 3, icon: "💎", name: "Diamond", description: "Reach a major XP milestone", criteria: "Earn 5,000 XP", earned: userProgress.xp >= 5000 }, { id: 4, icon: "🚀", name: "Rocket", description: "Speed through problems", criteria: "Solve 50 problems", earned: userProgress.completedProblems.length >= 50 }, { id: 5, icon: "👑", name: "Master", description: "Achieve expert problem-solving", criteria: "Solve 100 problems", earned: userProgress.completedProblems.length >= 100 }, { id: 6, icon: "🎯", name: "Sharpshooter", description: "Hit the target with consistency", criteria: "Solve 25 problems and earn 2,500 XP", earned: userProgress.completedProblems.length >= 25 && userProgress.xp >= 2500 }];
   const earned = badges.filter(b => b.earned).map(b => b.id);
   if (JSON.stringify(earned) !== JSON.stringify(userProgress.badges)) { userProgress.badges = earned; saveUserData(); }
   if (container) container.innerHTML = badges.map(badge => `<div class="badge ${badge.earned ? '' : 'locked'}" tabindex="0"><span class="badge-tooltip"><strong>${badge.name}</strong><span>${badge.description}</span><span>${badge.criteria}</span></span>${badge.icon}</div>`).join("");
