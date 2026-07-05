@@ -8958,7 +8958,11 @@ html.light-mode .dropdown-menu {
 
 html.auth-unverified #dashboard,
 html.auth-unverified #gamification,
-html.auth-unverified [data-auth-required] {
+html.auth-unverified [data-auth-required],
+html.auth-loading #dashboard,
+html.auth-loading #gamification,
+html.auth-loading [data-auth-required],
+html.auth-loading .auth-nav-item {
   display: none !important;
 }
 

@@ -68,22 +68,18 @@ export async function getRedirectUser() {
   }
 
   return new Promise((resolve) => {
-    let fallbackTimer;
     const unsubscribe = onAuthStateChanged(authInstance, (user) => {
+      unsubscribe();
       if (user) {
-        unsubscribe();
-        clearTimeout(fallbackTimer);
         user.getIdToken(true).then((idToken) => {
           resolve({ idToken, user });
         }).catch(() => {
           resolve(null);
         });
+      } else {
+        resolve(null);
       }
     });
-    fallbackTimer = setTimeout(() => {
-      unsubscribe();
-      resolve(null);
-    }, 3000);
   });
 }
 

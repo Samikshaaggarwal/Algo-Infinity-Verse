@@ -1,5 +1,5 @@
 (function () {
-  document.documentElement.classList.add("auth-unverified");
+  document.documentElement.classList.add("auth-loading");
   const privateHashes = new Set(["#dashboard", "#profile"]);
   let currentSession = null;
   let authReady = false;
@@ -263,7 +263,7 @@
         if (response.ok) {
           currentSession = { authenticated: true, user: payload.user };
           window.algoAuth = currentSession;
-          document.documentElement.classList.remove("auth-unverified");
+          document.documentElement.classList.remove("auth-unverified", "auth-loading");
           document.documentElement.classList.add("auth-verified");
           renderAuthNav();
           updateProfileNames(currentSession.user);
@@ -334,7 +334,7 @@
           const payload = await response.json();
           currentSession = { authenticated: true, user: payload.user };
           window.algoAuth = currentSession;
-          document.documentElement.classList.remove("auth-unverified");
+          document.documentElement.classList.remove("auth-unverified", "auth-loading");
           document.documentElement.classList.add("auth-verified");
           renderAuthNav();
           updateProfileNames(currentSession.user);
@@ -562,7 +562,7 @@
         authenticated: false,
         user: null,
       };
-      document.documentElement.classList.remove("auth-verified");
+      document.documentElement.classList.remove("auth-verified", "auth-loading");
       document.documentElement.classList.add("auth-unverified");
       authReady = true;
       window.algoAuth = currentSession;
@@ -599,7 +599,7 @@
             const payload = await response.json();
             currentSession = { authenticated: true, user: payload.user };
             window.algoAuth = currentSession;
-            document.documentElement.classList.remove("auth-unverified");
+            document.documentElement.classList.remove("auth-unverified", "auth-loading");
             document.documentElement.classList.add("auth-verified");
             renderAuthNav();
             updateProfileNames(currentSession.user);
@@ -618,10 +618,10 @@
     window.algoAuth = currentSession;
 
     if (currentSession.authenticated) {
-      document.documentElement.classList.remove("auth-unverified");
+      document.documentElement.classList.remove("auth-unverified", "auth-loading");
       document.documentElement.classList.add("auth-verified");
     } else {
-      document.documentElement.classList.remove("auth-verified");
+      document.documentElement.classList.remove("auth-verified", "auth-loading");
       document.documentElement.classList.add("auth-unverified");
     }
 
