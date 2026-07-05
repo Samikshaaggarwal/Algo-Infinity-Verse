@@ -51,7 +51,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -171,7 +171,7 @@
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="print('Hello, World!')">Copy</button>
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="print('Hello, World!')">Copy</button>
                 </div>
                 <pre><code><span class="tok-fn">print</span>(<span class="tok-str">'Hello, World!'</span>)</code></pre>
               </div>
@@ -209,7 +209,7 @@
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Bash</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="brew install python3">Copy</button>
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="brew install python3">Copy</button>
                 </div>
                 <pre><code>brew install python3</code></pre>
               </div>
@@ -227,7 +227,7 @@
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Bash</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="sudo apt update && sudo apt install python3">Copy</button>
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="sudo apt update && sudo apt install python3">Copy</button>
                 </div>
                 <pre><code>sudo apt update && sudo apt install python3</code></pre>
               </div>
@@ -240,7 +240,7 @@
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Bash</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="python3 --version">Copy</button>
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="python3 --version">Copy</button>
                 </div>
                 <pre><code>python3 --version
 <span class="tok-cmt"># Expected: Python 3.11.x (or newer)</span></code></pre>
@@ -266,7 +266,7 @@
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="name = &quot;Alice&quot;       # str
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="name = &quot;Alice&quot;       # str
 age = 25              # int
 height = 5.7          # float
 is_student = True     # bool
@@ -327,12 +327,12 @@ is_student = <span class="tok-bool">True</span>     <span class="tok-cmt"># bool
                   <li>Create a boolean <code>passed</code> set to <code>True</code></li>
                   <li>Print each variable and its <code>type()</code></li>
                 </ol>
-                <button class="py-exercise-toggle" aria-expanded="false" aria-controls="solution-variables">Show Solution</button>
+                <button type="button" class="py-exercise-toggle" aria-expanded="false" aria-controls="solution-variables">Show Solution</button>
                 <div class="py-exercise-solution" id="solution-variables">
                   <div class="py-code-block">
                     <div class="py-code-header">
                       <span class="py-code-lang">Python</span>
-                      <button class="py-code-copy" aria-label="Copy code" data-code="score = 95
+                      <button type="button" class="py-code-copy" aria-label="Copy code" data-code="score = 95
 gpa = 3.85
 city = &quot;New York&quot;
 passed = True
@@ -378,7 +378,7 @@ passed = <span class="tok-bool">True</span>
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="name = &quot;Alice&quot;
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="name = &quot;Alice&quot;
 age = 25
 
 # f-strings (formatted string literals)
@@ -411,7 +411,7 @@ Name: Alice | Age: 25</pre>
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="name = input(&quot;What is your name? &quot;)
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="name = input(&quot;What is your name? &quot;)
 print(f&quot;Hello, {name}! Welcome!&quot;)
 
 # Convert input to integer
@@ -442,12 +442,12 @@ age = <span class="tok-fn">int</span>(<span class="tok-fn">input</span>(<span cl
                   <li>Ask for their favorite color</li>
                   <li>Print a message: <code>"Hello {name}, your favorite color is {color}!"</code></li>
                 </ol>
-                <button class="py-exercise-toggle" aria-expanded="false" aria-controls="solution-io">Show Solution</button>
+                <button type="button" class="py-exercise-toggle" aria-expanded="false" aria-controls="solution-io">Show Solution</button>
                 <div class="py-exercise-solution" id="solution-io">
                   <div class="py-code-block">
                     <div class="py-code-header">
                       <span class="py-code-lang">Python</span>
-                      <button class="py-code-copy" aria-label="Copy code" data-code="name = input(&quot;Enter your name: &quot;)
+                      <button type="button" class="py-code-copy" aria-label="Copy code" data-code="name = input(&quot;Enter your name: &quot;)
 color = input(&quot;Enter your favorite color: &quot;)
 print(f&quot;Hello {name}, your favorite color is {color}!&quot;)">Copy</button>
                     </div>
@@ -476,7 +476,7 @@ color = <span class="tok-fn">input</span>(<span class="tok-str">"Enter your favo
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="score = 85
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="score = 85
 
 if score >= 90:
     grade = &quot;A&quot;
@@ -521,7 +521,7 @@ print(f&quot;Score: {score} → Grade: {grade}&quot;)">Copy</button>
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="age = 20
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="age = 20
 has_id = True
 
 if age >= 18 and has_id:
@@ -550,12 +550,12 @@ has_id = <span class="tok-bool">True</span>
                   <li>Prints "Negative" if it's less than 0</li>
                   <li>Prints "Zero" if it's exactly 0</li>
                 </ol>
-                <button class="py-exercise-toggle" aria-expanded="false" aria-controls="solution-conditionals">Show Solution</button>
+                <button type="button" class="py-exercise-toggle" aria-expanded="false" aria-controls="solution-conditionals">Show Solution</button>
                 <div class="py-exercise-solution" id="solution-conditionals">
                   <div class="py-code-block">
                     <div class="py-code-header">
                       <span class="py-code-lang">Python</span>
-                      <button class="py-code-copy" aria-label="Copy code" data-code="num = float(input(&quot;Enter a number: &quot;))
+                      <button type="button" class="py-code-copy" aria-label="Copy code" data-code="num = float(input(&quot;Enter a number: &quot;))
 
 if num &gt; 0:
     print(&quot;Positive&quot;)
@@ -599,7 +599,7 @@ else:
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="# Iterate over a range
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="# Iterate over a range
 for i in range(5):
     print(f&quot;Count: {i}&quot;)
 
@@ -638,7 +638,7 @@ cherry</pre>
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="count = 0
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="count = 0
 while count &lt; 5:
     print(f&quot;Count: {count}&quot;)
     count += 1">Copy</button>
@@ -657,7 +657,7 @@ while count &lt; 5:
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="# Break and Continue
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="# Break and Continue
 for i in range(10):
     if i == 3:
         continue    # skip 3
@@ -694,12 +694,12 @@ for i in range(10):
                   <li>Use a <code>for</code> loop to print all even numbers from 1 to 20</li>
                   <li>Use a <code>while</code> loop to find the sum of numbers from 1 to 100</li>
                 </ol>
-                <button class="py-exercise-toggle" aria-expanded="false" aria-controls="solution-loops">Show Solution</button>
+                <button type="button" class="py-exercise-toggle" aria-expanded="false" aria-controls="solution-loops">Show Solution</button>
                 <div class="py-exercise-solution" id="solution-loops">
                   <div class="py-code-block">
                     <div class="py-code-header">
                       <span class="py-code-lang">Python</span>
-                      <button class="py-code-copy" aria-label="Copy code" data-code="# Even numbers 1-20
+                      <button type="button" class="py-code-copy" aria-label="Copy code" data-code="# Even numbers 1-20
 for i in range(1, 21):
     if i % 2 == 0:
         print(i)
@@ -746,7 +746,7 @@ num = <span class="tok-num">1</span>
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="def greet(name):
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="def greet(name):
     &quot;&quot;&quot;Greet a user by name.&quot;&quot;&quot;
     return f&quot;Hello, {name}!&quot;
 
@@ -776,7 +776,7 @@ message = <span class="tok-fn">greet</span>(<span class="tok-str">"Alice"</span>
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="def calculate(a, b, operation=&quot;add&quot;):
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="def calculate(a, b, operation=&quot;add&quot;):
     if operation == &quot;add&quot;:
         return a + b
     elif operation == &quot;subtract&quot;:
@@ -828,12 +828,12 @@ Min: 1, Max: 9</pre>
                   <li>Write a function <code>factorial(n)</code> that returns the factorial of n</li>
                   <li>Write a function <code>reverse_string(s)</code> that returns the reversed string</li>
                 </ol>
-                <button class="py-exercise-toggle" aria-expanded="false" aria-controls="solution-functions">Show Solution</button>
+                <button type="button" class="py-exercise-toggle" aria-expanded="false" aria-controls="solution-functions">Show Solution</button>
                 <div class="py-exercise-solution" id="solution-functions">
                   <div class="py-code-block">
                     <div class="py-code-header">
                       <span class="py-code-lang">Python</span>
-                      <button class="py-code-copy" aria-label="Copy code" data-code="def is_even(n):
+                      <button type="button" class="py-code-copy" aria-label="Copy code" data-code="def is_even(n):
     return n % 2 == 0
 
 def factorial(n):
@@ -889,7 +889,7 @@ print(reverse_string(&quot;hello&quot;))  # olleh">Copy</button>
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="fruits = [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;]
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="fruits = [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;]
 
 # Access
 print(fruits[0])       # apple
@@ -934,7 +934,7 @@ Length: 4</pre>
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 print(nums[2:5])     # [2, 3, 4]
 print(nums[:4])      # [0, 1, 2, 3]
@@ -957,7 +957,7 @@ print(nums[::-1])    # [9, 8, 7, ... 0] (reversed)">Copy</button>
               <div class="py-code-block">
                 <div class="py-code-header">
                   <span class="py-code-lang">Python</span>
-                  <button class="py-code-copy" aria-label="Copy code" data-code="person = {
+                  <button type="button" class="py-code-copy" aria-label="Copy code" data-code="person = {
     &quot;name&quot;: &quot;Alice&quot;,
     &quot;age&quot;: 25,
     &quot;city&quot;: &quot;New York&quot;
@@ -1014,12 +1014,12 @@ email: alice@mail.com</pre>
                   <li>Create a dictionary representing a book (title, author, pages, genre) and print each field</li>
                   <li>Write a function that takes a list and returns a dictionary with each element as a key and its count as the value</li>
                 </ol>
-                <button class="py-exercise-toggle" aria-expanded="false" aria-controls="solution-lists-dicts">Show Solution</button>
+                <button type="button" class="py-exercise-toggle" aria-expanded="false" aria-controls="solution-lists-dicts">Show Solution</button>
                 <div class="py-exercise-solution" id="solution-lists-dicts">
                   <div class="py-code-block">
                     <div class="py-code-header">
                       <span class="py-code-lang">Python</span>
-                      <button class="py-code-copy" aria-label="Copy code" data-code="# Sum and average
+                      <button type="button" class="py-code-copy" aria-label="Copy code" data-code="# Sum and average
 nums = [10, 20, 30, 40, 50]
 total = sum(nums)
 avg = total / len(nums)
@@ -1082,7 +1082,10 @@ book = {
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./python-learning.js"></script>
   

@@ -4,6 +4,7 @@ import http from "http";
 import { execFile } from "child_process";
 import path from "path";
 import { fileURLToPath } from "url";
+import { FieldValue } from "firebase-admin/firestore";
 import { initializeFirebase, getDb, COLLECTIONS } from "./firebase.js";
 import { verifyCsrfToken } from "./utils/csrf-verify.js";
 import multer from "multer";
@@ -58,7 +59,8 @@ import {
   repoAnalysisLimiter,
   sdlcAdvisorLimiter,
   predictionLimiter,
-  bulkAuditLimiter
+  bulkAuditLimiter,
+  logErrorLimiter
 } from "./backend/utils/rateLimiter.js";
 import { applySM2 } from "./backend/services/memory.service.js";
 import { sendVerificationEmail } from "./backend/services/email.service.js";
@@ -98,15 +100,31 @@ function validateMagicBytes(buffer, mimeType) {
 }
 const userSocketMap = new Map();
 const studyRooms = new Map();
+const memoryUserStore = new Map();
+let userCacheTimestamp = 0;
+let userCacheDirty = true;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = __dirname;
-const DATA_DIR = path.join(ROOT, "data");
+const IS_VERCEL = process.env.VERCEL === "1";
+const DATA_DIR = IS_VERCEL
+  ? path.join("/tmp", "algo-infinity-verse")
+  : path.join(ROOT, "data");
 const USERS_FILE = path.join(DATA_DIR, "users.json");
 const MEMORY_FILE = path.join(DATA_DIR, "memory.json");
 const TEAM_PROFILES_FILE = path.join(DATA_DIR, "team_profiles.json");
 const AUDITS_FILE = path.join(DATA_DIR, "audits_history.json");
 const EXECUTIONS_FILE = path.join(DATA_DIR, "executions.json");
+const CLIENT_ERRORS_FILE = path.join(DATA_DIR, "client_errors.json");
+const FEEDBACK_FILE = path.join(DATA_DIR, "feedback.json");
+const INTERVIEW_EXPERIENCES_FILE = path.join(DATA_DIR, "interview-experiences.json");
+
+// Caps for append-only JSON logs so they can never grow unbounded on disk.
+const MAX_CLIENT_ERROR_ENTRIES = 1000;
+const MAX_FEEDBACK_ENTRIES = 5000;
+const MAX_INTERVIEW_EXPERIENCE_ENTRIES = 5000;
+const MAX_AUDIT_HISTORY_ENTRIES = 1000;
+const MAX_EXECUTIONS_ENTRIES = 5000;
 const SESSION_COOKIE = "aiv_session";
 const ACCESS_COOKIE = "aiv_access";
 const REFRESH_COOKIE = "aiv_refresh";
@@ -244,23 +262,49 @@ async function createUser(userData) {
 }
 
 async function ensureUserStore() {
-  await fs.mkdir(DATA_DIR, { recursive: true });
   try {
-    await fs.access(USERS_FILE);
-  } catch {
-    await fs.writeFile(USERS_FILE, "[]\n");
+    await fs.mkdir(DATA_DIR, { recursive: true });
+    try {
+      await fs.access(USERS_FILE);
+    } catch {
+      await fs.writeFile(USERS_FILE, "[]\n");
+    }
+  } catch (err) {
+    console.error("[ensureUserStore] Failed to initialize user store:", err);
   }
 }
 
 async function readUsers() {
+  if (!userCacheDirty && memoryUserStore.size > 0) {
+    return Array.from(memoryUserStore.values());
+  }
   await ensureUserStore();
-  const raw = await fs.readFile(USERS_FILE, "utf8");
-  return JSON.parse(raw || "[]");
+  try {
+    const stat = await fs.stat(USERS_FILE);
+    if (!userCacheDirty && stat.mtimeMs <= userCacheTimestamp) {
+      return Array.from(memoryUserStore.values());
+    }
+    const raw = await fs.readFile(USERS_FILE, "utf8");
+    const users = JSON.parse(raw || "[]");
+    memoryUserStore.clear();
+    users.forEach((u) => memoryUserStore.set(u.email, u));
+    userCacheTimestamp = stat.mtimeMs;
+    userCacheDirty = false;
+    return users;
+  } catch (err) {
+    console.error("[readUsers] Failed to read users:", err);
+    return Array.from(memoryUserStore.values());
+  }
 }
 
 async function writeUsers(users) {
   await ensureUserStore();
-  await fs.writeFile(USERS_FILE, `${JSON.stringify(users, null, 2)}\n`);
+  try {
+    await fs.writeFile(USERS_FILE, `${JSON.stringify(users, null, 2)}\n`);
+    userCacheDirty = true;
+  } catch (err) {
+    console.error("[writeUsers] Failed to write users:", err);
+  }
 }
 
 async function ensureAuditsStore() {
@@ -314,6 +358,9 @@ async function updateExecutionStore(mutator) {
     const raw = await fs.readFile(EXECUTIONS_FILE, "utf8");
     const store = JSON.parse(raw || "[]");
     const result = await mutator(store);
+    if (store.length > MAX_EXECUTIONS_ENTRIES) {
+      store.splice(0, store.length - MAX_EXECUTIONS_ENTRIES);
+    }
     await writeExecutionsAtomic(store);
     return result;
   });
@@ -415,9 +462,50 @@ async function updateTeamProfilesStore(mutator) {
   return task;
 }
 
+// ── Serialized, size-capped JSON array append store ──────────────────────────
+// Append-style endpoints (client error logs, feedback, interview experiences,
+// audit history) previously did an unserialized readFile → parse → push →
+// writeFile. Under concurrency those interleave and silently drop entries
+// (lost writes), and they grow without bound — the anonymous /api/log-error
+// route is a disk-fill DoS. This helper serializes each file's read-modify-write
+// through a per-file promise chain (mirroring updateMemoryStore), writes
+// atomically via a temp file + rename, and caps the array to its most recent
+// `maxEntries` so the file can never grow unbounded.
+const jsonArrayWriteQueues = new Map();
+
+function appendToJsonArrayFile(filePath, entry, maxEntries = 1000) {
+  const previous = jsonArrayWriteQueues.get(filePath) || Promise.resolve();
+  const task = previous.then(async () => {
+    await fs.mkdir(DATA_DIR, { recursive: true });
+    let list = [];
+    try {
+      const raw = await fs.readFile(filePath, "utf8");
+      list = JSON.parse(raw || "[]");
+      if (!Array.isArray(list)) list = [];
+    } catch (err) {
+      if (err.code !== "ENOENT") throw err;
+    }
+    list.push(entry);
+    if (list.length > maxEntries) {
+      list = list.slice(list.length - maxEntries);
+    }
+    const tmpPath = `${filePath}.${process.pid}.${Date.now()}.tmp`;
+    await fs.writeFile(tmpPath, `${JSON.stringify(list, null, 2)}\n`);
+    await fs.rename(tmpPath, filePath);
+    return entry;
+  });
+  // Keep the chain alive even if one write rejects, so later writes still run.
+  jsonArrayWriteQueues.set(filePath, task.catch(() => {}));
+  return task;
+}
+
 // ──────────────────────────────────────────────────────────────────────────
 
 async function readJsonBody(req) {
+  if (req.body && typeof req.body === "object") return req.body;
+  if (req.body && typeof req.body === "string") {
+    try { return JSON.parse(req.body); } catch { return {}; }
+  }
   let body = "";
   for await (const chunk of req) {
     body += chunk;
@@ -523,7 +611,9 @@ function isSameOriginRequest(req) {
   for (const header of [req.headers.origin, req.headers.referer]) {
     if (!header) continue;
     try {
-      if (new URL(header).host === host) return true;
+      const requestHost = host.split(":")[0];
+      const urlHost = new URL(header).host.split(":")[0];
+      if (urlHost && requestHost && urlHost === requestHost) return true;
     } catch {
       // Malformed Origin/Referer header — treat as untrusted.
     }
@@ -547,24 +637,19 @@ async function handleApi(req, res, pathname) {
                         .update(secret)
                         .digest("hex");
     const isProd = process.env.NODE_ENV === "production";
-    const cookieString = `csrfSecret=${secret}; HttpOnly; ${isProd ? "Secure; " : ""}SameSite=Strict; Path=/; Max-Age=3600`;
+    const cookieString = `csrfSecret=${secret}; HttpOnly; ${isProd ? "Secure; " : ""}SameSite=Lax; Path=/; Max-Age=3600`;
     return sendJson(res, 200, { csrfToken: token }, { "Set-Cookie": cookieString });
   }
 
   if (pathname === "/api/log-error" && req.method === "POST") {
+    // Anonymous + append-only: rate-limit to curb write-flooding abuse. The
+    // capped, serialized write below bounds disk use regardless.
+    if (!applyRateLimit(req, res, logErrorLimiter, "Too many error reports. Please try again later.")) {
+      return;
+    }
     try {
       const payload = await readJsonBody(req);
-      const logFile = path.join(DATA_DIR, "client_errors.json");
-      await fs.mkdir(DATA_DIR, { recursive: true });
-      let currentLogs = [];
-      try {
-        const raw = await fs.readFile(logFile, "utf8");
-        currentLogs = JSON.parse(raw || "[]");
-      } catch (e) {
-        // file might not exist
-      }
-      currentLogs.push(payload);
-      await fs.writeFile(logFile, `${JSON.stringify(currentLogs, null, 2)}\n`);
+      await appendToJsonArrayFile(CLIENT_ERRORS_FILE, payload, MAX_CLIENT_ERROR_ENTRIES);
       return sendJson(res, 200, { success: true });
     } catch (err) {
       console.error("Error logging client error:", err);
@@ -1256,7 +1341,28 @@ async function handleApi(req, res, pathname) {
     return sendJson(res, 200, { success: true }, { "Set-Cookie": authCookies(accessToken, refreshToken, req) });
   }
 
-if (pathname === "/api/session" && req.method === "GET") {
+  if (pathname === "/api/guest" && req.method === "POST") {
+    try {
+      const guestId = crypto.randomUUID();
+      const guestUser = {
+        id: `guest-${guestId}`,
+        name: "Guest",
+        email: `guest-${guestId}@local`,
+      };
+      const token = createAccessToken(guestUser);
+      const refreshToken = createRefreshToken(guestUser);
+      return sendJson(
+        res, 200,
+        { user: { id: guestUser.id, name: guestUser.name, email: guestUser.email } },
+        { "Set-Cookie": authCookies(token, refreshToken, req) },
+      );
+    } catch (err) {
+      console.error("[guest] Unexpected error:", err);
+      return sendJson(res, 500, { error: "Guest login failed. Please try again." });
+    }
+  }
+
+  if (pathname === "/api/session" && req.method === "GET") {
     const session = getSession(req);
     
     
@@ -1304,11 +1410,15 @@ if (pathname === "/api/session" && req.method === "GET") {
         createdAt: new Date().toISOString(),
         isDeactivated: false,
         deactivatedAt: null,
-        emailVerified: true,
+        emailVerified: false,
         verifyToken,
         verifyTokenExpiry: Date.now() + 24 * 60 * 60 * 1000,
       };
       await createUser(user);
+
+      sendVerificationEmail(email, user.name, verifyToken).catch((err) =>
+        console.error("[email] Signup verification failed:", err)
+      );
 
       const token = createAccessToken(user);
       const refreshToken = createRefreshToken(user);
@@ -1733,17 +1843,19 @@ if (pathname === "/api/forgot-password" && req.method === "POST") {
       const { initializeApp, getApps } = await import("firebase/app");
       const { getAuth, sendPasswordResetEmail } = await import("firebase/auth");
 
-      const configRes = await fetch(`http://127.0.0.1:${process.env.PORT || 3000}/api/firebase-config`);
-      const firebaseConfig = await configRes.json();
+      const firebaseConfig = {
+        apiKey: process.env.FIREBASE_API_KEY,
+        authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+        appId: process.env.FIREBASE_APP_ID,
+      };
 
-      if (firebaseConfig.configured) {
+      if (firebaseConfig.projectId) {
         const existingApps = getApps();
         const clientApp = existingApps.find(a => a.name === "reset-client") ||
-          initializeApp({
-            apiKey: firebaseConfig.apiKey,
-            authDomain: firebaseConfig.authDomain,
-            projectId: firebaseConfig.projectId,
-          }, "reset-client");
+          initializeApp(firebaseConfig, "reset-client");
 
         const auth = getAuth(clientApp);
         await sendPasswordResetEmail(auth, email);
@@ -1756,15 +1868,6 @@ if (pathname === "/api/forgot-password" && req.method === "POST") {
     // Always return success to prevent email enumeration
     return sendJson(res, 200, { message: "Reset email sent if account exists." });
   }
-  if (pathname === "/api/logout" && req.method === "POST") {
-    return sendJson(
-      res,
-      200,
-      { ok: true },
-      { "Set-Cookie": clearAuthCookies() },
-    );
-  }
-
   if (pathname === "/api/feedback" && req.method === "POST") {
     const session = getSession(req);
     let payload;
@@ -1829,21 +1932,8 @@ if (pathname === "/api/forgot-password" && req.method === "POST") {
         const docRef = await db.collection("feedback").add(feedbackData);
         feedbackData.id = docRef.id;
       } else {
-        const feedbackFile = path.join(DATA_DIR, "feedback.json");
-        await fs.mkdir(DATA_DIR, { recursive: true });
-        let feedbackList = [];
-        try {
-          const raw = await fs.readFile(feedbackFile, "utf8");
-          feedbackList = JSON.parse(raw || "[]");
-        } catch (err) {
-          if (err.code !== "ENOENT") throw err;
-        }
         feedbackData.id = crypto.randomUUID();
-        feedbackList.push(feedbackData);
-        await fs.writeFile(
-          feedbackFile,
-          JSON.stringify(feedbackList, null, 2) + "\n",
-        );
+        await appendToJsonArrayFile(FEEDBACK_FILE, feedbackData, MAX_FEEDBACK_ENTRIES);
       }
 
       return sendJson(res, 201, { success: true, feedback: feedbackData });
@@ -1944,17 +2034,11 @@ if (pathname === "/api/forgot-password" && req.method === "POST") {
           .add(experienceData);
         experienceData.id = docRef.id;
       } else {
-        const filePath = path.join(DATA_DIR, "interview-experiences.json");
-        await fs.mkdir(DATA_DIR, { recursive: true });
-        let list = [];
-        try {
-          const raw = await fs.readFile(filePath, "utf8");
-          list = JSON.parse(raw || "[]");
-        } catch (err) {
-          if (err.code !== "ENOENT") throw err;
-        }
-        list.push(experienceData);
-        await fs.writeFile(filePath, JSON.stringify(list, null, 2) + "\n");
+        await appendToJsonArrayFile(
+          INTERVIEW_EXPERIENCES_FILE,
+          experienceData,
+          MAX_INTERVIEW_EXPERIENCE_ENTRIES,
+        );
       }
       return sendJson(res, 201, { success: true, experience: experienceData });
     } catch (err) {
@@ -1985,9 +2069,7 @@ if (pathname === "/api/forgot-password" && req.method === "POST") {
       if (useFirestore) {
         await db.collection(COLLECTIONS.AUDITS_HISTORY).doc(auditData.auditId).set(auditData);
       } else {
-        const audits = await readAudits();
-        audits.push(auditData);
-        await writeAudits(audits);
+        await appendToJsonArrayFile(AUDITS_FILE, auditData, MAX_AUDIT_HISTORY_ENTRIES);
       }
 
       return sendJson(res, 201, { success: true, auditId: auditData.auditId });
@@ -2799,6 +2881,78 @@ if (pathname === "/api/forgot-password" && req.method === "POST") {
     }
   }
 
+  // ── Leaderboard ──────────────────────────────────────────────────────────
+  if (pathname === "/api/leaderboard" && req.method === "GET") {
+    try {
+      let leaders = [];
+      if (useFirestore) {
+        const usersSnap = await db.collection("users").get();
+        leaders = usersSnap.docs.map(doc => {
+          const d = doc.data();
+          return { id: doc.id, name: d.name || "Learner", xp: d.xp || 0, level: d.level || 1, avatar: d.avatar || "🚀" };
+        });
+      } else {
+        const users = await readUsers();
+        leaders = users.map(u => ({
+          id: u.id || u.email,
+          name: u.name || "Learner",
+          xp: u.xp || 0,
+          level: u.level || 1,
+          avatar: u.avatar || "🚀"
+        }));
+      }
+      const session = getSession(req);
+      return sendJson(res, 200, { leaders, currentUserId: session?.sub || null });
+    } catch (err) {
+      console.error("Leaderboard error:", err);
+      return sendJson(res, 200, { leaders: [], currentUserId: null });
+    }
+  }
+
+  // ── User Progress Sync ───────────────────────────────────────────────────
+  if (pathname === "/api/progress" && req.method === "PUT") {
+    const session = getSession(req);
+    if (!session) return sendJson(res, 401, { error: "Authentication required." });
+    try {
+      const body = await readJsonBody(req);
+      if (useFirestore) {
+         await db.collection("users").doc(session.sub).set({
+           name: body.name,
+           xp: body.xp || 0,
+           level: body.level || 1,
+           avatar: body.avatar || "🚀",
+           activityData: body.activityData || {},
+           updatedAt: new Date().toISOString()
+         }, { merge: true });
+      } else {
+        const users = await readUsers();
+        const idx = users.findIndex(u => u.id === session.sub || u.email === session.email);
+         if (idx !== -1) {
+           users[idx].name = body.name;
+           users[idx].xp = body.xp || 0;
+           users[idx].level = body.level || 1;
+           users[idx].avatar = body.avatar || "🚀";
+           if (body.activityData) users[idx].activityData = body.activityData;
+         } else {
+           users.push({
+             id: session.sub,
+             email: session.email,
+             name: body.name,
+             xp: body.xp || 0,
+             level: body.level || 1,
+             avatar: body.avatar || "🚀",
+             activityData: body.activityData || {}
+           });
+         }
+        await writeUsers(users);
+      }
+      return sendJson(res, 200, { success: true });
+    } catch (err) {
+      console.error("Progress sync error:", err);
+      return sendJson(res, 200, { success: false });
+    }
+  }
+
   return sendJson(res, 404, { error: "Not found." });
 }
 
@@ -2845,7 +2999,7 @@ const routes = {
   // 1. Block hidden files and sensitive directories
   if (
     fileName.startsWith(".") ||
-    rel.startsWith("data" + path.sep) ||
+    (rel.startsWith("data" + path.sep) && !fileName.endsWith(".js")) ||
     rel.startsWith("api" + path.sep) ||
     rel.startsWith("node_modules" + path.sep)
   ) {
@@ -2980,7 +3134,7 @@ async function serveStatic(req, res, pathname) {
   }
 }
 
-const server = http.createServer(async (req, res) => {
+async function requestHandler(req, res) {
   try {
     const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
     const pathname = normalizePathname(decodeURIComponent(url.pathname));
@@ -3012,7 +3166,9 @@ const server = http.createServer(async (req, res) => {
     console.error(error);
     sendJson(res, 500, { error: "Something went wrong." });
   }
-});
+}
+
+const server = http.createServer(requestHandler);
 
 // ===== CODE ANALYSIS ENGINE =====
 // Used by the POST /api/predict-acceptance route in handleApi().
@@ -3152,7 +3308,7 @@ function hasUnusedVariables(code) {
     if (!vars) return false;
     
     for (const v of vars) {
-        const name = v.replace(/let |const |var /g, '');
+        const name = v.replace(/let |const |let /g, '');
         if (code.split(name).length <= 2) {
             return true;
         }
@@ -3271,51 +3427,124 @@ socket.on('ai-evaluate-code', async (data = {}) => {
     }
 });
 
+// Socket input validation helper
+const MAX_PAYLOAD_SIZE = 100 * 1024;
+const MAX_TEXT_LENGTH = 10000;
+
+function validateSocketInput(data, schema) {
+  if (!data || typeof data !== 'object') return null;
+  if (JSON.stringify(data).length > MAX_PAYLOAD_SIZE) return null;
+  const result = {};
+  for (const [key, rules] of Object.entries(schema)) {
+    if (rules.required && !(key in data)) return null;
+    if (key in data) {
+      let val = data[key];
+      if (rules.type && (val === null || typeof val !== rules.type)) return null;
+      if (rules.string && typeof val === 'string') {
+        val = val.slice(0, rules.maxLength || MAX_TEXT_LENGTH);
+        val = val.replace(/[\x00-\x1F\x7F]/g, '');
+      }
+      result[key] = val;
+    }
+  }
+  return result;
+}
+
 // Draw events (whiteboard)
 socket.on('draw', (data) => {
-    // Broadcast to everyone else in the room
-    socket.to(data.roomId).emit('receive-draw', data);
+  const valid = validateSocketInput(data, {
+    roomId: { type: 'string', required: true },
+    imageData: { type: 'string', string: true }
+  });
+  if (!valid) return;
+  socket.to(valid.roomId).emit('receive-draw', valid);
 });
 
 // Clear board
-socket.on('clear-board', ({ roomId }) => {
-    socket.to(roomId).emit('receive-clear');
+socket.on('clear-board', (data) => {
+  const valid = validateSocketInput(data, {
+    roomId: { type: 'string', required: true }
+  });
+  if (!valid) return;
+  socket.to(valid.roomId).emit('receive-clear');
 });
 
 // Shared notes
-socket.on('share-notes', ({ roomId, text }) => {
-    socket.to(roomId).emit('receive-notes', text);
+socket.on('share-notes', (data) => {
+  const valid = validateSocketInput(data, {
+    roomId: { type: 'string', required: true },
+    text: { type: 'string', string: true, maxLength: MAX_TEXT_LENGTH }
+  });
+  if (!valid) return;
+  socket.to(valid.roomId).emit('receive-notes', valid.text);
 });
 
 // Chat messages
 socket.on('chat-message', (data) => {
-    socket.to(data.roomId).emit('chat-message', data);
+  const valid = validateSocketInput(data, {
+    roomId: { type: 'string', required: true },
+    userName: { type: 'string', string: true },
+    text: { type: 'string', string: true, maxLength: MAX_TEXT_LENGTH }
+  });
+  if (!valid) return;
+  socket.to(valid.roomId).emit('chat-message', valid);
 });
 
 // ── VOICE CHAT (WebRTC signaling) ──
 
-socket.on('voice-join', ({ roomId, userId }) => {
-    socket.to(roomId).emit('voice-user-joined', { userId });
+socket.on('voice-join', (data) => {
+  const valid = validateSocketInput(data, {
+    roomId: { type: 'string', required: true },
+    userId: { type: 'string', string: true }
+  });
+  if (!valid) return;
+  socket.to(valid.roomId).emit('voice-user-joined', { userId: valid.userId });
 });
 
-socket.on('voice-leave', ({ roomId, userId }) => {
-    socket.to(roomId).emit('voice-user-left', { userId });
+socket.on('voice-leave', (data) => {
+  const valid = validateSocketInput(data, {
+    roomId: { type: 'string', required: true },
+    userId: { type: 'string', string: true }
+  });
+  if (!valid) return;
+  socket.to(valid.roomId).emit('voice-user-left', { userId: valid.userId });
 });
 
 // WebRTC offer
-socket.on('voice-offer', ({ roomId, offer, to, from }) => {
-    const targetSocketId = userSocketMap.get(to);
-    if (targetSocketId) io.to(targetSocketId).emit('voice-offer', { offer, from });
+socket.on('voice-offer', (data) => {
+  const valid = validateSocketInput(data, {
+    roomId: { type: 'string', required: true },
+    offer: { type: 'object', required: true },
+    to: { type: 'string', required: true },
+    from: { type: 'string', string: true }
+  });
+  if (!valid) return;
+  const targetSocketId = userSocketMap.get(valid.to);
+  if (targetSocketId) io.to(targetSocketId).emit('voice-offer', { offer: valid.offer, from: valid.from });
 });
 
-socket.on('voice-answer', ({ roomId, answer, to, from }) => {
-    const targetSocketId = userSocketMap.get(to);
-    if (targetSocketId) io.to(targetSocketId).emit('voice-answer', { answer, from });
+socket.on('voice-answer', (data) => {
+  const valid = validateSocketInput(data, {
+    roomId: { type: 'string', required: true },
+    answer: { type: 'object', required: true },
+    to: { type: 'string', required: true },
+    from: { type: 'string', string: true }
+  });
+  if (!valid) return;
+  const targetSocketId = userSocketMap.get(valid.to);
+  if (targetSocketId) io.to(targetSocketId).emit('voice-answer', { answer: valid.answer, from: valid.from });
 });
 
-socket.on('voice-ice', ({ roomId, candidate, to, from }) => {
-    const targetSocketId = userSocketMap.get(to);
-    if (targetSocketId) io.to(targetSocketId).emit('voice-ice', { candidate, from });
+socket.on('voice-ice', (data) => {
+  const valid = validateSocketInput(data, {
+    roomId: { type: 'string', required: true },
+    candidate: { type: 'object', required: true },
+    to: { type: 'string', required: true },
+    from: { type: 'string', string: true }
+  });
+  if (!valid) return;
+  const targetSocketId = userSocketMap.get(valid.to);
+  if (targetSocketId) io.to(targetSocketId).emit('voice-ice', { candidate: valid.candidate, from: valid.from });
 });
 
 // ── END OF ADDITIONS ──
@@ -3366,6 +3595,10 @@ socket.on('voice-ice', ({ roomId, candidate, to, from }) => {
   socket.on("start-study-round", ({ roomId, problem }) => {
     const room = studyRooms.get(roomId);
     if (!room) return;
+    if (socket.userId !== room.hostId) {
+      socket.emit('error', { message: 'Only host can start the study round' });
+      return;
+    }
 
     room.status = "playing";
     room.currentProblem = problem;
@@ -3456,11 +3689,21 @@ socket.on('voice-ice', ({ roomId, candidate, to, from }) => {
 });
 // -----------------------------------------
 
-export { server, hashPassword, passwordMatches, applySM2, validateSignup, updateMemoryStore, readMemoryStore };
+export { server, requestHandler, hashPassword, passwordMatches, applySM2, validateSignup, updateMemoryStore, readMemoryStore, appendToJsonArrayFile };
+
 if (process.env.VERCEL === "1") {
   db = initializeFirebase();
   useFirestore = !!db;
+  if (!process.env.SESSION_SECRET) {
+    throw new Error("FATAL: SESSION_SECRET is required on Vercel. Set it in the Vercel dashboard under Project Settings > Environment Variables.");
+  }
 }
+
+const vercelHandler = process.env.VERCEL === "1"
+  ? async (req, res) => requestHandler(req, res)
+  : undefined;
+
+export default vercelHandler;
 
 
 

@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── Constants ─── */
-var ST_SPEED_MAP   = { 1: 1200, 2: 700, 3: 400, 4: 180, 5: 60 };
-var ST_SPEED_LABEL = { 1: 'Slowest', 2: 'Slow', 3: 'Normal', 4: 'Fast', 5: 'Blazing' };
+let ST_SPEED_MAP   = { 1: 1200, 2: 700, 3: 400, 4: 180, 5: 60 };
+let ST_SPEED_LABEL = { 1: 'Slowest', 2: 'Slow', 3: 'Normal', 4: 'Fast', 5: 'Blazing' };
 
 /* Node fill colors */
-var ST_COL = {
+let ST_COL = {
   DEFAULT : { fill: 'rgba(100,116,139,0.25)', stroke: '#64748b',  text: '#94a3b8' },
   ACTIVE  : { fill: 'rgba(168,85,247,0.25)',  stroke: '#a855f7',  text: '#e9d5ff' },
   MATCH   : { fill: 'rgba(34,197,94,0.25)',   stroke: '#22c55e',  text: '#bbf7d0' },
@@ -21,7 +21,7 @@ var ST_COL = {
 };
 
 /* ─── State ─── */
-var stState = {
+let stState = {
   arr       : [],
   tree      : [],        // segment tree array (1-indexed)
   n         : 0,
@@ -38,7 +38,7 @@ var stState = {
 };
 
 /* ─── Pulse Animation State ─── */
-var stPulseState = {
+let stPulseState = {
   active: false,
   type: '',      // 'descent', 'ascent', or 'ripple'
   fromX: 0,
@@ -51,15 +51,15 @@ var stPulseState = {
   node: -1
 };
 
-var stAnimationFrameId = null;
+let stAnimationFrameId = null;
 
 /* ─── Build Segment Tree ─── */
 function stBuild(arr) {
-  var n = arr.length;
-  var tree = new Array(4 * n).fill(0);
+  let n = arr.length;
+  let tree = new Array(4 * n).fill(0);
   function buildNode(node, start, end) {
     if (start === end) { tree[node] = arr[start]; return; }
-    var mid = Math.floor((start + end) / 2);
+    let mid = Math.floor((start + end) / 2);
     buildNode(2 * node, start, mid);
     buildNode(2 * node + 1, mid + 1, end);
     tree[node] = tree[2 * node] + tree[2 * node + 1];
@@ -70,7 +70,7 @@ function stBuild(arr) {
 
 /* ─── Generate Query Steps ─── */
 function stGenQuerySteps(tree, n, l, r) {
-  var steps = [];
+  let steps = [];
   function query(node, start, end, l, r) {
     if (r < start || end < l) {
       steps.push({ type: 'visit', node: node, color: 'NONE', start: start, end: end,
@@ -84,14 +84,14 @@ function stGenQuerySteps(tree, n, l, r) {
     }
     steps.push({ type: 'visit', node: node, color: 'PARTIAL', start: start, end: end,
       msg: 'Node ' + node + ' [' + start + '..' + end + '] — partial overlap. Recurse into children.' });
-    var mid = Math.floor((start + end) / 2);
-    var left  = query(2 * node, start, mid, l, r);
-    var right = query(2 * node + 1, mid + 1, end, l, r);
+    let mid = Math.floor((start + end) / 2);
+    let left  = query(2 * node, start, mid, l, r);
+    let right = query(2 * node + 1, mid + 1, end, l, r);
     steps.push({ type: 'return', node: node, color: 'ACTIVE', start: start, end: end,
       msg: 'Node ' + node + ': left=' + left + ' + right=' + right + ' = ' + (left + right) });
     return left + right;
   }
-  var result = query(1, 0, n - 1, l, r);
+  let result = query(1, 0, n - 1, l, r);
   steps.push({ type: 'result', node: -1, color: null,
     msg: 'Query sum [' + l + '..' + r + '] = ' + result, result: result });
   return steps;
@@ -99,8 +99,8 @@ function stGenQuerySteps(tree, n, l, r) {
 
 /* ─── Generate Update Steps ─── */
 function stGenUpdateSteps(tree, n, idx, val, oldVal) {
-  var steps = [];
-  var delta = val - oldVal;
+  let steps = [];
+  let delta = val - oldVal;
   function update(node, start, end, idx, val) {
     if (start === end) {
       tree[node] += delta;
@@ -108,7 +108,7 @@ function stGenUpdateSteps(tree, n, idx, val, oldVal) {
         msg: 'Leaf node ' + node + ' [' + start + ']: value updated from ' + oldVal + ' to ' + val + '.' });
       return;
     }
-    var mid = Math.floor((start + end) / 2);
+    let mid = Math.floor((start + end) / 2);
     steps.push({ type: 'visit', node: node, color: 'ACTIVE', idx: idx, start: start, end: end,
       msg: 'Node ' + node + ' [' + start + '..' + end + ']: descending to find index ' + idx + '.' });
     if (idx <= mid) update(2 * node, start, mid, idx, val);
@@ -127,22 +127,22 @@ function stGenUpdateSteps(tree, n, idx, val, oldVal) {
 
 /* ─── Layout Calculation ─── */
 function stCalcLayout(canvas, n) {
-  var depth  = Math.ceil(Math.log2(n)) + 1;
-  var levels = depth;
-  var W      = canvas.width;
-  var H      = Math.max(300, levels * 90 + 40);
+  let depth  = Math.ceil(Math.log2(n)) + 1;
+  let levels = depth;
+  let W      = canvas.width;
+  let H      = Math.max(300, levels * 90 + 40);
   canvas.height = H;
 
-  var pos = {};
-  var nodeR = Math.min(28, Math.floor(W / (Math.pow(2, levels - 1) * 2.2)));
+  let pos = {};
+  let nodeR = Math.min(28, Math.floor(W / (Math.pow(2, levels - 1) * 2.2)));
   nodeR = Math.max(16, nodeR);
 
   function layout(node, start, end, level, xMin, xMax) {
-    var x = (xMin + xMax) / 2;
-    var y  = level * 80 + 50;
+    let x = (xMin + xMax) / 2;
+    let y  = level * 80 + 50;
     pos[node] = { x: x, y: y, r: nodeR, start: start, end: end, val: stState.tree[node] };
     if (start === end) return;
-    var mid = Math.floor((start + end) / 2);
+    let mid = Math.floor((start + end) / 2);
     layout(2 * node, start, mid,     level + 1, xMin, (xMin + xMax) / 2);
     layout(2 * node + 1, mid + 1, end, level + 1, (xMin + xMax) / 2, xMax);
   }
@@ -153,25 +153,25 @@ function stCalcLayout(canvas, n) {
 
 /* ─── Drawing ─── */
 function stDraw() {
-  var canvas = document.getElementById('stCanvas');
+  let canvas = document.getElementById('stCanvas');
   if (!canvas) return;
-  var ctx    = canvas.getContext('2d');
-  var pos    = stState.nodePos;
-  var colors = stState.nodeColor;
-  var tree   = stState.tree;
+  let ctx    = canvas.getContext('2d');
+  let pos    = stState.nodePos;
+  let colors = stState.nodeColor;
+  let tree   = stState.tree;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if (!stState.built) return;
 
-  var n = stState.n;
+  let n = stState.n;
 
   // Draw edges first
   function drawEdges(node, start, end) {
     if (start === end) return;
-    var mid  = Math.floor((start + end) / 2);
-    var from = pos[node];
-    var toL  = pos[2 * node];
-    var toR  = pos[2 * node + 1];
+    let mid  = Math.floor((start + end) / 2);
+    let from = pos[node];
+    let toL  = pos[2 * node];
+    let toR  = pos[2 * node + 1];
     if (!from || !toL || !toR) return;
 
     ctx.strokeStyle = 'rgba(100,116,139,0.35)';
@@ -197,8 +197,8 @@ function stDraw() {
   if (stPulseState.active) {
     ctx.save();
     if (stPulseState.type === 'descent' || stPulseState.type === 'ascent') {
-      var px = stPulseState.fromX + (stPulseState.toX - stPulseState.fromX) * stPulseState.progress;
-      var py = stPulseState.fromY + (stPulseState.toY - stPulseState.fromY) * stPulseState.progress;
+      let px = stPulseState.fromX + (stPulseState.toX - stPulseState.fromX) * stPulseState.progress;
+      let py = stPulseState.fromY + (stPulseState.toY - stPulseState.fromY) * stPulseState.progress;
       
       ctx.shadowBlur = 10;
       ctx.shadowColor = '#06b6d4';
@@ -220,11 +220,11 @@ function stDraw() {
 
   // Draw nodes
   function drawNodes(node, start, end) {
-    var p   = pos[node];
+    let p   = pos[node];
     if (!p) return;
-    var col = ST_COL[colors[node] || 'DEFAULT'];
+    let col = ST_COL[colors[node] || 'DEFAULT'];
 
-    var isHovered = (stState.hoveredIndex !== null && p.start === stState.hoveredIndex && p.end === stState.hoveredIndex);
+    let isHovered = (stState.hoveredIndex !== null && p.start === stState.hoveredIndex && p.end === stState.hoveredIndex);
 
     // Circle
     ctx.beginPath();
@@ -246,8 +246,8 @@ function stDraw() {
     }
 
     // Value
-    var val   = tree[node];
-    var valStr = val !== undefined ? String(val) : '';
+    let val   = tree[node];
+    let valStr = val !== undefined ? String(val) : '';
     ctx.fillStyle  = col.text;
     ctx.font       = 'bold ' + Math.min(13, p.r * 0.7) + 'px "Fira Code", monospace';
     ctx.textAlign  = 'center';
@@ -261,7 +261,7 @@ function stDraw() {
     ctx.fillText('[' + start + '..' + end + ']', p.x, p.y + p.r + 3);
 
     if (start === end) return;
-    var mid = Math.floor((start + end) / 2);
+    let mid = Math.floor((start + end) / 2);
     drawNodes(2 * node, start, mid);
     drawNodes(2 * node + 1, mid + 1, end);
   }
@@ -279,7 +279,7 @@ function stResetColors() {
 /* ─── Pulse Animations ─── */
 function stTriggerPulse(step) {
   if (!stState.built) return;
-  var pos = stState.nodePos;
+  let pos = stState.nodePos;
   
   stPulseState.active = false;
   if (stAnimationFrameId) {
@@ -287,7 +287,7 @@ function stTriggerPulse(step) {
     stAnimationFrameId = null;
   }
 
-  var node = step.node;
+  let node = step.node;
   if (!node || node <= 0 || !pos[node]) return;
 
   if (step.type === 'visit') {
@@ -300,7 +300,7 @@ function stTriggerPulse(step) {
       stPulseState.maxRadius = pos[1].r + 15;
       stPulseState.node = 1;
     } else {
-      var parent = Math.floor(node / 2);
+      let parent = Math.floor(node / 2);
       if (pos[parent]) {
         stPulseState.active = true;
         stPulseState.type = 'descent';
@@ -321,9 +321,9 @@ function stTriggerPulse(step) {
     stPulseState.maxRadius = pos[node].r + 20;
     stPulseState.node = node;
   } else if (step.type === 'propagate') {
-    var childNode = -1;
-    var leftChild = 2 * node;
-    var rightChild = 2 * node + 1;
+    let childNode = -1;
+    let leftChild = 2 * node;
+    let rightChild = 2 * node + 1;
     
     if (pos[leftChild] && step.idx !== undefined && step.idx >= pos[leftChild].start && step.idx <= pos[leftChild].end) {
       childNode = leftChild;
@@ -349,12 +349,12 @@ function stTriggerPulse(step) {
 }
 
 function stAnimatePulse() {
-  var lastTime = performance.now();
-  var duration = Math.max(100, stGetDelay() * 0.7);
+  let lastTime = performance.now();
+  let duration = Math.max(100, stGetDelay() * 0.7);
   
   function frame(time) {
     if (!stPulseState.active) return;
-    var dt = time - lastTime;
+    let dt = time - lastTime;
     lastTime = time;
     
     if (stPulseState.type === 'ripple') {
@@ -382,27 +382,27 @@ function stAnimatePulse() {
 
 /* ─── Bottom Array Render ─── */
 function stRenderArray() {
-  var container = document.getElementById('stArrayLayout');
+  let container = document.getElementById('stArrayLayout');
   if (!container) return;
   container.innerHTML = '';
   if (!stState.built) return;
 
-  var currentStep = stState.steps[stState.stepIdx - 1];
-  var cellClasses = new Array(stState.n).fill('');
+  let currentStep = stState.steps[stState.stepIdx - 1];
+  let cellClasses = new Array(stState.n).fill('');
   
   if (currentStep) {
     if (currentStep.type === 'visit' || currentStep.type === 'return') {
-      var start = currentStep.start;
-      var end = currentStep.end;
-      var color = currentStep.color;
-      var cls = '';
+      let start = currentStep.start;
+      let end = currentStep.end;
+      let color = currentStep.color;
+      let cls = '';
       if (color === 'MATCH') cls = 'highlight-match';
       else if (color === 'PARTIAL') cls = 'highlight-partial';
       else if (color === 'ACTIVE') cls = 'highlight-active';
       else if (color === 'NONE') cls = 'highlight-none';
       
       if (cls && start !== undefined && end !== undefined) {
-        for (var i = start; i <= end; i++) {
+        for (let i = start; i <= end; i++) {
           cellClasses[i] = cls;
         }
       }
@@ -415,8 +415,8 @@ function stRenderArray() {
     }
   }
 
-  for (var i = 0; i < stState.n; i++) {
-    var cell = document.createElement('div');
+  for (let i = 0; i < stState.n; i++) {
+    let cell = document.createElement('div');
     cell.className = 'st-array-cell ' + cellClasses[i];
     cell.setAttribute('data-idx', i);
     
@@ -424,11 +424,11 @@ function stRenderArray() {
       cell.classList.add('highlight-active');
     }
     
-    var idxSpan = document.createElement('span');
+    let idxSpan = document.createElement('span');
     idxSpan.className = 'st-cell-idx';
     idxSpan.textContent = i;
     
-    var valSpan = document.createElement('span');
+    let valSpan = document.createElement('span');
     valSpan.className = 'st-cell-val';
     valSpan.textContent = stState.arr[i];
     
@@ -461,7 +461,7 @@ function stRenderArray() {
 
 /* ─── Apply a single step ─── */
 function stApplyStep(step) {
-  var statusEl = document.getElementById('stStatus');
+  let statusEl = document.getElementById('stStatus');
   if (statusEl && step.msg) {
     statusEl.textContent = step.msg;
     statusEl.className   = 'st-status-bar ' + (step.type === 'result' ? 'done' : step.type === 'propagate' || step.type === 'update' ? 'update' : 'query');
@@ -485,9 +485,9 @@ function stApplyStep(step) {
   }
 
   if (step.type === 'result') {
-    var panel  = document.getElementById('stResultPanel');
-    var iconEl = document.getElementById('stResultIcon');
-    var textEl = document.getElementById('stResultText');
+    let panel  = document.getElementById('stResultPanel');
+    let iconEl = document.getElementById('stResultIcon');
+    let textEl = document.getElementById('stResultText');
     if (panel && iconEl && textEl) {
       iconEl.textContent = step.result !== undefined ? '✅' : '⚡';
       textEl.textContent = step.msg;
@@ -501,7 +501,7 @@ function stApplyStep(step) {
 
 /* ─── Playback ─── */
 function stGetDelay() {
-  var el = document.getElementById('stSpeed');
+  let el = document.getElementById('stSpeed');
   return ST_SPEED_MAP[el ? el.value : 3] || 400;
 }
 
@@ -554,9 +554,9 @@ function stResetAnim() {
     cancelAnimationFrame(stAnimationFrameId);
     stAnimationFrameId = null;
   }
-  var resultPanel = document.getElementById('stResultPanel');
+  let resultPanel = document.getElementById('stResultPanel');
   if (resultPanel) resultPanel.classList.add('hidden');
-  var statusEl = document.getElementById('stStatus');
+  let statusEl = document.getElementById('stStatus');
   if (statusEl) { statusEl.textContent = 'Animation reset. Press Play or Step.'; statusEl.className = 'st-status-bar'; }
   stUpdateStepCounter();
   stRenderArray();
@@ -564,17 +564,17 @@ function stResetAnim() {
 }
 
 function stUpdateStepCounter() {
-  var numEl = document.getElementById('stStepNum');
-  var totEl = document.getElementById('stStepTotal');
+  let numEl = document.getElementById('stStepNum');
+  let totEl = document.getElementById('stStepTotal');
   if (numEl) numEl.textContent = stState.stepIdx;
   if (totEl) totEl.textContent = stState.steps.length;
 }
 
 function stUpdatePlaybackBtns() {
-  var playBtn  = document.getElementById('stPlayBtn');
-  var pauseBtn = document.getElementById('stPauseBtn');
-  var stepBtn  = document.getElementById('stStepBtn');
-  var hasSteps = stState.steps.length > 0;
+  let playBtn  = document.getElementById('stPlayBtn');
+  let pauseBtn = document.getElementById('stPauseBtn');
+  let stepBtn  = document.getElementById('stStepBtn');
+  let hasSteps = stState.steps.length > 0;
   if (playBtn)  playBtn.disabled  = stState.playing || !hasSteps;
   if (pauseBtn) pauseBtn.disabled = !stState.playing;
   if (stepBtn)  stepBtn.disabled  = !hasSteps || stState.stepIdx >= stState.steps.length;
@@ -583,12 +583,12 @@ function stUpdatePlaybackBtns() {
 /* ─── Build ─── */
 function stDoBuild() {
   stPause();
-  var inputEl = document.getElementById('stArrayInput');
+  let inputEl = document.getElementById('stArrayInput');
   if (!inputEl) return;
 
-  var raw = inputEl.value.split(',').map(function(s) { return parseInt(s.trim()); }).filter(function(v) { return !isNaN(v); });
+  let raw = inputEl.value.split(',').map(function(s) { return parseInt(s.trim()); }).filter(function(v) { return !isNaN(v); });
   if (raw.length < 2 || raw.length > 16) {
-    var statusEl = document.getElementById('stStatus');
+    let statusEl = document.getElementById('stStatus');
     if (statusEl) { statusEl.textContent = 'Please enter between 2 and 16 numbers.'; statusEl.className = 'st-status-bar update'; }
     return;
   }
@@ -604,31 +604,31 @@ function stDoBuild() {
   stState.treeBackup = null;
 
   // Resize canvas
-  var canvas = document.getElementById('stCanvas');
+  let canvas = document.getElementById('stCanvas');
   if (!canvas) return;
-  var wrap = canvas.parentElement;
+  let wrap = canvas.parentElement;
   canvas.width = wrap ? wrap.clientWidth : 800;
 
   stState.nodePos   = stCalcLayout(canvas, stState.n);
   stState.nodeColor = {};
   Object.keys(stState.nodePos).forEach(function(k) { stState.nodeColor[k] = 'DEFAULT'; });
 
-  var emptyEl = document.getElementById('stCanvasEmpty');
+  let emptyEl = document.getElementById('stCanvasEmpty');
   if (emptyEl) emptyEl.classList.add('hidden');
 
-  var resultPanel = document.getElementById('stResultPanel');
+  let resultPanel = document.getElementById('stResultPanel');
   if (resultPanel) resultPanel.classList.add('hidden');
 
-  var statusEl = document.getElementById('stStatus');
+  let statusEl = document.getElementById('stStatus');
   if (statusEl) {
     statusEl.textContent = 'Tree built from [' + raw.join(', ') + ']. Root sum = ' + stState.tree[1] + '. Now run a query or update.';
     statusEl.className = 'st-status-bar done';
   }
 
   // Update input bounds
-  var qL = document.getElementById('stQueryL');
-  var qR = document.getElementById('stQueryR');
-  var ui = document.getElementById('stUpdateIdx');
+  let qL = document.getElementById('stQueryL');
+  let qR = document.getElementById('stQueryR');
+  let ui = document.getElementById('stUpdateIdx');
   if (qL) { qL.max = raw.length - 1; }
   if (qR) { qR.max = raw.length - 1; qR.value = Math.min(parseInt(qR.value) || raw.length - 1, raw.length - 1); }
   if (ui) { ui.max = raw.length - 1; }
@@ -641,17 +641,17 @@ function stDoBuild() {
 
 /* ─── Query ─── */
 function stDoQuery() {
-  if (!stState.built) { alert('Build the tree first.'); return; }
+  if (!stState.built) { console.warn("Alert:", 'Build the tree first.'); return; }
   stPause();
 
-  var lEl = document.getElementById('stQueryL');
-  var rEl = document.getElementById('stQueryR');
-  var l   = parseInt(lEl ? lEl.value : 0);
-  var r   = parseInt(rEl ? rEl.value : 0);
-  var n   = stState.n;
+  let lEl = document.getElementById('stQueryL');
+  let rEl = document.getElementById('stQueryR');
+  let l   = parseInt(lEl ? lEl.value : 0);
+  let r   = parseInt(rEl ? rEl.value : 0);
+  let n   = stState.n;
 
   if (isNaN(l) || isNaN(r) || l < 0 || r >= n || l > r) {
-    var statusEl = document.getElementById('stStatus');
+    let statusEl = document.getElementById('stStatus');
     if (statusEl) { statusEl.textContent = 'Invalid range. Use 0-indexed values where L ≤ R < ' + n + '.'; statusEl.className = 'st-status-bar update'; }
     return;
   }
@@ -664,7 +664,7 @@ function stDoQuery() {
   stState.treeBackup = stState.tree.slice();
 
   stResetColors();
-  var resultPanel = document.getElementById('stResultPanel');
+  let resultPanel = document.getElementById('stResultPanel');
   if (resultPanel) resultPanel.classList.add('hidden');
 
   stState.steps   = stGenQuerySteps(stState.tree, n, l, r);
@@ -672,7 +672,7 @@ function stDoQuery() {
   stUpdateStepCounter();
   stUpdatePlaybackBtns();
 
-  var statusEl = document.getElementById('stStatus');
+  let statusEl = document.getElementById('stStatus');
   if (statusEl) { statusEl.textContent = 'Query sum [' + l + '..' + r + '] ready. Press Play or Step to animate.'; statusEl.className = 'st-status-bar query'; }
   stRenderArray();
   stDraw();
@@ -680,17 +680,17 @@ function stDoQuery() {
 
 /* ─── Update ─── */
 function stDoUpdate() {
-  if (!stState.built) { alert('Build the tree first.'); return; }
+  if (!stState.built) { console.warn("Alert:", 'Build the tree first.'); return; }
   stPause();
 
-  var idxEl = document.getElementById('stUpdateIdx');
-  var valEl = document.getElementById('stUpdateVal');
-  var idx   = parseInt(idxEl ? idxEl.value : 0);
-  var val   = parseInt(valEl ? valEl.value : 0);
-  var n     = stState.n;
+  let idxEl = document.getElementById('stUpdateIdx');
+  let valEl = document.getElementById('stUpdateVal');
+  let idx   = parseInt(idxEl ? idxEl.value : 0);
+  let val   = parseInt(valEl ? valEl.value : 0);
+  let n     = stState.n;
 
   if (isNaN(idx) || isNaN(val) || idx < 0 || idx >= n) {
-    var statusEl = document.getElementById('stStatus');
+    let statusEl = document.getElementById('stStatus');
     if (statusEl) { statusEl.textContent = 'Invalid index. Use 0 to ' + (n - 1) + '.'; statusEl.className = 'st-status-bar update'; }
     return;
   }
@@ -702,13 +702,13 @@ function stDoUpdate() {
   stState.arrBackup = stState.arr.slice();
   stState.treeBackup = stState.tree.slice();
 
-  var oldVal = stState.arr[idx];
+  let oldVal = stState.arr[idx];
   stResetColors();
-  var resultPanel = document.getElementById('stResultPanel');
+  let resultPanel = document.getElementById('stResultPanel');
   if (resultPanel) resultPanel.classList.add('hidden');
 
   // Clone tree for step generation (stGenUpdateSteps mutates it)
-  var treeCopy = stState.tree.slice();
+  let treeCopy = stState.tree.slice();
   stState.steps   = stGenUpdateSteps(treeCopy, n, idx, val, oldVal);
   // Defer applying to live state until animation completes
   stState.pendingUpdate = { idx: idx, val: val };
@@ -717,7 +717,7 @@ function stDoUpdate() {
   stUpdateStepCounter();
   stUpdatePlaybackBtns();
 
-  var statusEl = document.getElementById('stStatus');
+  let statusEl = document.getElementById('stStatus');
   if (statusEl) { statusEl.textContent = 'Update arr[' + idx + '] = ' + val + ' ready. Press Play or Step to animate propagation.'; statusEl.className = 'st-status-bar update'; }
   stRenderArray();
   stDraw();
@@ -725,21 +725,21 @@ function stDoUpdate() {
 
 /* ─── Prompt Update dialog ─── */
 function stPromptUpdate(idx) {
-  var n = stState.n;
+  let n = stState.n;
   if (idx < 0 || idx >= n) return;
   
-  var currentVal = stState.arr[idx];
-  var inputVal = prompt('Enter new value for index ' + idx + ' (current value: ' + currentVal + '):', currentVal);
+  let currentVal = stState.arr[idx];
+  let inputVal = null /* prompt removed */:', currentVal);
   if (inputVal === null) return;
   
-  var val = parseInt(inputVal.trim());
+  let val = parseInt(inputVal.trim());
   if (isNaN(val)) {
-    alert('Please enter a valid integer.');
+    console.warn("Alert:", 'Please enter a valid integer.');
     return;
   }
   
-  var idxEl = document.getElementById('stUpdateIdx');
-  var valEl = document.getElementById('stUpdateVal');
+  let idxEl = document.getElementById('stUpdateIdx');
+  let valEl = document.getElementById('stUpdateVal');
   if (idxEl) idxEl.value = idx;
   if (valEl) valEl.value = val;
   
@@ -748,14 +748,14 @@ function stPromptUpdate(idx) {
 
 /* ─── Init ─── */
 function stInit() {
-  var buildBtn  = document.getElementById('stBuildBtn');
-  var queryBtn  = document.getElementById('stQueryBtn');
-  var updateBtn = document.getElementById('stUpdateBtn');
-  var playBtn   = document.getElementById('stPlayBtn');
-  var pauseBtn  = document.getElementById('stPauseBtn');
-  var stepBtn   = document.getElementById('stStepBtn');
-  var resetBtn  = document.getElementById('stResetBtn');
-  var speedSlider = document.getElementById('stSpeed');
+  let buildBtn  = document.getElementById('stBuildBtn');
+  let queryBtn  = document.getElementById('stQueryBtn');
+  let updateBtn = document.getElementById('stUpdateBtn');
+  let playBtn   = document.getElementById('stPlayBtn');
+  let pauseBtn  = document.getElementById('stPauseBtn');
+  let stepBtn   = document.getElementById('stStepBtn');
+  let resetBtn  = document.getElementById('stResetBtn');
+  let speedSlider = document.getElementById('stSpeed');
 
   if (buildBtn)  buildBtn.addEventListener('click', stDoBuild);
   if (queryBtn)  queryBtn.addEventListener('click',  stDoQuery);
@@ -767,33 +767,33 @@ function stInit() {
 
   if (speedSlider) {
     speedSlider.addEventListener('input', function() {
-      var label = document.getElementById('stSpeedLabel');
+      let label = document.getElementById('stSpeedLabel');
       if (label) label.textContent = ST_SPEED_LABEL[speedSlider.value] || 'Normal';
       if (stState.playing) { stPause(); stPlay(); }
     });
   }
 
   // Set up canvas interactions
-  var canvas = document.getElementById('stCanvas');
+  let canvas = document.getElementById('stCanvas');
   if (canvas) {
     canvas.addEventListener('mousemove', function(e) {
       if (!stState.built) return;
-      var rect = canvas.getBoundingClientRect();
-      var x = e.clientX - rect.left;
-      var y = e.clientY - rect.top;
+      let rect = canvas.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      let y = e.clientY - rect.top;
       
-      var scaleX = canvas.width / rect.width;
-      var scaleY = canvas.height / rect.height;
+      let scaleX = canvas.width / rect.width;
+      let scaleY = canvas.height / rect.height;
       x *= scaleX;
       y *= scaleY;
       
-      var foundIdx = null;
-      var pos = stState.nodePos;
-      for (var key in pos) {
+      let foundIdx = null;
+      let pos = stState.nodePos;
+      for (let key in pos) {
         if (pos.hasOwnProperty(key)) {
-          var p = pos[key];
+          let p = pos[key];
           if (p.start === p.end) {
-            var dist = Math.sqrt((x - p.x)*(x - p.x) + (y - p.y)*(y - p.y));
+            let dist = Math.sqrt((x - p.x)*(x - p.x) + (y - p.y)*(y - p.y));
             if (dist <= p.r) {
               foundIdx = p.start;
               break;
@@ -819,21 +819,21 @@ function stInit() {
 
     canvas.addEventListener('click', function(e) {
       if (!stState.built) return;
-      var rect = canvas.getBoundingClientRect();
-      var x = e.clientX - rect.left;
-      var y = e.clientY - rect.top;
+      let rect = canvas.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      let y = e.clientY - rect.top;
       
-      var scaleX = canvas.width / rect.width;
-      var scaleY = canvas.height / rect.height;
+      let scaleX = canvas.width / rect.width;
+      let scaleY = canvas.height / rect.height;
       x *= scaleX;
       y *= scaleY;
       
-      var pos = stState.nodePos;
-      for (var key in pos) {
+      let pos = stState.nodePos;
+      for (let key in pos) {
         if (pos.hasOwnProperty(key)) {
-          var p = pos[key];
+          let p = pos[key];
           if (p.start === p.end) {
-            var dist = Math.sqrt((x - p.x)*(x - p.x) + (y - p.y)*(y - p.y));
+            let dist = Math.sqrt((x - p.x)*(x - p.x) + (y - p.y)*(y - p.y));
             if (dist <= p.r) {
               stPromptUpdate(p.start);
               break;
@@ -847,8 +847,8 @@ function stInit() {
   // Resize canvas on window resize
   window.addEventListener('resize', function() {
     if (!stState.built) return;
-    var canvas = document.getElementById('stCanvas');
-    var wrap   = canvas && canvas.parentElement;
+    let canvas = document.getElementById('stCanvas');
+    let wrap   = canvas && canvas.parentElement;
     if (!canvas || !wrap) return;
     canvas.width = wrap.clientWidth;
     stState.nodePos = stCalcLayout(canvas, stState.n);

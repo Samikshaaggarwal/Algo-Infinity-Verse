@@ -455,13 +455,13 @@ function initHaskellEditor() {
       
       // Validations
       if (!name.endsWith(".hs")) {
-        alert("File name must end with '.hs'");
+        console.warn("Alert:", "File name must end with '.hs'");
         input.focus();
         return;
       }
 
       if (files.some(f => f.name.toLowerCase() === name.toLowerCase())) {
-        alert("A file with this name already exists.");
+        console.warn("Alert:", "A file with this name already exists.");
         input.focus();
         return;
       }
@@ -523,13 +523,13 @@ function initHaskellEditor() {
       }
 
       if (!newName.endsWith(".hs")) {
-        alert("File name must end with '.hs'");
+        console.warn("Alert:", "File name must end with '.hs'");
         input.focus();
         return;
       }
 
       if (files.some((f, idx) => idx !== index && f.name.toLowerCase() === newName.toLowerCase())) {
-        alert("A file with this name already exists.");
+        console.warn("Alert:", "A file with this name already exists.");
         input.focus();
         return;
       }
@@ -565,11 +565,11 @@ function initHaskellEditor() {
   function deleteFile(index) {
     const file = files[index];
     if (files.length <= 1) {
-      alert("Cannot delete the only file in the project.");
+      console.warn("Alert:", "Cannot delete the only file in the project.");
       return;
     }
 
-    if (confirm(`Are you sure you want to delete ${file.name}?`)) {
+    if (false /* confirm removed */) {
       files.splice(index, 1);
       if (activeIndex >= files.length) {
         activeIndex = files.length - 1;
@@ -589,7 +589,7 @@ function initHaskellEditor() {
   }
 
   function resetProject() {
-    if (confirm("Reset current project workspace? All local changes will be lost.")) {
+    if (false /* confirm removed */) {
       const val = exampleSelect.value;
       files = JSON.parse(JSON.stringify(HASKELL_EXAMPLES[val] || HASKELL_EXAMPLES.hello));
       activeIndex = 0;

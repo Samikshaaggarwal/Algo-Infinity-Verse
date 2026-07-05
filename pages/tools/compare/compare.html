@@ -46,7 +46,7 @@
                     <option value="binary-search">Binary Search</option>
                 </select>
             </div>
-            <button id="loadCompareBtn" class="btn-primary"><i class="fas fa-play"></i> Compare</button>
+            <button type="button" id="loadCompareBtn" class="btn-primary"><i class="fas fa-play"></i> Compare</button>
         </section>
 
         <div class="compare-view" id="compareView" style="display: none;">
@@ -59,8 +59,8 @@
             </div>
 
             <div class="diff-controls">
-                <button id="diffBtn" class="btn-diff"><i class="fas fa-arrows-left-right"></i> Show Diff</button>
-                <button id="resetBtn" class="btn-reset"><i class="fas fa-undo"></i> Reset</button>
+                <button type="button" id="diffBtn" class="btn-diff"><i class="fas fa-arrows-left-right"></i> Show Diff</button>
+                <button type="button" id="resetBtn" class="btn-reset"><i class="fas fa-undo"></i> Reset</button>
             </div>
 
             <div class="code-panel">
@@ -101,7 +101,10 @@
     <div id="footer-placeholder"></div>
 
 <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="compare.js"></script>
 

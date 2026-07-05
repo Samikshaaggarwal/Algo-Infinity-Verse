@@ -531,6 +531,51 @@ html.light-mode .success-modal p {
     opacity: 1;
   }
 }
+/* ========================================================
+   FIX #1548: ULTRA-PREMIUM LOGIN BUTTON (PILL SHAPE)
+======================================================== */
+.session-notice.guest .login-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ffffff;
+  /* Clean white background for dark mode */
+  color: #1e293b;
+  /* Dark contrasting text */
+  text-decoration: none !important;
+  font-weight: 700;
+  padding: 6px 22px;
+  /* Premium spacious padding */
+  border-radius: 9999px;
+  /* Perfectly round pill shape */
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.9rem;
+  box-shadow: 0 2px 12px rgba(255, 255, 255, 0.15);
+}
+
+.session-notice.guest .login-btn:hover {
+  background: #f1f5f9;
+  transform: translateY(-2px) scale(1.02);
+  /* Smooth hover lift & scale */
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+  color: #0f172a;
+}
+
+/* ===== LIGHT MODE OVERRIDES (Complete contrast inversion) ===== */
+.light-mode .session-notice.guest .login-btn {
+  background: #1e293b;
+  /* Dark slate background */
+  color: #fbbf24;
+  /* Amber text to match the warning banner */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .session-notice.guest .login-btn:hover {
+  background: #0f172a;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
 
 /* Responsiveness settings */
 @media (max-width: 768px) {

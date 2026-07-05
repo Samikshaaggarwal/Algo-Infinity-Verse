@@ -73,7 +73,7 @@
           Find two numbers that add up to target. Target time complexity: O(N).
         </p>
       </div>
-      <button class="btn btn-primary" id="btnShowLobby">
+      <button type="button" class="btn btn-primary" id="btnShowLobby">
         <i class="fas fa-satellite-dish"></i> Connect Opponent
       </button>
     </header>
@@ -100,7 +100,7 @@
         </div>
 
         <div class="panel-footer">
-          <button class="btn btn-success w-100" id="btnRunMyCode" disabled>
+          <button type="button" class="btn btn-success w-100" id="btnRunMyCode" disabled>
             <i class="fas fa-play"></i> Run Tests
           </button>
         </div>
@@ -149,7 +149,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h2><i class="fas fa-gamepad"></i> Race Lobby (P2P)</h2>
-          <button class="btn-icon" id="btnCloseLobby">
+          <button type="button" class="btn-icon" id="btnCloseLobby">
             <i class="fas fa-times"></i>
           </button>
         </div>
@@ -162,10 +162,10 @@
           Status: Waiting for opponent...
         </div>
         <div class="tabs">
-          <button class="tab-btn active" data-tab="host">
+          <button type="button" class="tab-btn active" data-tab="host">
             🏁 Host a New Race
           </button>
-          <button class="tab-btn" data-tab="join">🤝 Join Existing Race</button>
+          <button type="button" class="tab-btn" data-tab="join">🤝 Join Existing Race</button>
         </div>
 
         <!-- Host Flow -->
@@ -180,7 +180,7 @@
               Generate a secure invite token and share it with your opponent.
             </p>
 
-            <button class="btn btn-primary w-100" id="btnGenerateOffer">
+            <button type="button" class="btn btn-primary w-100" id="btnGenerateOffer">
               ✨ Generate Invite Token
             </button>
             <label for="hostOfferToken"> Invite Token </label>
@@ -204,7 +204,7 @@
               id="hostAnswerToken"
               placeholder="Paste reply token..."
             ></textarea>
-            <button class="btn btn-success w-100" id="btnConnectHost">
+            <button type="button" class="btn btn-success w-100" id="btnConnectHost">
               🚀 Connect & Start Match
             </button>
           </div>
@@ -226,7 +226,7 @@
               id="guestOfferToken"
               placeholder="Paste host token..."
             ></textarea>
-            <button class="btn btn-primary w-100" id="btnAcceptOffer">
+            <button type="button" class="btn btn-primary w-100" id="btnAcceptOffer">
               🔗 Accept & Generate Reply
             </button>
           </div>
@@ -258,7 +258,7 @@
       <div class="winner-panel hidden" id="winnerPanel">
         <h1 id="winnerText">YOU WIN!</h1>
         <p id="winnerSubtext">Algorithm executed flawlessly.</p>
-        <button class="btn btn-primary" id="btnRematch">Request Rematch</button>
+        <button type="button" class="btn btn-primary" id="btnRematch">Request Rematch</button>
       </div>
     </div>
 

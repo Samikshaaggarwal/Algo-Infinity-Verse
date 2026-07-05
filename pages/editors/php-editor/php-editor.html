@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -78,14 +78,14 @@
             </select>
           </div>
           <div class="pe-toolbar-right">
-            <button id="peNewFileBtn" class="pe-icon-btn" title="New file" aria-label="Create new PHP file"><i class="fas fa-file"></i></button>
-            <button id="peLoadFileBtn" class="pe-icon-btn" title="Load .php file" aria-label="Load PHP file"><i class="fas fa-folder-open"></i></button>
-            <button id="peDownloadBtn" class="pe-icon-btn" title="Download .php file" aria-label="Download PHP file"><i class="fas fa-download"></i></button>
+            <button type="button" id="peNewFileBtn" class="pe-icon-btn" title="New file" aria-label="Create new PHP file"><i class="fas fa-file"></i></button>
+            <button type="button" id="peLoadFileBtn" class="pe-icon-btn" title="Load .php file" aria-label="Load PHP file"><i class="fas fa-folder-open"></i></button>
+            <button type="button" id="peDownloadBtn" class="pe-icon-btn" title="Download .php file" aria-label="Download PHP file"><i class="fas fa-download"></i></button>
             <input id="peFileInput" type="file" accept=".php" hidden />
-            <button id="peRunBtn" class="btn btn-primary pe-run-btn"><i class="fas fa-play"></i> Run</button>
-            <button id="peResetBtn" class="pe-icon-btn" title="Reset" aria-label="Reset to example"><i class="fas fa-undo"></i></button>
-            <button id="peCopyBtn" class="pe-icon-btn" title="Copy code" aria-label="Copy code to clipboard"><i class="fas fa-copy"></i></button>
-            <button id="peSaveBtn" class="pe-icon-btn" title="Save to localStorage" aria-label="Save code to browser storage"><i class="fas fa-save"></i></button>
+            <button type="button" id="peRunBtn" class="btn btn-primary pe-run-btn"><i class="fas fa-play"></i> Run</button>
+            <button type="button" id="peResetBtn" class="pe-icon-btn" title="Reset" aria-label="Reset to example"><i class="fas fa-undo"></i></button>
+            <button type="button" id="peCopyBtn" class="pe-icon-btn" title="Copy code" aria-label="Copy code to clipboard"><i class="fas fa-copy"></i></button>
+            <button type="button" id="peSaveBtn" class="pe-icon-btn" title="Save to localStorage" aria-label="Save code to browser storage"><i class="fas fa-save"></i></button>
           </div>
         </div>
 
@@ -115,7 +115,7 @@
         <div class="pe-console">
           <div class="pe-console-header">
             <span><i class="fas fa-exclamation-triangle"></i> Errors / Warnings</span>
-            <button class="pe-console-clear" id="peConsoleClear"><i class="fas fa-trash"></i> Clear</button>
+            <button type="button" class="pe-console-clear" id="peConsoleClear"><i class="fas fa-trash"></i> Clear</button>
           </div>
           <div class="pe-console-body" id="peConsoleBody">
             <span class="pe-console-placeholder">No errors detected.</span>
@@ -127,7 +127,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./php-editor.js"></script>
   

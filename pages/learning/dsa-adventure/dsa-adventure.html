@@ -63,9 +63,9 @@
         <div class="status-indicator" id="arenaStatus"><i class="fas fa-circle-notch fa-spin hidden" id="statusSpinner"></i> <span id="statusText">Awaiting Input</span></div>
         
         <div class="execution-controls">
-          <button id="btnPlayPause" class="ctrl-btn" disabled title="Play/Pause" aria-label="Play/Pause"><i class="fas fa-pause"></i></button>
-          <button id="btnStep" class="ctrl-btn" disabled title="Step Forward" aria-label="Step Forward"><i class="fas fa-step-forward"></i></button>
-          <button id="btnStop" class="ctrl-btn" disabled title="Stop Execution" aria-label="Stop Execution"><i class="fas fa-stop"></i></button>
+          <button type="button" id="btnPlayPause" class="ctrl-btn" disabled title="Play/Pause" aria-label="Play/Pause"><i class="fas fa-pause"></i></button>
+          <button type="button" id="btnStep" class="ctrl-btn" disabled title="Step Forward" aria-label="Step Forward"><i class="fas fa-step-forward"></i></button>
+          <button type="button" id="btnStop" class="ctrl-btn" disabled title="Stop Execution" aria-label="Stop Execution"><i class="fas fa-stop"></i></button>
           <div class="speed-controls">
             <label for="speedSlider">Speed:</label>
             <input type="range" id="speedSlider" min="1" max="100" value="50">
@@ -111,7 +111,11 @@
 
   </main>
 
+  <script src="/bootstrap-legacy.js"></script>
+
+
   <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="dsa-adventure.js"></script>
 </body>
 </html>

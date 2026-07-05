@@ -37,7 +37,7 @@
                 <p class="desc-text">Generate your secret keys and encrypt your private binary data. The server will never see these raw bits.</p>
 
                 <div class="key-section">
-                    <button class="btn btn-outline w-100" id="btnKeyGen"><i class="fas fa-key"></i> Generate Secret Key</button>
+                    <button type="button" class="btn btn-outline w-100" id="btnKeyGen"><i class="fas fa-key"></i> Generate Secret Key</button>
                     <div class="secret-key-display hidden" id="skDisplay">
                         <span>sk = </span> <code id="skVal">[...]</code>
                     </div>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-primary w-100 mt-3" id="btnEncrypt"><i class="fas fa-user-secret"></i> Encrypt & Send to Cloud</button>
+                <button type="button" class="btn btn-primary w-100 mt-3" id="btnEncrypt"><i class="fas fa-user-secret"></i> Encrypt & Send to Cloud</button>
 
                 <div class="cipher-log hidden" id="cipherLog">
                     <strong>Generated Ciphertexts (LWE):</strong>
@@ -85,7 +85,7 @@
             <div class="panel-body cloud-body">
                 <div class="cloud-toolbar">
                     <p>Construct a logic circuit. The server evaluates the gates using encrypted math without decrypting the inputs.</p>
-                    <button class="btn btn-accent" id="btnEvaluate" disabled><i class="fas fa-bolt"></i> Evaluate Blindly</button>
+                    <button type="button" class="btn btn-accent" id="btnEvaluate" disabled><i class="fas fa-bolt"></i> Evaluate Blindly</button>
                 </div>
 
                 <div class="circuit-arena" id="circuitArena">
@@ -148,7 +148,7 @@
                     <code id="receivedCipher">...</code>
                 </div>
 
-                <button class="btn btn-primary w-100 mt-3" id="btnDecrypt" disabled><i class="fas fa-unlock"></i> Decrypt Result</button>
+                <button type="button" class="btn btn-primary w-100 mt-3" id="btnDecrypt" disabled><i class="fas fa-unlock"></i> Decrypt Result</button>
 
                 <div class="results-dashboard hidden" id="resultsDashboard">
                     <div class="verdict-card" id="verdictCard">

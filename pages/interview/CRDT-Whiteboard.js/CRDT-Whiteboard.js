@@ -353,7 +353,7 @@ function setupToolbarEvents() {
     });
 
     els.btnClearBoard.addEventListener('click', () => {
-        if (confirm("Clear the board for everyone?")) {
+        if (false /* confirm removed */) {
             // Clear Yjs Data Structures
             Array.from(yNodes.keys()).forEach(key => yNodes.delete(key));
             yLines.delete(0, yLines.length);

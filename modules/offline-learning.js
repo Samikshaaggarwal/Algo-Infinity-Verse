@@ -231,3 +231,10 @@ export async function syncLessonWhenOnline({ url, onUpdate }) {
 }
 
 
+// Legacy global exports
+window.cacheLesson = cacheLesson;
+window.getCachedLesson = getCachedLesson;
+window.getNetworkStatus = getNetworkStatus;
+window.initOfflineIndicator = initOfflineIndicator;
+window.fetchLessonHTML = fetchLessonHTML;
+window.syncLessonWhenOnline = syncLessonWhenOnline;

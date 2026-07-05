@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 
-                <button class="btn btn-secondary w-100" id="btnAddProcess">
+                <button type="button" class="btn btn-secondary w-100" id="btnAddProcess">
                     <i class="fas fa-plus"></i> Add Process
                 </button>
 
@@ -71,10 +71,10 @@
                 </div>
 
                 <div class="action-row">
-                    <button class="btn btn-primary w-100" id="btnStartSimulation" disabled>
+                    <button type="button" class="btn btn-primary w-100" id="btnStartSimulation" disabled>
                         <i class="fas fa-play"></i> Run Scheduler
                     </button>
-                    <button class="btn btn-danger w-100" id="btnReset">
+                    <button type="button" class="btn btn-danger w-100" id="btnReset">
                         <i class="fas fa-redo"></i> Reset
                     </button>
                 </div>
@@ -148,7 +148,11 @@
 
     </main>
 
+    <script src="/bootstrap-legacy.js"></script>
+
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="sjf-visualizer.js"></script>
 </body>
 </html>

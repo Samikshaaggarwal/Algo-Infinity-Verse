@@ -127,18 +127,18 @@ export function instrumentJS(sourceCode) {
 
   const wrapped = [
     `(function() {`,
-    `  var __snapshots = [];`,
-    `  var __origLog = console.log;`,
-    `  var __userOutput = [];`,
+    `  let __snapshots = [];`,
+    `  let __origLog = console.log;`,
+    `  let __userOutput = [];`,
     `  console.log = function() {`,
-    `    var msg = Array.prototype.map.call(arguments, function(a) {`,
+    `    let msg = Array.prototype.map.call(arguments, function(a) {`,
     `      return typeof a === 'object' ? JSON.stringify(a) : String(a);`,
     `    }).join(' ');`,
     `    __userOutput.push(msg);`,
     `  };`,
     `  function __snap($$line) {`,
     `    try {`,
-    `      var __v = {};`,
+    `      let __v = {};`,
     ...Array.from(allVariableNames).map((v) =>
       `      try { __v["${v}"] = ${v}; } catch(e) {}`
     ),
@@ -147,7 +147,7 @@ export function instrumentJS(sourceCode) {
     `  }`,
     ...instrumentedLines.map((l) => `  ${l}`),
     `  console.log = __origLog;`,
-    `  var __result = JSON.stringify({ snapshots: __snapshots, output: __userOutput });`,
+    `  let __result = JSON.stringify({ snapshots: __snapshots, output: __userOutput });`,
     `  process.stdout.write(__result);`,
     `})()`,
   ].join("\n");
@@ -166,4 +166,9 @@ export function extractSnapshotsFromOutput(stdout) {
     }
   } catch {}
   return null;
+}
+// Legacy global exports (browser only)
+if (typeof window !== 'undefined') {
+  window.instrumentJS = instrumentJS;
+  window.extractSnapshotsFromOutput = extractSnapshotsFromOutput;
 }

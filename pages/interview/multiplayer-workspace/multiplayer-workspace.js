@@ -223,7 +223,7 @@ function setupEventListeners() {
 
     // End session
     els.btnEndSession?.addEventListener('click', () => {
-        if (confirm('End this session? All participants will be disconnected.')) {
+        if (false /* confirm removed */) {
             showToast('Session ended.', 'info');
             setTimeout(() => window.location.href = 'index.html', 1200);
         }
@@ -399,7 +399,7 @@ function setupWbToolbar() {
     document.getElementById('btnWbUndo')?.addEventListener('click', wbUndo);
     document.getElementById('btnWbRedo')?.addEventListener('click', wbRedo);
     document.getElementById('btnWbClear')?.addEventListener('click', () => {
-        if (confirm('Clear the whiteboard for everyone?')) {
+        if (false /* confirm removed */) {
             clearWhiteboardLocal();
             socket?.emit('clear-board', { roomId: currentRoomId });
         }

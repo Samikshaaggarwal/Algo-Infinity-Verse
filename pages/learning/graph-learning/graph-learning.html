@@ -49,7 +49,7 @@
     </div>
 
     <!-- Scroll to Top -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -205,7 +205,7 @@
               <div class="graph-code-block">
                 <div class="graph-code-header">
                   <span class="graph-code-lang">Python — Adjacency List</span>
-                  <button class="graph-code-copy" data-code="graph = {
+                  <button type="button" class="graph-code-copy" data-code="graph = {
     'A': ['B', 'C', 'D'],
     'B': ['A', 'D', 'E'],
     'C': ['A', 'D'],
@@ -225,7 +225,7 @@
               <div class="graph-exercise" id="exercise-intro">
                 <div class="graph-exercise-title"><i class="fas fa-dumbbell"></i> Quick Check</div>
                 <p>What are the two main components of every graph data structure?</p>
-                <button class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Answer</button>
+                <button type="button" class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Answer</button>
                 <div class="graph-exercise-solution" id="solution-intro">
                   <p><strong>Answer: Vertices (Nodes) and Edges</strong></p>
                   <p>Vertices represent entities (people, cities, web pages) and edges represent relationships or connections between them.</p>
@@ -290,7 +290,7 @@
               <div class="graph-exercise" id="exercise-terminology">
                 <div class="graph-exercise-title"><i class="fas fa-dumbbell"></i> Quick Check</div>
                 <p>In a directed graph, if vertex A has 3 incoming edges and 2 outgoing edges, what is its in-degree and out-degree?</p>
-                <button class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-terminology">Show Answer</button>
+                <button type="button" class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-terminology">Show Answer</button>
                 <div class="graph-exercise-solution" id="solution-terminology">
                   <p><strong>Answer: In-degree = 3, Out-degree = 2</strong></p>
                   <p>In a directed graph, in-degree counts edges pointing <em>into</em> the vertex, and out-degree counts edges going <em>out from</em> the vertex. They are tracked independently.</p>
@@ -358,7 +358,7 @@
               <div class="graph-code-block">
                 <div class="graph-code-header">
                   <span class="graph-code-lang">Pseudocode — BFS</span>
-                  <button class="graph-code-copy" data-code="function BFS(graph, start):
+                  <button type="button" class="graph-code-copy" data-code="function BFS(graph, start):
     queue  = new Queue()
     visited = empty set
 
@@ -394,7 +394,7 @@
               <div class="graph-code-block">
                 <div class="graph-code-header">
                   <span class="graph-code-lang">Python — BFS Implementation</span>
-                  <button class="graph-code-copy" data-code="from collections import deque
+                  <button type="button" class="graph-code-copy" data-code="from collections import deque
 
 def bfs(graph, start):
     visited = set()
@@ -441,7 +441,7 @@ def bfs(graph, start):
               <div class="graph-exercise" id="exercise-bfs">
                 <div class="graph-exercise-title"><i class="fas fa-dumbbell"></i> Practice: BFS Data Structure</div>
                 <p>Which data structure is essential to implement BFS iteratively, and why?</p>
-                <button class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-bfs">Show Answer</button>
+                <button type="button" class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-bfs">Show Answer</button>
                 <div class="graph-exercise-solution" id="solution-bfs">
                   <p><strong>Answer: Queue (FIFO — First In, First Out)</strong></p>
                   <p>A queue ensures nodes are visited in the order they were discovered — level by level. This guarantees that all nodes at distance <em>k</em> are visited before any node at distance <em>k+1</em>, which is exactly what BFS needs to find shortest paths.</p>
@@ -507,7 +507,7 @@ def bfs(graph, start):
               <div class="graph-code-block">
                 <div class="graph-code-header">
                   <span class="graph-code-lang">Pseudocode — DFS (Recursive)</span>
-                  <button class="graph-code-copy" data-code="function DFS(graph, node, visited):
+                  <button type="button" class="graph-code-copy" data-code="function DFS(graph, node, visited):
     mark node as visited
     process(node)
 
@@ -528,7 +528,7 @@ def bfs(graph, start):
               <div class="graph-code-block">
                 <div class="graph-code-header">
                   <span class="graph-code-lang">Python — DFS Recursive + Iterative</span>
-                  <button class="graph-code-copy" data-code="# Recursive DFS
+                  <button type="button" class="graph-code-copy" data-code="# Recursive DFS
 def dfs_recursive(graph, node, visited=None):
     if visited is None:
         visited = set()
@@ -593,7 +593,7 @@ def dfs_iterative(graph, start):
               <div class="graph-exercise" id="exercise-dfs">
                 <div class="graph-exercise-title"><i class="fas fa-dumbbell"></i> Practice: DFS vs BFS</div>
                 <p>You need to find whether a path exists between two nodes in a large graph. Which traversal would you choose, and why?</p>
-                <button class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-dfs">Show Answer</button>
+                <button type="button" class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-dfs">Show Answer</button>
                 <div class="graph-exercise-solution" id="solution-dfs">
                   <p><strong>Answer: Either works, but DFS is often preferred for reachability.</strong></p>
                   <p>DFS uses less memory (stack depth vs wide BFS queue) and quickly reaches distant nodes by going deep first. If you also need the shortest path, switch to BFS. For pure reachability, DFS is simpler.</p>
@@ -658,7 +658,7 @@ def dfs_iterative(graph, start):
               <div class="graph-exercise" id="exercise-applications">
                 <div class="graph-exercise-title"><i class="fas fa-dumbbell"></i> Quick Check</div>
                 <p>Which graph algorithm would you use to find the shortest driving route between two cities, and why?</p>
-                <button class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-applications">Show Answer</button>
+                <button type="button" class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-applications">Show Answer</button>
                 <div class="graph-exercise-solution" id="solution-applications">
                   <p><strong>Answer: Dijkstra's Algorithm (or A* for heuristic-guided search)</strong></p>
                   <p>Roads are a weighted graph where edge weights represent distance or travel time. BFS finds shortest path only in unweighted graphs. Dijkstra's handles non-negative weights and is the standard choice for navigation systems.</p>
@@ -756,7 +756,7 @@ def dfs_iterative(graph, start):
                   In the square graph (A-B-C-D), what is the BFS order if you start from node <strong>B</strong>?
                   Assume neighbours are visited in alphabetical order.
                 </p>
-                <button class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-diagrams">Show Answer</button>
+                <button type="button" class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-diagrams">Show Answer</button>
                 <div class="graph-exercise-solution" id="solution-diagrams">
                   <p><strong>Answer: B → A → D → C</strong></p>
                   <p>Starting at B, BFS enqueues its neighbours A and D first (level 1). Then processes A — its unvisited neighbour is C (level 2). D has no new unvisited neighbours. Final order: B → A → D → C.</p>
@@ -775,7 +775,7 @@ def dfs_iterative(graph, start):
               <div class="graph-exercise" id="exercise-ex1">
                 <div class="graph-exercise-title"><i class="fas fa-dumbbell"></i> Exercise 1: Define a Graph</div>
                 <p>In your own words, define a graph and explain the difference between a <strong>directed</strong> and <strong>undirected</strong> graph. Give one real-world example of each.</p>
-                <button class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-ex1">Show Answer</button>
+                <button type="button" class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-ex1">Show Answer</button>
                 <div class="graph-exercise-solution" id="solution-ex1">
                   <p><strong>Answer:</strong></p>
                   <p>A graph is a data structure of vertices (entities) and edges (relationships). <strong>Directed:</strong> edges have direction, like Twitter follows (A follows B ≠ B follows A). <strong>Undirected:</strong> edges are bidirectional, like Facebook friendship (if A is friends with B, B is friends with A).</p>
@@ -785,7 +785,7 @@ def dfs_iterative(graph, start):
               <div class="graph-exercise" id="exercise-ex2">
                 <div class="graph-exercise-title"><i class="fas fa-dumbbell"></i> Exercise 2: Identify a Cycle</div>
                 <p>Given the graph <code>A—B—C—A</code>, does this graph contain a cycle? What is the cycle?</p>
-                <button class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-ex2">Show Answer</button>
+                <button type="button" class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-ex2">Show Answer</button>
                 <div class="graph-exercise-solution" id="solution-ex2">
                   <p><strong>Answer: Yes — cycle is A → B → C → A</strong></p>
                   <p>A cycle exists because there is a path that starts at A, traverses through B and C, and returns to A without repeating any edge. This makes the graph cyclic.</p>
@@ -795,7 +795,7 @@ def dfs_iterative(graph, start):
               <div class="graph-exercise" id="exercise-ex3">
                 <div class="graph-exercise-title"><i class="fas fa-dumbbell"></i> Exercise 3: BFS vs DFS Choice</div>
                 <p>Scenario: You want to find the shortest number of hops between two users in a social network. Should you use BFS or DFS? Justify your answer.</p>
-                <button class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-ex3">Show Answer</button>
+                <button type="button" class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-ex3">Show Answer</button>
                 <div class="graph-exercise-solution" id="solution-ex3">
                   <p><strong>Answer: BFS</strong></p>
                   <p>BFS explores level by level — every node at distance <em>k</em> is found before any node at distance <em>k+1</em>. The first time BFS reaches the target node, it has found the fewest-hop path. DFS does not guarantee this as it dives deep down one branch first.</p>
@@ -805,7 +805,7 @@ def dfs_iterative(graph, start):
               <div class="graph-exercise" id="exercise-ex4">
                 <div class="graph-exercise-title"><i class="fas fa-dumbbell"></i> Exercise 4: Adjacency List</div>
                 <p>Build an adjacency list for the graph: <code>A—B, A—C, B—D, C—D, D—E</code>. Then perform a BFS starting from A and list the visit order.</p>
-                <button class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-ex4">Show Answer</button>
+                <button type="button" class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-ex4">Show Answer</button>
                 <div class="graph-exercise-solution" id="solution-ex4">
                   <p><strong>Adjacency List:</strong></p>
                   <p>A: [B, C] | B: [A, D] | C: [A, D] | D: [B, C, E] | E: [D]</p>
@@ -817,7 +817,7 @@ def dfs_iterative(graph, start):
               <div class="graph-exercise" id="exercise-ex5">
                 <div class="graph-exercise-title"><i class="fas fa-dumbbell"></i> Exercise 5: Application Design</div>
                 <p>You're designing a flight booking system. Airports are nodes and direct flight routes are edges with weights representing flight duration. Which algorithm would find the quickest route from City X to City Y? What if you wanted to include stopovers?</p>
-                <button class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-ex5">Show Answer</button>
+                <button type="button" class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-ex5">Show Answer</button>
                 <div class="graph-exercise-solution" id="solution-ex5">
                   <p><strong>Answer: Dijkstra's Algorithm</strong></p>
                   <p>This is a weighted shortest-path problem. Dijkstra's efficiently finds minimum-weight paths in graphs with non-negative edge weights. For stopovers, the same algorithm applies — it naturally considers multi-hop routes through intermediate airports when they produce a lower total weight.</p>
@@ -827,7 +827,7 @@ def dfs_iterative(graph, start):
               <div class="graph-exercise" id="exercise-ex6">
                 <div class="graph-exercise-title"><i class="fas fa-dumbbell"></i> Exercise 6: Time Complexity</div>
                 <p>A graph has V = 1000 vertices and E = 4000 edges. What is the time complexity of running BFS on it?</p>
-                <button class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-ex6">Show Answer</button>
+                <button type="button" class="graph-exercise-toggle" aria-expanded="false" aria-controls="solution-ex6">Show Answer</button>
                 <div class="graph-exercise-solution" id="solution-ex6">
                   <p><strong>Answer: O(V + E) = O(1000 + 4000) = O(5000) = O(V + E)</strong></p>
                   <p>BFS visits every vertex once and processes every edge once. With 1000 vertices and 4000 edges, it performs approximately 5000 operations — making it very efficient even at this scale.</p>
@@ -928,8 +928,8 @@ def dfs_iterative(graph, start):
               </div><!-- /quiz-container -->
 
               <div class="graph-quiz-actions">
-                <button class="graph-quiz-btn" id="submitQuizBtn">Submit Quiz</button>
-                <button class="graph-quiz-btn-secondary" id="resetQuizBtn" style="display:none">Reset Quiz</button>
+                <button type="button" class="graph-quiz-btn" id="submitQuizBtn">Submit Quiz</button>
+                <button type="button" class="graph-quiz-btn-secondary" id="resetQuizBtn" style="display:none">Reset Quiz</button>
               </div>
 
               <div class="graph-quiz-score-banner" id="quizScoreBanner">
@@ -951,7 +951,10 @@ def dfs_iterative(graph, start):
 
     <!-- Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="graph-learning.js" defer></script>
     

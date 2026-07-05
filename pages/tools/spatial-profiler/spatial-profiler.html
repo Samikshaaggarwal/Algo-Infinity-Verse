@@ -69,7 +69,7 @@
             <label>Input Size (N)</label>
             <div class="input-row">
               <input type="number" id="input-size" min="1" max="15" value="5" />
-              <button class="btn-vis btn-insert" id="btn-apply-size"><i class="fas fa-check"></i> Apply</button>
+              <button type="button" class="btn-vis btn-insert" id="btn-apply-size"><i class="fas fa-check"></i> Apply</button>
             </div>
           </div>
 
@@ -77,9 +77,9 @@
           <div class="control-group">
             <label>Execution Controls</label>
             <div class="execution-controls">
-              <button class="btn-ctrl" id="btn-prev" title="Step Backward"><i class="fas fa-step-backward"></i></button>
-              <button class="btn-ctrl" id="btn-play" title="Auto Play"><i class="fas fa-play"></i></button>
-              <button class="btn-ctrl" id="btn-next" title="Step Forward"><i class="fas fa-step-forward"></i></button>
+              <button type="button" class="btn-ctrl" id="btn-prev" title="Step Backward"><i class="fas fa-step-backward"></i></button>
+              <button type="button" class="btn-ctrl" id="btn-play" title="Auto Play"><i class="fas fa-play"></i></button>
+              <button type="button" class="btn-ctrl" id="btn-next" title="Step Forward"><i class="fas fa-step-forward"></i></button>
             </div>
           </div>
 
@@ -192,7 +192,11 @@
 
     <div id="footer-placeholder"></div>
     
+    <script src="/bootstrap-legacy.js"></script>
+
+    
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="spatial-profiler.js"></script>

@@ -60,8 +60,8 @@ function handleAddProcess() {
     const at = parseInt(els.arrivalTime.value);
     const bt = parseInt(els.burstTime.value);
 
-    if (isNaN(at) || at < 0) return alert("Arrival Time must be a positive number.");
-    if (isNaN(bt) || bt <= 0) return alert("Burst Time must be greater than 0.");
+    if (isNaN(at) || at < 0) return console.warn("Alert:", "Arrival Time must be a positive number.");
+    if (isNaN(bt) || bt <= 0) return console.warn("Alert:", "Burst Time must be greater than 0.");
 
     const process = {
         pid: `P${processIdCounter++}`,

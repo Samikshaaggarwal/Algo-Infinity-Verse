@@ -92,19 +92,19 @@
 
 <div class="perl-toolbar-right">
 
-<button id="perlRunBtn" class="btn btn-primary perl-run-btn">
+<button type="button" id="perlRunBtn" class="btn btn-primary perl-run-btn">
 <i class="fas fa-play"></i> Run
 </button>
 
-<button id="perlResetBtn" class="perl-icon-btn">
+<button type="button" id="perlResetBtn" class="perl-icon-btn">
 <i class="fas fa-undo"></i>
 </button>
 
-<button id="perlCopyBtn" class="perl-icon-btn">
+<button type="button" id="perlCopyBtn" class="perl-icon-btn">
 <i class="fas fa-copy"></i>
 </button>
 
-<button id="perlSaveBtn" class="perl-icon-btn">
+<button type="button" id="perlSaveBtn" class="perl-icon-btn">
 <i class="fas fa-save"></i>
 </button>
 
@@ -162,7 +162,7 @@ Run your code to see output here...
 Errors / Warnings
 </span>
 
-<button id="perlConsoleClear" class="perl-console-clear">
+<button type="button" id="perlConsoleClear" class="perl-console-clear">
 <i class="fas fa-trash"></i> Clear
 </button>
 
@@ -188,7 +188,10 @@ No errors detected.
     loadPartial('footer-placeholder', '/partials/footer.html');
   </script>
 <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
   </body>
 </html>

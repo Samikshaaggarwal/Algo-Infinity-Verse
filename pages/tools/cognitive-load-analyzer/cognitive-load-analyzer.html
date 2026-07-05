@@ -28,7 +28,7 @@
 </head>
 <body data-page="cognitive-load-analyzer">
   <div id="loading-screen"><div class="loader"><div class="infinity-loader">∞</div><h2>Algo Infinity Verse</h2><div class="loading-bar"><div class="loading-progress"></div></div></div></div>
-  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
+  <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
   <div id="navbar-placeholder"></div>
   <section id="home" class="cla-hero">
     <div class="cla-hero-badge"><i class="fas fa-brain"></i> Cognitive Load Analyzer</div>
@@ -52,19 +52,22 @@
             <div class="cla-pane-label"><span><i class="fas fa-terminal"></i> Write or paste your solution</span><span id="claLineCount" style="font-size:0.75rem;">1 line</span></div>
             <div class="cla-editor-frame"><div class="cla-line-numbers" id="claLineNumbers">1</div><textarea id="claCodeEditor" class="cla-code-textarea" spellcheck="false" placeholder="# Start coding..."></textarea></div>
           </div>
-          <div class="cla-controls"><button id="claStartBtn" class="btn btn-primary">Start Session</button><button id="claResetBtn" class="btn btn-secondary" disabled>Reset</button><button id="claGenerateBtn" class="btn btn-success" disabled>Generate Insights</button></div>
+          <div class="cla-controls"><button type="button" id="claStartBtn" class="btn btn-primary">Start Session</button><button type="button" id="claResetBtn" class="btn btn-secondary" disabled>Reset</button><button type="button" id="claGenerateBtn" class="btn btn-success" disabled>Generate Insights</button></div>
         </div>
         <div class="cla-panel-card" id="claInsightsPanel">
           <div class="cla-panel-header"><div class="cla-panel-title"><i class="fas fa-lightbulb cla-panel-icon"></i><h3>Insights</h3></div></div>
           <div id="claInsightsContainer" class="cla-insights-container"><p class="cla-placeholder">Run a session and click “Generate Insights” to see feedback.</p></div>
-          <div class="cla-controls"><button id="claCopyBtn" class="btn btn-outline" disabled>Copy Insights</button></div>
+          <div class="cla-controls"><button type="button" id="claCopyBtn" class="btn btn-outline" disabled>Copy Insights</button></div>
         </div>
       </div>
     </div>
   </section>
   <div id="footer-placeholder"></div>
   <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   <script src="cognitive-load-analyzer.js"></script>
 

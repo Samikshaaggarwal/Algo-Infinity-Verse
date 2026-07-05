@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Input Validation Layer
         if (!username) {
-            alert('Validation Error: Please enter a valid LeetCode username.');
+            console.warn("Alert:", 'Validation Error: Please enter a valid LeetCode username.');
             return;
         }
 
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Execution Exception:', error);
-            alert(`Sync Failed: ${error.message || 'Check the username and connection status.'}`);
+            console.warn("Alert:", `Sync Failed: ${error.message || 'Check the username and connection status.'}`);
             resetMetricsDisplay();
         } finally {
             // Exit Loading Lifecycle State

@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -76,7 +76,7 @@
               <label class="st-label" for="stArrayInput">Array (comma separated, max 16)</label>
               <input type="text" id="stArrayInput" class="st-input" value="1, 3, 5, 7, 9, 11" aria-label="Array input" placeholder="e.g. 1, 3, 5, 7, 9, 11" />
             </div>
-            <button class="btn btn-primary st-btn-primary" id="stBuildBtn">
+            <button type="button" class="btn btn-primary st-btn-primary" id="stBuildBtn">
               <i class="fas fa-hammer"></i> Build Tree
             </button>
           </div>
@@ -89,7 +89,7 @@
                 <input type="number" id="stQueryL" class="st-input-sm" value="1" min="0" aria-label="Query left index" placeholder="L" />
                 <span class="st-op-sep">to</span>
                 <input type="number" id="stQueryR" class="st-input-sm" value="4" min="0" aria-label="Query right index" placeholder="R" />
-                <button class="btn st-op-btn st-op-query" id="stQueryBtn">Query Sum</button>
+                <button type="button" class="btn st-op-btn st-op-query" id="stQueryBtn">Query Sum</button>
               </div>
             </div>
 
@@ -101,7 +101,7 @@
                 <input type="number" id="stUpdateIdx" class="st-input-sm" value="2" min="0" aria-label="Update index" placeholder="i" />
                 <span class="st-op-sep">val</span>
                 <input type="number" id="stUpdateVal" class="st-input-sm" value="10" aria-label="Update value" placeholder="v" />
-                <button class="btn st-op-btn st-op-update" id="stUpdateBtn">Update</button>
+                <button type="button" class="btn st-op-btn st-op-update" id="stUpdateBtn">Update</button>
               </div>
             </div>
 
@@ -117,16 +117,16 @@
 
           <!-- Playback controls -->
           <div class="st-playback-row">
-            <button class="btn btn-secondary st-pb-btn" id="stPlayBtn" disabled aria-label="Play">
+            <button type="button" class="btn btn-secondary st-pb-btn" id="stPlayBtn" disabled aria-label="Play">
               <i class="fas fa-play"></i> Play
             </button>
-            <button class="btn btn-secondary st-pb-btn" id="stPauseBtn" disabled aria-label="Pause">
+            <button type="button" class="btn btn-secondary st-pb-btn" id="stPauseBtn" disabled aria-label="Pause">
               <i class="fas fa-pause"></i> Pause
             </button>
-            <button class="btn btn-secondary st-pb-btn" id="stStepBtn" disabled aria-label="Step forward">
+            <button type="button" class="btn btn-secondary st-pb-btn" id="stStepBtn" disabled aria-label="Step forward">
               <i class="fas fa-step-forward"></i> Step
             </button>
-            <button class="btn btn-secondary st-pb-btn" id="stResetBtn" aria-label="Reset">
+            <button type="button" class="btn btn-secondary st-pb-btn" id="stResetBtn" aria-label="Reset">
               <i class="fas fa-undo"></i> Reset
             </button>
             <div class="st-step-counter">
@@ -237,7 +237,9 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
     <script src="/script.js?v=20260601"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="/auth-gate.js"></script>
     <script src="segment-tree-simulator.js"></script>

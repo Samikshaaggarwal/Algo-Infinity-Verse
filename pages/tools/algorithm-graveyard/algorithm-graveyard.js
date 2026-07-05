@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
   agInitModal();
 });
 
-var AG_SPEED = { 1: 900, 2: 500, 3: 280, 4: 120, 5: 40 };
+let AG_SPEED = { 1: 900, 2: 500, 3: 280, 4: 120, 5: 40 };
 
-var AG_EXHIBITS = [
+let AG_EXHIBITS = [
   {
     id: 'linear-vs-binary',
     cat: 'search',
@@ -194,8 +194,8 @@ var AG_EXHIBITS = [
 /* ─── Algorithm implementations (step-based) ─── */
 
 function agLinearSearch(arr, target) {
-  var steps = [];
-  for (var i = 0; i < arr.length; i++) {
+  let steps = [];
+  for (let i = 0; i < arr.length; i++) {
     steps.push({ type: 'compare', idx: i, ops: i + 1, msg: 'Comparing arr[' + i + ']=' + arr[i] + ' with target=' + target });
     if (arr[i] === target) {
       steps.push({ type: 'found', idx: i, ops: i + 1, msg: '✅ Found ' + target + ' at index ' + i + ' after ' + (i+1) + ' comparisons.' });
@@ -207,10 +207,10 @@ function agLinearSearch(arr, target) {
 }
 
 function agBinarySearch(arr, target) {
-  var steps = [];
-  var lo = 0, hi = arr.length - 1, ops = 0;
+  let steps = [];
+  let lo = 0, hi = arr.length - 1, ops = 0;
   while (lo <= hi) {
-    var mid = Math.floor((lo + hi) / 2);
+    let mid = Math.floor((lo + hi) / 2);
     ops++;
     steps.push({ type: 'compare', lo: lo, hi: hi, mid: mid, ops: ops, msg: 'lo=' + lo + ' hi=' + hi + ' mid=' + mid + ' arr[mid]=' + arr[mid] });
     if (arr[mid] === target) {
@@ -229,13 +229,13 @@ function agBinarySearch(arr, target) {
 }
 
 function agBubbleSort(arr) {
-  var a = arr.slice(); var steps = []; var ops = 0;
-  for (var i = 0; i < a.length - 1; i++) {
-    for (var j = 0; j < a.length - 1 - i; j++) {
+  let a = arr.slice(); let steps = []; let ops = 0;
+  for (let i = 0; i < a.length - 1; i++) {
+    for (let j = 0; j < a.length - 1 - i; j++) {
       ops++;
       steps.push({ type: 'compare', arr: a.slice(), j: j, ops: ops, msg: 'Compare a[' + j + ']=' + a[j] + ' and a[' + (j+1) + ']=' + a[j+1] });
       if (a[j] > a[j+1]) {
-        var t = a[j]; a[j] = a[j+1]; a[j+1] = t;
+        let t = a[j]; a[j] = a[j+1]; a[j+1] = t;
         steps.push({ type: 'swap', arr: a.slice(), j: j, ops: ops, msg: 'Swap → ' + a.slice().join(',') });
       }
     }
@@ -246,10 +246,10 @@ function agBubbleSort(arr) {
 }
 
 function agMergeSort(arr) {
-  var steps = []; var ops = 0;
+  let steps = []; let ops = 0;
   function merge(a, lo, mid, hi) {
-    var L = a.slice(lo, mid+1); var R = a.slice(mid+1, hi+1);
-    var i = 0, j = 0, k = lo;
+    let L = a.slice(lo, mid+1); let R = a.slice(mid+1, hi+1);
+    let i = 0, j = 0, k = lo;
     while (i < L.length && j < R.length) {
       ops++;
       steps.push({ type: 'compare', arr: a.slice(), lo: lo, hi: hi, ops: ops, msg: 'Compare L[' + i + ']=' + L[i] + ' R[' + j + ']=' + R[j] });
@@ -261,27 +261,27 @@ function agMergeSort(arr) {
   }
   function sort(a, lo, hi) {
     if (lo >= hi) return;
-    var mid = Math.floor((lo + hi) / 2);
+    let mid = Math.floor((lo + hi) / 2);
     sort(a, lo, mid);
     sort(a, mid+1, hi);
     merge(a, lo, mid, hi);
   }
-  var a = arr.slice();
+  let a = arr.slice();
   sort(a, 0, a.length - 1);
   steps.push({ type: 'done', arr: a.slice(), ops: ops, msg: '✅ Merge Sort done in ' + ops + ' comparisons. Much fewer than Bubble Sort!' });
   return steps;
 }
 
 function agSelectionSort(arr) {
-  var a = arr.slice(); var steps = []; var ops = 0;
-  for (var i = 0; i < a.length - 1; i++) {
-    var minIdx = i;
-    for (var j = i+1; j < a.length; j++) {
+  let a = arr.slice(); let steps = []; let ops = 0;
+  for (let i = 0; i < a.length - 1; i++) {
+    let minIdx = i;
+    for (let j = i+1; j < a.length; j++) {
       ops++;
       steps.push({ type: 'compare', arr: a.slice(), i: i, j: j, minIdx: minIdx, ops: ops, msg: 'Compare a[' + j + ']=' + a[j] + ' with current min a[' + minIdx + ']=' + a[minIdx] });
       if (a[j] < a[minIdx]) { minIdx = j; steps.push({ type: 'new-min', arr: a.slice(), minIdx: minIdx, ops: ops, msg: 'New min at ' + minIdx + '=' + a[minIdx] }); }
     }
-    if (minIdx !== i) { var t = a[i]; a[i] = a[minIdx]; a[minIdx] = t; }
+    if (minIdx !== i) { let t = a[i]; a[i] = a[minIdx]; a[minIdx] = t; }
     steps.push({ type: 'placed', arr: a.slice(), i: i, ops: ops, msg: 'Placed ' + a[i] + ' at position ' + i + '. Always scanned entire remaining array!' });
   }
   steps.push({ type: 'done', arr: a.slice(), ops: ops, msg: '✅ Done in ' + ops + ' comparisons — always O(n²), even on sorted input.' });
@@ -289,19 +289,19 @@ function agSelectionSort(arr) {
 }
 
 function agHeapSort(arr) {
-  var a = arr.slice(); var steps = []; var ops = 0;
+  let a = arr.slice(); let steps = []; let ops = 0;
   function heapify(n, i) {
-    var largest = i, l = 2*i+1, r = 2*i+2;
+    let largest = i, l = 2*i+1, r = 2*i+2;
     ops++;
     steps.push({ type: 'heapify', arr: a.slice(), i: i, ops: ops, msg: 'Heapify at ' + i + ': checking children ' + l + ' and ' + r });
     if (l < n && a[l] > a[largest]) largest = l;
     if (r < n && a[r] > a[largest]) largest = r;
-    if (largest !== i) { var t = a[i]; a[i] = a[largest]; a[largest] = t; heapify(n, largest); }
+    if (largest !== i) { let t = a[i]; a[i] = a[largest]; a[largest] = t; heapify(n, largest); }
   }
-  for (var i = Math.floor(a.length/2)-1; i >= 0; i--) heapify(a.length, i);
+  for (let i = Math.floor(a.length/2)-1; i >= 0; i--) heapify(a.length, i);
   steps.push({ type: 'heap-built', arr: a.slice(), ops: ops, msg: 'Max-heap built in O(n). Now extracting elements.' });
-  for (var i = a.length-1; i > 0; i--) {
-    var t = a[0]; a[0] = a[i]; a[i] = t;
+  for (let i = a.length-1; i > 0; i--) {
+    let t = a[0]; a[0] = a[i]; a[i] = t;
     steps.push({ type: 'extract', arr: a.slice(), i: i, ops: ops, msg: 'Extracted max ' + a[i] + ' → placed at end. Re-heapify in O(log n).' });
     heapify(i, 0);
   }
@@ -310,22 +310,22 @@ function agHeapSort(arr) {
 }
 
 function agNaiveFib(n) {
-  var steps = []; var calls = 0;
+  let steps = []; let calls = 0;
   function fib(k) {
     calls++;
     steps.push({ type: 'call', n: k, calls: calls, msg: 'fib(' + k + ') called. Total calls so far: ' + calls });
     if (k <= 1) { steps.push({ type: 'base', n: k, calls: calls, msg: 'fib(' + k + ') = ' + k + ' (base case)' }); return k; }
-    var a = fib(k-1); var b = fib(k-2);
+    let a = fib(k-1); let b = fib(k-2);
     steps.push({ type: 'return', n: k, calls: calls, msg: 'fib(' + k + ') = fib(' + (k-1) + ') + fib(' + (k-2) + ') = ' + (a+b) });
     return a + b;
   }
-  var result = fib(Math.min(n, 15));
+  let result = fib(Math.min(n, 15));
   steps.push({ type: 'done', result: result, calls: calls, msg: '✅ fib(' + n + ')=' + result + ' in ' + calls + ' function calls. Exponential!' });
   return steps;
 }
 
 function agMemoFib(n) {
-  var steps = []; var calls = 0; var memo = {};
+  let steps = []; let calls = 0; let memo = {};
   function fib(k) {
     calls++;
     if (memo[k] !== undefined) {
@@ -334,21 +334,21 @@ function agMemoFib(n) {
     }
     steps.push({ type: 'compute', n: k, calls: calls, msg: 'fib(' + k + '): computing (first time)' });
     if (k <= 1) { memo[k] = k; return k; }
-    var result = fib(k-1) + fib(k-2);
+    let result = fib(k-1) + fib(k-2);
     memo[k] = result;
     steps.push({ type: 'store', n: k, result: result, calls: calls, msg: 'Store fib(' + k + ')=' + result + ' in memo.' });
     return result;
   }
-  var result = fib(Math.min(n, 15));
+  let result = fib(Math.min(n, 15));
   steps.push({ type: 'done', result: result, calls: calls, msg: '✅ fib(' + n + ')=' + result + ' in only ' + calls + ' calls. O(n)!' });
   return steps;
 }
 
 function agNaiveString(arr, pat) {
-  var text = arr.join(''); var steps = []; var ops = 0;
-  for (var i = 0; i <= text.length - pat.length; i++) {
-    var match = true;
-    for (var j = 0; j < pat.length; j++) {
+  let text = arr.join(''); let steps = []; let ops = 0;
+  for (let i = 0; i <= text.length - pat.length; i++) {
+    let match = true;
+    for (let j = 0; j < pat.length; j++) {
       ops++;
       steps.push({ type: 'compare', ti: i+j, pi: j, ops: ops, msg: 'text[' + (i+j) + ']="' + text[i+j] + '" vs pat[' + j + ']="' + pat[j] + '"' });
       if (text[i+j] !== pat[j]) {
@@ -363,18 +363,18 @@ function agNaiveString(arr, pat) {
 }
 
 function agKMPString(arr, pat) {
-  var text = arr.join(''); var steps = []; var ops = 0;
+  let text = arr.join(''); let steps = []; let ops = 0;
   // Build failure function
-  var fail = new Array(pat.length).fill(0);
-  var k = 0;
-  for (var i = 1; i < pat.length; i++) {
+  let fail = new Array(pat.length).fill(0);
+  let k = 0;
+  for (let i = 1; i < pat.length; i++) {
     while (k > 0 && pat[i] !== pat[k]) k = fail[k-1];
     if (pat[i] === pat[k]) k++;
     fail[i] = k;
   }
   steps.push({ type: 'fail-built', fail: fail.slice(), ops: 0, msg: 'Failure function built: [' + fail.join(',') + ']. No re-examination of text chars!' });
-  var j = 0;
-  for (var i = 0; i < text.length; i++) {
+  let j = 0;
+  for (let i = 0; i < text.length; i++) {
     ops++;
     while (j > 0 && text[i] !== pat[j]) { steps.push({ type: 'jump', ti: i, pi: j, ops: ops, msg: 'Mismatch. Jump: j=' + j + '→' + fail[j-1] + ' (no re-scan of text!)' }); j = fail[j-1]; }
     if (text[i] === pat[j]) { steps.push({ type: 'match', ti: i, pi: j, ops: ops, msg: 'Match: text[' + i + ']=pat[' + j + ']' }); j++; }
@@ -390,15 +390,15 @@ function agKMPString(arr, pat) {
 function agBFSWrong(dummy) {
   // Simplified demo showing BFS picking wrong path on weighted graph
   // Graph: 0→1(w=1), 0→2(w=1), 1→3(w=100), 2→3(w=1) — BFS says 0→1→3 (2 hops), wrong shortest
-  var steps = [];
-  var graph = [[1,2],[3],[3],[]];
-  var weights = {0:{1:1,2:1},1:{3:100},2:{3:1}};
-  var visited = {}; var ops = 0;
-  var queue = [[0,0,0]]; // [node, hops, cost]
+  let steps = [];
+  let graph = [[1,2],[3],[3],[]];
+  let weights = {0:{1:1,2:1},1:{3:100},2:{3:1}};
+  let visited = {}; let ops = 0;
+  let queue = [[0,0,0]]; // [node, hops, cost]
   steps.push({ type:'start', ops:0, msg:'BFS: Start at 0. Queue treats all edges as cost=1.' });
   while (queue.length) {
     ops++;
-    var curr = queue.shift(); var node = curr[0]; var hops = curr[1]; var cost = curr[2];
+    let curr = queue.shift(); let node = curr[0]; let hops = curr[1]; let cost = curr[2];
     if (visited[node]) continue;
     visited[node] = true;
     steps.push({ type:'visit', node:node, hops:hops, cost:cost, ops:ops, msg:'Visit node ' + node + ' (hops=' + hops + ', actual cost=' + cost + ')' });
@@ -410,21 +410,21 @@ function agBFSWrong(dummy) {
 }
 
 function agDijkstraCorrect(dummy) {
-  var steps = [];
-  var weights = {0:{1:1,2:1},1:{3:100},2:{3:1}};
-  var dist = {0:0,1:Infinity,2:Infinity,3:Infinity};
-  var visited = {}; var ops = 0;
-  var pq = [{n:0,d:0}];
+  let steps = [];
+  let weights = {0:{1:1,2:1},1:{3:100},2:{3:1}};
+  let dist = {0:0,1:Infinity,2:Infinity,3:Infinity};
+  let visited = {}; let ops = 0;
+  let pq = [{n:0,d:0}];
   steps.push({ type:'start', ops:0, msg:"Dijkstra: Start at 0. Priority queue ordered by cumulative cost." });
   while (pq.length) {
     pq.sort(function(a,b){return a.d-b.d;});
-    var curr = pq.shift(); ops++;
+    let curr = pq.shift(); ops++;
     if (visited[curr.n]) continue;
     visited[curr.n] = true;
     steps.push({ type:'visit', node:curr.n, cost:curr.d, ops:ops, msg:'Visit node ' + curr.n + ' (cost=' + curr.d + ')' });
     if (curr.n === 3) { steps.push({ type:'found', cost:curr.d, ops:ops, msg:'✅ Dijkstra: shortest path cost=' + curr.d + ' (path 0→2→3). CORRECT!' }); break; }
     Object.keys(weights[curr.n] || {}).forEach(function(nb) {
-      var nd = curr.d + weights[curr.n][nb];
+      let nd = curr.d + weights[curr.n][nb];
       if (nd < dist[nb]) { dist[nb] = nd; pq.push({n:parseInt(nb),d:nd}); steps.push({ type:'relax', node:nb, cost:nd, ops:ops, msg:'Relax node ' + nb + ' → dist=' + nd }); }
     });
   }
@@ -434,9 +434,9 @@ function agDijkstraCorrect(dummy) {
 
 function agMatrixSpace(n) {
   n = n || 10;
-  var steps = [];
-  var matrix = Math.pow(n, 2);
-  var edges = n * 2;
+  let steps = [];
+  let matrix = Math.pow(n, 2);
+  let edges = n * 2;
   steps.push({ type:'matrix', ops:matrix, msg:'Adjacency Matrix: V²=' + n + '²=' + matrix + ' cells allocated.' });
   steps.push({ type:'edges', ops:edges, msg:'Actual edges in sparse graph: only ' + edges + '.' });
   steps.push({ type:'waste', ops:matrix-edges, msg:'Wasted cells: ' + (matrix-edges) + ' out of ' + matrix + ' (' + Math.round(100*(matrix-edges)/matrix) + '% empty!)' });
@@ -446,9 +446,9 @@ function agMatrixSpace(n) {
 
 function agListSpace(n) {
   n = n || 10;
-  var steps = [];
-  var edges = n * 2;
-  var total = n + edges;
+  let steps = [];
+  let edges = n * 2;
+  let total = n + edges;
   steps.push({ type:'nodes', ops:n, msg:'Adjacency List: ' + n + ' node headers allocated.' });
   steps.push({ type:'edges', ops:edges, msg:'Only ' + edges + ' edge entries allocated — exactly the edges that exist.' });
   steps.push({ type:'done', ops:total, msg:'Total: ' + total + ' entries vs matrix\'s ' + Math.pow(n,2) + '. ' + Math.round(100*total/Math.pow(n,2)) + '% of matrix size.' });
@@ -457,7 +457,7 @@ function agListSpace(n) {
 
 function agRecursiveDFS(n) {
   n = n || 12;
-  var steps = []; var depth = 0; var maxDepth = 0;
+  let steps = []; let depth = 0; let maxDepth = 0;
   function dfs(node) {
     depth++;
     if (depth > maxDepth) maxDepth = depth;
@@ -474,12 +474,12 @@ function agRecursiveDFS(n) {
 
 function agIterativeDFS(n) {
   n = n || 12;
-  var steps = []; var ops = 0;
-  var stack = [0]; var visited = {};
+  let steps = []; let ops = 0;
+  let stack = [0]; let visited = {};
   steps.push({ type:'start', ops:0, msg:'Iterative DFS: explicit stack on HEAP memory (gigabytes available, not just MB).' });
   while (stack.length && ops < 20) {
     ops++;
-    var node = stack.pop();
+    let node = stack.pop();
     if (visited[node]) continue;
     visited[node] = true;
     steps.push({ type:'visit', node:node, stackSize:stack.length, ops:ops, msg:'Pop node ' + node + '. Heap stack size: ' + stack.length + '. No call stack frames!' });
@@ -491,11 +491,11 @@ function agIterativeDFS(n) {
 
 function agFloydOps(n) {
   n = n || 8;
-  var ops = Math.pow(n, 3);
-  var steps = [];
+  let ops = Math.pow(n, 3);
+  let steps = [];
   steps.push({ type:'start', ops:0, msg:'Floyd-Warshall: 3 nested loops over ' + n + ' nodes.' });
-  for (var k = 0; k < Math.min(n, 4); k++) {
-    for (var i = 0; i < Math.min(n, 3); i++) {
+  for (let k = 0; k < Math.min(n, 4); k++) {
+    for (let i = 0; i < Math.min(n, 3); i++) {
       steps.push({ type:'pass', k:k, i:i, ops:(k*n*n+i*n), msg:'Outer k=' + k + ', i=' + i + ': updating row ' + i + ' using node ' + k + ' as intermediate.' });
     }
   }
@@ -505,12 +505,12 @@ function agFloydOps(n) {
 
 function agJohnsonOps(n) {
   n = n || 8;
-  var e = n * 2;
-  var ops = Math.round(n*n*Math.log2(n) + n*e);
-  var steps = [];
+  let e = n * 2;
+  let ops = Math.round(n*n*Math.log2(n) + n*e);
+  let steps = [];
   steps.push({ type:'start', ops:0, msg:"Johnson's: Bellman-Ford once + Dijkstra from each node." });
   steps.push({ type:'bf', ops:n*e, msg:'Bellman-Ford: ' + (n*e) + ' ops to reweight edges (handles negatives).' });
-  for (var i = 0; i < Math.min(n, 4); i++) {
+  for (let i = 0; i < Math.min(n, 4); i++) {
     steps.push({ type:'dijkstra', i:i, ops:Math.round(e*Math.log2(n)), msg:'Dijkstra from node ' + i + ': ~' + Math.round(e*Math.log2(n)) + ' ops on sparse graph.' });
   }
   steps.push({ type:'done', ops:ops, msg:"Total: ~" + ops + " ops for V=" + n + ", E=" + e + ". Vs Floyd's " + Math.pow(n,3) + ". Johnson's wins on sparse!" });
@@ -518,10 +518,10 @@ function agJohnsonOps(n) {
 }
 
 function agSimpleHash(arr) {
-  var steps = [];
+  let steps = [];
   arr.forEach(function(str) {
-    var h = 0;
-    for (var i = 0; i < str.length; i++) h += str.charCodeAt(i);
+    let h = 0;
+    for (let i = 0; i < str.length; i++) h += str.charCodeAt(i);
     h = h % 7;
     steps.push({ type:'hash', str:str, hash:h, msg:'hash("' + str + '") = sum(' + str.split('').map(function(c){return c.charCodeAt(0)}).join('+') + ') % 7 = ' + h });
   });
@@ -530,11 +530,11 @@ function agSimpleHash(arr) {
 }
 
 function agPolynomialHash(arr) {
-  var steps = [];
-  var BASE = 31; var MOD = 1000003;
+  let steps = [];
+  let BASE = 31; let MOD = 1000003;
   arr.forEach(function(str) {
-    var h = 0;
-    for (var i = 0; i < str.length; i++) {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) {
       h = (h * BASE + str.charCodeAt(i) - 96) % MOD;
     }
     steps.push({ type:'hash', str:str, hash:h, msg:'polyHash("' + str + '") = ' + h + ' (position-weighted — unique per anagram)' });
@@ -544,7 +544,7 @@ function agPolynomialHash(arr) {
 }
 
 /* ─── Modal race state ─── */
-var agRaceState = {
+let agRaceState = {
   exhibit : null,
   oldSteps: [],
   newSteps: [],
@@ -555,7 +555,7 @@ var agRaceState = {
 
 /* ─── Render the exhibit grid ─── */
 function agRenderGrid(exhibits) {
-  var grid = document.getElementById('agGrid');
+  let grid = document.getElementById('agGrid');
   if (!grid) return;
 
   grid.innerHTML = exhibits.map(function(ex) {
@@ -585,7 +585,7 @@ function agRenderGrid(exhibits) {
   }).join('');
 
   grid.querySelectorAll('.ag-card').forEach(function(card) {
-    var open = function() { agOpenModal(card.getAttribute('data-id')); };
+    let open = function() { agOpenModal(card.getAttribute('data-id')); };
     card.addEventListener('click', open);
     card.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
   });
@@ -597,8 +597,8 @@ function agInitFilter() {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.ag-filter-btn').forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
-      var cat = btn.getAttribute('data-cat');
-      var filtered = cat === 'all' ? AG_EXHIBITS : AG_EXHIBITS.filter(function(e) { return e.cat === cat; });
+      let cat = btn.getAttribute('data-cat');
+      let filtered = cat === 'all' ? AG_EXHIBITS : AG_EXHIBITS.filter(function(e) { return e.cat === cat; });
       agRenderGrid(filtered);
     });
   });
@@ -606,8 +606,8 @@ function agInitFilter() {
 
 /* ─── Modal ─── */
 function agInitModal() {
-  var modal    = document.getElementById('agModal');
-  var closeBtn = document.getElementById('agModalClose');
+  let modal    = document.getElementById('agModal');
+  let closeBtn = document.getElementById('agModalClose');
   if (!modal || !closeBtn) return;
   closeBtn.addEventListener('click', function() { modal.classList.remove('active'); agStopRace(); });
   modal.addEventListener('click', function(e) { if (e.target === modal) { modal.classList.remove('active'); agStopRace(); } });
@@ -615,11 +615,11 @@ function agInitModal() {
 }
 
 function agOpenModal(id) {
-  var ex = AG_EXHIBITS.find(function(e) { return e.id === id; });
+  let ex = AG_EXHIBITS.find(function(e) { return e.id === id; });
   if (!ex) return;
 
-  var modal = document.getElementById('agModal');
-  var body  = document.getElementById('agModalBody');
+  let modal = document.getElementById('agModal');
+  let body  = document.getElementById('agModalBody');
   if (!modal || !body) return;
 
   agStopRace();
@@ -675,9 +675,9 @@ function agOpenModal(id) {
     '</div>';
 
   // Wire up controls
-  var runBtn   = document.getElementById('agRaceRun');
-  var stepBtn  = document.getElementById('agRaceStep');
-  var resetBtn = document.getElementById('agRaceReset');
+  let runBtn   = document.getElementById('agRaceRun');
+  let stepBtn  = document.getElementById('agRaceStep');
+  let resetBtn = document.getElementById('agRaceReset');
   if (runBtn)   runBtn.addEventListener('click',   function() { agStartRace(ex); });
   if (stepBtn)  stepBtn.addEventListener('click',  agStepRace);
   if (resetBtn) resetBtn.addEventListener('click', function() { agResetRace(ex); });
@@ -690,7 +690,7 @@ function agOpenModal(id) {
 
 function agBuildCustomInput(ex) {
   if (!ex.defaultInput) return '';
-  var placeholder = Array.isArray(ex.defaultInput) ? ex.defaultInput.join(', ') : '';
+  let placeholder = Array.isArray(ex.defaultInput) ? ex.defaultInput.join(', ') : '';
   return '<div class="ag-modal-section-title"><i class="fas fa-pencil-alt"></i> Try Your Own Input</div>' +
     '<div class="ag-custom-input">' +
       '<span class="ag-custom-label">Input:</span>' +
@@ -703,24 +703,24 @@ function agBuildCustomInput(ex) {
 /* ─── Race logic ─── */
 function agStartRace(ex) {
   agStopRace();
-  var input  = agGetInput(ex);
-  var target = agGetTarget(ex);
+  let input  = agGetInput(ex);
+  let target = agGetTarget(ex);
 
   agRaceState.oldSteps = ex.runOld(input, target);
   agRaceState.newSteps = ex.runNew(input, target);
   agRaceState.stepIdx  = 0;
 
-  var stepBtn = document.getElementById('agRaceStep');
+  let stepBtn = document.getElementById('agRaceStep');
   if (stepBtn) stepBtn.disabled = false;
 
-  var badge = document.getElementById('agWinnerBadge');
+  let badge = document.getElementById('agWinnerBadge');
   if (badge) badge.classList.add('hidden');
 
-  var statusEl = document.getElementById('agRaceStatus');
+  let statusEl = document.getElementById('agRaceStatus');
   if (statusEl) statusEl.textContent = 'Race started! Watch the operations counter...';
 
   // Wire custom input button now that race is ready
-  var customBtn = document.getElementById('agCustomRun');
+  let customBtn = document.getElementById('agCustomRun');
   if (customBtn) {
     customBtn.onclick = function() { agStartRace(ex); };
   }
@@ -730,9 +730,9 @@ function agStartRace(ex) {
 }
 
 function agGetInput(ex) {
-  var el = document.getElementById('agCustomInput');
+  let el = document.getElementById('agCustomInput');
   if (el && el.value.trim()) {
-    var vals = el.value.split(',').map(function(v) { return v.trim(); });
+    let vals = el.value.split(',').map(function(v) { return v.trim(); });
     if (ex.type === 'sort' || ex.type === 'search') {
       return vals.map(function(v) { return isNaN(v) ? v : parseInt(v); });
     }
@@ -742,22 +742,22 @@ function agGetInput(ex) {
 }
 
 function agGetTarget(ex) {
-  var el = document.getElementById('agCustomTarget');
+  let el = document.getElementById('agCustomTarget');
   if (el && el.value.trim()) {
-    var v = el.value.trim();
+    let v = el.value.trim();
     return isNaN(v) ? v : parseInt(v);
   }
   return ex.searchTarget;
 }
 
 function agGetDelay() {
-  var el = document.getElementById('agSpeed');
+  let el = document.getElementById('agSpeed');
   return AG_SPEED[el ? el.value : 3] || 280;
 }
 
 function agPlayRace(ex) {
   if (!agRaceState.playing) return;
-  var maxSteps = Math.max(agRaceState.oldSteps.length, agRaceState.newSteps.length);
+  let maxSteps = Math.max(agRaceState.oldSteps.length, agRaceState.newSteps.length);
   if (agRaceState.stepIdx >= maxSteps) {
     agRaceState.playing = false;
     agShowWinner(ex);
@@ -770,23 +770,23 @@ function agPlayRace(ex) {
 
 function agStepRace() {
   if (agRaceState.playing) { agStopRace(); return; }
-  var ex = agRaceState.exhibit;
+  let ex = agRaceState.exhibit;
   if (!ex || agRaceState.oldSteps.length === 0) return;
-  var maxSteps = Math.max(agRaceState.oldSteps.length, agRaceState.newSteps.length);
+  let maxSteps = Math.max(agRaceState.oldSteps.length, agRaceState.newSteps.length);
   if (agRaceState.stepIdx >= maxSteps) { agShowWinner(ex); return; }
   agApplyRaceStep(ex, agRaceState.stepIdx);
   agRaceState.stepIdx++;
 }
 
 function agApplyRaceStep(ex, idx) {
-  var oldStep = agRaceState.oldSteps[idx] || agRaceState.oldSteps[agRaceState.oldSteps.length - 1];
-  var newStep = agRaceState.newSteps[idx] || agRaceState.newSteps[agRaceState.newSteps.length - 1];
+  let oldStep = agRaceState.oldSteps[idx] || agRaceState.oldSteps[agRaceState.oldSteps.length - 1];
+  let newStep = agRaceState.newSteps[idx] || agRaceState.newSteps[agRaceState.newSteps.length - 1];
 
-  var oldOpsEl = document.getElementById('agOldOps');
-  var newOpsEl = document.getElementById('agNewOps');
-  var statusEl = document.getElementById('agRaceStatus');
-  var oldViz   = document.getElementById('agOldViz');
-  var newViz   = document.getElementById('agNewViz');
+  let oldOpsEl = document.getElementById('agOldOps');
+  let newOpsEl = document.getElementById('agNewOps');
+  let statusEl = document.getElementById('agRaceStatus');
+  let oldViz   = document.getElementById('agOldViz');
+  let newViz   = document.getElementById('agNewViz');
 
   if (oldOpsEl && oldStep) oldOpsEl.textContent = oldStep.ops || 0;
   if (newOpsEl && newStep) newOpsEl.textContent = newStep.ops || 0;
@@ -800,18 +800,18 @@ function agApplyRaceStep(ex, idx) {
 }
 
 function agShowWinner(ex) {
-  var badge    = document.getElementById('agWinnerBadge');
-  var textEl   = document.getElementById('agWinnerText');
-  var oldOps   = (agRaceState.oldSteps[agRaceState.oldSteps.length-1] || {}).ops || 0;
-  var newOps   = (agRaceState.newSteps[agRaceState.newSteps.length-1] || {}).ops || 0;
-  var ratio    = oldOps > 0 && newOps > 0 ? Math.round(oldOps / newOps) : '∞';
+  let badge    = document.getElementById('agWinnerBadge');
+  let textEl   = document.getElementById('agWinnerText');
+  let oldOps   = (agRaceState.oldSteps[agRaceState.oldSteps.length-1] || {}).ops || 0;
+  let newOps   = (agRaceState.newSteps[agRaceState.newSteps.length-1] || {}).ops || 0;
+  let ratio    = oldOps > 0 && newOps > 0 ? Math.round(oldOps / newOps) : '∞';
 
   if (badge && textEl) {
     textEl.textContent = ex.replacement + ' wins! ' + oldOps + ' ops vs ' + newOps + ' ops (' + ratio + '× fewer)';
     badge.classList.remove('hidden');
   }
 
-  var statusEl = document.getElementById('agRaceStatus');
+  let statusEl = document.getElementById('agRaceStatus');
   if (statusEl) statusEl.textContent = '💀 ' + ex.deadName + ': ' + oldOps + ' operations. ✅ ' + ex.replacement + ': ' + newOps + ' operations. ' + ratio + '× improvement.';
 }
 
@@ -826,11 +826,11 @@ function agResetRace(ex) {
   agRaceState.newSteps = [];
   agRaceState.stepIdx  = 0;
 
-  var oldOpsEl = document.getElementById('agOldOps');
-  var newOpsEl = document.getElementById('agNewOps');
-  var statusEl = document.getElementById('agRaceStatus');
-  var badge    = document.getElementById('agWinnerBadge');
-  var stepBtn  = document.getElementById('agRaceStep');
+  let oldOpsEl = document.getElementById('agOldOps');
+  let newOpsEl = document.getElementById('agNewOps');
+  let statusEl = document.getElementById('agRaceStatus');
+  let badge    = document.getElementById('agWinnerBadge');
+  let stepBtn  = document.getElementById('agRaceStep');
 
   if (oldOpsEl) oldOpsEl.textContent = '0';
   if (newOpsEl) newOpsEl.textContent = '0';
@@ -838,8 +838,8 @@ function agResetRace(ex) {
   if (badge)    badge.classList.add('hidden');
   if (stepBtn)  stepBtn.disabled = true;
 
-  var oldViz = document.getElementById('agOldViz');
-  var newViz = document.getElementById('agNewViz');
+  let oldViz = document.getElementById('agOldViz');
+  let newViz = document.getElementById('agNewViz');
   agRenderVizForExhibit(ex, [], [], oldViz, newViz);
 }
 
@@ -847,10 +847,10 @@ function agResetRace(ex) {
 function agRenderVizForExhibit(ex, oldSteps, newSteps, oldVizEl, newVizEl) {
   if (!oldVizEl || !newVizEl) return;
 
-  var oldLast = oldSteps.length > 0 ? oldSteps[oldSteps.length-1] : null;
-  var newLast = newSteps.length > 0 ? newSteps[newSteps.length-1] : null;
+  let oldLast = oldSteps.length > 0 ? oldSteps[oldSteps.length-1] : null;
+  let newLast = newSteps.length > 0 ? newSteps[newSteps.length-1] : null;
 
-  var type = ex.type;
+  let type = ex.type;
 
   if (type === 'search') {
     agRenderSearchViz(oldVizEl, ex.defaultInput, oldSteps, 'old');
@@ -869,17 +869,17 @@ function agRenderVizForExhibit(ex, oldSteps, newSteps, oldVizEl, newVizEl) {
     agRenderHashViz(newVizEl, newSteps);
   } else {
     // Generic: show last status message
-    var msg = (oldLast && oldLast.msg) ? oldLast.msg : 'Waiting...';
+    let msg = (oldLast && oldLast.msg) ? oldLast.msg : 'Waiting...';
     oldVizEl.innerHTML = '<div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;padding:0.5rem">' + agEsc(msg) + '</div>';
-    var nmsg = (newLast && newLast.msg) ? newLast.msg : 'Waiting...';
+    let nmsg = (newLast && newLast.msg) ? newLast.msg : 'Waiting...';
     newVizEl.innerHTML = '<div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.5;padding:0.5rem">' + agEsc(nmsg) + '</div>';
   }
 }
 
 function agRenderSearchViz(el, arr, steps, side) {
   if (!el || !arr) return;
-  var last = steps.length > 0 ? steps[steps.length-1] : null;
-  var activeIdx = -1; var foundIdx = -1; var loIdx = -1; var hiIdx = -1; var midIdx = -1;
+  let last = steps.length > 0 ? steps[steps.length-1] : null;
+  let activeIdx = -1; let foundIdx = -1; let loIdx = -1; let hiIdx = -1; let midIdx = -1;
   if (last) {
     if (last.idx !== undefined) activeIdx = last.idx;
     if (last.type === 'found')  foundIdx  = last.idx !== undefined ? last.idx : (last.mid !== undefined ? last.mid : -1);
@@ -888,7 +888,7 @@ function agRenderSearchViz(el, arr, steps, side) {
     if (last.mid !== undefined) midIdx = last.mid;
   }
   el.innerHTML = '<div class="ag-cell-row">' + arr.map(function(v, i) {
-    var cls = 'ag-cell';
+    let cls = 'ag-cell';
     if (i === foundIdx)   cls += ' ag-cell-found';
     else if (i === midIdx)     cls += ' ag-cell-active';
     else if (i === activeIdx && side === 'old') cls += ' ag-cell-compare';
@@ -899,12 +899,12 @@ function agRenderSearchViz(el, arr, steps, side) {
 
 function agRenderSortViz(el, arr, steps, side) {
   if (!el || !arr) return;
-  var last = steps.length > 0 ? steps[steps.length-1] : null;
-  var displayArr = last && last.arr ? last.arr : arr;
-  var maxVal = Math.max.apply(null, displayArr);
+  let last = steps.length > 0 ? steps[steps.length-1] : null;
+  let displayArr = last && last.arr ? last.arr : arr;
+  let maxVal = Math.max.apply(null, displayArr);
   el.innerHTML = displayArr.map(function(v, i) {
-    var h = maxVal > 0 ? Math.round((v / maxVal) * 70) : 10;
-    var cls = side === 'old' ? '#ef4444' : '#22c55e';
+    let h = maxVal > 0 ? Math.round((v / maxVal) * 70) : 10;
+    let cls = side === 'old' ? '#ef4444' : '#22c55e';
     if (last && last.j !== undefined && (i === last.j || i === last.j+1)) cls = '#f59e0b';
     if (last && last.type === 'done') cls = '#22c55e';
     return '<div class="ag-bar" style="height:' + h + 'px;background:' + cls + '"></div>';
@@ -913,11 +913,11 @@ function agRenderSortViz(el, arr, steps, side) {
 
 function agRenderStringViz(el, arr, steps) {
   if (!el || !arr) return;
-  var last = steps.length > 0 ? steps[steps.length-1] : null;
-  var tiIdx = last && last.ti !== undefined ? last.ti : -1;
-  var foundStart = last && last.i !== undefined && last.type === 'found' ? last.i : -1;
+  let last = steps.length > 0 ? steps[steps.length-1] : null;
+  let tiIdx = last && last.ti !== undefined ? last.ti : -1;
+  let foundStart = last && last.i !== undefined && last.type === 'found' ? last.i : -1;
   el.innerHTML = '<div class="ag-cell-row">' + arr.map(function(v, i) {
-    var cls = 'ag-cell';
+    let cls = 'ag-cell';
     if (foundStart >= 0 && i >= foundStart && i < foundStart + 4) cls += ' ag-cell-found';
     else if (i === tiIdx) cls += ' ag-cell-active';
     return '<div class="' + cls + '">' + v + '</div>';
@@ -926,8 +926,8 @@ function agRenderStringViz(el, arr, steps) {
 
 function agRenderFibViz(el, step) {
   if (!el) return;
-  var calls = step ? (step.calls || 0) : 0;
-  var result = step ? (step.result || '') : '';
+  let calls = step ? (step.calls || 0) : 0;
+  let result = step ? (step.result || '') : '';
   el.innerHTML = '<div style="padding:0.5rem;font-family:Fira Code,monospace;font-size:0.75rem;color:var(--text-secondary)">' +
     '<div>Function calls: <span style="color:#ef4444;font-weight:700">' + calls + '</span></div>' +
     (result ? '<div>Result: <span style="color:#22c55e;font-weight:700">' + result + '</span></div>' : '') +
@@ -948,7 +948,7 @@ function agRenderHashViz(el, steps) {
 }
 
 function agEsc(str) {
-  var d = document.createElement('div');
+  let d = document.createElement('div');
   d.textContent = str;
   return d.innerHTML;
 }

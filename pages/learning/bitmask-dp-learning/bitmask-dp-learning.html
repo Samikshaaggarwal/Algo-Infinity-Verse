@@ -50,7 +50,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -208,8 +208,8 @@
                         
                         <div class="bit-code-block bit-lang-container">
                             <div class="bit-lang-switcher-tabs">
-                                <button class="bit-lang-tab-btn active" onclick="switchBitLang(this, 'py')">Python</button>
-                                <button class="bit-lang-tab-btn" onclick="switchBitLang(this, 'cpp')">C++</button>
+                                <button type="button" class="bit-lang-tab-btn active" onclick="switchBitLang(this, 'py')">Python</button>
+                                <button type="button" class="bit-lang-tab-btn" onclick="switchBitLang(this, 'cpp')">C++</button>
                             </div>
                             <div class="bit-lang-pane active" data-lang="py">
                                 <div class="bit-code-header"><span class="bit-code-lang">Python</span></div>
@@ -279,8 +279,8 @@
                         
                         <div class="bit-code-block bit-lang-container">
                             <div class="bit-lang-switcher-tabs">
-                                <button class="bit-lang-tab-btn active" onclick="switchBitLang(this, 'py')">Python</button>
-                                <button class="bit-lang-tab-btn" onclick="switchBitLang(this, 'cpp')">C++</button>
+                                <button type="button" class="bit-lang-tab-btn active" onclick="switchBitLang(this, 'py')">Python</button>
+                                <button type="button" class="bit-lang-tab-btn" onclick="switchBitLang(this, 'cpp')">C++</button>
                             </div>
                             <div class="bit-lang-pane active" data-lang="py">
                                 <div class="bit-code-header"><span class="bit-code-lang">Python</span></div>
@@ -333,7 +333,7 @@
                         <div class="bit-exercise">
                             <div class="bit-exercise-title"><i class="fas fa-hammer"></i> 1. Determine if a number is a power of 2</div>
                             <p>Write an O(1) expression to check if a positive integer <code>N</code> is a power of 2 using bitwise operations.</p>
-                            <button class="bit-exercise-toggle" aria-controls="sol-1" aria-expanded="false">Show Solution</button>
+                            <button type="button" class="bit-exercise-toggle" aria-controls="sol-1" aria-expanded="false">Show Solution</button>
                             <div class="bit-exercise-solution" id="sol-1">
                                 <p><strong>Hint:</strong> A power of 2 has exactly one bit set. Subtracting 1 from it flips all the bits to the right of the set bit (including the set bit itself).</p>
                                 <pre><code><span class="tok-kw">def</span> <span class="tok-fn">is_power_of_two</span>(<span class="tok-var">n</span>):
@@ -351,7 +351,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="bitmask-dp-learning.js"></script>
     <script>

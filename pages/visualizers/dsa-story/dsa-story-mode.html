@@ -115,7 +115,7 @@ class="progress-fill">
 
 <div class="algorithm-list">
 
-<button
+<button type="button"
 class="story-btn active"
 data-algo="binary">
 
@@ -125,7 +125,7 @@ Binary Search
 
 </button>
 
-<button
+<button type="button"
 class="story-btn"
 data-algo="bfs">
 
@@ -135,7 +135,7 @@ Breadth First Search
 
 </button>
 
-<button
+<button type="button"
 class="story-btn"
 data-algo="dfs">
 
@@ -145,7 +145,7 @@ Depth First Search
 
 </button>
 
-<button
+<button type="button"
 class="story-btn"
 data-algo="dijkstra">
 
@@ -155,7 +155,7 @@ Dijkstra
 
 </button>
 
-<button
+<button type="button"
 class="story-btn"
 data-algo="merge">
 
@@ -165,7 +165,7 @@ Merge Sort
 
 </button>
 
-<button
+<button type="button"
 class="story-btn"
 data-algo="stack">
 
@@ -241,17 +241,17 @@ Searching a book in a huge library.
 
     <div class="simulation-controls">
 
-        <button id="playBtn" class="btn-primary">
+        <button type="button" id="playBtn" class="btn-primary">
             <i class="fas fa-play"></i>
             Play
         </button>
 
-        <button id="pauseBtn" class="btn-secondary">
+        <button type="button" id="pauseBtn" class="btn-secondary">
             <i class="fas fa-pause"></i>
             Pause
         </button>
 
-        <button id="resetBtn" class="btn-secondary">
+        <button type="button" id="resetBtn" class="btn-secondary">
             <i class="fas fa-rotate-left"></i>
             Reset
         </button>
@@ -274,7 +274,7 @@ Actual Code
 
 </h2>
 
-<button
+<button type="button"
 id="copyCodeBtn"
 class="btn-secondary">
 
@@ -354,7 +354,11 @@ Study Code
 
 </div>
 
+<script src="/bootstrap-legacy.js"></script>
+
+
 <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
 
 <script src="dsa-story-mode.js"></script>
 

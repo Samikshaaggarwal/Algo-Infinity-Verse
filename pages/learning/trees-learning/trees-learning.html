@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -171,7 +171,7 @@
               <div class="trees-code-block">
                 <div class="trees-code-header">
                   <span class="trees-code-lang">JavaScript</span>
-                  <button class="trees-code-copy" aria-label="Copy code" data-code="class TreeNode {
+                  <button type="button" class="trees-code-copy" aria-label="Copy code" data-code="class TreeNode {
   constructor(value) {
     this.value = value;
     this.left = null;
@@ -217,7 +217,7 @@
               <div class="trees-code-block">
                 <div class="trees-code-header">
                   <span class="trees-code-lang">Python</span>
-                  <button class="trees-code-copy" aria-label="Copy code" data-code="def searchBST(root, target):
+                  <button type="button" class="trees-code-copy" aria-label="Copy code" data-code="def searchBST(root, target):
     if root is None or root.val == target:
         return root
         
@@ -259,7 +259,7 @@
                 <div class="trees-code-block">
                   <div class="trees-code-header">
                     <span class="trees-code-lang">JavaScript</span>
-                    <button class="trees-code-copy" aria-label="Copy code" data-code="function inOrder(root) {
+                    <button type="button" class="trees-code-copy" aria-label="Copy code" data-code="function inOrder(root) {
   if (root !== null) {
     inOrder(root.left);
     console.log(root.value);
@@ -289,7 +289,7 @@
                 <div class="trees-code-block">
                   <div class="trees-code-header">
                     <span class="trees-code-lang">JavaScript</span>
-                    <button class="trees-code-copy" aria-label="Copy code" data-code="function preOrder(root) {
+                    <button type="button" class="trees-code-copy" aria-label="Copy code" data-code="function preOrder(root) {
   if (root !== null) {
     console.log(root.value);
     preOrder(root.left);
@@ -319,7 +319,7 @@
                 <div class="trees-code-block">
                   <div class="trees-code-header">
                     <span class="trees-code-lang">JavaScript</span>
-                    <button class="trees-code-copy" aria-label="Copy code" data-code="function postOrder(root) {
+                    <button type="button" class="trees-code-copy" aria-label="Copy code" data-code="function postOrder(root) {
   if (root !== null) {
     postOrder(root.left);
     postOrder(root.right);
@@ -354,7 +354,7 @@
       <i class="fas fa-dumbbell"></i> Exercise 1: In-order Traversal Output
     </div>
     <p>Given a Binary Search Tree (BST) with a root node of <code>10</code>, a left child of <code>5</code>, and a right child of <code>15</code>, what is the output of an In-order traversal?</p>
-    <button class="trees-exercise-toggle" aria-expanded="false" aria-controls="solution-ex1">Show Solution</button>
+    <button type="button" class="trees-exercise-toggle" aria-expanded="false" aria-controls="solution-ex1">Show Solution</button>
     <div class="trees-exercise-solution" id="solution-ex1">
       <p><strong>Answer: 5, 10, 15</strong></p>
       <p>Explanation: In-order traversal follows the Left -> Root -> Right pattern. It visits 5 (Left), then 10 (Root), then 15 (Right). Because it is a valid BST, an in-order traversal always results in sorted output.</p>
@@ -366,7 +366,7 @@
       <i class="fas fa-dumbbell"></i> Exercise 2: Identify the Root
     </div>
     <p>You are given the Post-order traversal array of a binary tree: <code>[4, 5, 2, 8, 9, 3, 1]</code>. What is the root node of this tree?</p>
-    <button class="trees-exercise-toggle" aria-expanded="false" aria-controls="solution-ex2">Show Solution</button>
+    <button type="button" class="trees-exercise-toggle" aria-expanded="false" aria-controls="solution-ex2">Show Solution</button>
     <div class="trees-exercise-solution" id="solution-ex2">
       <p><strong>Answer: 1</strong></p>
       <p>Explanation: Post-order traversal processes nodes in the order of Left -> Right -> Root. Therefore, the very last element processed and added to the output array is always the root of the tree.</p>
@@ -378,7 +378,7 @@
       <i class="fas fa-dumbbell"></i> Exercise 3: Maximum Nodes
     </div>
     <p>What is the maximum number of nodes possible at level <code>L</code> of a binary tree? (Assume the root node is at Level 0).</p>
-    <button class="trees-exercise-toggle" aria-expanded="false" aria-controls="solution-ex3">Show Solution</button>
+    <button type="button" class="trees-exercise-toggle" aria-expanded="false" aria-controls="solution-ex3">Show Solution</button>
     <div class="trees-exercise-solution" id="solution-ex3">
       <p><strong>Answer: $2^L$</strong></p>
       <p>Explanation: At Level 0 (root), there is $2^0 = 1$ node. At Level 1, there are $2^1 = 2$ nodes. At Level 2, there are $2^2 = 4$ nodes. The number of nodes doubles at each subsequent level.</p>
@@ -390,7 +390,7 @@
       <i class="fas fa-dumbbell"></i> Exercise 4: Worst-Case Deletion
     </div>
     <p>What is the worst-case time complexity of searching for and deleting a node in an unbalanced Binary Search Tree of <code>N</code> nodes?</p>
-    <button class="trees-exercise-toggle" aria-expanded="false" aria-controls="solution-ex4">Show Solution</button>
+    <button type="button" class="trees-exercise-toggle" aria-expanded="false" aria-controls="solution-ex4">Show Solution</button>
     <div class="trees-exercise-solution" id="solution-ex4">
       <p><strong>Answer: O(N)</strong></p>
       <p>Explanation: In the worst-case scenario (e.g., a tree where every node only has a right child), the tree degrades into a straight line resembling a linked list. Traversing it to find the target node will take linear time, O(N).</p>
@@ -405,7 +405,11 @@
 
     <div id="footer-placeholder"></div>
 
+    <script src="/bootstrap-legacy.js"></script>
+
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="trees-learning.js"></script>

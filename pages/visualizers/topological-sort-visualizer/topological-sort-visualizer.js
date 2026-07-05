@@ -376,7 +376,7 @@ svg.addEventListener("mousedown", (e) => {
   const y = e.clientY - rect.top;
 
   if (nextLabelCode > 90) {
-    alert("Maximum node limit (A-Z) reached!");
+    console.warn("Alert:", "Maximum node limit (A-Z) reached!");
     return;
   }
 
@@ -1107,7 +1107,7 @@ function resetVisualizerState() {
 
 function initializeSimulation() {
   if (nodes.length === 0) {
-    alert("Please add nodes to the canvas or load a preset first!");
+    console.warn("Alert:", "Please add nodes to the canvas or load a preset first!");
     resetVisualizerState();
     return;
   }

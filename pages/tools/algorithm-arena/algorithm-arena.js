@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── Algorithm Metadata ─── */
-var ARENA_ALGOS = {
+let ARENA_ALGOS = {
   bubbleSort:    { name: 'Bubble Sort',    timeAvg: 'O(n²)',     timeBest: 'O(n)',       timeWorst: 'O(n²)',      space: 'O(1)',  stable: true  },
   selectionSort: { name: 'Selection Sort', timeAvg: 'O(n²)',     timeBest: 'O(n²)',      timeWorst: 'O(n²)',      space: 'O(1)',  stable: false },
   insertionSort: { name: 'Insertion Sort', timeAvg: 'O(n²)',     timeBest: 'O(n)',       timeWorst: 'O(n²)',      space: 'O(1)',  stable: true  },
@@ -16,7 +16,7 @@ var ARENA_ALGOS = {
   heapSort:      { name: 'Heap Sort',      timeAvg: 'O(n log n)',timeBest: 'O(n log n)', timeWorst: 'O(n log n)', space: 'O(1)',  stable: false },
 };
 
-var ALGO_BEST_FOR = {
+let ALGO_BEST_FOR = {
   bubbleSort:    'Small arrays or nearly-sorted data (educational use)',
   selectionSort: 'When write count must be minimized (e.g. flash memory)',
   insertionSort: 'Small or nearly-sorted arrays — O(n) best case',
@@ -27,20 +27,20 @@ var ALGO_BEST_FOR = {
 
 /* ─── Dataset Generator ─── */
 function arenaGenData(type, size) {
-  var arr = [];
-  var i;
+  let arr = [];
+  let i;
   for (i = 0; i < size; i++) arr.push(Math.floor(Math.random() * (size - 1)) + 1);
   if (type === 'sorted')      { arr.sort(function(a,b){return a-b;}); }
   else if (type === 'reverse'){ arr.sort(function(a,b){return b-a;}); }
   else if (type === 'nearlySorted') {
     arr.sort(function(a,b){return a-b;});
     for (i = 0; i < Math.floor(size * 0.1); i++) {
-      var x = Math.floor(Math.random() * size);
-      var y = Math.floor(Math.random() * size);
-      var tmp = arr[x]; arr[x] = arr[y]; arr[y] = tmp;
+      let x = Math.floor(Math.random() * size);
+      let y = Math.floor(Math.random() * size);
+      let tmp = arr[x]; arr[x] = arr[y]; arr[y] = tmp;
     }
   } else if (type === 'duplicates') {
-    var vals = [1,2,3,4,5];
+    let vals = [1,2,3,4,5];
     for (i = 0; i < size; i++) arr[i] = vals[Math.floor(Math.random() * vals.length)];
   }
   return arr;
@@ -48,12 +48,12 @@ function arenaGenData(type, size) {
 
 /* ─── Step Generators (return array of steps, each step = array state + highlights) ─── */
 function arenaStepsBubble(arr) {
-  var a = arr.slice(), steps = [], n = a.length, comps = 0, swaps = 0;
-  for (var i = 0; i < n - 1; i++) {
-    for (var j = 0; j < n - i - 1; j++) {
+  let a = arr.slice(), steps = [], n = a.length, comps = 0, swaps = 0;
+  for (let i = 0; i < n - 1; i++) {
+    for (let j = 0; j < n - i - 1; j++) {
       comps++;
       if (a[j] > a[j+1]) {
-        var tmp = a[j]; a[j] = a[j+1]; a[j+1] = tmp;
+        let tmp = a[j]; a[j] = a[j+1]; a[j+1] = tmp;
         swaps++;
       }
       steps.push({ arr: a.slice(), hi: [j, j+1], sorted: [], comps: comps, swaps: swaps });
@@ -64,15 +64,15 @@ function arenaStepsBubble(arr) {
 }
 
 function arenaStepsSelection(arr) {
-  var a = arr.slice(), steps = [], n = a.length, comps = 0, swaps = 0;
-  for (var i = 0; i < n - 1; i++) {
-    var minIdx = i;
-    for (var j = i + 1; j < n; j++) {
+  let a = arr.slice(), steps = [], n = a.length, comps = 0, swaps = 0;
+  for (let i = 0; i < n - 1; i++) {
+    let minIdx = i;
+    for (let j = i + 1; j < n; j++) {
       comps++;
       if (a[j] < a[minIdx]) minIdx = j;
       steps.push({ arr: a.slice(), hi: [i, j, minIdx], sorted: [], comps: comps, swaps: swaps });
     }
-    if (minIdx !== i) { var tmp = a[i]; a[i] = a[minIdx]; a[minIdx] = tmp; swaps++; }
+    if (minIdx !== i) { let tmp = a[i]; a[i] = a[minIdx]; a[minIdx] = tmp; swaps++; }
     steps.push({ arr: a.slice(), hi: [], sorted: [], comps: comps, swaps: swaps });
   }
   steps.push({ arr: a.slice(), hi: [], sorted: 'all', comps: comps, swaps: swaps });
@@ -80,9 +80,9 @@ function arenaStepsSelection(arr) {
 }
 
 function arenaStepsInsertion(arr) {
-  var a = arr.slice(), steps = [], n = a.length, comps = 0, swaps = 0;
-  for (var i = 1; i < n; i++) {
-    var key = a[i], j = i - 1;
+  let a = arr.slice(), steps = [], n = a.length, comps = 0, swaps = 0;
+  for (let i = 1; i < n; i++) {
+    let key = a[i], j = i - 1;
     while (j >= 0 && a[j] > key) {
       comps++; swaps++;
       a[j + 1] = a[j]; j--;
@@ -97,10 +97,10 @@ function arenaStepsInsertion(arr) {
 }
 
 function arenaStepsMerge(arr) {
-  var a = arr.slice(), steps = [], comps = 0, swaps = 0;
+  let a = arr.slice(), steps = [], comps = 0, swaps = 0;
   function merge(arr, l, m, r) {
-    var left = arr.slice(l, m+1), right = arr.slice(m+1, r+1);
-    var i = 0, j = 0, k = l;
+    let left = arr.slice(l, m+1), right = arr.slice(m+1, r+1);
+    let i = 0, j = 0, k = l;
     while (i < left.length && j < right.length) {
       comps++;
       if (left[i] <= right[j]) { arr[k++] = left[i++]; }
@@ -112,7 +112,7 @@ function arenaStepsMerge(arr) {
   }
   function mergeSort(arr, l, r) {
     if (l >= r) return;
-    var m = Math.floor((l + r) / 2);
+    let m = Math.floor((l + r) / 2);
     mergeSort(arr, l, m);
     mergeSort(arr, m+1, r);
     merge(arr, l, m, r);
@@ -123,28 +123,28 @@ function arenaStepsMerge(arr) {
 }
 
 function arenaStepsQuick(arr) {
-  var a = arr.slice(), steps = [], comps = 0, swaps = 0;
+  let a = arr.slice(), steps = [], comps = 0, swaps = 0;
   function partition(arr, lo, hi) {
-    var pivot = arr[hi], i = lo - 1;
-    for (var j = lo; j < hi; j++) {
+    let pivot = arr[hi], i = lo - 1;
+    for (let j = lo; j < hi; j++) {
       comps++;
       if (arr[j] <= pivot) {
         i++;
-        var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+        let tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
         swaps++;
         steps.push({ arr: arr.slice(), hi: [i, j, hi], sorted: [], comps: comps, swaps: swaps });
       } else {
         steps.push({ arr: arr.slice(), hi: [j, hi], sorted: [], comps: comps, swaps: swaps });
       }
     }
-    var tmp2 = arr[i+1]; arr[i+1] = arr[hi]; arr[hi] = tmp2;
+    let tmp2 = arr[i+1]; arr[i+1] = arr[hi]; arr[hi] = tmp2;
     swaps++;
     steps.push({ arr: arr.slice(), hi: [i+1], sorted: [], comps: comps, swaps: swaps });
     return i + 1;
   }
   function quickSort(arr, lo, hi) {
     if (lo < hi) {
-      var p = partition(arr, lo, hi);
+      let p = partition(arr, lo, hi);
       quickSort(arr, lo, p - 1);
       quickSort(arr, p + 1, hi);
     }
@@ -155,23 +155,23 @@ function arenaStepsQuick(arr) {
 }
 
 function arenaStepsHeap(arr) {
-  var a = arr.slice(), steps = [], n = a.length, comps = 0, swaps = 0;
+  let a = arr.slice(), steps = [], n = a.length, comps = 0, swaps = 0;
   function heapify(arr, n, i) {
-    var largest = i, l = 2*i+1, r = 2*i+2;
+    let largest = i, l = 2*i+1, r = 2*i+2;
     comps++;
     if (l < n && arr[l] > arr[largest]) largest = l;
     comps++;
     if (r < n && arr[r] > arr[largest]) largest = r;
     if (largest !== i) {
-      var tmp = arr[i]; arr[i] = arr[largest]; arr[largest] = tmp;
+      let tmp = arr[i]; arr[i] = arr[largest]; arr[largest] = tmp;
       swaps++;
       steps.push({ arr: arr.slice(), hi: [i, largest], sorted: [], comps: comps, swaps: swaps });
       heapify(arr, n, largest);
     }
   }
-  for (var i = Math.floor(n/2) - 1; i >= 0; i--) heapify(a, n, i);
-  for (var j = n - 1; j > 0; j--) {
-    var tmp2 = a[0]; a[0] = a[j]; a[j] = tmp2;
+  for (let i = Math.floor(n/2) - 1; i >= 0; i--) heapify(a, n, i);
+  for (let j = n - 1; j > 0; j--) {
+    let tmp2 = a[0]; a[0] = a[j]; a[j] = tmp2;
     swaps++;
     steps.push({ arr: a.slice(), hi: [0, j], sorted: [], comps: comps, swaps: swaps });
     heapify(a, j, 0);
@@ -180,7 +180,7 @@ function arenaStepsHeap(arr) {
   return steps;
 }
 
-var STEP_FUNS = {
+let STEP_FUNS = {
   bubbleSort: arenaStepsBubble,
   selectionSort: arenaStepsSelection,
   insertionSort: arenaStepsInsertion,
@@ -191,17 +191,17 @@ var STEP_FUNS = {
 
 /* ─── Canvas Draw ─── */
 function arenaDrawStep(canvas, step, colorA) {
-  var ctx = canvas.getContext('2d');
-  var W = canvas.width, H = canvas.height;
-  var arr = step.arr, n = arr.length;
-  var max = Math.max.apply(null, arr);
+  let ctx = canvas.getContext('2d');
+  let W = canvas.width, H = canvas.height;
+  let arr = step.arr, n = arr.length;
+  let max = Math.max.apply(null, arr);
   ctx.clearRect(0, 0, W, H);
-  var barW = Math.floor(W / n);
-  for (var i = 0; i < n; i++) {
-    var h = Math.max(2, Math.floor((arr[i] / max) * (H - 8)));
-    var x = i * barW;
-    var isHi = step.hi && step.hi.indexOf(i) !== -1;
-    var isSorted = step.sorted === 'all';
+  let barW = Math.floor(W / n);
+  for (let i = 0; i < n; i++) {
+    let h = Math.max(2, Math.floor((arr[i] / max) * (H - 8)));
+    let x = i * barW;
+    let isHi = step.hi && step.hi.indexOf(i) !== -1;
+    let isSorted = step.sorted === 'all';
     if (isSorted)     ctx.fillStyle = '#22c55e';
     else if (isHi)    ctx.fillStyle = '#ffffff';
     else              ctx.fillStyle = colorA;
@@ -213,26 +213,26 @@ function arenaDrawStep(canvas, step, colorA) {
 
 /* ─── Update Metrics + Chart ─── */
 function arenaUpdateMetrics(side, comps, swaps, time) {
-  var suffix = side === 'A' ? 'A' : 'B';
-  var compsEl  = document.getElementById('arenaComps'  + suffix);
-  var swapsEl  = document.getElementById('arenaSwaps'  + suffix);
-  var timeEl   = document.getElementById('arenaTime'   + suffix);
+  let suffix = side === 'A' ? 'A' : 'B';
+  let compsEl  = document.getElementById('arenaComps'  + suffix);
+  let swapsEl  = document.getElementById('arenaSwaps'  + suffix);
+  let timeEl   = document.getElementById('arenaTime'   + suffix);
   if (compsEl) compsEl.textContent = comps.toLocaleString();
   if (swapsEl) swapsEl.textContent = swaps.toLocaleString();
   if (timeEl)  timeEl.textContent  = time;
 }
 
 function arenaUpdateChart(compsA, swapsA, timeA, compsB, swapsB, timeB) {
-  var maxComps = Math.max(compsA, compsB, 1);
-  var maxSwaps = Math.max(swapsA, swapsB, 1);
-  var maxTime  = Math.max(timeA,  timeB,  1);
+  let maxComps = Math.max(compsA, compsB, 1);
+  let maxSwaps = Math.max(swapsA, swapsB, 1);
+  let maxTime  = Math.max(timeA,  timeB,  1);
 
   function set(id, val, pct) {
-    var el = document.getElementById(id);
+    let el = document.getElementById(id);
     if (el) el.style.width = Math.min(100, Math.round(pct)) + '%';
   }
   function setVal(id, val) {
-    var el = document.getElementById(id);
+    let el = document.getElementById(id);
     if (el) el.textContent = typeof val === 'number' ? val.toLocaleString() : val;
   }
 
@@ -252,7 +252,7 @@ function arenaUpdateChart(compsA, swapsA, timeA, compsB, swapsB, timeB) {
 }
 
 /* ─── Arena State ─── */
-var arenaState = {
+let arenaState = {
   data: [],
   running: false,
   rafA: null,
@@ -265,16 +265,16 @@ var arenaState = {
   startA: 0, startB: 0,
 };
 
-var SPEED_MS = { 1: 120, 2: 60, 3: 25, 4: 10, 5: 2 };
-var SPEED_LABELS = { 1: 'Slowest', 2: 'Slow', 3: 'Normal', 4: 'Fast', 5: 'Blazing' };
+let SPEED_MS = { 1: 120, 2: 60, 3: 25, 4: 10, 5: 2 };
+let SPEED_LABELS = { 1: 'Slowest', 2: 'Slow', 3: 'Normal', 4: 'Fast', 5: 'Blazing' };
 
 function arenaGetDelay() {
-  var el = document.getElementById('arenaSpeed');
+  let el = document.getElementById('arenaSpeed');
   return SPEED_MS[el ? el.value : 3] || 25;
 }
 
 function arenaSetStatus(side, text, cls) {
-  var el = document.getElementById('arenaStatus' + side);
+  let el = document.getElementById('arenaStatus' + side);
   if (!el) return;
   el.textContent = text;
   el.className = 'arena-status' + (cls ? ' ' + cls : '');
@@ -285,28 +285,28 @@ function arenaCheckDone() {
   arenaState.running = false;
 
   // Determine winner
-  var timeA = arenaState.timeA, timeB = arenaState.timeB;
-  var compsA = arenaState.compsA, compsB = arenaState.compsB;
-  var nameA = document.getElementById('arenaPanelNameA');
-  var nameB = document.getElementById('arenaPanelNameB');
-  var nA = nameA ? nameA.textContent : 'A';
-  var nB = nameB ? nameB.textContent : 'B';
+  let timeA = arenaState.timeA, timeB = arenaState.timeB;
+  let compsA = arenaState.compsA, compsB = arenaState.compsB;
+  let nameA = document.getElementById('arenaPanelNameA');
+  let nameB = document.getElementById('arenaPanelNameB');
+  let nA = nameA ? nameA.textContent : 'A';
+  let nB = nameB ? nameB.textContent : 'B';
 
-  var winnerName, winnerSide;
+  let winnerName, winnerSide;
   if (compsA < compsB) { winnerName = nA; winnerSide = 'A'; }
   else if (compsB < compsA) { winnerName = nB; winnerSide = 'B'; }
   else if (timeA <= timeB) { winnerName = nA; winnerSide = 'A'; }
   else { winnerName = nB; winnerSide = 'B'; }
 
-  var banner = document.getElementById('arenaWinnerBanner');
-  var content = document.getElementById('arenaWinnerContent');
+  let banner = document.getElementById('arenaWinnerBanner');
+  let content = document.getElementById('arenaWinnerContent');
   if (banner && content) {
     content.innerHTML = '🏆<br>' + winnerName + '<br>wins!';
     banner.classList.remove('hidden');
   }
 
-  var panelA = document.getElementById('arenaPanelA');
-  var panelB = document.getElementById('arenaPanelB');
+  let panelA = document.getElementById('arenaPanelA');
+  let panelB = document.getElementById('arenaPanelB');
   if (panelA && panelB) {
     if (winnerSide === 'A') { panelA.classList.add('winner'); panelB.classList.add('loser'); }
     else { panelB.classList.add('winner'); panelA.classList.add('loser'); }
@@ -315,20 +315,20 @@ function arenaCheckDone() {
   arenaSetStatus('A', winnerSide === 'A' ? '🏆 Winner!' : 'Done', winnerSide === 'A' ? 'done' : '');
   arenaSetStatus('B', winnerSide === 'B' ? '🏆 Winner!' : 'Done', winnerSide === 'B' ? 'done' : '');
 
-  var fightBtn = document.getElementById('arenaFightBtn');
+  let fightBtn = document.getElementById('arenaFightBtn');
   if (fightBtn) { fightBtn.disabled = false; fightBtn.innerHTML = '<i class="fas fa-play"></i> Fight Again'; }
 }
 
 function arenaRunSide(side, steps, canvasId, color) {
-  var canvas = document.getElementById(canvasId);
+  let canvas = document.getElementById(canvasId);
   if (!canvas) return;
-  var idx = 0;
-  var startTime = performance.now();
+  let idx = 0;
+  let startTime = performance.now();
   arenaSetStatus(side, 'Fighting...', 'running');
 
   function tick() {
     if (idx >= steps.length) {
-      var elapsed = Math.round(performance.now() - startTime);
+      let elapsed = Math.round(performance.now() - startTime);
       if (side === 'A') {
         arenaState.doneA = true;
         arenaState.timeA = elapsed;
@@ -347,9 +347,9 @@ function arenaRunSide(side, steps, canvasId, color) {
       return;
     }
 
-    var step = steps[idx];
+    let step = steps[idx];
     arenaDrawStep(canvas, step, color);
-    var s = side === 'A' ? arenaState : arenaState;
+    let s = side === 'A' ? arenaState : arenaState;
     arenaUpdateMetrics(side, step.comps, step.swaps, Math.round(performance.now() - startTime));
     arenaUpdateChart(
       side === 'A' ? step.comps : arenaState.compsA,
@@ -361,7 +361,7 @@ function arenaRunSide(side, steps, canvasId, color) {
     );
 
     idx++;
-    var delay = arenaGetDelay();
+    let delay = arenaGetDelay();
     if (side === 'A') arenaState.rafA = setTimeout(tick, delay);
     else              arenaState.rafB = setTimeout(tick, delay);
   }
@@ -370,9 +370,9 @@ function arenaRunSide(side, steps, canvasId, color) {
 }
 
 function arenaResizeCanvas(id) {
-  var canvas = document.getElementById(id);
+  let canvas = document.getElementById(id);
   if (!canvas) return;
-  var parent = canvas.parentElement;
+  let parent = canvas.parentElement;
   canvas.width  = parent ? parent.clientWidth : 400;
   canvas.height = 200;
 }
@@ -381,13 +381,13 @@ function arenaResizeCanvas(id) {
 function arenaFight() {
   if (arenaState.running) return;
 
-  var selA = document.getElementById('arenaAlgoA');
-  var selB = document.getElementById('arenaAlgoB');
+  let selA = document.getElementById('arenaAlgoA');
+  let selB = document.getElementById('arenaAlgoB');
   if (!selA || !selB) return;
 
-  var keyA = selA.value, keyB = selB.value;
+  let keyA = selA.value, keyB = selB.value;
   if (keyA === keyB) {
-    alert('Please select two different algorithms to battle!');
+    console.warn("Alert:", 'Please select two different algorithms to battle!');
     return;
   }
 
@@ -404,21 +404,21 @@ function arenaFight() {
   arenaState.timeA  = arenaState.timeB  = 0;
 
   // Update panel names + legend
-  var nameA = ARENA_ALGOS[keyA].name;
-  var nameB = ARENA_ALGOS[keyB].name;
-  var pnA = document.getElementById('arenaPanelNameA');
-  var pnB = document.getElementById('arenaPanelNameB');
-  var lgA = document.getElementById('arenaLegendA');
-  var lgB = document.getElementById('arenaLegendB');
+  let nameA = ARENA_ALGOS[keyA].name;
+  let nameB = ARENA_ALGOS[keyB].name;
+  let pnA = document.getElementById('arenaPanelNameA');
+  let pnB = document.getElementById('arenaPanelNameB');
+  let lgA = document.getElementById('arenaLegendA');
+  let lgB = document.getElementById('arenaLegendB');
   if (pnA) pnA.textContent = nameA;
   if (pnB) pnB.textContent = nameB;
   if (lgA) lgA.textContent = nameA;
   if (lgB) lgB.textContent = nameB;
 
   // Reset panels
-  var panelA = document.getElementById('arenaPanelA');
-  var panelB = document.getElementById('arenaPanelB');
-  var banner = document.getElementById('arenaWinnerBanner');
+  let panelA = document.getElementById('arenaPanelA');
+  let panelB = document.getElementById('arenaPanelB');
+  let banner = document.getElementById('arenaWinnerBanner');
   if (panelA) { panelA.classList.remove('winner','loser'); }
   if (panelB) { panelB.classList.remove('winner','loser'); }
   if (banner) { banner.classList.add('hidden'); }
@@ -429,22 +429,22 @@ function arenaFight() {
   arenaUpdateChart(0,0,0,0,0,0);
 
   // Generate data
-  var datasetSel = document.getElementById('arenaDataset');
-  var sizeSel    = document.getElementById('arenaSize');
-  var dataType   = datasetSel ? datasetSel.value : 'random';
-  var size       = sizeSel   ? parseInt(sizeSel.value) : 40;
-  var data       = arenaGenData(dataType, size);
+  let datasetSel = document.getElementById('arenaDataset');
+  let sizeSel    = document.getElementById('arenaSize');
+  let dataType   = datasetSel ? datasetSel.value : 'random';
+  let size       = sizeSel   ? parseInt(sizeSel.value) : 40;
+  let data       = arenaGenData(dataType, size);
 
   // Resize canvases
   arenaResizeCanvas('arenaCanvasA');
   arenaResizeCanvas('arenaCanvasB');
 
   // Generate steps
-  var stepsA = STEP_FUNS[keyA](data.slice());
-  var stepsB = STEP_FUNS[keyB](data.slice());
+  let stepsA = STEP_FUNS[keyA](data.slice());
+  let stepsB = STEP_FUNS[keyB](data.slice());
 
   // Disable fight button
-  var fightBtn = document.getElementById('arenaFightBtn');
+  let fightBtn = document.getElementById('arenaFightBtn');
   if (fightBtn) { fightBtn.disabled = true; fightBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Fighting...'; }
 
   // Run both simultaneously
@@ -459,14 +459,14 @@ function arenaReset() {
   arenaState.doneA = false;
   arenaState.doneB = false;
 
-  var canvasA = document.getElementById('arenaCanvasA');
-  var canvasB = document.getElementById('arenaCanvasB');
-  if (canvasA) { arenaResizeCanvas('arenaCanvasA'); var ctx = canvasA.getContext('2d'); ctx.clearRect(0,0,canvasA.width,canvasA.height); }
-  if (canvasB) { arenaResizeCanvas('arenaCanvasB'); var ctx = canvasB.getContext('2d'); ctx.clearRect(0,0,canvasB.width,canvasB.height); }
+  let canvasA = document.getElementById('arenaCanvasA');
+  let canvasB = document.getElementById('arenaCanvasB');
+  if (canvasA) { arenaResizeCanvas('arenaCanvasA'); let ctx = canvasA.getContext('2d'); ctx.clearRect(0,0,canvasA.width,canvasA.height); }
+  if (canvasB) { arenaResizeCanvas('arenaCanvasB'); let ctx = canvasB.getContext('2d'); ctx.clearRect(0,0,canvasB.width,canvasB.height); }
 
-  var panelA = document.getElementById('arenaPanelA');
-  var panelB = document.getElementById('arenaPanelB');
-  var banner = document.getElementById('arenaWinnerBanner');
+  let panelA = document.getElementById('arenaPanelA');
+  let panelB = document.getElementById('arenaPanelB');
+  let banner = document.getElementById('arenaWinnerBanner');
   if (panelA) panelA.classList.remove('winner','loser');
   if (panelB) panelB.classList.remove('winner','loser');
   if (banner) banner.classList.add('hidden');
@@ -477,38 +477,38 @@ function arenaReset() {
   arenaUpdateMetrics('B',0,0,0);
   arenaUpdateChart(0,0,0,0,0,0);
 
-  var fightBtn = document.getElementById('arenaFightBtn');
+  let fightBtn = document.getElementById('arenaFightBtn');
   if (fightBtn) { fightBtn.disabled = false; fightBtn.innerHTML = '<i class="fas fa-play"></i> Fight!'; }
 }
 
 function arenaNewData() {
   arenaReset();
   // Draw preview bars on both canvases
-  var datasetSel = document.getElementById('arenaDataset');
-  var sizeSel    = document.getElementById('arenaSize');
-  var dataType   = datasetSel ? datasetSel.value : 'random';
-  var size       = sizeSel   ? parseInt(sizeSel.value) : 40;
-  var data       = arenaGenData(dataType, size);
+  let datasetSel = document.getElementById('arenaDataset');
+  let sizeSel    = document.getElementById('arenaSize');
+  let dataType   = datasetSel ? datasetSel.value : 'random';
+  let size       = sizeSel   ? parseInt(sizeSel.value) : 40;
+  let data       = arenaGenData(dataType, size);
 
   arenaResizeCanvas('arenaCanvasA');
   arenaResizeCanvas('arenaCanvasB');
 
-  var previewStep = { arr: data, hi: [], sorted: [] };
-  var canvasA = document.getElementById('arenaCanvasA');
-  var canvasB = document.getElementById('arenaCanvasB');
+  let previewStep = { arr: data, hi: [], sorted: [] };
+  let canvasA = document.getElementById('arenaCanvasA');
+  let canvasB = document.getElementById('arenaCanvasB');
   if (canvasA) arenaDrawStep(canvasA, previewStep, '#f59e0b');
   if (canvasB) arenaDrawStep(canvasB, previewStep, '#3b82f6');
 }
 
 /* ─── Educational Cards ─── */
 function arenaRenderEdu() {
-  var grid = document.getElementById('arenaEduGrid');
+  let grid = document.getElementById('arenaEduGrid');
   if (!grid) return;
-  var html = '';
-  var keys = Object.keys(ARENA_ALGOS);
-  for (var i = 0; i < keys.length; i++) {
-    var k = keys[i];
-    var a = ARENA_ALGOS[k];
+  let html = '';
+  let keys = Object.keys(ARENA_ALGOS);
+  for (let i = 0; i < keys.length; i++) {
+    let k = keys[i];
+    let a = ARENA_ALGOS[k];
     html +=
       '<div class="arena-edu-card">' +
         '<div class="arena-edu-card-name">' + a.name + '</div>' +
@@ -526,11 +526,11 @@ function arenaRenderEdu() {
 
 /* ─── Init ─── */
 function arenaInit() {
-  var fightBtn   = document.getElementById('arenaFightBtn');
-  var resetBtn   = document.getElementById('arenaResetBtn');
-  var newDataBtn = document.getElementById('arenaNewDataBtn');
-  var sizeSlider = document.getElementById('arenaSize');
-  var speedSlider= document.getElementById('arenaSpeed');
+  let fightBtn   = document.getElementById('arenaFightBtn');
+  let resetBtn   = document.getElementById('arenaResetBtn');
+  let newDataBtn = document.getElementById('arenaNewDataBtn');
+  let sizeSlider = document.getElementById('arenaSize');
+  let speedSlider= document.getElementById('arenaSpeed');
 
   if (fightBtn)    fightBtn.addEventListener('click', arenaFight);
   if (resetBtn)    resetBtn.addEventListener('click', arenaReset);
@@ -538,14 +538,14 @@ function arenaInit() {
 
   if (sizeSlider) {
     sizeSlider.addEventListener('input', function() {
-      var lbl = document.getElementById('arenaSizeLabel');
+      let lbl = document.getElementById('arenaSizeLabel');
       if (lbl) lbl.textContent = sizeSlider.value;
     });
   }
 
   if (speedSlider) {
     speedSlider.addEventListener('input', function() {
-      var lbl = document.getElementById('arenaSpeedLabel');
+      let lbl = document.getElementById('arenaSpeedLabel');
       if (lbl) lbl.textContent = SPEED_LABELS[speedSlider.value] || 'Normal';
     });
   }

@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+  <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
     <i class="fas fa-circle-chevron-up"></i>
   </button>
 
@@ -59,7 +59,7 @@
             <option value="4" selected>4 (max 3 keys/node)</option>
             <option value="5">5 (max 4 keys/node)</option>
           </select>
-          <button class="btn bpt-btn-primary bpt-preset-btn" id="bptPresetBtn">
+          <button type="button" class="btn bpt-btn-primary bpt-preset-btn" id="bptPresetBtn">
             <i class="fas fa-bolt"></i> Preset: Insert 1–20
           </button>
         </div>
@@ -72,20 +72,20 @@
         <div class="bpt-row">
           <span class="bpt-row-label">Value:</span>
           <input type="number" id="bptValueInput" class="bpt-val-input" value="10" aria-label="Key value" />
-          <button class="btn bpt-btn-primary bpt-exec-btn" id="bptExecBtn">
+          <button type="button" class="btn bpt-btn-primary bpt-exec-btn" id="bptExecBtn">
             <i class="fas fa-play"></i> Execute
           </button>
         </div>
 
         <div class="bpt-row">
           <span class="bpt-row-label">Playback:</span>
-          <button class="btn btn-secondary bpt-exec-btn" id="bptStepBtn">
+          <button type="button" class="btn btn-secondary bpt-exec-btn" id="bptStepBtn">
             <i class="fas fa-step-forward"></i> Step
           </button>
-          <button class="btn btn-secondary bpt-exec-btn" id="bptPlayBtn">
+          <button type="button" class="btn btn-secondary bpt-exec-btn" id="bptPlayBtn">
             <i class="fas fa-play"></i> Play
           </button>
-          <button class="btn btn-secondary bpt-exec-btn" id="bptResetBtn">
+          <button type="button" class="btn btn-secondary bpt-exec-btn" id="bptResetBtn">
             <i class="fas fa-undo"></i> Reset Tree
           </button>
           <label class="bpt-speed-label">
@@ -177,7 +177,10 @@
   <div id="footer-placeholder"></div>
 
   <script src="../../../auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="../../../theme.js"></script>
   <script src="../../../auth-gate.js"></script>
   <script src="bplus-tree-visualizer.js"></script>

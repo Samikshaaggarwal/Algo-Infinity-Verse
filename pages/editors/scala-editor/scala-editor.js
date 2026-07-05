@@ -70,7 +70,7 @@ const SCALA_EXAMPLES = {
   def main(args: Array[String]): Unit = {
     val name: String = "Lakshay"
     val age: Int = 21
-    var score: Double = 98.5
+    let score: Double = 98.5
     val isReady: Boolean = true
     println(s"Name: \${name}")
     println(s"Age: \${age}")

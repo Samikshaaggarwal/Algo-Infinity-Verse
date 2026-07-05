@@ -13,3 +13,5 @@ export function getFirebaseErrorMessage(error) {
   };
   return messages[error.code] || "Sign-in failed. Please try again.";
 }
+// Legacy global exports
+window.getFirebaseErrorMessage = getFirebaseErrorMessage;

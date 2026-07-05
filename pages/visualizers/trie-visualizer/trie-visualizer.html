@@ -37,14 +37,14 @@
           <input id="wordInput" type="text" autocomplete="off" placeholder="apple" />
         </div>
         <div class="button-grid trie-action-grid">
-          <button class="btn-vis btn-insert" id="insertBtn"><i class="fas fa-plus"></i> Insert</button>
-          <button class="btn-vis btn-search" id="searchBtn"><i class="fas fa-search"></i> Search</button>
+          <button type="button" class="btn-vis btn-insert" id="insertBtn"><i class="fas fa-plus"></i> Insert</button>
+          <button type="button" class="btn-vis btn-search" id="searchBtn"><i class="fas fa-search"></i> Search</button>
         </div>
         <div class="button-grid trie-playback-grid">
-          <button class="btn-vis" id="previousBtn"><i class="fas fa-step-backward"></i> Previous</button>
-          <button class="btn-vis" id="playPauseBtn"><i class="fas fa-play"></i> Play</button>
-          <button class="btn-vis" id="nextBtn"><i class="fas fa-step-forward"></i> Next</button>
-          <button class="btn-vis btn-danger" id="resetBtn"><i class="fas fa-undo"></i> Reset</button>
+          <button type="button" class="btn-vis" id="previousBtn"><i class="fas fa-step-backward"></i> Previous</button>
+          <button type="button" class="btn-vis" id="playPauseBtn"><i class="fas fa-play"></i> Play</button>
+          <button type="button" class="btn-vis" id="nextBtn"><i class="fas fa-step-forward"></i> Next</button>
+          <button type="button" class="btn-vis btn-danger" id="resetBtn"><i class="fas fa-undo"></i> Reset</button>
         </div>
         <div class="status-box" id="statusBox">Insert a word or search an existing one to begin.</div>
         <div class="explanation-box">
@@ -80,7 +80,10 @@
     </div>
   </section>
   <div id="footer-placeholder"></div>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/auth.js"></script>
   <script src="/theme.js"></script>
   <script src="trie-visualizer.js"></script>

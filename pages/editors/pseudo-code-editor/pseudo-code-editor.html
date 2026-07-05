@@ -62,8 +62,8 @@
         <!-- Toolbar -->
         <div class="editor-toolbar">
           <div class="toolbar-left">
-            <button class="btn btn-secondary" id="btnFormat"><i class="fas fa-align-left"></i> Auto-Indent</button>
-            <button class="btn btn-secondary" id="btnClear"><i class="fas fa-eraser"></i> Clear</button>
+            <button type="button" class="btn btn-secondary" id="btnFormat"><i class="fas fa-align-left"></i> Auto-Indent</button>
+            <button type="button" class="btn btn-secondary" id="btnClear"><i class="fas fa-eraser"></i> Clear</button>
           </div>
           <div class="toolbar-right">
             <span id="lintStatus" class="status-badge valid"><i class="fas fa-check-circle"></i> Valid</span>
@@ -97,7 +97,10 @@ ENDIF"></textarea>
   <div id="footer-placeholder"></div>
 
   <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   <script src="pseudo-code-editor.js"></script>
   <script>

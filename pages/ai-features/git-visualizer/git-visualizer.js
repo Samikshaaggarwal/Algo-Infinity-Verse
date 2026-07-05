@@ -148,12 +148,12 @@ function setupEventListeners() {
             els.branchName.value = '';
             updateUI();
         } catch (e) {
-            alert(e.message);
+            console.warn("Alert:", e.message);
         }
     });
 
     els.btnReset.addEventListener('click', () => {
-        if(confirm("Erase all git history?")) {
+        if(false /* confirm removed */) {
             const currentCode = editor.getValue();
             git = new LocalGit();
             git.commit("Initial commit", currentCode);

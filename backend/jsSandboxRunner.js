@@ -1,3 +1,20 @@
+import { exec } from 'child_process';
+import { promises as fs } from 'fs';
+import path from 'path';
+import crypto from 'crypto';
+import os from 'os';
+import util from 'util';
+
+const execPromise = util.promisify(exec);
+
+// Docker Configuration for Supported Languages
+const RUNTIME_CONFIG = {
+  python: { image: 'python:3.9-alpine', ext: '.py', getCmd: (f) => `python ${f}` },
+  cpp: { image: 'gcc:latest', ext: '.cpp', getCmd: (f) => `g++ -O2 -o /tmp/out ${f} && /tmp/out` },
+  javascript: { image: 'node:18-alpine', ext: '.js', getCmd: (f) => `node ${f}` },
+  java: { image: 'openjdk:11-jdk-slim', ext: '.java', getCmd: (f) => `java ${f}` }
+};
+
 function truncate(str, max) {
   const s = String(str ?? "");
   if (!Number.isFinite(max) || max <= 0) return "";
@@ -6,47 +23,30 @@ function truncate(str, max) {
 
 function normalizeTestCase(t) {
   if (t == null || typeof t !== "object") {
-    return {
-      input: "",
-      expectedOutput: "",
-      name: undefined,
-      show: true,
-    };
+    return { input: "", expectedOutput: "", name: undefined, show: true };
   }
-
   if ("input" in t) {
-    return {
-      name: t.name ?? undefined,
-      input: t.input,
-      expectedOutput: t.expectedOutput ?? t.expected ?? "",
-      isHidden: Boolean(t.isHidden),
-    };
+    return { name: t.name ?? undefined, input: t.input, expectedOutput: t.expectedOutput ?? t.expected ?? "", isHidden: Boolean(t.isHidden) };
   }
-
   if ("stdin" in t) {
-    return {
-      name: t.name ?? undefined,
-      input: t.stdin,
-      expectedOutput: t.expected ?? "",
-      isHidden: Boolean(t.isHidden),
-    };
+    return { name: t.name ?? undefined, input: t.stdin, expectedOutput: t.expected ?? "", isHidden: Boolean(t.isHidden) };
   }
-
-  return {
-    name: t.name ?? undefined,
-    input: t.value ?? "",
-    expectedOutput: t.expectedOutput ?? t.expected ?? "",
-    isHidden: Boolean(t.isHidden),
-  };
+  return { name: t.name ?? undefined, input: t.value ?? "", expectedOutput: t.expectedOutput ?? t.expected ?? "", isHidden: Boolean(t.isHidden) };
 }
 
-async function runWithPiston({ language, sourceCode, tests, timeoutMs, maxOutputChars, showMySteps }) {
-  const versionMap = { python: "3.10.0", cpp: "10.2.0", javascript: "18.15.0" };
-  const langIdMap = { python: "python", cpp: "c++", javascript: "javascript" };
-  const langId = langIdMap[language] || language;
+async function runWithDocker({ language, sourceCode, tests, timeoutMs, maxOutputChars, showMySteps }) {
+  const langIdMap = { python: "python", cpp: "cpp", javascript: "javascript", 'c++': 'cpp', java: 'java' };
+  const langKey = langIdMap[language.toLowerCase()] || language.toLowerCase();
+  const langConfig = RUNTIME_CONFIG[langKey];
+
+  if (!langConfig) {
+    return { ok: false, error: `Unsupported language for local docker sandbox: ${language}` };
+  }
   
   let finalSourceCode = sourceCode;
-  if (language === "javascript") {
+  
+  // KEEPING ORIGINAL JS WRAPPER LOGIC INTACT
+  if (langKey === "javascript") {
     finalSourceCode = `
 ${sourceCode}
 
@@ -88,6 +88,7 @@ try {
   }
   
   const results = [];
+  const tmpDir = os.tmpdir();
   
   for (let i = 0; i < tests.length; i++) {
     const t = tests[i];
@@ -103,76 +104,87 @@ try {
     let stderr = "";
     let timedOut = false;
     
-    try {
-      const response = await fetch("https://emkc.org/api/v2/piston/execute", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          language: langId,
-          version: versionMap[language] || "*",
-          files: [{ content: finalSourceCode }],
-          stdin: stdinStr || "",
-          compile_timeout: timeoutMs,
-          run_timeout: timeoutMs,
-        })
-      });
-      
-      const data = await response.json();
-      
-      if (data.compile && data.compile.code !== 0) {
-        runtimeError = { message: "Compilation Error:\n" + data.compile.stderr };
-      } else if (data.run) {
-        const rawStdout = data.run.stdout || "";
-        const rawStderr = data.run.stderr || "";
-        
-        const MAX_LOG_LINES = 100;
-        const MAX_TOTAL_LOG_CHARS = 10000;
-        
-        function enforceLimits(text) {
-          if (!text) return "";
-          let lines = text.split("\n");
-          let truncated = false;
-          if (lines.length > MAX_LOG_LINES) {
-            lines = lines.slice(0, MAX_LOG_LINES);
-            truncated = true;
-          }
-          let result = lines.join("\n");
-          if (result.length > MAX_TOTAL_LOG_CHARS) {
-            result = result.slice(0, MAX_TOTAL_LOG_CHARS);
-            truncated = true;
-          }
-          if (truncated) {
-            result += "\n[Output Truncated: exceeded log size or line limits]";
-          }
-          return result;
-        }
+    const execId = crypto.randomUUID();
+    const fileName = langKey === 'java' ? `Main_${execId.replace(/-/g, '')}${langConfig.ext}` : `${execId}${langConfig.ext}`;
+    const hostFilePath = path.join(tmpDir, fileName);
+    const containerFilePath = `/tmp/${fileName}`;
+    const hostInputPath = path.join(tmpDir, `${execId}.in`);
+    const containerInputPath = `/tmp/${execId}.in`;
 
-        stdout = enforceLimits(rawStdout);
-        stderr = enforceLimits(rawStderr);
-        
-        if (data.run.signal === "SIGKILL") {
+    try {
+      await fs.writeFile(hostFilePath, finalSourceCode);
+      await fs.writeFile(hostInputPath, stdinStr || "");
+
+      // SECURE DOCKER COMMAND (Replaces Piston API)
+      const dockerCmd = `docker run --rm -i --network none --memory 256m --cpus 0.5 -v ${hostFilePath}:${containerFilePath}:ro -v ${hostInputPath}:${containerInputPath}:ro ${langConfig.image} sh -c "${langConfig.getCmd(containerFilePath)} < ${containerInputPath}"`;
+
+      let rawStdout = "";
+      let rawStderr = "";
+      let exitCode = 0;
+
+      try {
+        const { stdout: out, stderr: err } = await execPromise(dockerCmd, { timeout: timeoutMs });
+        rawStdout = out;
+        rawStderr = err;
+      } catch (execErr) {
+        if (execErr.killed || execErr.code === 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER') {
           timedOut = true;
-          runtimeError = { message: "Execution timed out" };
-        } else if (data.run.code !== 0) {
-          runtimeError = { message: stderr || `Process exited with code ${data.run.code}` };
+          rawStderr = "Execution timed out";
         } else {
-          actualOutput = stdout.trim();
-          if (typeof expected === "string") {
+          rawStdout = execErr.stdout || "";
+          rawStderr = execErr.stderr || "";
+          exitCode = execErr.code || 1;
+        }
+      }
+
+      // KEEPING ORIGINAL LIMIT ENFORCEMENT
+      const MAX_LOG_LINES = 100;
+      const MAX_TOTAL_LOG_CHARS = 10000;
+      
+      function enforceLimits(text) {
+        if (!text) return "";
+        let lines = text.split("\n");
+        let truncated = false;
+        if (lines.length > MAX_LOG_LINES) {
+          lines = lines.slice(0, MAX_LOG_LINES);
+          truncated = true;
+        }
+        let result = lines.join("\n");
+        if (result.length > MAX_TOTAL_LOG_CHARS) {
+          result = result.slice(0, MAX_TOTAL_LOG_CHARS);
+          truncated = true;
+        }
+        if (truncated) {
+          result += "\n[Output Truncated: exceeded log size or line limits]";
+        }
+        return result;
+      }
+
+      stdout = enforceLimits(rawStdout);
+      stderr = enforceLimits(rawStderr);
+      
+      if (timedOut) {
+        runtimeError = { message: "Execution timed out" };
+      } else if (exitCode !== 0 || stderr) {
+        runtimeError = { message: stderr || `Process exited with code ${exitCode}` };
+      } else {
+        actualOutput = stdout.trim();
+        if (typeof expected === "string") {
+          passed = actualOutput === String(expected).trim();
+        } else {
+          try {
+            const parsedActual = JSON.parse(actualOutput);
+            passed = JSON.stringify(parsedActual) === JSON.stringify(expected);
+          } catch {
             passed = actualOutput === String(expected).trim();
-          } else {
-            try {
-              const parsedActual = JSON.parse(actualOutput);
-              passed = JSON.stringify(parsedActual) === JSON.stringify(expected);
-            } catch {
-              passed = actualOutput === String(expected).trim();
-            }
           }
         }
-      } else {
-         runtimeError = { message: data.message || "Unknown error" };
       }
     } catch (e) {
       runtimeError = { message: e.message };
+    } finally {
+      await fs.unlink(hostFilePath).catch(() => {});
+      await fs.unlink(hostInputPath).catch(() => {});
     }
     
     results.push({
@@ -191,22 +203,11 @@ try {
     });
   }
   
-  return {
-    ok: true,
-    results,
-    runtimeMeta: { timeoutMs, maxOutputChars, showMySteps }
-  };
+  return { ok: true, results, runtimeMeta: { timeoutMs, maxOutputChars, showMySteps } };
 }
 
-export async function runUserCode({
-  language,
-  sourceCode,
-  tests,
-  timeoutMs = 1000,
-  maxOutputChars = 20000,
-  showMySteps = false,
-}) {
-  const MAX_CODE_LENGTH = 50000; // 50KB limit
+export async function runUserCode({ language, sourceCode, tests, timeoutMs = 2000, maxOutputChars = 20000, showMySteps = false }) {
+  const MAX_CODE_LENGTH = 50000;
   
   if (!sourceCode || typeof sourceCode !== "string") {
     return { ok: false, error: "Source code must be a non-empty string." };
@@ -217,20 +218,5 @@ export async function runUserCode({
 
   const normalizedTests = Array.isArray(tests) ? tests.map(normalizeTestCase) : [];
 
-  // Route supported languages to Piston
-  if (language === "python" || language === "cpp" || language === "javascript") {
-    return await runWithPiston({
-      language,
-      sourceCode,
-      tests: normalizedTests,
-      timeoutMs,
-      maxOutputChars,
-      showMySteps,
-    });
-  }
-
-  return {
-    ok: false,
-    error: `Unsupported language for MVP sandbox: ${language}`,
-  };
+  return await runWithDocker({ language, sourceCode, tests: normalizedTests, timeoutMs, maxOutputChars, showMySteps });
 }

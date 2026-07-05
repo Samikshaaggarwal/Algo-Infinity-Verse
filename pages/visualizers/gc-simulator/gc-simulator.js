@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
   gcsInit();
 });
 
-var GCS_SVG_NS = 'http://www.w3.org/2000/svg';
+let GCS_SVG_NS = 'http://www.w3.org/2000/svg';
 
 /* ─── State ─── */
-var gcsState = {
+let gcsState = {
   algo        : 'marksweep',
   tool        : 'move',
   nodes       : [],     // {id, x, y, root, gen, refcount, marked, dead, age}
@@ -40,40 +40,40 @@ function gcsApplyPreset(name) {
   gcsResetGcOnly();
 
   function addNode(x, y, root) {
-    var n = { id: gcsState.nextId++, x: x, y: y, root: !!root, gen: 'young', refcount: 0, marked: false, dead: false, age: 0 };
+    let n = { id: gcsState.nextId++, x: x, y: y, root: !!root, gen: 'young', refcount: 0, marked: false, dead: false, age: 0 };
     gcsState.nodes.push(n);
     return n.id;
   }
   function addEdge(from, to) { gcsState.edges.push({ from: from, to: to }); }
 
   if (name === 'acyclic') {
-    var root = addNode(90, 200, true);
-    var a = addNode(230, 100);
-    var b = addNode(230, 300);
-    var c = addNode(380, 100);
-    var orphan = addNode(380, 300);
+    let root = addNode(90, 200, true);
+    let a = addNode(230, 100);
+    let b = addNode(230, 300);
+    let c = addNode(380, 100);
+    let orphan = addNode(380, 300);
     addEdge(root, a); addEdge(root, b); addEdge(a, c);
     // orphan has no incoming edges — garbage immediately
 
   } else if (name === 'cycle') {
-    var root = addNode(80, 200, true);
-    var a = addNode(220, 100);
-    var b = addNode(360, 100);
-    var c = addNode(220, 320);
-    var d = addNode(360, 320);
+    let root = addNode(80, 200, true);
+    let a = addNode(220, 100);
+    let b = addNode(360, 100);
+    let c = addNode(220, 320);
+    let d = addNode(360, 320);
     addEdge(root, a);
     // c <-> d form an isolated cycle, unreachable from root
     addEdge(c, d); addEdge(d, c);
 
   } else if (name === 'nested') {
-    var root = addNode(60, 220, true);
-    var a = addNode(190, 120);
-    var b = addNode(190, 320);
-    var c = addNode(320, 70);
-    var d = addNode(320, 170);
-    var e = addNode(320, 270);
-    var f = addNode(320, 370);
-    var g = addNode(450, 220);
+    let root = addNode(60, 220, true);
+    let a = addNode(190, 120);
+    let b = addNode(190, 320);
+    let c = addNode(320, 70);
+    let d = addNode(320, 170);
+    let e = addNode(320, 270);
+    let f = addNode(320, 370);
+    let g = addNode(450, 220);
     addEdge(root, a); addEdge(root, b);
     addEdge(a, c); addEdge(a, d);
     addEdge(b, e); addEdge(b, f);
@@ -96,12 +96,12 @@ function gcsRecomputeRefcounts() {
 
 /* ─── Add object ─── */
 function gcsAddObject() {
-  var wrap = document.getElementById('gcsGraphWrap');
-  var w = wrap ? wrap.clientWidth : 600;
-  var h = wrap ? wrap.clientHeight : 420;
-  var x = 60 + Math.random() * Math.max(60, w - 160);
-  var y = 60 + Math.random() * Math.max(60, h - 120);
-  var n = { id: gcsState.nextId++, x: x, y: y, root: false, gen: 'young', refcount: 0, marked: false, dead: false, age: 0 };
+  let wrap = document.getElementById('gcsGraphWrap');
+  let w = wrap ? wrap.clientWidth : 600;
+  let h = wrap ? wrap.clientHeight : 420;
+  let x = 60 + Math.random() * Math.max(60, w - 160);
+  let y = 60 + Math.random() * Math.max(60, h - 120);
+  let n = { id: gcsState.nextId++, x: x, y: y, root: false, gen: 'young', refcount: 0, marked: false, dead: false, age: 0 };
   gcsState.nodes.push(n);
   gcsRecomputeRefcounts();
   gcsRender();
@@ -110,19 +110,19 @@ function gcsAddObject() {
 
 /* ─── SVG rendering ─── */
 function gcsRender() {
-  var svg = document.getElementById('gcsSvg');
+  let svg = document.getElementById('gcsSvg');
   if (!svg) return;
   while (svg.firstChild) svg.removeChild(svg.firstChild);
 
   // Arrow marker
-  var defs = document.createElementNS(GCS_SVG_NS, 'defs');
-  var marker = document.createElementNS(GCS_SVG_NS, 'marker');
+  let defs = document.createElementNS(GCS_SVG_NS, 'defs');
+  let marker = document.createElementNS(GCS_SVG_NS, 'marker');
   marker.setAttribute('id', 'gcsArrow');
   marker.setAttribute('viewBox', '0 0 10 10');
   marker.setAttribute('refX', '9'); marker.setAttribute('refY', '5');
   marker.setAttribute('markerWidth', '7'); marker.setAttribute('markerHeight', '7');
   marker.setAttribute('orient', 'auto-start-reverse');
-  var path = document.createElementNS(GCS_SVG_NS, 'path');
+  let path = document.createElementNS(GCS_SVG_NS, 'path');
   path.setAttribute('d', 'M 0 0 L 10 5 L 0 10 z');
   path.setAttribute('fill', 'rgba(148,163,184,0.6)');
   marker.appendChild(path);
@@ -131,19 +131,19 @@ function gcsRender() {
 
   // Draw edges first (under nodes)
   gcsState.edges.forEach(function(edge, idx) {
-    var from = gcsGetNode(edge.from); var to = gcsGetNode(edge.to);
+    let from = gcsGetNode(edge.from); let to = gcsGetNode(edge.to);
     if (!from || !to) return;
 
-    var dx = to.x - from.x; var dy = to.y - from.y;
-    var dist = Math.sqrt(dx*dx + dy*dy) || 1;
-    var ux = dx / dist; var uy = dy / dist;
-    var r = 24;
-    var x1 = from.x + ux * r; var y1 = from.y + uy * r;
-    var x2 = to.x - ux * (r+8); var y2 = to.y - uy * (r+8);
+    let dx = to.x - from.x; let dy = to.y - from.y;
+    let dist = Math.sqrt(dx*dx + dy*dy) || 1;
+    let ux = dx / dist; let uy = dy / dist;
+    let r = 24;
+    let x1 = from.x + ux * r; let y1 = from.y + uy * r;
+    let x2 = to.x - ux * (r+8); let y2 = to.y - uy * (r+8);
 
-    var isCycleEdge = gcsIsPartOfCycle(edge.from, edge.to);
+    let isCycleEdge = gcsIsPartOfCycle(edge.from, edge.to);
 
-    var line = document.createElementNS(GCS_SVG_NS, 'line');
+    let line = document.createElementNS(GCS_SVG_NS, 'line');
     line.setAttribute('class', 'gcs-edge-line');
     line.setAttribute('x1', x1); line.setAttribute('y1', y1);
     line.setAttribute('x2', x2); line.setAttribute('y2', y2);
@@ -166,14 +166,14 @@ function gcsRender() {
 
   // Draw nodes
   gcsState.nodes.forEach(function(node) {
-    var g = document.createElementNS(GCS_SVG_NS, 'g');
+    let g = document.createElementNS(GCS_SVG_NS, 'g');
     g.setAttribute('transform', 'translate(' + node.x + ',' + node.y + ')');
 
-    var circle = document.createElementNS(GCS_SVG_NS, 'circle');
+    let circle = document.createElementNS(GCS_SVG_NS, 'circle');
     circle.setAttribute('class', 'gcs-node-circle');
     circle.setAttribute('r', '24');
 
-    var fillColor, strokeColor;
+    let fillColor, strokeColor;
     if (node.dead) { fillColor = 'rgba(239,68,68,0.25)'; strokeColor = '#ef4444'; }
     else if (gcsState.algo === 'generational') {
       fillColor   = node.gen === 'old' ? 'rgba(168,85,247,0.25)' : 'rgba(6,182,212,0.25)';
@@ -195,7 +195,7 @@ function gcsRender() {
 
     // Root house icon
     if (node.root) {
-      var rootIcon = document.createElementNS(GCS_SVG_NS, 'text');
+      let rootIcon = document.createElementNS(GCS_SVG_NS, 'text');
       rootIcon.setAttribute('y', '-30');
       rootIcon.setAttribute('text-anchor', 'middle');
       rootIcon.setAttribute('font-size', '12');
@@ -204,7 +204,7 @@ function gcsRender() {
     }
 
     // Label
-    var label = document.createElementNS(GCS_SVG_NS, 'text');
+    let label = document.createElementNS(GCS_SVG_NS, 'text');
     label.setAttribute('class', 'gcs-node-label');
     label.setAttribute('text-anchor', 'middle');
     label.setAttribute('dy', '4');
@@ -214,12 +214,12 @@ function gcsRender() {
 
     // Refcount badge (only show in refcount mode)
     if (gcsState.algo === 'refcount') {
-      var rcBg = document.createElementNS(GCS_SVG_NS, 'circle');
+      let rcBg = document.createElementNS(GCS_SVG_NS, 'circle');
       rcBg.setAttribute('cx', '18'); rcBg.setAttribute('cy', '-18'); rcBg.setAttribute('r', '9');
       rcBg.setAttribute('fill', node.refcount === 0 ? '#ef4444' : '#06b6d4');
       g.appendChild(rcBg);
 
-      var rcText = document.createElementNS(GCS_SVG_NS, 'text');
+      let rcText = document.createElementNS(GCS_SVG_NS, 'text');
       rcText.setAttribute('class', 'gcs-node-rc');
       rcText.setAttribute('x', '18'); rcText.setAttribute('y', '-14');
       rcText.setAttribute('text-anchor', 'middle');
@@ -239,13 +239,13 @@ function gcsRender() {
 /* ─── Cycle detection (for visual dashing) ─── */
 function gcsIsPartOfCycle(fromId, toId) {
   // Simple: check if there's a path from `to` back to `from`
-  var visited = {};
+  let visited = {};
   function dfs(id, target) {
     if (id === target) return true;
     if (visited[id]) return false;
     visited[id] = true;
-    var outs = gcsOutgoingEdges(id);
-    for (var i = 0; i < outs.length; i++) { if (dfs(outs[i].to, target)) return true; }
+    let outs = gcsOutgoingEdges(id);
+    for (let i = 0; i < outs.length; i++) { if (dfs(outs[i].to, target)) return true; }
     return false;
   }
   return dfs(toId, fromId);
@@ -256,8 +256,8 @@ function gcsHandleNodeMouseDown(e, node) {
   e.stopPropagation();
   if (gcsState.tool === 'move') {
     gcsState.draggingId = node.id;
-    var svg = document.getElementById('gcsSvg');
-    var rect = svg.getBoundingClientRect();
+    let svg = document.getElementById('gcsSvg');
+    let rect = svg.getBoundingClientRect();
     gcsState.dragOffsetX = e.clientX - rect.left - node.x;
     gcsState.dragOffsetY = e.clientY - rect.top - node.y;
   } else if (gcsState.tool === 'link') {
@@ -268,9 +268,9 @@ function gcsHandleNodeMouseDown(e, node) {
 function gcsHandleNodeTouchStart(e, node) {
   if (gcsState.tool === 'move') {
     gcsState.draggingId = node.id;
-    var svg = document.getElementById('gcsSvg');
-    var rect = svg.getBoundingClientRect();
-    var touch = e.touches[0];
+    let svg = document.getElementById('gcsSvg');
+    let rect = svg.getBoundingClientRect();
+    let touch = e.touches[0];
     gcsState.dragOffsetX = touch.clientX - rect.left - node.x;
     gcsState.dragOffsetY = touch.clientY - rect.top - node.y;
   } else if (gcsState.tool === 'link') {
@@ -287,7 +287,7 @@ function gcsHandleNodeClick(node) {
     gcsRender();
     gcsSetStatus(node.root ? 'Object #' + node.id + ' is now a root (always reachable).' : 'Object #' + node.id + ' is no longer a root.', '🏠', '');
   } else if (gcsState.tool === 'link' && gcsState.linkFrom !== null && gcsState.linkFrom !== node.id) {
-    var exists = gcsState.edges.some(function(e){ return e.from === gcsState.linkFrom && e.to === node.id; });
+    let exists = gcsState.edges.some(function(e){ return e.from === gcsState.linkFrom && e.to === node.id; });
     if (!exists) {
       gcsState.edges.push({ from: gcsState.linkFrom, to: node.id });
       gcsRecomputeRefcounts();
@@ -300,14 +300,14 @@ function gcsHandleNodeClick(node) {
 
 /* ─── Mouse/touch move/up for dragging ─── */
 function gcsInitDragHandlers() {
-  var svg = document.getElementById('gcsSvg');
+  let svg = document.getElementById('gcsSvg');
   if (!svg) return;
 
   document.addEventListener('mousemove', function(e) {
     if (gcsState.draggingId === null) return;
-    var node = gcsGetNode(gcsState.draggingId);
+    let node = gcsGetNode(gcsState.draggingId);
     if (!node) return;
-    var rect = svg.getBoundingClientRect();
+    let rect = svg.getBoundingClientRect();
     node.x = Math.max(28, Math.min(rect.width - 28, e.clientX - rect.left - gcsState.dragOffsetX));
     node.y = Math.max(28, Math.min(rect.height - 28, e.clientY - rect.top - gcsState.dragOffsetY));
     gcsRender();
@@ -318,10 +318,10 @@ function gcsInitDragHandlers() {
   document.addEventListener('touchmove', function(e) {
     if (gcsState.draggingId === null) return;
     e.preventDefault();
-    var touch = e.touches[0];
-    var node = gcsGetNode(gcsState.draggingId);
+    let touch = e.touches[0];
+    let node = gcsGetNode(gcsState.draggingId);
     if (!node) return;
-    var rect = svg.getBoundingClientRect();
+    let rect = svg.getBoundingClientRect();
     node.x = Math.max(28, Math.min(rect.width - 28, touch.clientX - rect.left - gcsState.dragOffsetX));
     node.y = Math.max(28, Math.min(rect.height - 28, touch.clientY - rect.top - gcsState.dragOffsetY));
     gcsRender();
@@ -332,9 +332,9 @@ function gcsInitDragHandlers() {
 
 /* ─── Status ─── */
 function gcsSetStatus(msg, icon, cls) {
-  var msgEl  = document.getElementById('gcsStatusMsg');
-  var iconEl = document.getElementById('gcsStatusIcon');
-  var wrap   = document.getElementById('gcsStatus');
+  let msgEl  = document.getElementById('gcsStatusMsg');
+  let iconEl = document.getElementById('gcsStatusIcon');
+  let wrap   = document.getElementById('gcsStatus');
   if (msgEl)  msgEl.textContent  = msg;
   if (iconEl) iconEl.textContent = icon || '🗑️';
   if (wrap)   wrap.className = 'gcs-status ' + (cls || '');
@@ -342,14 +342,14 @@ function gcsSetStatus(msg, icon, cls) {
 
 /* ─── Heap stats ─── */
 function gcsUpdateHeapStats() {
-  var total = gcsState.nodes.length;
-  var dead  = gcsState.nodes.filter(function(n){ return n.dead; }).length;
-  var live  = total - dead;
+  let total = gcsState.nodes.length;
+  let dead  = gcsState.nodes.filter(function(n){ return n.dead; }).length;
+  let live  = total - dead;
 
-  var t = document.getElementById('gcsHeapTotal');
-  var l = document.getElementById('gcsHeapLive');
-  var d = document.getElementById('gcsHeapDead');
-  var f = document.getElementById('gcsHeapFreed');
+  let t = document.getElementById('gcsHeapTotal');
+  let l = document.getElementById('gcsHeapLive');
+  let d = document.getElementById('gcsHeapDead');
+  let f = document.getElementById('gcsHeapFreed');
   if (t) t.textContent = total;
   if (l) l.textContent = live;
   if (d) d.textContent = dead;
@@ -358,17 +358,17 @@ function gcsUpdateHeapStats() {
 
 /* ─── Reference Counting panel ─── */
 function gcsRenderRefcountPanel() {
-  var list = document.getElementById('gcsRefcountList');
-  var warning = document.getElementById('gcsCycleWarning');
+  let list = document.getElementById('gcsRefcountList');
+  let warning = document.getElementById('gcsCycleWarning');
   if (!list) return;
 
-  var hasLeak = false;
+  let hasLeak = false;
 
   list.innerHTML = gcsState.nodes.map(function(n) {
-    var reachable = gcsIsReachableFromRoot(n.id);
-    var isLeak = !reachable && n.refcount > 0;
+    let reachable = gcsIsReachableFromRoot(n.id);
+    let isLeak = !reachable && n.refcount > 0;
     if (isLeak) hasLeak = true;
-    var cls = n.refcount === 0 ? 'gcs-rc-zero' : isLeak ? 'gcs-rc-leak' : '';
+    let cls = n.refcount === 0 ? 'gcs-rc-zero' : isLeak ? 'gcs-rc-leak' : '';
     return '<div class="gcs-rc-item ' + cls + '">' +
       '<span class="gcs-rc-name">Object #' + n.id + (n.root ? ' (root)' : '') + '</span>' +
       '<span class="gcs-rc-count">refcount: ' + n.refcount + '</span>' +
@@ -380,11 +380,11 @@ function gcsRenderRefcountPanel() {
 
 /* ─── Reachability check (used by refcount leak detection) ─── */
 function gcsIsReachableFromRoot(targetId) {
-  var roots = gcsState.nodes.filter(function(n){ return n.root; }).map(function(n){ return n.id; });
-  var visited = {};
-  var queue = roots.slice();
+  let roots = gcsState.nodes.filter(function(n){ return n.root; }).map(function(n){ return n.id; });
+  let visited = {};
+  let queue = roots.slice();
   while (queue.length) {
-    var cur = queue.shift();
+    let cur = queue.shift();
     if (cur === targetId) return true;
     if (visited[cur]) continue;
     visited[cur] = true;
@@ -395,16 +395,16 @@ function gcsIsReachableFromRoot(targetId) {
 
 /* ─── Generational panel ─── */
 function gcsRenderGenerationalPanel() {
-  var young = gcsState.nodes.filter(function(n){ return n.gen === 'young' && !n.dead; }).length;
-  var old   = gcsState.nodes.filter(function(n){ return n.gen === 'old' && !n.dead; }).length;
-  var total = Math.max(1, young + old);
+  let young = gcsState.nodes.filter(function(n){ return n.gen === 'young' && !n.dead; }).length;
+  let old   = gcsState.nodes.filter(function(n){ return n.gen === 'old' && !n.dead; }).length;
+  let total = Math.max(1, young + old);
 
-  var yc = document.getElementById('gcsYoungCount');
-  var oc = document.getElementById('gcsOldCount');
-  var yb = document.getElementById('gcsYoungBar');
-  var ob = document.getElementById('gcsOldBar');
-  var mc = document.getElementById('gcsMinorCount');
-  var pc = document.getElementById('gcsPromotedCount');
+  let yc = document.getElementById('gcsYoungCount');
+  let oc = document.getElementById('gcsOldCount');
+  let yb = document.getElementById('gcsYoungBar');
+  let ob = document.getElementById('gcsOldBar');
+  let mc = document.getElementById('gcsMinorCount');
+  let pc = document.getElementById('gcsPromotedCount');
 
   if (yc) yc.textContent = young;
   if (oc) oc.textContent = old;
@@ -417,15 +417,15 @@ function gcsRenderGenerationalPanel() {
 /* ─── GC Algorithms: step generators ─── */
 
 function gcsGenMarkSweepSteps() {
-  var steps = [];
-  var roots = gcsState.nodes.filter(function(n){ return n.root; });
+  let steps = [];
+  let roots = gcsState.nodes.filter(function(n){ return n.root; });
 
   steps.push({ phase:'mark', type:'start', msg:'Phase 1: MARK — starting traversal from ' + roots.length + ' root object(s).' });
 
-  var visited = {};
-  var queue = roots.map(function(n){ return n.id; });
+  let visited = {};
+  let queue = roots.map(function(n){ return n.id; });
   while (queue.length) {
-    var cur = queue.shift();
+    let cur = queue.shift();
     if (visited[cur]) continue;
     visited[cur] = true;
     steps.push({ phase:'mark', type:'mark-node', nodeId:cur, msg:'Mark object #' + cur + ' as reachable.' });
@@ -438,7 +438,7 @@ function gcsGenMarkSweepSteps() {
 
   steps.push({ phase:'sweep', type:'start', msg:'Phase 2: SWEEP — scanning entire heap for unmarked objects.' });
 
-  var sweptIds = [];
+  let sweptIds = [];
   gcsState.nodes.forEach(function(n) {
     if (!visited[n.id]) {
       sweptIds.push(n.id);
@@ -454,14 +454,14 @@ function gcsGenMarkSweepSteps() {
 }
 
 function gcsGenRefcountSteps() {
-  var steps = [];
+  let steps = [];
   steps.push({ phase:'refcount', type:'start', msg:'Reference Counting: checking each object\'s refcount immediately.' });
 
-  var freedIds = [];
-  var leakIds  = [];
+  let freedIds = [];
+  let leakIds  = [];
 
   gcsState.nodes.forEach(function(n) {
-    var reachable = gcsIsReachableFromRoot(n.id);
+    let reachable = gcsIsReachableFromRoot(n.id);
     if (n.refcount === 0) {
       freedIds.push(n.id);
       steps.push({ phase:'refcount', type:'free', nodeId:n.id, msg:'Object #' + n.id + ' has refcount=0 → freed immediately.' });
@@ -481,24 +481,24 @@ function gcsGenRefcountSteps() {
 }
 
 function gcsGenGenerationalSteps() {
-  var steps = [];
-  var scope = gcsState.runType === 'major' ? 'entire heap (young + old)' : 'young generation only';
+  let steps = [];
+  let scope = gcsState.runType === 'major' ? 'entire heap (young + old)' : 'young generation only';
   steps.push({ phase:'gen', type:'start', msg: (gcsState.runType === 'major' ? 'MAJOR' : 'MINOR') + ' GC: scanning ' + scope + '.' });
 
-  var candidates = gcsState.runType === 'major' ? gcsState.nodes : gcsState.nodes.filter(function(n){ return n.gen === 'young'; });
+  let candidates = gcsState.runType === 'major' ? gcsState.nodes : gcsState.nodes.filter(function(n){ return n.gen === 'young'; });
 
-  var roots = gcsState.nodes.filter(function(n){ return n.root; });
-  var visited = {};
-  var queue = roots.map(function(n){ return n.id; });
+  let roots = gcsState.nodes.filter(function(n){ return n.root; });
+  let visited = {};
+  let queue = roots.map(function(n){ return n.id; });
   while (queue.length) {
-    var cur = queue.shift();
+    let cur = queue.shift();
     if (visited[cur]) continue;
     visited[cur] = true;
     gcsOutgoingEdges(cur).forEach(function(e){ if (!visited[e.to]) queue.push(e.to); });
   }
 
-  var freedIds = [];
-  var promotedIds = [];
+  let freedIds = [];
+  let promotedIds = [];
 
   candidates.forEach(function(n) {
     if (!visited[n.id]) {
@@ -531,12 +531,12 @@ function gcsRunGc() {
 
   gcsState.gcStepIdx = 0;
 
-  var stepBtn = document.getElementById('gcsStepBtn');
+  let stepBtn = document.getElementById('gcsStepBtn');
   if (stepBtn) stepBtn.disabled = false;
 
   // Reset phase indicators
-  var pm = document.getElementById('gcsPhaseMark');
-  var ps = document.getElementById('gcsPhaseSweep');
+  let pm = document.getElementById('gcsPhaseMark');
+  let ps = document.getElementById('gcsPhaseSweep');
   if (pm) pm.className = 'gcs-phase';
   if (ps) ps.className = 'gcs-phase';
 
@@ -557,19 +557,19 @@ function gcsGcStep() {
   gcsApplyGcStep();
   gcsState.gcStepIdx++;
   if (gcsState.gcStepIdx >= gcsState.gcSteps.length) {
-    var stepBtn = document.getElementById('gcsStepBtn');
+    let stepBtn = document.getElementById('gcsStepBtn');
     if (stepBtn) stepBtn.disabled = true;
   }
 }
 
 function gcsApplyGcStep() {
-  var step = gcsState.gcSteps[gcsState.gcStepIdx];
+  let step = gcsState.gcSteps[gcsState.gcStepIdx];
   if (!step) return;
 
   // Update phase indicators (mark & sweep)
   if (gcsState.algo === 'marksweep') {
-    var pm = document.getElementById('gcsPhaseMark');
-    var ps = document.getElementById('gcsPhaseSweep');
+    let pm = document.getElementById('gcsPhaseMark');
+    let ps = document.getElementById('gcsPhaseSweep');
     if (step.phase === 'mark') { if (pm) pm.className = 'gcs-phase active'; }
     if (step.phase === 'sweep') {
       if (pm) pm.className = 'gcs-phase done';
@@ -579,29 +579,29 @@ function gcsApplyGcStep() {
 
   // Apply node state changes
   if (step.type === 'mark-node') {
-    var n = gcsGetNode(step.nodeId); if (n) n.marked = true;
+    let n = gcsGetNode(step.nodeId); if (n) n.marked = true;
   } else if (step.type === 'sweep-node' || step.type === 'free') {
-    var n = gcsGetNode(step.nodeId);
+    let n = gcsGetNode(step.nodeId);
     if (n && !n.dead) { n.dead = true; gcsState.totalFreed++; }
   } else if (step.type === 'promote') {
-    var n = gcsGetNode(step.nodeId); if (n) { n.gen = 'old'; gcsState.promotedCount++; }
+    let n = gcsGetNode(step.nodeId); if (n) { n.gen = 'old'; gcsState.promotedCount++; }
   } else if (step.type === 'done') {
     if (step.phase === 'gen') gcsState.minorCount = gcsState.runType === 'minor' ? gcsState.minorCount + 1 : gcsState.minorCount;
   }
 
   // Status + classes
-  var cls = step.type === 'leak' ? 'leak' : step.phase === 'mark' ? 'marking' : step.phase === 'sweep' ? 'sweeping' : step.type === 'done' ? 'done' : '';
-  var icon = step.type === 'leak' ? '⚠️' : step.phase === 'mark' ? '🔍' : step.phase === 'sweep' ? '🧹' : step.type === 'done' ? '✅' : '🗑️';
+  let cls = step.type === 'leak' ? 'leak' : step.phase === 'mark' ? 'marking' : step.phase === 'sweep' ? 'sweeping' : step.type === 'done' ? 'done' : '';
+  let icon = step.type === 'leak' ? '⚠️' : step.phase === 'mark' ? '🔍' : step.phase === 'sweep' ? '🧹' : step.type === 'done' ? '✅' : '🗑️';
   gcsSetStatus(step.msg, icon, cls);
 
   // Update mark/sweep stats
   if (step.type === 'mark-done') {
-    var el = document.getElementById('gcsMsMarked');
+    let el = document.getElementById('gcsMsMarked');
     if (el) el.textContent = step.markedIds.length;
   }
   if (step.type === 'done' && step.phase === 'sweep') {
-    var sweptEl = document.getElementById('gcsMsSwept');
-    var heapEl  = document.getElementById('gcsMsHeap');
+    let sweptEl = document.getElementById('gcsMsSwept');
+    let heapEl  = document.getElementById('gcsMsHeap');
     if (sweptEl) sweptEl.textContent = step.sweptIds.length;
     if (heapEl) heapEl.textContent = gcsState.nodes.length + ' / ' + (gcsState.nodes.length - step.sweptIds.length);
   }
@@ -617,18 +617,18 @@ function gcsResetGcOnly() {
   gcsState.minorCount = 0;
   gcsState.promotedCount = 0;
 
-  var stepBtn = document.getElementById('gcsStepBtn');
+  let stepBtn = document.getElementById('gcsStepBtn');
   if (stepBtn) stepBtn.disabled = true;
 
-  var msMarked = document.getElementById('gcsMsMarked');
-  var msSwept  = document.getElementById('gcsMsSwept');
-  var msHeap   = document.getElementById('gcsMsHeap');
+  let msMarked = document.getElementById('gcsMsMarked');
+  let msSwept  = document.getElementById('gcsMsSwept');
+  let msHeap   = document.getElementById('gcsMsHeap');
   if (msMarked) msMarked.textContent = '0';
   if (msSwept)  msSwept.textContent  = '0';
   if (msHeap)   msHeap.textContent   = '— / —';
 
-  var pm = document.getElementById('gcsPhaseMark');
-  var ps = document.getElementById('gcsPhaseSweep');
+  let pm = document.getElementById('gcsPhaseMark');
+  let ps = document.getElementById('gcsPhaseSweep');
   if (pm) pm.className = 'gcs-phase';
   if (ps) ps.className = 'gcs-phase';
 
@@ -639,7 +639,7 @@ function gcsResetGcOnly() {
 /* ─── Switch algorithm panel ─── */
 function gcsSwitchAlgoPanel(algo) {
   document.querySelectorAll('.gcs-algo-detail').forEach(function(p) { p.classList.remove('active'); });
-  var panel = document.getElementById('gcsPanel' + gcsCapFirst(algo));
+  let panel = document.getElementById('gcsPanel' + gcsCapFirst(algo));
   if (panel) panel.classList.add('active');
 }
 
@@ -670,19 +670,19 @@ function gcsInit() {
       gcsState.tool = btn.getAttribute('data-tool');
       gcsState.linkFrom = null;
 
-      var hints = {
+      let hints = {
         move:   'Move mode — drag objects to reposition',
         link:   'Link mode — click one object then another to add a reference',
         unlink: 'Unlink mode — click a reference arrow to remove it',
         root:   'Root mode — click an object to toggle it as a GC root',
       };
-      var hintEl = document.getElementById('gcsToolHint');
+      let hintEl = document.getElementById('gcsToolHint');
       if (hintEl) hintEl.textContent = hints[gcsState.tool] || '';
     });
   });
 
   // Add object
-  var addBtn = document.getElementById('gcsAddObjBtn');
+  let addBtn = document.getElementById('gcsAddObjBtn');
   if (addBtn) addBtn.addEventListener('click', gcsAddObject);
 
   // Presets
@@ -691,16 +691,16 @@ function gcsInit() {
   });
 
   // Run / Step / Reset
-  var runBtn   = document.getElementById('gcsRunBtn');
-  var stepBtn  = document.getElementById('gcsStepBtn');
-  var resetBtn = document.getElementById('gcsResetGcBtn');
+  let runBtn   = document.getElementById('gcsRunBtn');
+  let stepBtn  = document.getElementById('gcsStepBtn');
+  let resetBtn = document.getElementById('gcsResetGcBtn');
   if (runBtn)   runBtn.addEventListener('click', gcsRunGc);
   if (stepBtn)  stepBtn.addEventListener('click', gcsGcStep);
   if (resetBtn) resetBtn.addEventListener('click', gcsResetGcOnly);
 
   // Generational run-type toggle
-  var minorBtn = document.getElementById('gcsMinorBtn');
-  var majorBtn = document.getElementById('gcsMajorBtn');
+  let minorBtn = document.getElementById('gcsMinorBtn');
+  let majorBtn = document.getElementById('gcsMajorBtn');
   if (minorBtn) minorBtn.addEventListener('click', function() {
     gcsState.runType = 'minor';
     minorBtn.classList.add('active');
@@ -713,7 +713,7 @@ function gcsInit() {
   });
 
   // Click empty SVG cancels link-in-progress
-  var svg = document.getElementById('gcsSvg');
+  let svg = document.getElementById('gcsSvg');
   if (svg) {
     svg.addEventListener('click', function() {
       if (gcsState.tool === 'link') gcsState.linkFrom = null;

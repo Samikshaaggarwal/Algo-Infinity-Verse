@@ -58,10 +58,10 @@
                 </p>
 
                 <div class="action-grid">
-                    <button class="btn btn-primary w-100" id="btnGenerate">
+                    <button type="button" class="btn btn-primary w-100" id="btnGenerate">
                         <i class="fas fa-random"></i> Generate Terrain
                     </button>
-                    <button class="btn btn-success w-100" id="btnStartSearch">
+                    <button type="button" class="btn btn-success w-100" id="btnStartSearch">
                         <i class="fas fa-play"></i> Start Search
                     </button>
                 </div>
@@ -106,7 +106,10 @@
     </main>
 
     <!-- External Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="3d-pathfinding.js"></script>
 </body>
 </html>

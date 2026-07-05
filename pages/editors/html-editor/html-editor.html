@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -88,10 +88,10 @@
               </span>
               <span class="he-toggle-label">Live</span>
             </label>
-            <button id="heRunBtn" class="btn btn-primary he-run-btn"><i class="fas fa-play"></i> Run</button>
-            <button id="heResetBtn" class="he-icon-btn" title="Reset to example" aria-label="Reset to example"><i class="fas fa-undo"></i></button>
-            <button id="heCopyBtn" class="he-icon-btn" title="Copy code" aria-label="Copy code to clipboard"><i class="fas fa-copy"></i></button>
-            <button id="heSaveBtn" class="he-icon-btn" title="Save to browser storage" aria-label="Save code to browser storage"><i class="fas fa-save"></i></button>
+            <button type="button" id="heRunBtn" class="btn btn-primary he-run-btn"><i class="fas fa-play"></i> Run</button>
+            <button type="button" id="heResetBtn" class="he-icon-btn" title="Reset to example" aria-label="Reset to example"><i class="fas fa-undo"></i></button>
+            <button type="button" id="heCopyBtn" class="he-icon-btn" title="Copy code" aria-label="Copy code to clipboard"><i class="fas fa-copy"></i></button>
+            <button type="button" id="heSaveBtn" class="he-icon-btn" title="Save to browser storage" aria-label="Save code to browser storage"><i class="fas fa-save"></i></button>
           </div>
         </div>
 
@@ -127,7 +127,7 @@
         <div class="he-console">
           <div class="he-console-header">
             <span><i class="fas fa-exclamation-triangle"></i> Console / Notes</span>
-            <button class="he-console-clear" id="heConsoleClear" aria-label="Clear console"><i class="fas fa-trash"></i> Clear</button>
+            <button type="button" class="he-console-clear" id="heConsoleClear" aria-label="Clear console"><i class="fas fa-trash"></i> Clear</button>
           </div>
           <div class="he-console-body" id="heConsoleBody">
             <span class="he-console-placeholder">No issues detected.</span>
@@ -148,7 +148,10 @@
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.20/mode/javascript/javascript.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.20/mode/css/css.min.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./html-editor.js"></script>
   

@@ -48,7 +48,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -129,7 +129,7 @@
             <div class="thoughts-pane-wrapper">
               <div class="pane-subheader">
                 <span><i class="fas fa-list-ol"></i> Step-by-Step Thinking Log (Optional)</span>
-                <button id="extractCommentsBtn" class="btn btn-outline-mini">
+                <button type="button" id="extractCommentsBtn" class="btn btn-outline-mini">
                   <i class="fas fa-file-import"></i> Extract from Comments
                 </button>
               </div>
@@ -141,10 +141,10 @@
             </div>
 
             <div class="action-buttons-row">
-              <button id="runCodeBtn" class="btn btn-secondary flex-btn">
+              <button type="button" id="runCodeBtn" class="btn btn-secondary flex-btn">
                 <i class="fas fa-play"></i> Run Code
               </button>
-              <button id="analyzeReasoningBtn" class="btn btn-primary glow-btn flex-btn">
+              <button type="button" id="analyzeReasoningBtn" class="btn btn-primary glow-btn flex-btn">
                 <i class="fas fa-microscope"></i> Analyze Reasoning
               </button>
             </div>
@@ -241,14 +241,14 @@
 
     <!-- Chatbot Widget (standard dynamic toggle injected by JS) -->
     <div class="chatbot-widget">
-      <button class="chatbot-toggle" id="chatbotToggle" aria-label="Toggle chat">
+      <button type="button" class="chatbot-toggle" id="chatbotToggle" aria-label="Toggle chat">
         <i class="fas fa-comments"></i>
         <span class="chatbot-badge">3</span>
       </button>
       <div class="chatbot-window hidden" id="chatbotWindow">
         <div class="chatbot-header">
           <h4>Algo Assistant</h4>
-          <button class="chatbot-close" id="chatbotClose" aria-label="Close chat">
+          <button type="button" class="chatbot-close" id="chatbotClose" aria-label="Close chat">
             <i class="fas fa-times"></i>
           </button>
         </div>
@@ -259,18 +259,18 @@
         </div>
         <div class="chatbot-input">
           <input type="text" id="chatbotInput" placeholder="Type your question..." />
-          <button id="chatbotSend" aria-label="Send message">
+          <button type="button" id="chatbotSend" aria-label="Send message">
             <i class="fas fa-paper-plane"></i>
           </button>
         </div>
         <div class="quick-questions">
-          <button class="quick-q" data-question="What is the time complexity of this problem?">
+          <button type="button" class="quick-q" data-question="What is the time complexity of this problem?">
             Time Complexity
           </button>
-          <button class="quick-q" data-question="Can you give me a hint for this problem?">
+          <button type="button" class="quick-q" data-question="Can you give me a hint for this problem?">
             Hint
           </button>
-          <button class="quick-q" data-question="What approach should I use?">
+          <button type="button" class="quick-q" data-question="What approach should I use?">
             Approach
           </button>
         </div>
@@ -279,7 +279,10 @@
 
     <!-- Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="think-aloud-judge.js"></script>
   

@@ -174,7 +174,7 @@ if (startBattleBtn) {
     const difficulty    = document.getElementById("difficultySelect")?.value;
 
     if (!opponentEmail) {
-      alert("Enter your opponent's email address first.");
+      console.warn("Alert:", "Enter your opponent's email address first.");
       return;
     }
 
@@ -191,7 +191,7 @@ if (startBattleBtn) {
       setStatus(`✅ Battle created! Share this ID with your opponent: ${battleId}`);
       startPolling(battleId);
     } catch (err) {
-      alert(`Could not create battle: ${err.message}`);
+      console.warn("Alert:", `Could not create battle: ${err.message}`);
       resetUI();
     }
   });
@@ -202,7 +202,7 @@ if (joinBattleBtn) {
   joinBattleBtn.addEventListener("click", async () => {
     const battleId = document.getElementById("joinBattleId")?.value.trim();
     if (!battleId) {
-      alert("Paste the Battle ID your opponent shared with you.");
+      console.warn("Alert:", "Paste the Battle ID your opponent shared with you.");
       return;
     }
 
@@ -215,7 +215,7 @@ if (joinBattleBtn) {
       setStatus("✅ Joined! Battle is starting...");
       startPolling(battleId);
     } catch (err) {
-      alert(`Could not join: ${err.message}`);
+      console.warn("Alert:", `Could not join: ${err.message}`);
       joinBattleBtn.disabled    = false;
       joinBattleBtn.textContent = "Join Battle";
     }
@@ -226,13 +226,13 @@ if (joinBattleBtn) {
 if (submitSolutionBtn) {
   submitSolutionBtn.addEventListener("click", async () => {
     if (!currentBattleId) {
-      alert("No active battle. Create or join one first.");
+      console.warn("Alert:", "No active battle. Create or join one first.");
       return;
     }
 
     const code = document.getElementById("solutionCode")?.value || "";
     if (!code.trim()) {
-      alert("Write your solution before submitting.");
+      console.warn("Alert:", "Write your solution before submitting.");
       return;
     }
 
@@ -252,7 +252,7 @@ if (submitSolutionBtn) {
       resetUI();
     } catch (err) {
       // Could be "opponent submitted first" — poll to get the real final state
-      alert(err.message);
+      console.warn("Alert:", err.message);
       submitSolutionBtn.disabled    = false;
       submitSolutionBtn.textContent = "Submit Solution";
       if (currentBattleId) pollBattle(currentBattleId);

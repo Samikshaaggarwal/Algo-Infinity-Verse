@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -87,11 +87,11 @@
               </span>
               <span class="cse-toggle-label">Live</span>
             </label>
-            <button id="cseRunBtn" class="btn btn-primary cse-run-btn"><i class="fas fa-play"></i> Apply Styles</button>
-            <button id="cseResetBtn" class="cse-icon-btn" title="Reset to example" aria-label="Reset to example"><i class="fas fa-undo"></i></button>
-            <button id="cseClearBtn" class="cse-icon-btn" title="Clear CSS" aria-label="Clear CSS"><i class="fas fa-eraser"></i></button>
-            <button id="cseCopyBtn" class="cse-icon-btn" title="Copy code" aria-label="Copy code to clipboard"><i class="fas fa-copy"></i></button>
-            <button id="cseSaveBtn" class="cse-icon-btn" title="Save to browser storage" aria-label="Save code to browser storage"><i class="fas fa-save"></i></button>
+            <button type="button" id="cseRunBtn" class="btn btn-primary cse-run-btn"><i class="fas fa-play"></i> Apply Styles</button>
+            <button type="button" id="cseResetBtn" class="cse-icon-btn" title="Reset to example" aria-label="Reset to example"><i class="fas fa-undo"></i></button>
+            <button type="button" id="cseClearBtn" class="cse-icon-btn" title="Clear CSS" aria-label="Clear CSS"><i class="fas fa-eraser"></i></button>
+            <button type="button" id="cseCopyBtn" class="cse-icon-btn" title="Copy code" aria-label="Copy code to clipboard"><i class="fas fa-copy"></i></button>
+            <button type="button" id="cseSaveBtn" class="cse-icon-btn" title="Save to browser storage" aria-label="Save code to browser storage"><i class="fas fa-save"></i></button>
           </div>
         </div>
 
@@ -126,7 +126,7 @@
         <div class="cse-console">
           <div class="cse-console-header">
             <span><i class="fas fa-exclamation-triangle"></i> Console / Notes</span>
-            <button class="cse-console-clear" id="cseConsoleClear" aria-label="Clear console"><i class="fas fa-trash"></i> Clear</button>
+            <button type="button" class="cse-console-clear" id="cseConsoleClear" aria-label="Clear console"><i class="fas fa-trash"></i> Clear</button>
           </div>
           <div class="cse-console-body" id="cseConsoleBody">
             <span class="cse-console-placeholder">No issues detected.</span>
@@ -140,7 +140,10 @@
     <script src="/auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.20/lib/codemirror.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.20/mode/css/css.min.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./css-editor.js"></script>
 

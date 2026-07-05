@@ -102,11 +102,11 @@ function triggerServerRipple(serverId) {
 }
 
 function hexToRgb(hex) {
-    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, function(m, r, g, b) {
         return r + r + g + g + b + b;
     });
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? 
         parseInt(result[1], 16) + "," + parseInt(result[2], 16) + "," + parseInt(result[3], 16)
         : "6, 182, 212";
@@ -157,7 +157,7 @@ function handleRouteCustomKey() {
     if (!text) return;
     
     if (state.servers.length === 0) {
-        alert("Build/Add servers first!");
+        console.warn("Alert:", "Build/Add servers first!");
         return;
     }
     
@@ -194,7 +194,7 @@ function bindEvents() {
     });
     
     els.btnKillServer.addEventListener('click', () => {
-        if (state.servers.length <= 1) return alert("Cannot kill the last server.");
+        if (state.servers.length <= 1) return console.warn("Alert:", "Cannot kill the last server.");
         const idx = Math.floor(Math.random() * state.servers.length);
         const serverToKill = state.servers[idx];
         removeServer(serverToKill.id);
@@ -267,7 +267,7 @@ function bindEvents() {
         els.btnKillSpecificServer.addEventListener('click', () => {
             const targetId = els.selKillServer ? els.selKillServer.value : null;
             if (!targetId) return;
-            if (state.servers.length <= 1) return alert("Cannot kill the last server.");
+            if (state.servers.length <= 1) return console.warn("Alert:", "Cannot kill the last server.");
             removeServer(targetId);
         });
     }

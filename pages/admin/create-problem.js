@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.style.backgroundColor = 'var(--success)';
       
       setTimeout(() => {
-        alert("Problem successfully created! You can copy the JSON from the console or the output box.");
+        console.warn("Alert:", "Problem successfully created! You can copy the JSON from the console or the output box.");
         // Optional: redirect to admin dashboard or reset form
       }, 500);
     }, 1500);

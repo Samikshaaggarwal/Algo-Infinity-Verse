@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -56,8 +56,8 @@
           <div class="bf-row">
             <span class="bf-row-label">Algorithm:</span>
             <div class="bf-algo-btns">
-              <button class="bf-algo-btn active" data-algo="bf">Bellman-Ford</button>
-              <button class="bf-algo-btn" data-algo="spfa">SPFA</button>
+              <button type="button" class="bf-algo-btn active" data-algo="bf">Bellman-Ford</button>
+              <button type="button" class="bf-algo-btn" data-algo="spfa">SPFA</button>
             </div>
           </div>
 
@@ -65,10 +65,10 @@
           <div class="bf-row">
             <span class="bf-row-label">Preset:</span>
             <div class="bf-preset-btns">
-              <button class="bf-preset-btn active" data-preset="basic">Basic</button>
-              <button class="bf-preset-btn" data-preset="negative">Negative Edges</button>
-              <button class="bf-preset-btn" data-preset="negcycle">Negative Cycle</button>
-              <button class="bf-preset-btn" data-preset="complex">Complex</button>
+              <button type="button" class="bf-preset-btn active" data-preset="basic">Basic</button>
+              <button type="button" class="bf-preset-btn" data-preset="negative">Negative Edges</button>
+              <button type="button" class="bf-preset-btn" data-preset="negcycle">Negative Cycle</button>
+              <button type="button" class="bf-preset-btn" data-preset="complex">Complex</button>
             </div>
           </div>
 
@@ -80,16 +80,16 @@
 
           <!-- Playback -->
           <div class="bf-playback-row">
-            <button class="btn bf-btn-primary bf-pb-btn" id="bfRunBtn">
+            <button type="button" class="btn bf-btn-primary bf-pb-btn" id="bfRunBtn">
               <i class="fas fa-play"></i> Run
             </button>
-            <button class="btn btn-secondary bf-pb-btn" id="bfStepBtn" disabled>
+            <button type="button" class="btn btn-secondary bf-pb-btn" id="bfStepBtn" disabled>
               <i class="fas fa-step-forward"></i> Step
             </button>
-            <button class="btn btn-secondary bf-pb-btn" id="bfPauseBtn" disabled>
+            <button type="button" class="btn btn-secondary bf-pb-btn" id="bfPauseBtn" disabled>
               <i class="fas fa-pause"></i> Pause
             </button>
-            <button class="btn btn-secondary bf-pb-btn" id="bfResetBtn">
+            <button type="button" class="btn btn-secondary bf-pb-btn" id="bfResetBtn">
               <i class="fas fa-undo"></i> Reset
             </button>
             <div class="bf-speed-wrap">
@@ -217,7 +217,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="bellman-ford-visualizer.js"></script>

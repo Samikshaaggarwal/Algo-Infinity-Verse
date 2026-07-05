@@ -45,7 +45,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -206,7 +206,7 @@
                   <li>C) Providing transactional rollbacks during database crashes.</li>
                   <li>D) Restricting database access to authorized users via roles.</li>
                 </ul>
-                <button class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-introduction">Show Solution</button>
+                <button type="button" class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-introduction">Show Solution</button>
                 <div class="dbms-exercise-solution" id="solution-introduction">
                   <p><strong>Correct Answer: B</strong></p>
                   <p>Explanation: Flat file readability is a characteristic of File Systems. A DBMS compiles data into binary formats (pages, blocks) optimized for storage and indexing, requiring DBMS interfaces or SQL engines to query it, rather than direct text editors.</p>
@@ -283,7 +283,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Schema &amp; Instance
                 </div>
                 <p>If you execute <code>ALTER TABLE Students ADD COLUMN email VARCHAR(100);</code>, are you modifying the database <strong>Schema</strong> or the database <strong>Instance</strong>?</p>
-                <button class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-architecture">Show Solution</button>
+                <button type="button" class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-architecture">Show Solution</button>
                 <div class="dbms-exercise-solution" id="solution-architecture">
                   <p><strong>Answer: Schema</strong></p>
                   <p>Explanation: Running `ALTER TABLE` changes the structural blueprint (the columns available in the table definition). Changes to the actual row records (e.g., adding a student's record) modify the database instance.</p>
@@ -334,7 +334,7 @@
                   <li>C) Key-Value memory store (Redis)</li>
                   <li>D) Graph database (Neo4j)</li>
                 </ul>
-                <button class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-types">Show Solution</button>
+                <button type="button" class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-types">Show Solution</button>
                 <div class="dbms-exercise-solution" id="solution-types">
                   <p><strong>Correct Answer: C</strong></p>
                   <p>Explanation: For sub-millisecond real-time tracking, an in-memory key-value cache (like Redis) is ideal. Relational and document databases query disks which introduces read latency, whereas Key-Value memory caches operate directly inside RAM.</p>
@@ -406,7 +406,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: ER Model
                 </div>
                 <p>If a student can enroll in multiple courses, and each course can contain multiple students, what is the cardinality of the <code>Enrolls</code> relationship?</p>
-                <button class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-er-model">Show Solution</button>
+                <button type="button" class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-er-model">Show Solution</button>
                 <div class="dbms-exercise-solution" id="solution-er-model">
                   <p><strong>Answer: Many-to-Many (N:M)</strong></p>
                   <p>Explanation: Since entities on both sides are associated with multiple instances of the other, it represents an N:M relationship. In relational mapping, this results in a separate junction/association table.</p>
@@ -480,7 +480,7 @@
                   <li>C) Composite Key of (StudentID, CourseID)</li>
                   <li>D) DateEnrolled</li>
                 </ul>
-                <button class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-keys">Show Solution</button>
+                <button type="button" class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-keys">Show Solution</button>
                 <div class="dbms-exercise-solution" id="solution-keys">
                   <p><strong>Correct Answer: C</strong></p>
                   <p>Explanation: Because StudentID alone repeats (a student takes multiple courses) and CourseID repeats (multiple students enroll), neither can be unique alone. The combination of (StudentID, CourseID) is unique for each enrollment, making it a composite primary key.</p>
@@ -544,7 +544,7 @@
                   <li>C) 3NF</li>
                   <li>D) It is already in BCNF</li>
                 </ul>
-                <button class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-normalization">Show Solution</button>
+                <button type="button" class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-normalization">Show Solution</button>
                 <div class="dbms-exercise-solution" id="solution-normalization">
                   <p><strong>Correct Answer: C</strong></p>
                   <p>Explanation: Since <code>ManagerPhone</code> depends on <code>ManagerID</code>, which depends on the primary key <code>StoreID</code>, this forms a transitive dependency (<code>StoreID -> ManagerID -> ManagerPhone</code>). This violates 3NF rules.</p>
@@ -577,7 +577,7 @@
               <div class="dbms-code-block">
                 <div class="dbms-code-header">
                   <span class="dbms-code-lang">SQL - CREATE</span>
-                  <button class="dbms-code-copy" aria-label="Copy code" data-code="CREATE TABLE employees (
+                  <button type="button" class="dbms-code-copy" aria-label="Copy code" data-code="CREATE TABLE employees (
     id INT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     salary DECIMAL(10, 2)
@@ -594,7 +594,7 @@
               <div class="dbms-code-block">
                 <div class="dbms-code-header">
                   <span class="dbms-code-lang">SQL - INSERT</span>
-                  <button class="dbms-code-copy" aria-label="Copy code" data-code="INSERT INTO employees (id, name, salary) VALUES
+                  <button type="button" class="dbms-code-copy" aria-label="Copy code" data-code="INSERT INTO employees (id, name, salary) VALUES
 (1, 'Alice', 75000.00),
 (2, 'Bob', 62000.00),
 (3, 'Charlie', 80000.00);">Copy</button>
@@ -609,7 +609,7 @@
               <div class="dbms-code-block">
                 <div class="dbms-code-header">
                   <span class="dbms-code-lang">SQL - SELECT</span>
-                  <button class="dbms-code-copy" aria-label="Copy code" data-code="SELECT name, salary FROM employees WHERE salary >= 70000 ORDER BY salary DESC;">Copy</button>
+                  <button type="button" class="dbms-code-copy" aria-label="Copy code" data-code="SELECT name, salary FROM employees WHERE salary >= 70000 ORDER BY salary DESC;">Copy</button>
                 </div>
                 <pre><code><span class="tok-kw">SELECT</span> <span class="tok-var">name</span>, <span class="tok-var">salary</span> 
 <span class="tok-kw">FROM</span> <span class="tok-var">employees</span> 
@@ -630,7 +630,7 @@
               <div class="dbms-code-block">
                 <div class="dbms-code-header">
                   <span class="dbms-code-lang">SQL - UPDATE</span>
-                  <button class="dbms-code-copy" aria-label="Copy code" data-code="UPDATE employees SET salary = 65000.00 WHERE id = 2;">Copy</button>
+                  <button type="button" class="dbms-code-copy" aria-label="Copy code" data-code="UPDATE employees SET salary = 65000.00 WHERE id = 2;">Copy</button>
                 </div>
                 <pre><code><span class="tok-kw">UPDATE</span> <span class="tok-var">employees</span> 
 <span class="tok-kw">SET</span> <span class="tok-var">salary</span> <span class="tok-op">=</span> <span class="tok-num">65000.00</span> 
@@ -641,7 +641,7 @@
               <div class="dbms-code-block">
                 <div class="dbms-code-header">
                   <span class="dbms-code-lang">SQL - DELETE</span>
-                  <button class="dbms-code-copy" aria-label="Copy code" data-code="DELETE FROM employees WHERE id = 3;">Copy</button>
+                  <button type="button" class="dbms-code-copy" aria-label="Copy code" data-code="DELETE FROM employees WHERE id = 3;">Copy</button>
                 </div>
                 <pre><code><span class="tok-kw">DELETE FROM</span> <span class="tok-var">employees</span> <span class="tok-kw">WHERE</span> <span class="tok-var">id</span> <span class="tok-op">=</span> <span class="tok-num">3</span>;</code></pre>
               </div>
@@ -651,7 +651,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: SQL Basics
                 </div>
                 <p>Write an SQL query to retrieve the <code>name</code> and <code>salary</code> of all employees who earn less than <code>70000</code>.</p>
-                <button class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-sql-basics">Show Solution</button>
+                <button type="button" class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-sql-basics">Show Solution</button>
                 <div class="dbms-exercise-solution" id="solution-sql-basics">
                   <div class="dbms-code-block">
                     <div class="dbms-code-header">
@@ -707,7 +707,7 @@
                   <li>C) Isolation</li>
                   <li>D) Durability</li>
                 </ul>
-                <button class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-transactions">Show Solution</button>
+                <button type="button" class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-transactions">Show Solution</button>
                 <div class="dbms-exercise-solution" id="solution-transactions">
                   <p><strong>Correct Answer: C</strong></p>
                   <p>Explanation: Isolation guarantees that concurrently running transactions do not interfere or read uncommitted states of each other. Violating this rule leads to Isolation anomalies (like Dirty Reads).</p>
@@ -763,7 +763,7 @@
                   <li>C) Neither</li>
                   <li>D) Both X and S</li>
                 </ul>
-                <button class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-concurrency">Show Solution</button>
+                <button type="button" class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-concurrency">Show Solution</button>
                 <div class="dbms-exercise-solution" id="solution-concurrency">
                   <p><strong>Correct Answer: B</strong></p>
                   <p>Explanation: Shared locks are compatible with each other, meaning multiple transactions can read the same row at the same time. Exclusive locks are incompatible with any locks.</p>
@@ -842,7 +842,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Indexing
                 </div>
                 <p>Why can a relational database table have only one <strong>Clustered Index</strong>?</p>
-                <button class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-indexing">Show Solution</button>
+                <button type="button" class="dbms-exercise-toggle" aria-expanded="false" aria-controls="solution-indexing">Show Solution</button>
                 <div class="dbms-exercise-solution" id="solution-indexing">
                   <p><strong>Answer: Physical sorting constraints</strong></p>
                   <p>Explanation: Since a clustered index dictates the physical sorting and organization of rows on disk blocks, and data rows can physically be sorted in only one sequence (e.g., by ID or Surname), only one clustered index is physically possible. Non-clustered indexes, however, are separate index tables that point back to the raw rows, allowing multiples.</p>
@@ -860,7 +860,10 @@
 
     <!-- Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="dbms-learning.js"></script>
   

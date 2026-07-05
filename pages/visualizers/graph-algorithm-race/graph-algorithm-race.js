@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── Speed ─── */
-var GAR_SPEED = { 1: 800, 2: 450, 3: 250, 4: 100, 5: 30 };
-var GAR_SPEED_LABEL = { 1: 'Slowest', 2: 'Slow', 3: 'Normal', 4: 'Fast', 5: 'Blazing' };
+let GAR_SPEED = { 1: 800, 2: 450, 3: 250, 4: 100, 5: 30 };
+let GAR_SPEED_LABEL = { 1: 'Slowest', 2: 'Slow', 3: 'Normal', 4: 'Fast', 5: 'Blazing' };
 
 /* ─── Algorithm colors ─── */
-var GAR_ALGO_DEF = {
+let GAR_ALGO_DEF = {
   bfs:      { label: 'BFS',      color: '#22c55e', visited: 'rgba(34,197,94,0.25)',   path: 'rgba(34,197,94,0.6)',   frontier: 'rgba(34,197,94,0.5)'  },
   dfs:      { label: 'DFS',      color: '#a855f7', visited: 'rgba(168,85,247,0.25)',  path: 'rgba(168,85,247,0.6)',  frontier: 'rgba(168,85,247,0.5)' },
   dijkstra: { label: "Dijkstra", color: '#f59e0b', visited: 'rgba(245,158,11,0.25)',  path: 'rgba(245,158,11,0.6)',  frontier: 'rgba(245,158,11,0.5)' },
@@ -21,15 +21,15 @@ var GAR_ALGO_DEF = {
 /* ─── Graph presets ─── */
 function garBuildGrid() {
   // 4x4 grid graph, nodes 0-15
-  var nodes = [];
-  var edges = [];
-  var cols = 4;
-  for (var i = 0; i < 16; i++) {
+  let nodes = [];
+  let edges = [];
+  let cols = 4;
+  for (let i = 0; i < 16; i++) {
     nodes.push({ id: i, x: (i % cols) * 90 + 45, y: Math.floor(i / cols) * 80 + 40 });
   }
-  for (var r = 0; r < 4; r++) {
-    for (var c = 0; c < 4; c++) {
-      var id = r * 4 + c;
+  for (let r = 0; r < 4; r++) {
+    for (let c = 0; c < 4; c++) {
+      let id = r * 4 + c;
       if (c < 3) edges.push({ u: id, v: id + 1, w: 1 });
       if (r < 3) edges.push({ u: id, v: id + 4, w: 1 });
     }
@@ -38,12 +38,12 @@ function garBuildGrid() {
 }
 
 function garBuildWeighted() {
-  var nodes = [
+  let nodes = [
     { id:0, x:40,  y:60  }, { id:1, x:140, y:30  }, { id:2, x:240, y:60  },
     { id:3, x:140, y:120 }, { id:4, x:80,  y:180 }, { id:5, x:200, y:180 },
     { id:6, x:300, y:120 }, { id:7, x:300, y:200 }, { id:8, x:160, y:230 },
   ];
-  var edges = [
+  let edges = [
     { u:0, v:1, w:4 }, { u:0, v:4, w:2 }, { u:1, v:2, w:1 }, { u:1, v:3, w:5 },
     { u:2, v:6, w:3 }, { u:3, v:4, w:2 }, { u:3, v:5, w:6 }, { u:4, v:8, w:7 },
     { u:5, v:6, w:1 }, { u:5, v:8, w:3 }, { u:6, v:7, w:2 }, { u:7, v:8, w:4 },
@@ -52,36 +52,36 @@ function garBuildWeighted() {
 }
 
 function garBuildDense() {
-  var nodes = [];
-  var edges = [];
-  var n = 10;
-  for (var i = 0; i < n; i++) {
-    var angle = (2 * Math.PI * i) / n;
+  let nodes = [];
+  let edges = [];
+  let n = 10;
+  for (let i = 0; i < n; i++) {
+    let angle = (2 * Math.PI * i) / n;
     nodes.push({ id: i, x: Math.round(160 + 120 * Math.cos(angle)), y: Math.round(130 + 100 * Math.sin(angle)) });
   }
-  for (var i = 0; i < n; i++) {
-    for (var j = i + 1; j < n; j++) {
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
       if (Math.random() < 0.55) {
-        var w = Math.floor(Math.random() * 9) + 1;
+        let w = Math.floor(Math.random() * 9) + 1;
         edges.push({ u: i, v: j, w: w });
       }
     }
   }
   // Ensure connectivity
-  for (var i = 0; i < n - 1; i++) {
-    var exists = edges.some(function(e) { return (e.u === i && e.v === i+1) || (e.u === i+1 && e.v === i); });
+  for (let i = 0; i < n - 1; i++) {
+    let exists = edges.some(function(e) { return (e.u === i && e.v === i+1) || (e.u === i+1 && e.v === i); });
     if (!exists) edges.push({ u: i, v: i+1, w: Math.floor(Math.random()*5)+1 });
   }
   return { nodes: nodes, edges: edges, defaultSource: 0, defaultTarget: 5 };
 }
 
 function garBuildSparse() {
-  var nodes = [
+  let nodes = [
     { id:0, x:40,  y:100 }, { id:1, x:120, y:40  }, { id:2, x:200, y:100 },
     { id:3, x:120, y:160 }, { id:4, x:280, y:60  }, { id:5, x:280, y:160 },
     { id:6, x:360, y:100 },
   ];
-  var edges = [
+  let edges = [
     { u:0, v:1, w:3 }, { u:1, v:2, w:5 }, { u:0, v:3, w:2 },
     { u:3, v:2, w:8 }, { u:2, v:4, w:1 }, { u:2, v:5, w:6 },
     { u:4, v:6, w:4 }, { u:5, v:6, w:2 },
@@ -89,10 +89,10 @@ function garBuildSparse() {
   return { nodes: nodes, edges: edges, defaultSource: 0, defaultTarget: 6 };
 }
 
-var GAR_PRESETS = { grid: garBuildGrid, weighted: garBuildWeighted, dense: garBuildDense, sparse: garBuildSparse };
+let GAR_PRESETS = { grid: garBuildGrid, weighted: garBuildWeighted, dense: garBuildDense, sparse: garBuildSparse };
 
 /* ─── State ─── */
-var garState = {
+let garState = {
   preset    : 'grid',
   graph     : null,
   algos     : { bfs: true, dfs: true, dijkstra: true, astar: true },
@@ -107,7 +107,7 @@ var garState = {
 
 /* ─── Build adjacency list ─── */
 function garBuildAdj(graph) {
-  var adj = {};
+  let adj = {};
   graph.nodes.forEach(function(n) { adj[n.id] = []; });
   graph.edges.forEach(function(e) {
     adj[e.u].push({ to: e.v, w: e.w });
@@ -118,19 +118,19 @@ function garBuildAdj(graph) {
 
 /* ─── A* heuristic (Euclidean) ─── */
 function garHeuristic(nodes, a, b) {
-  var na = nodes[a]; var nb = nodes[b];
+  let na = nodes[a]; let nb = nodes[b];
   if (!na || !nb) return 0;
-  var dx = na.x - nb.x; var dy = na.y - nb.y;
+  let dx = na.x - nb.x; let dy = na.y - nb.y;
   return Math.sqrt(dx*dx + dy*dy) / 60;
 }
 
 /* ─── Algorithm runners (step-based) ─── */
 function garMakeRunner(algo, graph, adj, src, tgt) {
-  var def   = GAR_ALGO_DEF[algo];
-  var nodes = {};
+  let def   = GAR_ALGO_DEF[algo];
+  let nodes = {};
   graph.nodes.forEach(function(n) { nodes[n.id] = n; });
 
-  var runner = {
+  let runner = {
     algo      : algo,
     label     : def.label,
     color     : def.color,
@@ -154,7 +154,7 @@ function garMakeRunner(algo, graph, adj, src, tgt) {
     runner.frontier = [src];
     runner.step = function() {
       if (runner.frontier.length === 0) { runner.status = 'failed'; runner.done = true; return; }
-      var cur = runner.frontier.shift();
+      let cur = runner.frontier.shift();
       if (runner.visited[cur]) return;
       runner.visited[cur] = true;
       runner.nodesVisited++;
@@ -172,13 +172,13 @@ function garMakeRunner(algo, graph, adj, src, tgt) {
     runner.frontier = [src];
     runner.step = function() {
       if (runner.frontier.length === 0) { runner.status = 'failed'; runner.done = true; return; }
-      var cur = runner.frontier.pop();
+      let cur = runner.frontier.pop();
       if (runner.visited[cur]) return;
       runner.visited[cur] = true;
       runner.nodesVisited++;
       runner.steps++;
       if (cur === tgt) { runner.status = 'found'; runner.done = true; garTracePath(runner, src, tgt); return; }
-      var neighbors = (adj[cur] || []).slice().reverse();
+      let neighbors = (adj[cur] || []).slice().reverse();
       neighbors.forEach(function(nb) {
         if (!runner.visited[nb.to]) {
           runner.frontier.push(nb.to);
@@ -192,18 +192,18 @@ function garMakeRunner(algo, graph, adj, src, tgt) {
   } else if (algo === 'dijkstra') {
     // Simple priority queue as sorted array
     runner.frontier = [{ id: src, dist: 0 }];
-    var dist = {}; dist[src] = 0;
+    let dist = {}; dist[src] = 0;
     runner.step = function() {
       if (runner.frontier.length === 0) { runner.status = 'failed'; runner.done = true; return; }
       runner.frontier.sort(function(a, b) { return a.dist - b.dist; });
-      var cur = runner.frontier.shift();
+      let cur = runner.frontier.shift();
       if (runner.visited[cur.id]) return;
       runner.visited[cur.id] = true;
       runner.nodesVisited++;
       runner.steps++;
       if (cur.id === tgt) { runner.status = 'found'; runner.done = true; garTracePath(runner, src, tgt); return; }
       (adj[cur.id] || []).forEach(function(nb) {
-        var newDist = cur.dist + nb.w;
+        let newDist = cur.dist + nb.w;
         if (!runner.visited[nb.to] && (dist[nb.to] === undefined || newDist < dist[nb.to])) {
           dist[nb.to] = newDist;
           runner.parent[nb.to] = cur.id;
@@ -213,24 +213,24 @@ function garMakeRunner(algo, graph, adj, src, tgt) {
       });
     };
   } else if (algo === 'astar') {
-    var g = {}; g[src] = 0;
+    let g = {}; g[src] = 0;
     runner.frontier = [{ id: src, f: garHeuristic(nodes, src, tgt) }];
     runner.step = function() {
       if (runner.frontier.length === 0) { runner.status = 'failed'; runner.done = true; return; }
       runner.frontier.sort(function(a, b) { return a.f - b.f; });
-      var cur = runner.frontier.shift();
+      let cur = runner.frontier.shift();
       if (runner.visited[cur.id]) return;
       runner.visited[cur.id] = true;
       runner.nodesVisited++;
       runner.steps++;
       if (cur.id === tgt) { runner.status = 'found'; runner.done = true; garTracePath(runner, src, tgt); return; }
       (adj[cur.id] || []).forEach(function(nb) {
-        var tentG = (g[cur.id] || 0) + nb.w;
+        let tentG = (g[cur.id] || 0) + nb.w;
         if (!runner.visited[nb.to] && (g[nb.to] === undefined || tentG < g[nb.to])) {
           g[nb.to] = tentG;
           runner.parent[nb.to] = cur.id;
           runner.cost[nb.to] = tentG;
-          var f = tentG + garHeuristic(nodes, nb.to, tgt);
+          let f = tentG + garHeuristic(nodes, nb.to, tgt);
           runner.frontier.push({ id: nb.to, f: f });
         }
       });
@@ -241,7 +241,7 @@ function garMakeRunner(algo, graph, adj, src, tgt) {
 }
 
 function garTracePath(runner, src, tgt) {
-  var path = []; var cur = tgt;
+  let path = []; let cur = tgt;
   while (cur !== -1 && cur !== undefined) {
     path.unshift(cur);
     if (cur === src) break;
@@ -254,24 +254,24 @@ function garTracePath(runner, src, tgt) {
 }
 
 /* ─── Canvas drawing ─── */
-var GAR_NODE_R = 16;
+let GAR_NODE_R = 16;
 
 function garDrawCanvas(canvasId, runner, graph, src, tgt) {
-  var canvas = document.getElementById(canvasId);
+  let canvas = document.getElementById(canvasId);
   if (!canvas) return;
-  var ctx = canvas.getContext('2d');
-  var def = GAR_ALGO_DEF[runner.algo];
+  let ctx = canvas.getContext('2d');
+  let def = GAR_ALGO_DEF[runner.algo];
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw edges
   graph.edges.forEach(function(e) {
-    var na = graph.nodes[e.u]; var nb = graph.nodes[e.v];
+    let na = graph.nodes[e.u]; let nb = graph.nodes[e.v];
     if (!na || !nb) return;
     // Check if edge is on path
-    var onPath = false;
+    let onPath = false;
     if (runner.path.length > 1) {
-      for (var i = 0; i < runner.path.length - 1; i++) {
+      for (let i = 0; i < runner.path.length - 1; i++) {
         if ((runner.path[i] === e.u && runner.path[i+1] === e.v) ||
             (runner.path[i] === e.v && runner.path[i+1] === e.u)) { onPath = true; break; }
       }
@@ -285,7 +285,7 @@ function garDrawCanvas(canvasId, runner, graph, src, tgt) {
 
     // Weight label
     if (e.w > 1) {
-      var mx = (na.x + nb.x) / 2; var my = (na.y + nb.y) / 2;
+      let mx = (na.x + nb.x) / 2; let my = (na.y + nb.y) / 2;
       ctx.fillStyle = onPath ? def.color : 'rgba(148,163,184,0.6)';
       ctx.font = '9px Fira Code,monospace';
       ctx.textAlign = 'center';
@@ -295,16 +295,16 @@ function garDrawCanvas(canvasId, runner, graph, src, tgt) {
 
   // Draw nodes
   graph.nodes.forEach(function(node) {
-    var isVisited  = runner.visited[node.id];
-    var isFrontier = runner.frontier.some(function(f) { return (typeof f === 'object' ? f.id : f) === node.id; });
-    var isPath     = runner.path.indexOf(node.id) !== -1;
-    var isSrc      = node.id === src;
-    var isTgt      = node.id === tgt;
+    let isVisited  = runner.visited[node.id];
+    let isFrontier = runner.frontier.some(function(f) { return (typeof f === 'object' ? f.id : f) === node.id; });
+    let isPath     = runner.path.indexOf(node.id) !== -1;
+    let isSrc      = node.id === src;
+    let isTgt      = node.id === tgt;
 
-    var fillColor   = 'rgba(255,255,255,0.04)';
-    var strokeColor = 'rgba(100,116,139,0.4)';
-    var textColor   = 'rgba(148,163,184,0.8)';
-    var lineWidth   = 1.5;
+    let fillColor   = 'rgba(255,255,255,0.04)';
+    let strokeColor = 'rgba(100,116,139,0.4)';
+    let textColor   = 'rgba(148,163,184,0.8)';
+    let lineWidth   = 1.5;
 
     if (isPath)     { fillColor = def.path;     strokeColor = def.color; textColor = '#fff'; lineWidth = 2.5; }
     else if (isVisited)  { fillColor = def.visited;  strokeColor = def.color; textColor = def.color; lineWidth = 2; }
@@ -334,15 +334,15 @@ function garDrawCanvas(canvasId, runner, graph, src, tgt) {
 
 /* ─── Setup canvases ─── */
 function garSetupCanvases() {
-  var wrap = document.getElementById('garCanvases');
+  let wrap = document.getElementById('garCanvases');
   if (!wrap) return;
 
-  var activeAlgos = Object.keys(garState.algos).filter(function(a) { return garState.algos[a]; });
-  var cols = activeAlgos.length <= 2 ? activeAlgos.length : 2;
+  let activeAlgos = Object.keys(garState.algos).filter(function(a) { return garState.algos[a]; });
+  let cols = activeAlgos.length <= 2 ? activeAlgos.length : 2;
   wrap.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
 
   wrap.innerHTML = activeAlgos.map(function(algo) {
-    var def = GAR_ALGO_DEF[algo];
+    let def = GAR_ALGO_DEF[algo];
     return '<div class="gar-canvas-wrap" id="garWrap_' + algo + '">' +
       '<div class="gar-canvas-header">' +
         '<span class="gar-canvas-algo-name" style="color:' + def.color + '">' + def.label + '</span>' +
@@ -355,8 +355,8 @@ function garSetupCanvases() {
   // Resize canvases to fit
   setTimeout(function() {
     activeAlgos.forEach(function(algo) {
-      var canvas = document.getElementById('garCanvas_' + algo);
-      var cWrap  = document.getElementById('garWrap_' + algo);
+      let canvas = document.getElementById('garCanvas_' + algo);
+      let cWrap  = document.getElementById('garWrap_' + algo);
       if (canvas && cWrap) {
         canvas.width = cWrap.clientWidth;
         canvas.height = Math.min(280, canvas.width * 0.65);
@@ -367,15 +367,15 @@ function garSetupCanvases() {
 
 /* ─── Setup runners ─── */
 function garSetupRunners() {
-  var graph = garState.graph;
-  var adj   = garBuildAdj(graph);
-  var src   = garState.source;
-  var tgt   = garState.target;
+  let graph = garState.graph;
+  let adj   = garBuildAdj(graph);
+  let src   = garState.source;
+  let tgt   = garState.target;
 
   garState.runners = {};
   Object.keys(garState.algos).forEach(function(algo) {
     if (!garState.algos[algo]) return;
-    var runner = garMakeRunner(algo, graph, adj, src, tgt);
+    let runner = garMakeRunner(algo, graph, adj, src, tgt);
     runner.status = 'running';
     garState.runners[algo] = runner;
   });
@@ -383,15 +383,15 @@ function garSetupRunners() {
 
 /* ─── Update metrics ─── */
 function garUpdateMetrics() {
-  var tbody = document.getElementById('garMetricsBody');
+  let tbody = document.getElementById('garMetricsBody');
   if (!tbody) return;
 
   tbody.innerHTML = Object.keys(garState.runners).map(function(algo) {
-    var r   = garState.runners[algo];
-    var def = GAR_ALGO_DEF[algo];
-    var statusStr = r.status === 'found' ? '✅ Found' : r.status === 'failed' ? '❌ Not Found' : '🔄 Running';
-    var costStr   = r.pathCost === Infinity ? '—' : r.pathCost.toFixed(1);
-    var isWinner  = garState.winner === algo;
+    let r   = garState.runners[algo];
+    let def = GAR_ALGO_DEF[algo];
+    let statusStr = r.status === 'found' ? '✅ Found' : r.status === 'failed' ? '❌ Not Found' : '🔄 Running';
+    let costStr   = r.pathCost === Infinity ? '—' : r.pathCost.toFixed(1);
+    let isWinner  = garState.winner === algo;
     return '<tr class="' + (isWinner ? 'gar-winner-row' : '') + '">' +
       '<td style="color:' + def.color + '">' + def.label + (isWinner ? ' 🏆' : '') + '</td>' +
       '<td>' + r.nodesVisited + '</td>' +
@@ -406,9 +406,9 @@ function garUpdateMetrics() {
 /* ─── Update badges ─── */
 function garUpdateBadges() {
   Object.keys(garState.runners).forEach(function(algo) {
-    var r   = garState.runners[algo];
-    var el  = document.getElementById('garBadge_' + algo);
-    var wrap = document.getElementById('garWrap_' + algo);
+    let r   = garState.runners[algo];
+    let el  = document.getElementById('garBadge_' + algo);
+    let wrap = document.getElementById('garWrap_' + algo);
     if (!el) return;
     if (r.status === 'found') {
       el.textContent = 'Found!'; el.className = 'gar-canvas-badge found';
@@ -424,7 +424,7 @@ function garUpdateBadges() {
 
 /* ─── Draw all ─── */
 function garDrawAll() {
-  var graph = garState.graph;
+  let graph = garState.graph;
   Object.keys(garState.runners).forEach(function(algo) {
     garDrawCanvas('garCanvas_' + algo, garState.runners[algo], graph, garState.source, garState.target);
   });
@@ -432,11 +432,11 @@ function garDrawAll() {
 
 /* ─── Single step — advance ALL runners one step ─── */
 function garDoStep() {
-  var allDone = true;
-  var firstFound = null;
+  let allDone = true;
+  let firstFound = null;
 
   Object.keys(garState.runners).forEach(function(algo) {
-    var r = garState.runners[algo];
+    let r = garState.runners[algo];
     if (!r.done) {
       r.step();
       if (r.status === 'found' && !garState.winner) {
@@ -452,16 +452,16 @@ function garDoStep() {
   garUpdateMetrics();
 
   // Update status
-  var statusEl = document.getElementById('garStatus');
+  let statusEl = document.getElementById('garStatus');
   if (firstFound && statusEl) {
-    var def = GAR_ALGO_DEF[firstFound];
+    let def = GAR_ALGO_DEF[firstFound];
     statusEl.textContent = def.label + ' reached the target first! All algorithms continue until done.';
     statusEl.className = 'gar-status running';
 
     // Winner banner
-    var banner = document.getElementById('garWinnerBanner');
-    var bannerText = document.getElementById('garWinnerText');
-    var wrap = document.getElementById('garWrap_' + firstFound);
+    let banner = document.getElementById('garWinnerBanner');
+    let bannerText = document.getElementById('garWinnerText');
+    let wrap = document.getElementById('garWrap_' + firstFound);
     if (banner && bannerText) {
       bannerText.textContent = def.label + ' wins the race!';
       banner.classList.remove('hidden');
@@ -482,7 +482,7 @@ function garDoStep() {
 
 /* ─── Playback ─── */
 function garGetDelay() {
-  var el = document.getElementById('garSpeed');
+  let el = document.getElementById('garSpeed');
   return GAR_SPEED[el ? el.value : 3] || 250;
 }
 
@@ -515,8 +515,8 @@ function garStep() {
 }
 
 function garUpdatePBBtns() {
-  var stepBtn  = document.getElementById('garStepBtn');
-  var pauseBtn = document.getElementById('garPauseBtn');
+  let stepBtn  = document.getElementById('garStepBtn');
+  let pauseBtn = document.getElementById('garPauseBtn');
   if (stepBtn)  stepBtn.disabled  = garState.done;
   if (pauseBtn) pauseBtn.disabled = !garState.playing;
 }
@@ -526,11 +526,11 @@ function garRun() {
   garPause();
 
   // Read inputs
-  var src = parseInt((document.getElementById('garSource') || {}).value || 0);
-  var tgt = parseInt((document.getElementById('garTarget') || {}).value || 0);
-  var graph = GAR_PRESETS[garState.preset]();
+  let src = parseInt((document.getElementById('garSource') || {}).value || 0);
+  let tgt = parseInt((document.getElementById('garTarget') || {}).value || 0);
+  let graph = GAR_PRESETS[garState.preset]();
 
-  var maxId = graph.nodes.length - 1;
+  let maxId = graph.nodes.length - 1;
   if (isNaN(src) || src < 0 || src > maxId) src = 0;
   if (isNaN(tgt) || tgt < 0 || tgt > maxId) tgt = maxId;
 
@@ -540,15 +540,15 @@ function garRun() {
   garState.winner = null;
   garState.done   = false;
 
-  var activeAlgos = Object.keys(garState.algos).filter(function(a) { return garState.algos[a]; });
+  let activeAlgos = Object.keys(garState.algos).filter(function(a) { return garState.algos[a]; });
   if (activeAlgos.length === 0) {
-    var el = document.getElementById('garStatus');
+    let el = document.getElementById('garStatus');
     if (el) el.textContent = 'Select at least one algorithm.';
     return;
   }
 
   // Reset winner banner
-  var banner = document.getElementById('garWinnerBanner');
+  let banner = document.getElementById('garWinnerBanner');
   if (banner) banner.classList.add('hidden');
 
   garSetupCanvases();
@@ -558,8 +558,8 @@ function garRun() {
   setTimeout(function() {
     // Resize canvases again after DOM settles
     activeAlgos.forEach(function(algo) {
-      var canvas = document.getElementById('garCanvas_' + algo);
-      var cWrap  = document.getElementById('garWrap_' + algo);
+      let canvas = document.getElementById('garCanvas_' + algo);
+      let cWrap  = document.getElementById('garWrap_' + algo);
       if (canvas && cWrap) {
         canvas.width  = cWrap.clientWidth;
         canvas.height = Math.min(280, Math.floor(canvas.width * 0.65));
@@ -567,17 +567,17 @@ function garRun() {
     });
 
     // Scale node positions to fit canvas
-    var canvas0 = document.getElementById('garCanvas_' + activeAlgos[0]);
+    let canvas0 = document.getElementById('garCanvas_' + activeAlgos[0]);
     if (canvas0 && garState.graph) {
-      var cw = canvas0.width; var ch = canvas0.height;
-      var minX = Infinity, maxX = 0, minY = Infinity, maxY = 0;
+      let cw = canvas0.width; let ch = canvas0.height;
+      let minX = Infinity, maxX = 0, minY = Infinity, maxY = 0;
       garState.graph.nodes.forEach(function(n) {
         if (n.x < minX) minX = n.x; if (n.x > maxX) maxX = n.x;
         if (n.y < minY) minY = n.y; if (n.y > maxY) maxY = n.y;
       });
-      var scaleX = (cw - 60) / Math.max(maxX - minX, 1);
-      var scaleY = (ch - 60) / Math.max(maxY - minY, 1);
-      var scale  = Math.min(scaleX, scaleY, 1.2);
+      let scaleX = (cw - 60) / Math.max(maxX - minX, 1);
+      let scaleY = (ch - 60) / Math.max(maxY - minY, 1);
+      let scale  = Math.min(scaleX, scaleY, 1.2);
       garState.graph.nodes.forEach(function(n) {
         n.x = Math.round(30 + (n.x - minX) * scale);
         n.y = Math.round(30 + (n.y - minY) * scale);
@@ -588,7 +588,7 @@ function garRun() {
     garUpdateMetrics();
     garUpdatePBBtns();
 
-    var statusEl = document.getElementById('garStatus');
+    let statusEl = document.getElementById('garStatus');
     if (statusEl) { statusEl.textContent = 'Race ready! Press Step or watch auto-play.'; statusEl.className = 'gar-status running'; }
 
     garPlay();
@@ -602,16 +602,16 @@ function garReset() {
   garState.winner  = null;
   garState.done    = false;
 
-  var wrap = document.getElementById('garCanvases');
+  let wrap = document.getElementById('garCanvases');
   if (wrap) wrap.innerHTML = '';
 
-  var banner = document.getElementById('garWinnerBanner');
+  let banner = document.getElementById('garWinnerBanner');
   if (banner) banner.classList.add('hidden');
 
-  var tbody = document.getElementById('garMetricsBody');
+  let tbody = document.getElementById('garMetricsBody');
   if (tbody) tbody.innerHTML = '';
 
-  var statusEl = document.getElementById('garStatus');
+  let statusEl = document.getElementById('garStatus');
   if (statusEl) { statusEl.textContent = 'Select a graph preset, choose algorithms, then click Start Race.'; statusEl.className = 'gar-status'; }
 
   garUpdatePBBtns();
@@ -627,9 +627,9 @@ function garInit() {
       garState.preset = btn.getAttribute('data-preset');
 
       // Update default source/target
-      var g = GAR_PRESETS[garState.preset]();
-      var srcEl = document.getElementById('garSource');
-      var tgtEl = document.getElementById('garTarget');
+      let g = GAR_PRESETS[garState.preset]();
+      let srcEl = document.getElementById('garSource');
+      let tgtEl = document.getElementById('garTarget');
       if (srcEl) srcEl.value = g.defaultSource;
       if (tgtEl) tgtEl.value = g.defaultTarget;
 
@@ -640,18 +640,18 @@ function garInit() {
   // Algorithm toggles
   document.querySelectorAll('.gar-algo-toggle').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      var algo = btn.getAttribute('data-algo');
+      let algo = btn.getAttribute('data-algo');
       garState.algos[algo] = !garState.algos[algo];
       btn.classList.toggle('active', garState.algos[algo]);
     });
   });
 
   // Playback
-  var runBtn   = document.getElementById('garRunBtn');
-  var stepBtn  = document.getElementById('garStepBtn');
-  var pauseBtn = document.getElementById('garPauseBtn');
-  var resetBtn = document.getElementById('garResetBtn');
-  var speedSl  = document.getElementById('garSpeed');
+  let runBtn   = document.getElementById('garRunBtn');
+  let stepBtn  = document.getElementById('garStepBtn');
+  let pauseBtn = document.getElementById('garPauseBtn');
+  let resetBtn = document.getElementById('garResetBtn');
+  let speedSl  = document.getElementById('garSpeed');
 
   if (runBtn)   runBtn.addEventListener('click',   garRun);
   if (stepBtn)  stepBtn.addEventListener('click',  garStep);
@@ -660,7 +660,7 @@ function garInit() {
 
   if (speedSl) {
     speedSl.addEventListener('input', function() {
-      var lbl = document.getElementById('garSpeedVal');
+      let lbl = document.getElementById('garSpeedVal');
       if (lbl) lbl.textContent = GAR_SPEED_LABEL[speedSl.value] || 'Normal';
       if (garState.playing) { garPause(); garPlay(); }
     });
@@ -669,8 +669,8 @@ function garInit() {
   window.addEventListener('resize', function() {
     if (Object.keys(garState.runners).length === 0) return;
     Object.keys(garState.runners).forEach(function(algo) {
-      var canvas = document.getElementById('garCanvas_' + algo);
-      var cWrap  = document.getElementById('garWrap_' + algo);
+      let canvas = document.getElementById('garCanvas_' + algo);
+      let cWrap  = document.getElementById('garWrap_' + algo);
       if (canvas && cWrap) {
         canvas.width  = cWrap.clientWidth;
         canvas.height = Math.min(280, Math.floor(canvas.width * 0.65));

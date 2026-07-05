@@ -280,8 +280,8 @@ async function handleInsert() {
     const key = els.inputKey.value.trim().toLowerCase();
     const val = els.inputValue.value.trim();
 
-    if (!key || !val) return alert("Key and Value are required.");
-    if (!/^[0-9a-f]+$/.test(key)) return alert("Key must be a valid Hex string (0-9, a-f).");
+    if (!key || !val) return console.warn("Alert:", "Key and Value are required.");
+    if (!/^[0-9a-f]+$/.test(key)) return console.warn("Alert:", "Key must be a valid Hex string (0-9, a-f).");
 
     els.btnInsert.disabled = true;
     els.engineBadge.classList.add('hashing');

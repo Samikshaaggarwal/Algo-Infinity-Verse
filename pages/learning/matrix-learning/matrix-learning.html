@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -162,7 +162,7 @@
               <div class="matrix-code-block">
                 <div class="matrix-code-header">
                   <span class="matrix-code-lang">Python</span>
-                  <button class="matrix-code-copy" aria-label="Copy code" data-code="matrix = [
+                  <button type="button" class="matrix-code-copy" aria-label="Copy code" data-code="matrix = [
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9]
@@ -188,7 +188,7 @@ print(matrix[1][2])">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Introduction
                 </div>
                 <p>In a 4×5 matrix, what is the index of the element at the 3rd row and 4th column?</p>
-                <button class="matrix-exercise-toggle" aria-expanded="false" aria-controls="solution-introduction">Show Solution</button>
+                <button type="button" class="matrix-exercise-toggle" aria-expanded="false" aria-controls="solution-introduction">Show Solution</button>
                 <div class="matrix-exercise-solution" id="solution-introduction">
                   <p><strong>Answer: matrix[2][3]</strong></p>
                   <p>Explanation: Arrays are 0-indexed. 3rd row → index 2, 4th column → index 3.</p>
@@ -215,7 +215,7 @@ print(matrix[1][2])">Copy</button>
               <div class="matrix-code-block">
                 <div class="matrix-code-header">
                   <span class="matrix-code-lang">Python</span>
-                  <button class="matrix-code-copy" aria-label="Copy code" data-code="def linear_traverse(matrix):
+                  <button type="button" class="matrix-code-copy" aria-label="Copy code" data-code="def linear_traverse(matrix):
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
             print(matrix[i][j], end=' ')
@@ -241,7 +241,7 @@ print(matrix[1][2])">Copy</button>
               <div class="matrix-code-block">
                 <div class="matrix-code-header">
                   <span class="matrix-code-lang">Python</span>
-                  <button class="matrix-code-copy" aria-label="Copy code" data-code="def spiral_order(matrix):
+                  <button type="button" class="matrix-code-copy" aria-label="Copy code" data-code="def spiral_order(matrix):
     result = []
     top, bottom = 0, len(matrix) - 1
     left, right = 0, len(matrix[0]) - 1
@@ -311,7 +311,7 @@ print(matrix[1][2])">Copy</button>
               <div class="matrix-code-block">
                 <div class="matrix-code-header">
                   <span class="matrix-code-lang">Python</span>
-                  <button class="matrix-code-copy" aria-label="Copy code" data-code="def transpose(matrix):
+                  <button type="button" class="matrix-code-copy" aria-label="Copy code" data-code="def transpose(matrix):
     n = len(matrix)
     for i in range(n):
         for j in range(i + 1, n):
@@ -332,7 +332,7 @@ print(matrix[1][2])">Copy</button>
               <div class="matrix-code-block">
                 <div class="matrix-code-header">
                   <span class="matrix-code-lang">Python</span>
-                  <button class="matrix-code-copy" aria-label="Copy code" data-code="def rotate_90_cw(matrix):
+                  <button type="button" class="matrix-code-copy" aria-label="Copy code" data-code="def rotate_90_cw(matrix):
     n = len(matrix)
     for i in range(n):
         for j in range(i + 1, n):
@@ -359,7 +359,7 @@ print(matrix[1][2])">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Operations
                 </div>
                 <p>What is the result of transposing the matrix <code>[[1,2],[3,4]]</code>?</p>
-                <button class="matrix-exercise-toggle" aria-expanded="false" aria-controls="solution-operations">Show Solution</button>
+                <button type="button" class="matrix-exercise-toggle" aria-expanded="false" aria-controls="solution-operations">Show Solution</button>
                 <div class="matrix-exercise-solution" id="solution-operations">
                   <p><strong>Answer: [[1,3],[2,4]]</strong></p>
                   <p>Explanation: matrix[0][1]=2 swaps with matrix[1][0]=3. Row 0 becomes [1,3], Row 1 becomes [2,4].</p>
@@ -418,7 +418,7 @@ print(matrix[1][2])">Copy</button>
                   <i class="fas fa-dumbbell"></i> Exercise 1: Spiral Matrix
                 </div>
                 <p>Given matrix <code>[[1,2,3],[4,5,6],[7,8,9]]</code>, what is the spiral order output?</p>
-                <button class="matrix-exercise-toggle" aria-expanded="false" aria-controls="solution-ex1">Show Solution</button>
+                <button type="button" class="matrix-exercise-toggle" aria-expanded="false" aria-controls="solution-ex1">Show Solution</button>
                 <div class="matrix-exercise-solution" id="solution-ex1">
                   <p><strong>Answer: [1, 2, 3, 6, 9, 8, 7, 4, 5]</strong></p>
                   <p>Explanation: Top row left→right: 1,2,3. Right column top→bottom: 6,9. Bottom row right→left: 8,7. Left column bottom→top: 4. Center: 5.</p>
@@ -430,7 +430,7 @@ print(matrix[1][2])">Copy</button>
                   <i class="fas fa-dumbbell"></i> Exercise 2: Rotate 90°
                 </div>
                 <p>After rotating <code>[[1,2],[3,4]]</code> 90° clockwise in-place, what is the result?</p>
-                <button class="matrix-exercise-toggle" aria-expanded="false" aria-controls="solution-ex2">Show Solution</button>
+                <button type="button" class="matrix-exercise-toggle" aria-expanded="false" aria-controls="solution-ex2">Show Solution</button>
                 <div class="matrix-exercise-solution" id="solution-ex2">
                   <p><strong>Answer: [[3,1],[4,2]]</strong></p>
                   <p>Explanation: Transpose → [[1,3],[2,4]]. Reverse each row → [[3,1],[4,2]].</p>
@@ -442,7 +442,7 @@ print(matrix[1][2])">Copy</button>
                   <i class="fas fa-dumbbell"></i> Exercise 3: Search in Sorted Matrix
                 </div>
                 <p>In matrix <code>[[1,4,7],[2,5,8],[3,6,9]]</code> (rows and columns sorted), how many steps does it take to find <code>6</code> using the top-right corner approach?</p>
-                <button class="matrix-exercise-toggle" aria-expanded="false" aria-controls="solution-ex3">Show Solution</button>
+                <button type="button" class="matrix-exercise-toggle" aria-expanded="false" aria-controls="solution-ex3">Show Solution</button>
                 <div class="matrix-exercise-solution" id="solution-ex3">
                   <p><strong>Answer: 3 steps</strong></p>
                   <p>Start at top-right: matrix[0][2]=7. 6 &lt; 7 → move left. matrix[0][1]=4. 6 &gt; 4 → move down. matrix[1][1]=5. 6 &gt; 5 → move down. matrix[2][1]=6. Found!</p>
@@ -457,7 +457,11 @@ print(matrix[1][2])">Copy</button>
 
     <div id="footer-placeholder"></div>
 
+    <script src="/bootstrap-legacy.js"></script>
+
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="matrix-learning.js"></script>

@@ -109,3 +109,5 @@ export function initPagination({
   // Initialize first page
   renderPage(1);
 }
+// Legacy global exports
+window.initPagination = initPagination;

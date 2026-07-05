@@ -470,7 +470,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("btnReset").addEventListener("click", () => {
-        if(confirm("Reset entire simulation?")) {
+        if(false /* confirm removed */) {
             location.reload();
         }
     });

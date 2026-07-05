@@ -45,7 +45,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -174,7 +174,7 @@
                   <li>C) PHP compiles CSS and Javascript stylesheets into binary objects on the client machine.</li>
                   <li>D) PHP is a database server that replaces SQL engines.</li>
                 </ul>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-introduction">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-introduction">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-introduction">
                   <p><strong>Correct Answer: B</strong></p>
                   <p>Explanation: PHP is a server-side language. The server runs the script, builds the final HTML text, and returns only that HTML to the client browser, keeping the database logic and secret code hidden.</p>
@@ -209,7 +209,7 @@
               <div class="php-code-block">
                 <div class="php-code-header">
                   <span class="php-code-lang">CLI</span>
-                  <button class="php-code-copy" aria-label="Copy code" data-code="php -S localhost:8000">Copy</button>
+                  <button type="button" class="php-code-copy" aria-label="Copy code" data-code="php -S localhost:8000">Copy</button>
                 </div>
                 <pre><code>php -S localhost:8000</code></pre>
               </div>
@@ -224,7 +224,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Local Server Setup
                 </div>
                 <p>When running a local XAMPP Apache server, what folder directory must your PHP project files be saved in to resolve on localhost?</p>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-setup">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-setup">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-setup">
                   <p><strong>Answer: htdocs</strong></p>
                   <p>Explanation: Apache in XAMPP defaults its document root to the `htdocs` directory (located inside the XAMPP installation directory). Files saved there are resolved relative to `http://localhost/`.</p>
@@ -245,7 +245,7 @@
               <div class="php-code-block">
                 <div class="php-code-header">
                   <span class="php-code-lang">PHP</span>
-                  <button class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
+                  <button type="button" class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
 // Single-line comment
 # Another single-line comment
 
@@ -289,7 +289,7 @@ echo &quot;Hello from PHP!&quot;;
                   <li>C) <code>$val = "A" $val2 = "B";</code></li>
                   <li>D) <code>// print "Hello";</code></li>
                 </ul>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-syntax">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-syntax">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-syntax">
                   <p><strong>Correct Answer: C</strong></p>
                   <p>Explanation: Semicolons are required to terminate statements. Failing to place a semicolon between the assignment of `$val` and `$val2` causes a parse error.</p>
@@ -310,7 +310,7 @@ echo &quot;Hello from PHP!&quot;;
               <div class="php-code-block">
                 <div class="php-code-header">
                   <span class="php-code-lang">PHP</span>
-                  <button class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
+                  <button type="button" class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
 $name = &quot;John Doe&quot;;     // String
 $age = 30;              // Integer
 $price = 19.99;         // Float (Double)
@@ -361,7 +361,7 @@ float(19.99)</pre>
                   <li>C) <code>$1stUser</code></li>
                   <li>D) <code>$userAge</code></li>
                 </ul>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-variables">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-variables">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-variables">
                   <p><strong>Correct Answer: C</strong></p>
                   <p>Explanation: PHP variables cannot start with numbers. Therefore, `$1stUser` is invalid, whereas letters and underscores are permitted starting symbols.</p>
@@ -416,7 +416,7 @@ float(19.99)</pre>
               <div class="php-code-block">
                 <div class="php-code-header">
                   <span class="php-code-lang">PHP</span>
-                  <button class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
+                  <button type="button" class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
 $greeting = &quot;Hello &quot;;
 $name = &quot;Alice&quot;;
 $fullMessage = $greeting . $name; // Concatenation
@@ -453,7 +453,7 @@ bool(false)</pre>
                   <i class="fas fa-dumbbell"></i> Practice: Operators
                 </div>
                 <p>If <code>$a = 10; $b = "10";</code>, what will be the outputs of <code>var_dump($a === $b);</code> and <code>var_dump($a !== $b);</code>?</p>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-operators">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-operators">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-operators">
                   <p><strong>Answer: false and true</strong></p>
                   <p>Explanation: Strict comparison `===` checks both data types, and since integer 10 doesn't match string "10", `===` evaluates to `false`. Strict inequality `!==` checks if they are not identical, which is `true`.</p>
@@ -483,7 +483,7 @@ bool(false)</pre>
               <div class="php-code-block">
                 <div class="php-code-header">
                   <span class="php-code-lang">PHP</span>
-                  <button class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
+                  <button type="button" class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
 echo &quot;Hello&quot;, &quot; &quot;, &quot;World!&quot;; // Multiple parameters
 
 $result = print(&quot;Welcome! &quot;);
@@ -526,7 +526,7 @@ array(3) {
                   <li>C) var_dump()</li>
                   <li>D) print_r() without types</li>
                 </ul>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-io">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-io">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-io">
                   <p><strong>Correct Answer: C</strong></p>
                   <p>Explanation: `var_dump()` output includes values along with their types (e.g. `int`, `string`, `bool`) and string sizes, which is vital for thorough debugging.</p>
@@ -547,7 +547,7 @@ array(3) {
               <div class="php-code-block">
                 <div class="php-code-header">
                   <span class="php-code-lang">PHP</span>
-                  <button class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
+                  <button type="button" class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
 $score = 82;
 
 if ($score >= 90) {
@@ -612,7 +612,7 @@ switch ($favColor) {
                   <i class="fas fa-dumbbell"></i> Practice: Conditionals
                 </div>
                 <p>What will happen in a <code>switch</code> statement block if a case matches, but there is no <code>break;</code> statement at the end of that case?</p>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-conditionals">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-conditionals">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-conditionals">
                   <p><strong>Answer: Fall-through behavior</strong></p>
                   <p>Explanation: If you omit a `break;` statement, execution will continue (fall through) into the next case statement, executing its code regardless of whether the case criteria matches, until it hits a `break;` or the end of the switch block.</p>
@@ -633,7 +633,7 @@ switch ($favColor) {
               <div class="php-code-block">
                 <div class="php-code-header">
                   <span class="php-code-lang">PHP</span>
-                  <button class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
+                  <button type="button" class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
 // For Loop
 for ($i = 1; $i &lt;= 3; $i++) {
     echo &quot;For count: $i &quot;;
@@ -690,7 +690,7 @@ foreach ($colors as $color) {
                   <li>C) do-while loop</li>
                   <li>D) foreach loop</li>
                 </ul>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-loops">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-loops">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-loops">
                   <p><strong>Correct Answer: D</strong></p>
                   <p>Explanation: The `foreach` loop is specifically designed to iterate over arrays and objects in PHP. It automatically moves the internal array pointer forwards with each iteration.</p>
@@ -711,7 +711,7 @@ foreach ($colors as $color) {
               <div class="php-code-block">
                 <div class="php-code-header">
                   <span class="php-code-lang">PHP</span>
-                  <button class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
+                  <button type="button" class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
 // Default value parameter
 function greet($name = &quot;Guest&quot;) {
     return &quot;Hello, $name!&quot;;
@@ -755,7 +755,7 @@ Hello, Guest!</pre>
                   <i class="fas fa-dumbbell"></i> Practice: Functions
                 </div>
                 <p>Given the function: <code>function calc($val = 5) { return $val * 2; }</code>, what is the output of <code>echo calc();</code>?</p>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-functions">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-functions">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-functions">
                   <p><strong>Answer: 10</strong></p>
                   <p>Explanation: Because no argument is passed during the function call `calc()`, PHP defaults `$val` to `5`. It then returns `5 * 2 = 10`.</p>
@@ -785,7 +785,7 @@ Hello, Guest!</pre>
               <div class="php-code-block">
                 <div class="php-code-header">
                   <span class="php-code-lang">PHP</span>
-                  <button class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
+                  <button type="button" class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
 // Associative Array
 $person = [
     &quot;name&quot; =&gt; &quot;Alice&quot;,
@@ -821,7 +821,7 @@ echo $person[&quot;skills&quot;][0]; // PHP
                   <li>C) <code>$palette->secondary</code></li>
                   <li>D) <code>$palette.secondary</code></li>
                 </ul>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-arrays">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-arrays">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-arrays">
                   <p><strong>Correct Answer: B</strong></p>
                   <p>Explanation: For associative arrays, you access elements using square brackets containing the string key, hence `$palette["secondary"]` is the correct notation.</p>
@@ -921,7 +921,7 @@ if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;POST&quot;) {
                   <li>C) <code>session_start()</code></li>
                   <li>D) <code>urlencode()</code></li>
                 </ul>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-forms">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-forms">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-forms">
                   <p><strong>Correct Answer: B</strong></p>
                   <p>Explanation: `htmlspecialchars()` converts special characters (like `<` and `>`) into HTML entities (like `&lt;` and `&gt;`), rendering them as static text instead of executable scripts in the browser.</p>
@@ -953,7 +953,7 @@ if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;POST&quot;) {
               <div class="php-code-block">
                 <div class="php-code-header">
                   <span class="php-code-lang">PHP</span>
-                  <button class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
+                  <button type="button" class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
 // Display server name and visitor User Agent headers
 echo $_SERVER['SERVER_NAME'];
 echo &quot;\n&quot;;
@@ -973,7 +973,7 @@ echo $_SERVER['HTTP_USER_AGENT'];
                   <i class="fas fa-dumbbell"></i> Practice: Superglobals
                 </div>
                 <p>Which superglobal would you read to verify the client browser's HTTP User Agent or request header methods (e.g. GET vs POST)?</p>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-superglobals">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-superglobals">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-superglobals">
                   <p><strong>Answer: $_SERVER</strong></p>
                   <p>Explanation: `$_SERVER` houses all headers, client connection parameters, script execution settings, and local hosting values (such as `$_SERVER['HTTP_USER_AGENT']` and `$_SERVER['REQUEST_METHOD']`).</p>
@@ -1003,7 +1003,7 @@ echo $_SERVER['HTTP_USER_AGENT'];
               <div class="php-code-block">
                 <div class="php-code-header">
                   <span class="php-code-lang">PHP - Sessions</span>
-                  <button class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
+                  <button type="button" class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
 // Must be called at the very top before any HTML output
 session_start();
 
@@ -1032,7 +1032,7 @@ echo &quot;User: &quot; . $_SESSION[&quot;userid&quot;];
               <div class="php-code-block">
                 <div class="php-code-header">
                   <span class="php-code-lang">PHP - Cookies</span>
-                  <button class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
+                  <button type="button" class="php-code-copy" aria-label="Copy code" data-code="&lt;?php
 // setcookie(name, value, expire_time, path)
 // Expire in 1 hour (3600 seconds)
 setcookie(&quot;user&quot;, &quot;Alex&quot;, time() + 3600, &quot;/&quot;);
@@ -1062,7 +1062,7 @@ echo $_COOKIE[&quot;user&quot;] ?? &quot;Not logged in&quot;;
                   <li>C) <code>setcookie()</code></li>
                   <li>D) <code>session_register()</code></li>
                 </ul>
-                <button class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-sessions-cookies">Show Solution</button>
+                <button type="button" class="php-exercise-toggle" aria-expanded="false" aria-controls="solution-sessions-cookies">Show Solution</button>
                 <div class="php-exercise-solution" id="solution-sessions-cookies">
                   <p><strong>Correct Answer: B</strong></p>
                   <p>Explanation: `session_start()` initiates/resumes a session. It sends header cookies behind the scenes, so it must be executed before printing any characters or tags, otherwise PHP throws a "Headers already sent" warning.</p>
@@ -1080,7 +1080,10 @@ echo $_COOKIE[&quot;user&quot;] ?? &quot;Not logged in&quot;;
 
     <!-- Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="php-learning.js"></script>
   

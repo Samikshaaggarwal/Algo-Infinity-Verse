@@ -726,23 +726,23 @@ function initializeSimulation() {
   
   // Basic validation
   if (!text) {
-    alert("Source text cannot be empty.");
+    console.warn("Alert:", "Source text cannot be empty.");
     return;
   }
   if (!pattern) {
-    alert("Pattern to match cannot be empty.");
+    console.warn("Alert:", "Pattern to match cannot be empty.");
     return;
   }
   if (text.length < pattern.length) {
-    alert("Source text length must be greater than or equal to pattern length.");
+    console.warn("Alert:", "Source text length must be greater than or equal to pattern length.");
     return;
   }
   if (d < 2) {
-    alert("Radix base must be at least 2.");
+    console.warn("Alert:", "Radix base must be at least 2.");
     return;
   }
   if (q < 2) {
-    alert("Modulo prime must be at least 2.");
+    console.warn("Alert:", "Modulo prime must be at least 2.");
     return;
   }
 

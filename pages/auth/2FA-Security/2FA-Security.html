@@ -53,8 +53,8 @@
                     </div>
                 </div>
                 <div class="status-action">
-                    <button class="btn btn-primary" id="btnEnable2FA">Enable 2FA</button>
-                    <button class="btn btn-danger hidden" id="btnDisable2FA">Disable 2FA</button>
+                    <button type="button" class="btn btn-primary" id="btnEnable2FA">Enable 2FA</button>
+                    <button type="button" class="btn btn-danger hidden" id="btnDisable2FA">Disable 2FA</button>
                 </div>
             </div>
 
@@ -76,8 +76,8 @@
                         <span>Or enter this secret key manually:</span>
                         <code>JBSWY3DPEHPK3PXP</code>
                     </div>
-                    <button class="btn btn-primary" id="btnNextStep1">Next Step <i class="fas fa-arrow-right"></i></button>
-                    <button class="btn btn-text" id="btnCancelSetup">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="btnNextStep1">Next Step <i class="fas fa-arrow-right"></i></button>
+                    <button type="button" class="btn btn-text" id="btnCancelSetup">Cancel</button>
                 </div>
 
                 <!-- Step 2: Verify OTP -->
@@ -96,7 +96,7 @@
                     </div>
                     <div class="error-msg hidden" id="setupErrorMsg">Invalid code. Please try again.</div>
                     
-                    <button class="btn btn-primary" id="btnVerifySetup">Verify & Enable</button>
+                    <button type="button" class="btn btn-primary" id="btnVerifySetup">Verify & Enable</button>
                 </div>
 
                 <!-- Step 3: Backup Codes -->
@@ -109,10 +109,10 @@
                     </div>
 
                     <div class="recovery-actions">
-                        <button class="btn btn-secondary" id="btnCopyCodes"><i class="fas fa-copy"></i> Copy Codes</button>
+                        <button type="button" class="btn btn-secondary" id="btnCopyCodes"><i class="fas fa-copy"></i> Copy Codes</button>
                     </div>
 
-                    <button class="btn btn-success" id="btnCompleteSetup">I have saved my codes safely</button>
+                    <button type="button" class="btn btn-success" id="btnCompleteSetup">I have saved my codes safely</button>
                 </div>
             </div>
         </main>
@@ -133,8 +133,8 @@
                         <label>Password</label>
                         <input type="password" value="********" disabled class="mock-input">
                     </div>
-                    <button class="btn btn-primary w-100" id="btnMockLogin">Sign In</button>
-                    <button class="btn btn-text w-100 mt-3" id="btnBackToSettings"><i class="fas fa-arrow-left"></i> Back to Settings</button>
+                    <button type="button" class="btn btn-primary w-100" id="btnMockLogin">Sign In</button>
+                    <button type="button" class="btn btn-text w-100 mt-3" id="btnBackToSettings"><i class="fas fa-arrow-left"></i> Back to Settings</button>
                 </div>
 
                 <div class="login-card hidden" id="loginStage2">
@@ -153,10 +153,10 @@
                     
                     <div class="error-msg hidden" id="loginErrorMsg">Invalid code. Please try again.</div>
                     
-                    <button class="btn btn-primary w-100" id="btnVerifyLogin">Authenticate</button>
+                    <button type="button" class="btn btn-primary w-100" id="btnVerifyLogin">Authenticate</button>
                     
                     <div class="login-footer">
-                        <a href="#" id="btnUseRecovery">Lost your phone? Use a recovery code.</a>
+                        <a href="javascript:void(0)" id="btnUseRecovery">Lost your phone? Use a recovery code.</a>
                     </div>
                 </div>
 
@@ -170,10 +170,10 @@
                     
                     <div class="error-msg hidden" id="recoveryErrorMsg">Invalid recovery code.</div>
                     
-                    <button class="btn btn-primary w-100" id="btnVerifyRecovery">Verify Recovery Code</button>
+                    <button type="button" class="btn btn-primary w-100" id="btnVerifyRecovery">Verify Recovery Code</button>
                     
                     <div class="login-footer">
-                        <a href="#" id="btnBackToOTP">Back to Authenticator App</a>
+                        <a href="javascript:void(0)" id="btnBackToOTP">Back to Authenticator App</a>
                     </div>
                 </div>
 
@@ -181,7 +181,7 @@
                     <div class="success-icon"><i class="fas fa-check-circle"></i></div>
                     <h2>Authentication Successful</h2>
                     <p>You have securely logged into your account.</p>
-                    <button class="btn btn-secondary w-100" id="btnReturnDashboard">Return to Dashboard</button>
+                    <button type="button" class="btn btn-secondary w-100" id="btnReturnDashboard">Return to Dashboard</button>
                 </div>
             </div>
         </main>
@@ -192,7 +192,11 @@
 
     <script src="2fa-security.js"></script>
 
+    <script src="/bootstrap-legacy.js"></script>
+
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="/auth-gate.js"></script>

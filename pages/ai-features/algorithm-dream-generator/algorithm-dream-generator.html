@@ -35,7 +35,7 @@
     </div>
   </div>
 
-  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+  <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
     <i class="fas fa-circle-chevron-up"></i>
   </button>
 
@@ -162,15 +162,15 @@
             <!-- Slide Navigation Controls -->
             <div class="narrative-controls mt-4 pt-3 border-top">
               <div class="control-row">
-                <button id="btn-prev" class="btn btn-secondary" disabled>
+                <button type="button" id="btn-prev" class="btn btn-secondary" disabled>
                   <i class="fas fa-chevron-left"></i> Back
                 </button>
                 
-                <button id="btn-play-pause" class="btn btn-primary">
+                <button type="button" id="btn-play-pause" class="btn btn-primary">
                   <i class="fas fa-play"></i> Auto Play
                 </button>
 
-                <button id="btn-next" class="btn btn-secondary">
+                <button type="button" id="btn-next" class="btn btn-secondary">
                   Next <i class="fas fa-chevron-right"></i>
                 </button>
               </div>
@@ -184,7 +184,7 @@
               </div>
 
               <div class="exit-row mt-4">
-                <button id="btn-wake-up" class="btn btn-danger btn-block">
+                <button type="button" id="btn-wake-up" class="btn btn-danger btn-block">
                   <i class="fas fa-power-off"></i> Wake Up (Return to Portal)
                 </button>
               </div>
@@ -214,10 +214,10 @@
             <div class="dream-card">
               <div class="card-header flex justify-between align-center p-3 border-bottom">
                 <div class="panel-tabs">
-                  <button id="tab-btn-state" class="panel-tab-btn active" data-tab="tab-state">
+                  <button type="button" id="tab-btn-state" class="panel-tab-btn active" data-tab="tab-state">
                     <i class="fas fa-list-check"></i> Algorithmic State
                   </button>
-                  <button id="tab-btn-code" class="panel-tab-btn" data-tab="tab-code">
+                  <button type="button" id="tab-btn-code" class="panel-tab-btn" data-tab="tab-code">
                     <i class="fas fa-code"></i> Live Code Inspector
                   </button>
                 </div>
@@ -235,7 +235,7 @@
                   <div class="code-wrapper">
                     <div class="code-header flex justify-between">
                       <span id="code-lang-label">JavaScript</span>
-                      <button class="btn btn-sm btn-outline-secondary" id="btn-copy-code">Copy</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary" id="btn-copy-code">Copy</button>
                     </div>
                     <pre class="code-editor-pre"><code id="code-lines-display">
                       <!-- Syntax-highlighted/line-numbered code -->
@@ -272,7 +272,7 @@
           <div class="quiz-feedback hidden mt-3" id="quiz-feedback-box"></div>
           
           <div class="text-right mt-4">
-            <button class="btn btn-primary hidden" id="btn-quiz-next">
+            <button type="button" class="btn btn-primary hidden" id="btn-quiz-next">
               Next Question <i class="fas fa-chevron-right"></i>
             </button>
           </div>
@@ -289,7 +289,10 @@
   <div id="footer-placeholder"></div>
 
   <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="./algorithm-dream-generator.js"></script>
 
   <script>

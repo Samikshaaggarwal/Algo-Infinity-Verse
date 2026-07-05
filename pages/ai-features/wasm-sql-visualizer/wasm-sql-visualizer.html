@@ -58,8 +58,8 @@
             <div class="panel-header">
                 <h3><i class="fas fa-database"></i> SQL Query Editor</h3>
                 <div class="header-actions">
-                    <button class="btn btn-outline btn-sm" id="btnSeedData"><i class="fas fa-seedling"></i> Seed 10k Rows</button>
-                    <button class="btn btn-outline btn-sm" id="btnCreateIndex" title="Fix the slow query!"><i class="fas fa-bolt"></i> Add Index on Age</button>
+                    <button type="button" class="btn btn-outline btn-sm" id="btnSeedData"><i class="fas fa-seedling"></i> Seed 10k Rows</button>
+                    <button type="button" class="btn btn-outline btn-sm" id="btnCreateIndex" title="Fix the slow query!"><i class="fas fa-bolt"></i> Add Index on Age</button>
                 </div>
             </div>
 
@@ -69,10 +69,10 @@
             <div class="action-bar">
                 <div class="preset-queries">
                     <span class="preset-label">Presets:</span>
-                    <button class="badge-btn" id="btnPresetSlow">Slow Scan</button>
-                    <button class="badge-btn" id="btnPresetJoin">Complex Join</button>
+                    <button type="button" class="badge-btn" id="btnPresetSlow">Slow Scan</button>
+                    <button type="button" class="badge-btn" id="btnPresetJoin">Complex Join</button>
                 </div>
-                <button class="btn btn-primary" id="btnRunQuery" disabled>
+                <button type="button" class="btn btn-primary" id="btnRunQuery" disabled>
                     <i class="fas fa-play"></i> Execute Query
                 </button>
             </div>

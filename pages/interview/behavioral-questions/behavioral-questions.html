@@ -53,7 +53,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -131,28 +131,28 @@
           </div>
 
           <div class="filter-buttons">
-            <button class="filter-btn active">All</button>
+            <button type="button" class="filter-btn active">All</button>
 
-            <button class="filter-btn">Leadership</button>
+            <button type="button" class="filter-btn">Leadership</button>
 
-            <button class="filter-btn">Teamwork</button>
+            <button type="button" class="filter-btn">Teamwork</button>
 
-            <button class="filter-btn">Conflict</button>
+            <button type="button" class="filter-btn">Conflict</button>
 
-            <button class="filter-btn">Communication</button>
+            <button type="button" class="filter-btn">Communication</button>
 
-            <button class="filter-btn">Failure</button>
+            <button type="button" class="filter-btn">Failure</button>
 
-            <button class="filter-btn">Success</button>
+            <button type="button" class="filter-btn">Success</button>
 
-            <button class="filter-btn">Problem Solving</button>
+            <button type="button" class="filter-btn">Problem Solving</button>
 
-            <button class="filter-btn">Time Management</button>
+            <button type="button" class="filter-btn">Time Management</button>
 
-            <button class="filter-btn">Adaptability</button>
-            <button class="filter-btn">Career Goals</button>
-            <button class="filter-btn">Motivation</button>
-            <button class="filter-btn">Self Awareness</button>
+            <button type="button" class="filter-btn">Adaptability</button>
+            <button type="button" class="filter-btn">Career Goals</button>
+            <button type="button" class="filter-btn">Motivation</button>
+            <button type="button" class="filter-btn">Self Awareness</button>
           </div>
         </div>
       </div>
@@ -284,7 +284,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h3 id="notesModalTitle">Problem Notes</h3>
-          <button class="modal-close" id="notesModalClose">&times;</button>
+          <button type="button" class="modal-close" id="notesModalClose">&times;</button>
         </div>
         <div class="modal-body">
           <textarea
@@ -293,8 +293,8 @@
           ></textarea>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" id="notesCancelBtn">Cancel</button>
-          <button class="btn btn-primary" id="notesSaveBtn">
+          <button type="button" class="btn btn-secondary" id="notesCancelBtn">Cancel</button>
+          <button type="button" class="btn btn-primary" id="notesSaveBtn">
             <i class="fas fa-save"></i> Save Notes
           </button>
         </div>
@@ -305,7 +305,7 @@
         <div class="modal-header">
           <h3 id="modalQuestion"></h3>
 
-          <button class="modal-close" id="closeAnswer">&times;</button>
+          <button type="button" class="modal-close" id="closeAnswer">&times;</button>
         </div>
 
         <div class="modal-body">
@@ -319,13 +319,16 @@
       </div>
     </div>
     <!-- Back To Top Button -->
-    <button id="backToTopBtn" class="back-to-top" aria-label="Back to Top">
+    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to Top">
       <i class="fas fa-arrow-up"></i>
     </button>
     <script src="behavioral-questions.js"></script>
   
   <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   <script>
     loadPartial('navbar-placeholder', '/partials/navbar.html');

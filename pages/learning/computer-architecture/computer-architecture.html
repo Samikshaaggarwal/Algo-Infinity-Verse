@@ -45,7 +45,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -236,7 +236,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Bottlenecks
                 </div>
                 <p>What defines the main drawback of the standard Von Neumann architecture?</p>
-                <button class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Solution</button>
+                <button type="button" class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Solution</button>
                 <div class="ca-exercise-solution" id="solution-intro">
                   <p><strong>Answer: Shared bus bottleneck</strong></p>
                   <p>Explanation: Because a shared bus is used for fetching both instructions and data, data transfers block instruction fetches, causing CPU idle states.</p>
@@ -262,7 +262,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Arch vs. Org
                 </div>
                 <p>Is defining the size of a register block an architectural or organizational decision?</p>
-                <button class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-org">Show Solution</button>
+                <button type="button" class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-org">Show Solution</button>
                 <div class="ca-exercise-solution" id="solution-org">
                   <p><strong>Answer: Architectural</strong></p>
                   <p>Explanation: Register quantities and sizes directly affect the programmer's visibility (ISA instructions reference these registers), meaning it is an architectural decision.</p>
@@ -300,7 +300,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Registers
                 </div>
                 <p>Which register holds the address of the next instruction to fetch?</p>
-                <button class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-cpu">Show Solution</button>
+                <button type="button" class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-cpu">Show Solution</button>
                 <div class="ca-exercise-solution" id="solution-cpu">
                   <p><strong>Answer: Program Counter (PC)</strong></p>
                   <p>Explanation: The Program Counter (PC) increments after every fetch cycle, tracking the sequence of execution instructions in memory.</p>
@@ -351,7 +351,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Cache speed
                 </div>
                 <p>Which level of cache memory is typically the fastest?</p>
-                <button class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-memory">Show Solution</button>
+                <button type="button" class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-memory">Show Solution</button>
                 <div class="ca-exercise-solution" id="solution-memory">
                   <p><strong>Answer: L1 Cache</strong></p>
                   <p>Explanation: L1 Cache is located closest to the CPU core registers and operates at the internal clock frequency of the processor core, making it the fastest cache tier.</p>
@@ -378,7 +378,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: DMA
                 </div>
                 <p>Why is Direct Memory Access (DMA) used instead of Programmed I/O for SSD transfers?</p>
-                <button class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-io">Show Solution</button>
+                <button type="button" class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-io">Show Solution</button>
                 <div class="ca-exercise-solution" id="solution-io">
                   <p><strong>Answer: It avoids CPU execution overhead.</strong></p>
                   <p>Explanation: For high-speed devices, having the CPU copy byte-by-byte would saturate the CPU. DMA handles the transfer autonomously, freeing the CPU to execute other tasks.</p>
@@ -408,7 +408,7 @@
               <div class="ca-code-block">
                 <div class="oop-code-header">
                   <span class="ca-code-lang">Binary Conversion Example</span>
-                  <button class="ca-code-copy" data-code="Decimal: 5
+                  <button type="button" class="ca-code-copy" data-code="Decimal: 5
 Binary (8-bit): 00000101
 
 Invert Bits: 11111010
@@ -427,7 +427,7 @@ Result (-5): 11111011</code></pre>
                   <i class="fas fa-dumbbell"></i> Practice: Hex translation
                 </div>
                 <p>Convert the binary byte <code>1010 1100</code> to Hexadecimal.</p>
-                <button class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-datarep">Show Solution</button>
+                <button type="button" class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-datarep">Show Solution</button>
                 <div class="ca-exercise-solution" id="solution-datarep">
                   <p><strong>Answer: AC</strong></p>
                   <p>Explanation: Splitting into nibbles: `1010` is 10 (which is hex `A`), and `1100` is 12 (which is hex `C`). Thus, it is represented as hex `AC` or `0xAC`.</p>
@@ -454,7 +454,7 @@ Result (-5): 11111011</code></pre>
                   <i class="fas fa-dumbbell"></i> Practice: Fetch Phase
                 </div>
                 <p>During the Fetch phase, which register transfers the memory address to the MAR?</p>
-                <button class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-cycle">Show Solution</button>
+                <button type="button" class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-cycle">Show Solution</button>
                 <div class="ca-exercise-solution" id="solution-cycle">
                   <p><strong>Answer: Program Counter (PC)</strong></p>
                   <p>Explanation: The Program Counter (PC) stores the location of the next instruction. The CPU copies this address to the Memory Address Register (MAR) to request it from RAM.</p>
@@ -481,7 +481,7 @@ Result (-5): 11111011</code></pre>
                   <i class="fas fa-dumbbell"></i> Practice: Bus Directions
                 </div>
                 <p>True or False: The Address Bus is bi-directional.</p>
-                <button class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-buses">Show Solution</button>
+                <button type="button" class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-buses">Show Solution</button>
                 <div class="ca-exercise-solution" id="solution-buses">
                   <p><strong>Answer: False</strong></p>
                   <p>Explanation: The Address Bus is uni-directional. Only the CPU (or DMA controller) generates memory addresses to select locations; memory chips do not generate address coordinates.</p>
@@ -513,7 +513,7 @@ Result (-5): 11111011</code></pre>
                   <i class="fas fa-dumbbell"></i> Practice: CPU speed
                 </div>
                 <p>If a processor executes a program with 1,000 instructions, taking an average CPI of 2 cycles, on a clock speed of 1 GHz (1,000,000,000 Hz), what is the total execution time in microseconds?</p>
-                <button class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-performance">Show Solution</button>
+                <button type="button" class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-performance">Show Solution</button>
                 <div class="ca-exercise-solution" id="solution-performance">
                   <p><strong>Answer: 2 microseconds</strong></p>
                   <p>Explanation: Cycles = 1,000 * 2 = 2,000 cycles. Time = 2,000 / 1,000,000,000 seconds = 0.000002 seconds = 2 microseconds.</p>
@@ -540,7 +540,7 @@ Result (-5): 11111011</code></pre>
                   <i class="fas fa-dumbbell"></i> Practice: RISC vs CISC
                 </div>
                 <p>Which design strategy focuses on simple instructions executing in a single clock cycle?</p>
-                <button class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-modern">Show Solution</button>
+                <button type="button" class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-modern">Show Solution</button>
                 <div class="ca-exercise-solution" id="solution-modern">
                   <p><strong>Answer: RISC (Reduced Instruction Set Computer)</strong></p>
                   <p>Explanation: RISC architectures prioritize hardware simplicity and single-cycle instruction execution, delegating complexity to compiler software optimization.</p>
@@ -563,7 +563,7 @@ Result (-5): 11111011</code></pre>
                   <i class="fas fa-dumbbell"></i> Exercise 1: Pipeline Hazards
                 </div>
                 <p>What is a <strong>Data Hazard</strong> in a CPU execution pipeline, and how does it occur?</p>
-                <button class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-comp-1">Show Solution</button>
+                <button type="button" class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-comp-1">Show Solution</button>
                 <div class="ca-exercise-solution" id="solution-comp-1">
                   <p><strong>Solution: Dependency delay</strong></p>
                   <p>Explanation: A data hazard occurs when an instruction in the pipeline depends on the result of a previous instruction that has not yet completed execution. This causes pipeline stalls (bubbles) until the data becomes available.</p>
@@ -575,7 +575,7 @@ Result (-5): 11111011</code></pre>
                   <i class="fas fa-dumbbell"></i> Exercise 2: Cache Misses
                 </div>
                 <p>Explain the difference between a **Spatial Locality** and a **Temporal Locality** cache hit.</p>
-                <button class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-comp-2">Show Solution</button>
+                <button type="button" class="ca-exercise-toggle" aria-expanded="false" aria-controls="solution-comp-2">Show Solution</button>
                 <div class="ca-exercise-solution" id="solution-comp-2">
                   <p><strong>Solution: Locality differences</strong></p>
                   <p>Explanation: **Temporal Locality** assumes that memory accessed once is likely to be accessed again soon (like a loop variable). **Spatial Locality** assumes that memory locations close to the recently accessed location are likely to be accessed soon (like array elements stored sequentially). Cache controllers preload neighboring lines to exploit spatial locality.</p>
@@ -746,8 +746,8 @@ Result (-5): 11111011</code></pre>
               </div>
 
               <div class="ca-quiz-actions">
-                <button class="ca-quiz-btn" id="submitQuizBtn">Submit Quiz</button>
-                <button class="ca-quiz-btn-secondary" id="resetQuizBtn" style="display: none;">Reset Quiz</button>
+                <button type="button" class="ca-quiz-btn" id="submitQuizBtn">Submit Quiz</button>
+                <button type="button" class="ca-quiz-btn-secondary" id="resetQuizBtn" style="display: none;">Reset Quiz</button>
               </div>
 
               <!-- Score Banner -->
@@ -768,7 +768,10 @@ Result (-5): 11111011</code></pre>
 
     <!-- Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="computer-architecture.js"></script>
   

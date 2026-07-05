@@ -45,7 +45,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -207,8 +207,8 @@
                         <h4 style="color:var(--text-primary); margin: 1.25rem 0 0.5rem;">Tabulation (Bottom-Up)</h4>
                         <div class="dp-code-block dp-lang-container">
                             <div class="dp-lang-switcher-tabs">
-                                <button class="dp-lang-tab-btn active" onclick="switchDPLang(this, 'py')">Python</button>
-                                <button class="dp-lang-tab-btn" onclick="switchDPLang(this, 'cpp')">C++</button>
+                                <button type="button" class="dp-lang-tab-btn active" onclick="switchDPLang(this, 'py')">Python</button>
+                                <button type="button" class="dp-lang-tab-btn" onclick="switchDPLang(this, 'cpp')">C++</button>
                             </div>
                             <div class="dp-lang-pane active" data-lang="py">
                                 <div class="dp-code-header">
@@ -270,8 +270,8 @@
                         </div>
                         <div class="dp-code-block dp-lang-container">
                             <div class="dp-lang-switcher-tabs">
-                                <button class="dp-lang-tab-btn active" onclick="switchDPLang(this, 'py')">Python</button>
-                                <button class="dp-lang-tab-btn" onclick="switchDPLang(this, 'cpp')">C++</button>
+                                <button type="button" class="dp-lang-tab-btn active" onclick="switchDPLang(this, 'py')">Python</button>
+                                <button type="button" class="dp-lang-tab-btn" onclick="switchDPLang(this, 'cpp')">C++</button>
                             </div>
                             <div class="dp-lang-pane active" data-lang="py">
                                 <div class="dp-code-header">
@@ -322,8 +322,8 @@
                         </div>
                         <div class="dp-code-block dp-lang-container">
                             <div class="dp-lang-switcher-tabs">
-                                <button class="dp-lang-tab-btn active" onclick="switchDPLang(this, 'py')">Python</button>
-                                <button class="dp-lang-tab-btn" onclick="switchDPLang(this, 'cpp')">C++</button>
+                                <button type="button" class="dp-lang-tab-btn active" onclick="switchDPLang(this, 'py')">Python</button>
+                                <button type="button" class="dp-lang-tab-btn" onclick="switchDPLang(this, 'cpp')">C++</button>
                             </div>
                             <div class="dp-lang-pane active" data-lang="py">
                                 <div class="dp-code-header">
@@ -388,8 +388,8 @@
                         </div>
                         <div class="dp-code-block dp-lang-container">
                             <div class="dp-lang-switcher-tabs">
-                                <button class="dp-lang-tab-btn active" onclick="switchDPLang(this, 'py')">Python</button>
-                                <button class="dp-lang-tab-btn" onclick="switchDPLang(this, 'cpp')">C++</button>
+                                <button type="button" class="dp-lang-tab-btn active" onclick="switchDPLang(this, 'py')">Python</button>
+                                <button type="button" class="dp-lang-tab-btn" onclick="switchDPLang(this, 'cpp')">C++</button>
                             </div>
                             <div class="dp-lang-pane active" data-lang="py">
                                 <div class="dp-code-header">
@@ -484,7 +484,7 @@
                         <div class="dp-exercise">
                             <div class="dp-exercise-title"><i class="fas fa-dumbbell"></i> 1. Climbing Stairs</div>
                             <p>You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?</p>
-                            <button class="dp-exercise-toggle" aria-controls="sol-1" aria-expanded="false">Show Solution</button>
+                            <button type="button" class="dp-exercise-toggle" aria-controls="sol-1" aria-expanded="false">Show Solution</button>
                             <div class="dp-exercise-solution" id="sol-1">
                                 <p><strong>Hint:</strong> This is perfectly equivalent to the Fibonacci sequence. The number of ways to reach step <code>i</code> is the sum of ways to reach step <code>i-1</code> and step <code>i-2</code>.</p>
                                 <div class="dp-code-block">
@@ -505,7 +505,7 @@
                         <div class="dp-exercise">
                             <div class="dp-exercise-title"><i class="fas fa-dumbbell"></i> 2. House Robber</div>
                             <p>You are a professional robber planning to rob houses along a street. You cannot rob adjacent houses. Given an integer array <code>nums</code> representing the money in each house, return the maximum amount of money you can rob.</p>
-                            <button class="dp-exercise-toggle" aria-controls="sol-2" aria-expanded="false">Show Solution</button>
+                            <button type="button" class="dp-exercise-toggle" aria-controls="sol-2" aria-expanded="false">Show Solution</button>
                             <div class="dp-exercise-solution" id="sol-2">
                                 <p><strong>Hint:</strong> For each house <code>i</code>, you either rob it (money[i] + max from <code>i-2</code>) or skip it (max from <code>i-1</code>).</p>
                                 <div class="dp-code-block">
@@ -536,7 +536,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./dp-learning.js"></script>
 

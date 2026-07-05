@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -61,10 +61,10 @@
               <div class="ca-editor-header">
                 <span class="ca-editor-title"><i class="fas fa-file-code"></i> Your Code</span>
                 <div class="ca-editor-actions">
-                  <button class="ca-action-btn" id="caClearBtn" aria-label="Clear code">
+                  <button type="button" class="ca-action-btn" id="caClearBtn" aria-label="Clear code">
                     <i class="fas fa-trash"></i> Clear
                   </button>
-                  <button class="ca-action-btn ca-action-copy" id="caCopyBtn" aria-label="Copy code">
+                  <button type="button" class="ca-action-btn ca-action-copy" id="caCopyBtn" aria-label="Copy code">
                     <i class="fas fa-copy"></i> Copy
                   </button>
                 </div>
@@ -84,7 +84,7 @@
             </div>
 
             <!-- Analyze button -->
-            <button class="btn ca-btn-primary ca-analyze-btn" id="caAnalyzeBtn">
+            <button type="button" class="btn ca-btn-primary ca-analyze-btn" id="caAnalyzeBtn">
               <i class="fas fa-magnifying-glass-chart"></i> Analyze Complexity
             </button>
 
@@ -186,7 +186,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="complexity-analyzer.js"></script>

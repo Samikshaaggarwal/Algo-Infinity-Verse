@@ -4,6 +4,7 @@
 *.swp
 *.swo
 *~
+
 # Dependencies
 node_modules/
 backend/node_modules/
@@ -34,7 +35,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Local auth data
-data/
+data/*
 
 # Testing
 playwright-report/
@@ -45,3 +46,5 @@ dist/
 
 # Local developer scratch / one-off scripts
 scratch/
+screenshots/
+*.cjs

@@ -823,7 +823,7 @@ function renderCertificatesDashboard(tracks) {
         // Automatically uses structural records cleanly 
         downloadCertificatePDF("Prasiddhi Mishra", track.topicName, track.completionDate, track.certificateId);
       } else {
-        alert("This roadmap track is not fully completed yet.");
+        console.warn("Alert:", "This roadmap track is not fully completed yet.");
       }
     });
 

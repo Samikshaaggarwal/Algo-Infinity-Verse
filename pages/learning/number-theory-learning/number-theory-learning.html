@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -118,7 +118,7 @@ lcm(a, b) = (a * b) / gcd(a, b)   // avoid overflow: a / gcd(a,b) * b</pre>
                   <label class="nt-label" for="ntGcdB">b</label>
                   <input type="number" id="ntGcdB" class="nt-input" value="18" aria-label="GCD input b" />
                 </div>
-                <button class="btn nt-run-btn" id="ntGcdBtn">Trace GCD</button>
+                <button type="button" class="btn nt-run-btn" id="ntGcdBtn">Trace GCD</button>
               </div>
               <div class="nt-trace-wrap" id="ntGcdTrace"></div>
             </div>
@@ -176,9 +176,9 @@ lcm(a, b) = (a * b) / gcd(a, b)   // avoid overflow: a / gcd(a,b) * b</pre>
                   <label class="nt-label" for="ntSieveN">N (max 100)</label>
                   <input type="number" id="ntSieveN" class="nt-input" value="50" min="10" max="100" aria-label="Sieve N" />
                 </div>
-                <button class="btn nt-run-btn" id="ntSieveRunBtn">Run Sieve</button>
-                <button class="btn nt-secondary-btn" id="ntSieveStepBtn">Step</button>
-                <button class="btn nt-secondary-btn" id="ntSieveResetBtn">Reset</button>
+                <button type="button" class="btn nt-run-btn" id="ntSieveRunBtn">Run Sieve</button>
+                <button type="button" class="btn nt-secondary-btn" id="ntSieveStepBtn">Step</button>
+                <button type="button" class="btn nt-secondary-btn" id="ntSieveResetBtn">Reset</button>
               </div>
               <div class="nt-sieve-status" id="ntSieveStatus">Press Run or Step to animate.</div>
               <div class="nt-sieve-grid" id="ntSieveGrid"></div>
@@ -230,7 +230,7 @@ lcm(a, b) = (a * b) / gcd(a, b)   // avoid overflow: a / gcd(a,b) * b</pre>
                   <label class="nt-label" for="ntFactN">Number</label>
                   <input type="number" id="ntFactN" class="nt-input" value="360" min="2" max="999999" aria-label="Number to factorize" />
                 </div>
-                <button class="btn nt-run-btn" id="ntFactBtn">Factorize</button>
+                <button type="button" class="btn nt-run-btn" id="ntFactBtn">Factorize</button>
               </div>
               <div class="nt-trace-wrap" id="ntFactTrace"></div>
             </div>
@@ -292,7 +292,7 @@ modInverse(a, m) = pow(a, m-2, m)
                   <label class="nt-label" for="ntModM">mod</label>
                   <input type="number" id="ntModM" class="nt-input" value="1000000007" aria-label="Modulus" />
                 </div>
-                <button class="btn nt-run-btn" id="ntModBtn">Calculate</button>
+                <button type="button" class="btn nt-run-btn" id="ntModBtn">Calculate</button>
               </div>
               <div class="nt-trace-wrap" id="ntModTrace"></div>
             </div>
@@ -351,7 +351,7 @@ modInverse(a, m) = pow(a, m-2, m)
                   <label class="nt-label" for="ntExpMod">mod</label>
                   <input type="number" id="ntExpMod" class="nt-input" value="1000000007" aria-label="Mod" />
                 </div>
-                <button class="btn nt-run-btn" id="ntExpBtn">Trace</button>
+                <button type="button" class="btn nt-run-btn" id="ntExpBtn">Trace</button>
               </div>
               <div class="nt-trace-wrap" id="ntExpTrace"></div>
             </div>
@@ -408,7 +408,7 @@ function totient(n):
                   <label class="nt-label" for="ntEulerN">n</label>
                   <input type="number" id="ntEulerN" class="nt-input" value="36" min="1" max="999999" aria-label="Euler input n" />
                 </div>
-                <button class="btn nt-run-btn" id="ntEulerBtn">Compute φ(n)</button>
+                <button type="button" class="btn nt-run-btn" id="ntEulerBtn">Compute φ(n)</button>
               </div>
               <div class="nt-trace-wrap" id="ntEulerTrace"></div>
             </div>
@@ -485,7 +485,7 @@ function crt2(a, m, b, n):
                   <label class="nt-label" for="ntCrtN">n</label>
                   <input type="number" id="ntCrtN" class="nt-input" value="5" aria-label="CRT n" />
                 </div>
-                <button class="btn nt-run-btn" id="ntCrtBtn">Solve</button>
+                <button type="button" class="btn nt-run-btn" id="ntCrtBtn">Solve</button>
               </div>
               <div class="nt-trace-wrap" id="ntCrtTrace"></div>
             </div>
@@ -525,7 +525,10 @@ function crt2(a, m, b, n):
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="number-theory-learning.js"></script>

@@ -58,10 +58,10 @@
                 </div>
 
                 <div class="action-row">
-                    <button class="btn btn-primary w-100" id="btnStart">
+                    <button type="button" class="btn btn-primary w-100" id="btnStart">
                         <i class="fas fa-play"></i> Run Algorithm
                     </button>
-                    <button class="btn btn-outline w-100" id="btnReset">
+                    <button type="button" class="btn btn-outline w-100" id="btnReset">
                         <i class="fas fa-redo"></i> Reset State
                     </button>
                 </div>
@@ -71,11 +71,11 @@
             <div class="editor-tools">
                 <h4><i class="fas fa-edit"></i> Graph Editor</h4>
                 <div class="tool-grid">
-                    <button class="tool-btn active" data-mode="move"><i class="fas fa-hand-pointer"></i> Move</button>
-                    <button class="tool-btn" data-mode="node"><i class="fas fa-circle"></i> Add Node</button>
-                    <button class="tool-btn" data-mode="edge"><i class="fas fa-external-link-alt"></i> Add Edge</button>
+                    <button type="button" class="tool-btn active" data-mode="move"><i class="fas fa-hand-pointer"></i> Move</button>
+                    <button type="button" class="tool-btn" data-mode="node"><i class="fas fa-circle"></i> Add Node</button>
+                    <button type="button" class="tool-btn" data-mode="edge"><i class="fas fa-external-link-alt"></i> Add Edge</button>
                 </div>
-                <button class="btn btn-danger w-100" id="btnClearGraph" style="margin-top: 0.5rem; padding: 0.4rem;">Clear Graph</button>
+                <button type="button" class="btn btn-danger w-100" id="btnClearGraph" style="margin-top: 0.5rem; padding: 0.4rem;">Clear Graph</button>
             </div>
 
             <!-- Distances / Telemetry Table -->
@@ -151,8 +151,8 @@
             <p>Enter the distance/cost for this edge. (Use negative numbers to test Bellman-Ford).</p>
             <input type="number" id="edgeWeightInput" value="1" />
             <div class="modal-actions">
-                <button class="btn btn-outline" id="btnCancelEdge">Cancel</button>
-                <button class="btn btn-primary" id="btnSaveEdge">Save Edge</button>
+                <button type="button" class="btn btn-outline" id="btnCancelEdge">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnSaveEdge">Save Edge</button>
             </div>
         </div>
     </div>

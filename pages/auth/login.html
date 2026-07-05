@@ -93,6 +93,10 @@
         </form>
 
         <div class="auth-divider"><span>or</span></div>
+        <button class="guest-btn" data-auth-guest type="button" aria-label="Continue as guest">
+          <i class="fas fa-user-astronaut"></i>
+          <span>Continue as Guest</span>
+        </button>
         <button class="google-btn" data-auth-google type="button" aria-label="Sign in with Google">
           <svg class="google-btn-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
@@ -113,6 +117,7 @@
     <script type="module" src="/modules/firebase-client.js"></script>
     <script src="/interceptors.js"></script><script src="/auth.js"></script>
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
   </body>
 </html>

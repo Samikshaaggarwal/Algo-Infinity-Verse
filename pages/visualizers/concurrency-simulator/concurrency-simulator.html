@@ -32,7 +32,7 @@
 <body class="conc-body">
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -58,13 +58,13 @@
                 </div>
 
                 <div class="action-buttons-row">
-                    <button class="btn btn-primary" id="btnPlayPause" title="Play or Pause the simulation">
+                    <button type="button" class="btn btn-primary" id="btnPlayPause" title="Play or Pause the simulation">
                         <i class="fas fa-play" id="playIcon"></i> <span id="playText">Play</span>
                     </button>
-                    <button class="btn btn-outline" id="btnStep" title="Step simulation forward one tick">
+                    <button type="button" class="btn btn-outline" id="btnStep" title="Step simulation forward one tick">
                         <i class="fas fa-step-forward"></i> Step
                     </button>
-                    <button class="btn btn-outline" id="btnResetAll" title="Reset all thread and memory states">
+                    <button type="button" class="btn btn-outline" id="btnResetAll" title="Reset all thread and memory states">
                         <i class="fas fa-redo"></i> Reset
                     </button>
                 </div>
@@ -76,7 +76,7 @@
                     <div class="scenario-card">
                         <h5>1. Load Balancing (Thread Pool)</h5>
                         <p>Enqueue 8 computational tasks. Watch the 4 active threads pull tasks from the queue dynamically.</p>
-                        <button class="btn btn-success w-100" id="btnScenarioPool">
+                        <button type="button" class="btn btn-success w-100" id="btnScenarioPool">
                             <i class="fas fa-cubes"></i> Run Thread Pool Demo
                         </button>
                     </div>
@@ -84,7 +84,7 @@
                     <div class="scenario-card">
                         <h5>2. Race Condition (No Locks)</h5>
                         <p>Two threads read, modify, and write Resource A (Balance) concurrently. Context switching causes data corruption.</p>
-                        <button class="btn btn-warning w-100" id="btnScenarioRace">
+                        <button type="button" class="btn btn-warning w-100" id="btnScenarioRace">
                             <i class="fas fa-running"></i> Run Race Condition
                         </button>
                     </div>
@@ -92,7 +92,7 @@
                     <div class="scenario-card">
                         <h5>3. Thread-Safe (Mutex Locks)</h5>
                         <p>Same operations but protected by Mutex A. Threads wait for locks, ensuring sequential and safe execution.</p>
-                        <button class="btn btn-success w-100" id="btnScenarioSafe">
+                        <button type="button" class="btn btn-success w-100" id="btnScenarioSafe">
                             <i class="fas fa-lock"></i> Run Safe Execution
                         </button>
                     </div>
@@ -100,7 +100,7 @@
                     <div class="scenario-card">
                         <h5>4. Mutual Deadlock</h5>
                         <p>Thread 1 locks A, waits for B. Thread 2 locks B, waits for A. Visualizes circular dependency and locks up the threads.</p>
-                        <button class="btn btn-danger w-100" id="btnScenarioDeadlock">
+                        <button type="button" class="btn btn-danger w-100" id="btnScenarioDeadlock">
                             <i class="fas fa-skull-crossbones"></i> Induce Deadlock
                         </button>
                     </div>
@@ -129,7 +129,7 @@
                                 <option value="write_A">Modify & Write Resource A</option>
                                 <option value="yield">Context Switch (Yield)</option>
                             </select>
-                            <button class="btn btn-outline" id="btnAddStep" title="Add step to list">
+                            <button type="button" class="btn btn-outline" id="btnAddStep" title="Add step to list">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -143,7 +143,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary w-100" id="btnEnqueueCustom" style="margin-top: 1rem;">
+                    <button type="button" class="btn btn-primary w-100" id="btnEnqueueCustom" style="margin-top: 1rem;">
                         <i class="fas fa-plus"></i> Enqueue Task
                     </button>
                 </div>
@@ -202,7 +202,7 @@
         <div class="panel-right">
             <div class="panel-header">
                 <h3><i class="fas fa-terminal"></i> Thread Output Logs</h3>
-                <button class="btn-clear" id="btnClearLogs" title="Clear Logs"><i class="fas fa-trash-alt"></i></button>
+                <button type="button" class="btn-clear" id="btnClearLogs" title="Clear Logs"><i class="fas fa-trash-alt"></i></button>
             </div>
             <div class="logs-container" id="logContainer">
                 <div class="log-entry sys">> System booted. Simulated multi-threading ready.</div>
@@ -218,7 +218,10 @@
 
     <!-- Core Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="concurrency-simulator.js"></script>
 

@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── Prompts ─── */
-var SDS_PROMPTS = {
+let SDS_PROMPTS = {
   urlshortener: {
     title: 'Design a URL Shortener (like bit.ly)',
     context: 'A URL shortening service that converts long URLs into short aliases and redirects users when they visit the short URL.',
@@ -62,7 +62,7 @@ var SDS_PROMPTS = {
 };
 
 /* ─── Phases ─── */
-var SDS_PHASES = [
+let SDS_PHASES = [
   {
     name: 'Phase 1: Clarify Requirements',
     short: 'Clarify',
@@ -146,7 +146,7 @@ var SDS_PHASES = [
 ];
 
 /* ─── Rubric ─── */
-var SDS_RUBRIC = [
+let SDS_RUBRIC = [
   {
     key: 'scalability',
     icon: '📈',
@@ -185,7 +185,7 @@ var SDS_RUBRIC = [
 ];
 
 /* ─── State ─── */
-var sdsState = {
+let sdsState = {
   phase         : 0,
   totalSeconds  : 45 * 60,
   secondsLeft   : 45 * 60,
@@ -199,18 +199,18 @@ var sdsState = {
   ended         : false,
 };
 
-var SDS_PHASE_RATIOS = [5/45, 5/45, 20/45, 10/45, 5/45]; // proportion of total
+let SDS_PHASE_RATIOS = [5/45, 5/45, 20/45, 10/45, 5/45]; // proportion of total
 
 /* ─── Helpers ─── */
 function sdsFmt(s) {
-  var m = Math.floor(s / 60);
-  var sec = s % 60;
+  let m = Math.floor(s / 60);
+  let sec = s % 60;
   return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
 }
 
 function sdsPickPrompt(key) {
   if (key === 'random') {
-    var keys = Object.keys(SDS_PROMPTS);
+    let keys = Object.keys(SDS_PROMPTS);
     key = keys[Math.floor(Math.random() * keys.length)];
   }
   return SDS_PROMPTS[key];
@@ -218,10 +218,10 @@ function sdsPickPrompt(key) {
 
 /* ─── Render Rubric Reference ─── */
 function sdsRenderRubricRef() {
-  var grid = document.getElementById('sdsRubricGrid');
+  let grid = document.getElementById('sdsRubricGrid');
   if (!grid) return;
   grid.innerHTML = SDS_RUBRIC.map(function(r) {
-    var pts = r.points.map(function(p) {
+    let pts = r.points.map(function(p) {
       return '<span class="sds-rubric-ref-point">' + p + '</span>';
     }).join('');
     return '<div class="sds-rubric-ref-card">' +
@@ -265,7 +265,7 @@ function sdsStart(topicKey, durationMin) {
 
 /* ─── Phase Bar & Dots ─── */
 function sdsRenderPhasesBar() {
-  var bar = document.getElementById('sdsPhasesBar');
+  let bar = document.getElementById('sdsPhasesBar');
   if (!bar) return;
   bar.innerHTML = SDS_PHASES.map(function(p, i) {
     return '<div class="sds-phase-tab" data-phase="' + i + '">' + p.icon + ' ' + p.short + '</div>';
@@ -273,7 +273,7 @@ function sdsRenderPhasesBar() {
 }
 
 function sdsRenderPhaseDots() {
-  var dots = document.getElementById('sdsPhaseDots');
+  let dots = document.getElementById('sdsPhaseDots');
   if (!dots) return;
   dots.innerHTML = SDS_PHASES.map(function(p, i) {
     return '<div class="sds-phase-dot" data-dot="' + i + '"></div>';
@@ -282,26 +282,26 @@ function sdsRenderPhaseDots() {
 
 function sdsUpdatePhaseUI() {
   // Phase tabs
-  var tabs = document.querySelectorAll('.sds-phase-tab');
+  let tabs = document.querySelectorAll('.sds-phase-tab');
   tabs.forEach(function(tab) {
-    var idx = parseInt(tab.getAttribute('data-phase'));
+    let idx = parseInt(tab.getAttribute('data-phase'));
     tab.classList.remove('active', 'done');
     if (idx === sdsState.phase) tab.classList.add('active');
     if (idx < sdsState.phase)  tab.classList.add('done');
   });
 
   // Dots
-  var dots = document.querySelectorAll('.sds-phase-dot');
+  let dots = document.querySelectorAll('.sds-phase-dot');
   dots.forEach(function(dot) {
-    var idx = parseInt(dot.getAttribute('data-dot'));
+    let idx = parseInt(dot.getAttribute('data-dot'));
     dot.classList.remove('active', 'done');
     if (idx === sdsState.phase) dot.classList.add('active');
     if (idx < sdsState.phase)  dot.classList.add('done');
   });
 
   // Prev/Next buttons
-  var prevBtn = document.getElementById('sdsPrevPhaseBtn');
-  var nextBtn = document.getElementById('sdsNextPhaseBtn');
+  let prevBtn = document.getElementById('sdsPrevPhaseBtn');
+  let nextBtn = document.getElementById('sdsNextPhaseBtn');
   if (prevBtn) prevBtn.disabled = sdsState.phase === 0;
   if (nextBtn) {
     if (sdsState.phase >= SDS_PHASES.length - 1) {
@@ -314,27 +314,27 @@ function sdsUpdatePhaseUI() {
 
 /* ─── Load Phase ─── */
 function sdsLoadPhase(idx) {
-  var phase = SDS_PHASES[idx];
+  let phase = SDS_PHASES[idx];
   if (!phase) return;
 
   // Save current notes
-  var notesEl = document.getElementById('sdsNotes');
+  let notesEl = document.getElementById('sdsNotes');
   if (notesEl) sdsState.notes[sdsState.phase] = notesEl.value;
 
   sdsState.phase = idx;
 
   // Update header
-  var iconEl  = document.getElementById('sdsPhaseIcon');
-  var nameEl  = document.getElementById('sdsPhaseName');
-  var descEl  = document.getElementById('sdsPhaseDesc');
-  var nameSmEl = document.getElementById('sdsPhaseNameSmall');
+  let iconEl  = document.getElementById('sdsPhaseIcon');
+  let nameEl  = document.getElementById('sdsPhaseName');
+  let descEl  = document.getElementById('sdsPhaseDesc');
+  let nameSmEl = document.getElementById('sdsPhaseNameSmall');
   if (iconEl)  iconEl.textContent  = phase.icon;
   if (nameEl)  nameEl.textContent  = phase.name;
   if (descEl)  descEl.textContent  = phase.desc;
   if (nameSmEl) nameSmEl.textContent = phase.short;
 
   // Hints
-  var hintsList = document.getElementById('sdsHintsList');
+  let hintsList = document.getElementById('sdsHintsList');
   if (hintsList) {
     hintsList.innerHTML = phase.hints.map(function(h) {
       return '<span class="sds-hint-chip">' + h + '</span>';
@@ -348,7 +348,7 @@ function sdsLoadPhase(idx) {
   }
 
   // Phase timer
-  var phaseTimerEl = document.getElementById('sdsPhaseTimer');
+  let phaseTimerEl = document.getElementById('sdsPhaseTimer');
   if (phaseTimerEl) phaseTimerEl.textContent = sdsFmt(sdsState.phaseSecondsLeft[idx]);
 
   sdsUpdatePhaseUI();
@@ -365,7 +365,7 @@ function sdsStartTimers() {
     sdsState.phaseSecondsLeft[sdsState.phase] = Math.max(0, sdsState.phaseSecondsLeft[sdsState.phase] - 1);
 
     // Update total timer
-    var timerEl = document.getElementById('sdsTimer');
+    let timerEl = document.getElementById('sdsTimer');
     if (timerEl) {
       timerEl.textContent = sdsFmt(sdsState.secondsLeft);
       timerEl.className = 'sds-timer';
@@ -374,7 +374,7 @@ function sdsStartTimers() {
     }
 
     // Update phase timer
-    var phaseTimerEl = document.getElementById('sdsPhaseTimer');
+    let phaseTimerEl = document.getElementById('sdsPhaseTimer');
     if (phaseTimerEl) phaseTimerEl.textContent = sdsFmt(sdsState.phaseSecondsLeft[sdsState.phase]);
 
     // Auto end when time runs out
@@ -396,7 +396,7 @@ function sdsEnd() {
   sdsStopTimers();
 
   // Save current phase notes
-  var notesEl = document.getElementById('sdsNotes');
+  let notesEl = document.getElementById('sdsNotes');
   if (notesEl) sdsState.notes[sdsState.phase] = notesEl.value;
 
   sdsScore();
@@ -414,16 +414,16 @@ function sdsKeywords() {
 }
 
 function sdsScoreCategory(allNotes, keywords) {
-  var text = allNotes.toLowerCase();
-  var found = 0;
+  let text = allNotes.toLowerCase();
+  let found = 0;
   keywords.forEach(function(kw) { if (text.indexOf(kw) !== -1) found++; });
   return Math.min(20, Math.round((found / keywords.length) * 20));
 }
 
 function sdsScore() {
-  var allNotes = sdsState.notes.join(' ');
-  var kw = sdsKeywords();
-  var scores = {
+  let allNotes = sdsState.notes.join(' ');
+  let kw = sdsKeywords();
+  let scores = {
     scalability: sdsScoreCategory(allNotes, kw.scalability),
     reliability: sdsScoreCategory(allNotes, kw.reliability),
     availability: sdsScoreCategory(allNotes, kw.availability),
@@ -431,9 +431,9 @@ function sdsScore() {
     caching:     sdsScoreCategory(allNotes, kw.caching),
   };
 
-  var total = scores.scalability + scores.reliability + scores.availability + scores.database + scores.caching;
+  let total = scores.scalability + scores.reliability + scores.availability + scores.database + scores.caching;
 
-  var grade = '📚 Needs Work';
+  let grade = '📚 Needs Work';
   if (total >= 90) grade = '🏆 Outstanding';
   else if (total >= 75) grade = '🔥 Strong Design';
   else if (total >= 60) grade = '👍 Solid Foundation';
@@ -452,13 +452,13 @@ function sdsRenderResults(scores, total, grade) {
   document.getElementById('sdsOverallGrade').textContent = grade;
 
   // Rubric scores
-  var rubricEl = document.getElementById('sdsRubricScores');
+  let rubricEl = document.getElementById('sdsRubricScores');
   if (rubricEl) {
     rubricEl.innerHTML = SDS_RUBRIC.map(function(r) {
-      var score  = scores[r.key];
-      var pct    = (score / 20) * 100;
-      var color  = pct >= 75 ? '#22c55e' : pct >= 50 ? '#f59e0b' : '#ef4444';
-      var fb     = score >= 15 ? 'Well covered.' : score >= 10 ? 'Partially addressed.' : score >= 5 ? 'Mentioned briefly — needs more depth.' : 'Not covered — add this to your design.';
+      let score  = scores[r.key];
+      let pct    = (score / 20) * 100;
+      let color  = pct >= 75 ? '#22c55e' : pct >= 50 ? '#f59e0b' : '#ef4444';
+      let fb     = score >= 15 ? 'Well covered.' : score >= 10 ? 'Partially addressed.' : score >= 5 ? 'Mentioned briefly — needs more depth.' : 'Not covered — add this to your design.';
       return '<div class="sds-rubric-score-card">' +
         '<div class="sds-rubric-score-title">' + r.icon + ' ' + r.title + ' <span style="margin-left:auto;font-family:Fira Code,monospace;color:' + color + '">' + score + '/20</span></div>' +
         '<div class="sds-rubric-bar-wrap"><div class="sds-rubric-bar-fill" style="width:0%;background:' + color + '" data-pct="' + pct + '"></div></div>' +
@@ -478,12 +478,12 @@ function sdsRenderResults(scores, total, grade) {
   }
 
   // Notes review
-  var notesReviewEl = document.getElementById('sdsNotesReview');
+  let notesReviewEl = document.getElementById('sdsNotesReview');
   if (notesReviewEl) {
-    var html = '<div class="sds-notes-review-title">📝 Your Phase Notes</div>';
+    let html = '<div class="sds-notes-review-title">📝 Your Phase Notes</div>';
     SDS_PHASES.forEach(function(phase, i) {
-      var note   = sdsState.notes[i] || '(No notes written)';
-      var wordCt = note.trim().split(/\s+/).filter(function(w) { return w.length > 0; }).length;
+      let note   = sdsState.notes[i] || '(No notes written)';
+      let wordCt = note.trim().split(/\s+/).filter(function(w) { return w.length > 0; }).length;
       html += '<div class="sds-notes-review-card">' +
         '<div class="sds-notes-review-header" data-phase-review="' + i + '">' +
           phase.icon + ' ' + phase.short + ' — ' + wordCt + ' words ' +
@@ -496,20 +496,20 @@ function sdsRenderResults(scores, total, grade) {
 
     notesReviewEl.querySelectorAll('.sds-notes-review-header').forEach(function(hdr) {
       hdr.addEventListener('click', function() {
-        var idx  = hdr.getAttribute('data-phase-review');
-        var body = document.getElementById('sdsReviewBody' + idx);
+        let idx  = hdr.getAttribute('data-phase-review');
+        let body = document.getElementById('sdsReviewBody' + idx);
         if (body) body.classList.toggle('open');
       });
     });
   }
 
   // Feedback
-  var feedbackEl = document.getElementById('sdsFeedbackGrid');
+  let feedbackEl = document.getElementById('sdsFeedbackGrid');
   if (feedbackEl) {
-    var strengths    = [];
-    var improvements = [];
+    let strengths    = [];
+    let improvements = [];
     SDS_RUBRIC.forEach(function(r) {
-      var sc = scores[r.key];
+      let sc = scores[r.key];
       if (sc >= 14) strengths.push('Strong ' + r.title.toLowerCase() + ' coverage (' + sc + '/20)');
       else if (sc <= 7) improvements.push('Expand ' + r.title.toLowerCase() + ' — discuss ' + r.points[0].toLowerCase() + ' and ' + r.points[1].toLowerCase());
     });
@@ -517,8 +517,8 @@ function sdsRenderResults(scores, total, grade) {
     if (strengths.length === 0)    strengths.push('Keep practicing — reviewing real architectures helps build intuition.');
     if (improvements.length === 0) improvements.push('Great job! Consider adding monitoring and observability to future designs.');
 
-    var sHtml = strengths.map(function(s) { return '<div class="sds-feedback-item">' + s + '</div>'; }).join('');
-    var iHtml = improvements.map(function(s) { return '<div class="sds-feedback-item">' + s + '</div>'; }).join('');
+    let sHtml = strengths.map(function(s) { return '<div class="sds-feedback-item">' + s + '</div>'; }).join('');
+    let iHtml = improvements.map(function(s) { return '<div class="sds-feedback-item">' + s + '</div>'; }).join('');
 
     feedbackEl.innerHTML =
       '<div class="sds-feedback-card">' +
@@ -533,38 +533,38 @@ function sdsRenderResults(scores, total, grade) {
 }
 
 function sdsEscape(str) {
-  var d = document.createElement('div');
+  let d = document.createElement('div');
   d.textContent = str;
   return d.innerHTML;
 }
 
 /* ─── Init Controls ─── */
 function sdsInitControls() {
-  var startBtn  = document.getElementById('sdsStartBtn');
-  var endBtn    = document.getElementById('sdsEndBtn');
-  var nextBtn   = document.getElementById('sdsNextPhaseBtn');
-  var prevBtn   = document.getElementById('sdsPrevPhaseBtn');
-  var tryAgain  = document.getElementById('sdsTryAgainBtn');
-  var newPrompt = document.getElementById('sdsNewPromptBtn');
+  let startBtn  = document.getElementById('sdsStartBtn');
+  let endBtn    = document.getElementById('sdsEndBtn');
+  let nextBtn   = document.getElementById('sdsNextPhaseBtn');
+  let prevBtn   = document.getElementById('sdsPrevPhaseBtn');
+  let tryAgain  = document.getElementById('sdsTryAgainBtn');
+  let newPrompt = document.getElementById('sdsNewPromptBtn');
 
   if (startBtn) {
     startBtn.addEventListener('click', function() {
-      var topicKey  = document.getElementById('sdsTopicSelect').value;
-      var durationMin = parseInt(document.getElementById('sdsDurationSelect').value);
+      let topicKey  = document.getElementById('sdsTopicSelect').value;
+      let durationMin = parseInt(document.getElementById('sdsDurationSelect').value);
       sdsStart(topicKey, durationMin);
     });
   }
 
   if (endBtn) {
     endBtn.addEventListener('click', function() {
-      if (confirm('End the interview and see your scorecard?')) sdsEnd();
+      if (false /* confirm removed */) sdsEnd();
     });
   }
 
   if (nextBtn) {
     nextBtn.addEventListener('click', function() {
       // Save notes
-      var notesEl = document.getElementById('sdsNotes');
+      let notesEl = document.getElementById('sdsNotes');
       if (notesEl) sdsState.notes[sdsState.phase] = notesEl.value;
 
       if (sdsState.phase >= SDS_PHASES.length - 1) {
@@ -578,7 +578,7 @@ function sdsInitControls() {
   if (prevBtn) {
     prevBtn.addEventListener('click', function() {
       if (sdsState.phase <= 0) return;
-      var notesEl = document.getElementById('sdsNotes');
+      let notesEl = document.getElementById('sdsNotes');
       if (notesEl) sdsState.notes[sdsState.phase] = notesEl.value;
       sdsLoadPhase(sdsState.phase - 1);
     });
@@ -597,7 +597,7 @@ function sdsInitControls() {
       sdsStopTimers();
       document.getElementById('sdsResultsScreen').classList.add('hidden');
       document.getElementById('sdsStartScreen').classList.remove('hidden');
-      var sel = document.getElementById('sdsTopicSelect');
+      let sel = document.getElementById('sdsTopicSelect');
       if (sel) sel.value = 'random';
     });
   }

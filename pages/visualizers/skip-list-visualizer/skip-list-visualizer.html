@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -57,7 +57,7 @@
               <div class="sl-op-title"><i class="fas fa-plus-circle"></i> Insert</div>
               <div class="sl-op-inputs">
                 <input type="number" id="slInsertVal" class="sl-input-sm" value="5" min="-999" max="999" aria-label="Insert value" placeholder="val" />
-                <button class="btn sl-op-btn sl-op-insert" id="slInsertBtn">Insert</button>
+                <button type="button" class="btn sl-op-btn sl-op-insert" id="slInsertBtn">Insert</button>
               </div>
             </div>
             <!-- Search -->
@@ -65,7 +65,7 @@
               <div class="sl-op-title"><i class="fas fa-search"></i> Search</div>
               <div class="sl-op-inputs">
                 <input type="number" id="slSearchVal" class="sl-input-sm" value="5" min="-999" max="999" aria-label="Search value" placeholder="val" />
-                <button class="btn sl-op-btn sl-op-search" id="slSearchBtn">Search</button>
+                <button type="button" class="btn sl-op-btn sl-op-search" id="slSearchBtn">Search</button>
               </div>
             </div>
             <!-- Delete -->
@@ -73,7 +73,7 @@
               <div class="sl-op-title"><i class="fas fa-trash"></i> Delete</div>
               <div class="sl-op-inputs">
                 <input type="number" id="slDeleteVal" class="sl-input-sm" value="5" min="-999" max="999" aria-label="Delete value" placeholder="val" />
-                <button class="btn sl-op-btn sl-op-delete" id="slDeleteBtn">Delete</button>
+                <button type="button" class="btn sl-op-btn sl-op-delete" id="slDeleteBtn">Delete</button>
               </div>
             </div>
             <!-- Probability -->
@@ -88,9 +88,9 @@
 
           <!-- Playback -->
           <div class="sl-playback-row">
-            <button class="btn btn-secondary sl-pb-btn" id="slStepBtn" disabled><i class="fas fa-step-forward"></i> Step</button>
-            <button class="btn btn-secondary sl-pb-btn" id="slPlayBtn" disabled><i class="fas fa-play"></i> Play All</button>
-            <button class="btn btn-secondary sl-pb-btn" id="slResetBtn"><i class="fas fa-undo"></i> Reset</button>
+            <button type="button" class="btn btn-secondary sl-pb-btn" id="slStepBtn" disabled><i class="fas fa-step-forward"></i> Step</button>
+            <button type="button" class="btn btn-secondary sl-pb-btn" id="slPlayBtn" disabled><i class="fas fa-play"></i> Play All</button>
+            <button type="button" class="btn btn-secondary sl-pb-btn" id="slResetBtn"><i class="fas fa-undo"></i> Reset</button>
             <div class="sl-speed-wrap">
               <label class="sl-speed-label">Speed:</label>
               <input type="range" id="slSpeed" class="sl-range" min="1" max="5" value="3" aria-label="Speed" />
@@ -102,8 +102,8 @@
           <!-- Preset -->
           <div class="sl-preset-row">
             <span class="sl-preset-label">Preload:</span>
-            <button class="btn sl-preset-btn" id="slPresetBtn">Insert [3, 6, 7, 9, 12, 19, 21, 25]</button>
-            <button class="btn sl-preset-btn" id="slClearBtn">Clear All</button>
+            <button type="button" class="btn sl-preset-btn" id="slPresetBtn">Insert [3, 6, 7, 9, 12, 19, 21, 25]</button>
+            <button type="button" class="btn sl-preset-btn" id="slClearBtn">Clear All</button>
           </div>
         </div>
 
@@ -184,7 +184,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="skip-list-visualizer.js"></script>

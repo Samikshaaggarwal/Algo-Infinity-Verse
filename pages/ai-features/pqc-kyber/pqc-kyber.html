@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     
-                    <button class="btn btn-primary w-100 mt-3" id="btnAliceKeyGen">Generate Keys</button>
+                    <button type="button" class="btn btn-primary w-100 mt-3" id="btnAliceKeyGen">Generate Keys</button>
                 </div>
 
                 <!-- Step 3: Decapsulation -->
@@ -81,7 +81,7 @@
 
                     <p class="desc mt-3">By rounding coefficients closer to <code>q/2 (1664)</code> to 1, and <code>0/3329</code> to 0, she filters out the quantum-resistant noise!</p>
                     
-                    <button class="btn btn-success w-100" id="btnAliceDecaps">Round & Recover Secret</button>
+                    <button type="button" class="btn btn-success w-100" id="btnAliceDecaps">Round & Recover Secret</button>
                     
                     <div class="final-secret hidden" id="aliceFinalSecret">
                         <strong>Shared Binary Secret:</strong>
@@ -172,7 +172,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-accent w-100 mt-3" id="btnBobEncaps">Compute (u, v) & Send</button>
+                    <button type="button" class="btn btn-accent w-100 mt-3" id="btnBobEncaps">Compute (u, v) & Send</button>
                 </div>
                 
                 <div class="waiting-state" id="bobWaiting">

@@ -37,7 +37,7 @@
   </div>
 
   <!-- Scroll to Top -->
-  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+  <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
     <i class="fas fa-circle-chevron-up"></i>
   </button>
 
@@ -100,7 +100,7 @@
               <textarea id="codeEditor" class="code-textarea" placeholder="// Paste or write your solution here..." spellcheck="false"></textarea>
             </div>
 
-            <button id="btnRunReview" class="btn btn-primary btn-block">
+            <button type="button" id="btnRunReview" class="btn btn-primary btn-block">
               <i class="fas fa-glasses"></i> Generate Timeline Review
             </button>
           </div>
@@ -111,8 +111,8 @@
           <div class="fscr-panel-header">
             <h3><i class="fas fa-route"></i> Developer Timeline Feedback</h3>
             <div class="view-toggles">
-              <button class="view-toggle-btn active" data-view="timeline"><i class="fas fa-list-ol"></i> Timeline</button>
-              <button class="view-toggle-btn" data-view="comparison"><i class="fas fa-columns"></i> Compare</button>
+              <button type="button" class="view-toggle-btn active" data-view="timeline"><i class="fas fa-list-ol"></i> Timeline</button>
+              <button type="button" class="view-toggle-btn" data-view="comparison"><i class="fas fa-columns"></i> Compare</button>
             </div>
           </div>
 
@@ -236,7 +236,10 @@
   <div id="footer-placeholder"></div>
 
   <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   <script src="future-self-code-reviewer.js"></script>
 

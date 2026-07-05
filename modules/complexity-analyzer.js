@@ -108,3 +108,5 @@ export function analyzeComplexity(sourceCode) {
         return { complexity: "Unknown (Parse Error)", error: e.message };
     }
 }
+// Legacy global exports
+window.analyzeComplexity = analyzeComplexity;

@@ -1,49 +1,41 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Algo Infinity Verse - Master DSA &amp; Crack Interviews</title>
 
-    <!-- SEO / Social metadata -->
-    <meta
-      name="description"
-      content="Algo Infinity Verse is an interactive DSA learning platform — master data structures and algorithms and crack technical interviews with hands-on visualizers, quizzes, and coding practice."
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algo Infinity Verse - Master DSA &amp; Crack Interviews</title>
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Algo Infinity Verse" />
-    <meta property="og:title" content="Algo Infinity Verse - Master DSA &amp; Crack Interviews" />
-    <meta
-      property="og:description"
-      content="Master DSA and crack interviews with interactive visualizers, quizzes, and coding practice."
-    />
-    <meta property="og:image" content="/images/banner.png" />
+  <!-- SEO / Social metadata -->
+  <meta name="description"
+    content="Algo Infinity Verse is an interactive DSA learning platform — master data structures and algorithms and crack technical interviews with hands-on visualizers, quizzes, and coding practice." />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Algo Infinity Verse - Master DSA &amp; Crack Interviews" />
-    <meta
-      name="twitter:description"
-      content="Master DSA and crack interviews with interactive visualizers, quizzes, and coding practice."
-    />
-    <meta name="twitter:image" content="/images/banner.png" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Algo Infinity Verse" />
+  <meta property="og:title" content="Algo Infinity Verse - Master DSA &amp; Crack Interviews" />
+  <meta property="og:description"
+    content="Master DSA and crack interviews with interactive visualizers, quizzes, and coding practice." />
+  <meta property="og:image" content="/images/banner.png" />
 
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#38bdf8" />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="pages/learning/rust-learning.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Poppins:wght@300;400;500;600;700&amp;family=Fira+Code:wght@400;500;600&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <script src="error-boundary.js"></script>
-    <script type="importmap">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Algo Infinity Verse - Master DSA &amp; Crack Interviews" />
+  <meta name="twitter:description"
+    content="Master DSA and crack interviews with interactive visualizers, quizzes, and coding practice." />
+  <meta name="twitter:image" content="/images/banner.png" />
+
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#38bdf8" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="pages/learning/rust-learning.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Poppins:wght@300;400;500;600;700&amp;family=Fira+Code:wght@400;500;600&amp;display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="pages/index/index.css" />
+  <script src="error-boundary.js"></script>
+  <script type="importmap">
     {
       "imports": {
         "firebase/app": "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js",
@@ -51,6 +43,7 @@
       }
     }
     </script>
+
   
     <!-- Theme Initialization Script -->
     <script>
@@ -67,356 +60,905 @@
         } catch (e) {}
       })();
     </script>
+
+    <style>
+
+      /* Activity Feed Styles */
+      .card-header-with-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .btn-clear-activity {
+      /* Search Autocomplete Styles */
+      .search-wrapper {
+        position: relative;
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .search-bar {
+        display: flex;
+        align-items: center;
+        background: var(--bg-secondary);
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        padding: 0 16px;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+      }
+
+      .search-bar:focus-within {
+        border-color: #7c3aed;
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+      }
+
+      .search-bar i {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        transition: color 0.3s ease;
+      }
+
+      .search-bar:focus-within i {
+        color: #7c3aed;
+      }
+
+      .search-bar input {
+        flex: 1;
+        padding: 12px 12px;
+        border: none;
+        background: transparent;
+        color: var(--text-primary);
+        font-size: 0.95rem;
+        outline: none;
+        width: 100%;
+      }
+
+      .search-bar input::placeholder {
+        color: var(--text-secondary);
+        opacity: 0.7;
+      }
+
+      .clear-search-btn {
+
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 6px;
+
+        transition: all 0.2s ease;
+        font-size: 0.9rem;
+      }
+
+      .btn-clear-activity:hover {
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .clear-search-btn.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .clear-search-btn:hover {
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+      }
+
+
+      .activity-feed {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 4px;
+      }
+
+      .activity-feed::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .activity-feed::-webkit-scrollbar-track {
+
+      .search-suggestions {
+        position: absolute;
+        top: calc(100% + 4px);
+        left: 0;
+        right: 0;
+        background: var(--bg-secondary);
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        max-height: 320px;
+        overflow-y: auto;
+        display: none;
+        z-index: 1000;
+        padding: 8px 0;
+      }
+
+      .search-suggestions::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .search-suggestions::-webkit-scrollbar-track {
+
+        background: var(--bg-primary);
+        border-radius: 2px;
+      }
+
+
+      .activity-feed::-webkit-scrollbar-thumb {
+      .search-suggestions::-webkit-scrollbar-thumb {
+
+        background: var(--border-color);
+        border-radius: 2px;
+      }
+
+
+      .activity-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: var(--bg-primary);
+        border: 1px solid var(--border-color);
+        transition: all 0.2s ease;
+        animation: activitySlideIn 0.3s ease;
+      }
+
+      .activity-item:hover {
+        border-color: var(--primary);
+        transform: translateX(4px);
+      }
+
+      .activity-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 16px;
+      }
+
+      .activity-icon.solved {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+      }
+
+      .activity-icon.quiz {
+        background: rgba(59, 130, 246, 0.15);
+        color: #3b82f6;
+      }
+
+      .activity-icon.badge {
+        background: rgba(251, 191, 36, 0.15);
+        color: #fbbf24;
+      }
+
+      .activity-icon.streak {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+      }
+
+      .activity-icon.level {
+
+      .search-suggestions.visible {
+        display: block;
+        animation: suggestionsSlideIn 0.2s ease;
+      }
+
+      @keyframes suggestionsSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .suggestion-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+
+      .suggestion-item:hover,
+      .suggestion-item:focus {
+        background: rgba(124, 58, 237, 0.08);
+      }
+
+      .suggestion-item.active {
+        background: rgba(124, 58, 237, 0.12);
+        border-left: 3px solid #7c3aed;
+      }
+
+      .suggestion-icon {
+        font-size: 1rem;
+        flex-shrink: 0;
+        width: 24px;
+        text-align: center;
+      }
+
+      .suggestion-text {
+        flex: 1;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .suggestion-text .highlight {
+        background-color: #fbbf24;
+        color: #1e293b;
+        padding: 0 2px;
+        border-radius: 2px;
+        font-weight: 600;
+      }
+
+      .suggestion-type {
+        font-size: 0.65rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 2px 8px;
+        border-radius: 4px;
+        flex-shrink: 0;
+      }
+
+      .suggestion-type.title {
+        background: rgba(59, 130, 246, 0.15);
+        color: #3b82f6;
+      }
+
+      .suggestion-type.tag {
+
+        background: rgba(168, 85, 247, 0.15);
+        color: #a855f7;
+      }
+
+
+      .activity-icon.xp {
+      .suggestion-type.topic {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+      }
+
+      .suggestion-type.description {
+        background: rgba(251, 191, 36, 0.15);
+        color: #f59e0b;
+      }
+
+
+      .activity-icon.practice {
+        background: rgba(6, 182, 212, 0.15);
+        color: #06b6d4;
+      }
+
+      .activity-content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .activity-content .activity-message {
+        font-size: 0.9rem;
+        color: var(--text-primary);
+        margin: 0 0 2px 0;
+        line-height: 1.4;
+      }
+
+      .activity-content .activity-detail {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin: 0;
+      }
+
+      .activity-time {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+        white-space: nowrap;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .activity-empty {
+        text-align: center;
+        padding: 30px 20px;
+        color: var(--text-secondary);
+      }
+
+      .activity-empty i {
+        font-size: 32px;
+        color: var(--border-color);
+        display: block;
+        margin-bottom: 12px;
+      }
+
+      .activity-empty p {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+
+      .activity-feed-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 12px;
+        margin-top: 12px;
+        border-top: 1px solid var(--border-color);
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+      }
+
+      .btn-view-all {
+        background: none;
+        border: none;
+        color: var(--primary);
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 0.8rem;
+        transition: color 0.2s ease;
+      }
+
+      .btn-view-all:hover {
+        color: var(--accent);
+        text-decoration: underline;
+      }
+
+      @keyframes activitySlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .activity-item.new {
+        border-left: 3px solid var(--primary);
+      }
+
+      .dark .activity-item {
+        background: #0f172a;
+        border-color: #334155;
+      }
+
+      .dark .activity-item:hover {
+        border-color: #7c3aed;
+      }
+
+      .dark .activity-empty i {
+        color: #334155;
+      }
+
+      .dark .activity-feed-footer {
+      .suggestion-group-header {
+        padding: 6px 16px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--text-secondary);
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 4px;
+      }
+
+      .suggestion-no-results {
+        padding: 16px;
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      .suggestion-no-results i {
+        display: block;
+        font-size: 24px;
+        margin-bottom: 8px;
+        color: var(--border-color);
+      }
+
+
+      /* Tag Clickable Styles */
+      .tag {
+        cursor: pointer;
+        transition: all 0.25s ease;
+        user-select: none;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        background: var(--bg-primary);
+        color: var(--text-secondary);
+        border: 1px solid var(--border-color);
+      }
+
+      .tag:hover {
+
+      /* ===== KEYBOARD SHORTCUTS STYLES ===== */
+      
+      .shortcuts-toggle-btn {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        z-index: 998;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        font-family: 'Poppins', sans-serif;
+      }
+
+      .shortcuts-toggle-btn:hover {
+
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        transform: translateY(-2px);
+
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+      }
+
+      .tag:active {
+        transform: scale(0.95);
+      }
+
+      .tag:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      .tag::after {
+        content: ' 🔍';
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        font-size: 0.6rem;
+      }
+
+      .tag:hover::after {
+        opacity: 1;
+      }
+
+      .dark .tag {
+        background: #1e293b;
+        border-color: #334155;
+        color: #94a3b8;
+      }
+
+      .dark .tag:hover {
+        background: #7c3aed;
+        color: white;
+        border-color: #7c3aed;
+      }
+
+      @media (max-width: 768px) {
+        .tag {
+          padding: 6px 14px;
+          font-size: 0.8rem;
+          min-height: 32px;
+        }
+        .tag::after {
+          content: '';
+
+        box-shadow: 0 8px 24px rgba(124, 58, 237, 0.3);
+      }
+
+      .shortcuts-toggle-btn i {
+        font-size: 1rem;
+      }
+
+      .shortcuts-toggle-btn .shortcut-hint {
+        font-size: 0.7rem;
+        opacity: 0.6;
+        font-weight: 400;
+      }
+
+      .shortcuts-modal .modal-content {
+        max-width: 700px;
+        max-height: 85vh;
+        overflow-y: auto;
+      }
+
+      .shortcuts-modal-content {
+        padding: 0 !important;
+      }
+
+      .shortcuts-modal .modal-header {
+        padding: 20px 24px 16px;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .shortcuts-modal .modal-header h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .shortcuts-modal .modal-header h3 i {
+        color: var(--primary);
+      }
+
+      .shortcuts-modal .modal-body {
+        padding: 20px 24px 16px;
+      }
+
+      .shortcuts-intro {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+      }
+
+      .shortcuts-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+
+  <!-- Theme Initialization Script -->
+  <script>
+    (function () {
+      try {
+        var storedTheme = localStorage.getItem('theme');
+        var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        var theme = storedTheme || (prefersLight ? 'light' : 'dark');
+        if (theme === 'light') {
+          document.documentElement.classList.add('light-mode');
+        } else {
+          document.documentElement.classList.remove('light-mode');
+        }
+      } catch (e) { }
+    })();
+  </script>
+
+
+      .dark .suggestion-type.description {
+        background: rgba(251, 191, 36, 0.2);
+        color: #fcd34d;
+      }
+
+      .dark .suggestion-group-header {
+        color: #94a3b8;
+
+        border-color: #334155;
+      }
+
+      @media (max-width: 768px) {
+
+        .activity-item {
+          padding: 8px 10px;
+          gap: 10px;
+        }
+        
+        .activity-icon {
+          width: 30px;
+          height: 30px;
+          font-size: 13px;
+        }
+        
+        .activity-content .activity-message {
+          font-size: 0.85rem;
+        }
+        
+        .activity-time {
+          font-size: 0.65rem;
+
+        .search-wrapper {
+          min-width: 150px;
+        }
+        
+        .search-bar input {
+          font-size: 0.85rem;
+          padding: 10px 10px;
+        }
+        
+        .search-suggestions {
+          max-height: 260px;
+          border-radius: 10px;
+        }
+        
+        .suggestion-item {
+          padding: 8px 14px;
+          font-size: 0.85rem;
+        }
+        
+        .suggestion-icon {
+          font-size: 0.85rem;
+          width: 20px;
+
+        }
+      }
+
+      @media (max-width: 480px) {
+
+        .activity-item {
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        
+        .activity-time {
+          width: 100%;
+          margin-left: 42px;
+
+        .search-wrapper {
+          min-width: 120px;
+          width: 100%;
+        }
+        
+        .search-suggestions {
+          max-height: 220px;
+          margin-top: 2px;
+        }
+        
+        .suggestion-item {
+          padding: 6px 12px;
+          font-size: 0.8rem;
+          gap: 8px;
+        }
+        
+        .suggestion-type {
+          font-size: 0.55rem;
+          padding: 1px 6px;
+
+        }
+      }
+    </style>
+
 </head>
-  
-  <body data-page="index">
-    <!-- Skip to main content (accessibility) -->
-    <a href="#main" class="skip-link">Skip to content</a>
 
-    <!-- Offline Status Banner -->
-    <div id="offline-banner" class="offline-banner hidden" aria-live="polite">
-      <i class="fas fa-wifi-slash"></i> You are currently offline. Some features may be limited, but cached content is available.
-    </div>
+<body data-page="index">
+  <!-- Offline Status Banner -->
+  <div id="offline-banner" class="offline-banner hidden" aria-live="polite">
+    <i class="fas fa-wifi-slash"></i> You are currently offline. Some features may be limited, but cached content is
+    available.
+  </div>
 
-    <!-- PWA Storage Usage -->
-    <div id="pwa-storage-usage" style="position: fixed; bottom: 10px; left: 10px; background: rgba(16, 23, 42, 0.8); border: 1px solid var(--primary); padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; color: #cbd5e1; z-index: 9999; backdrop-filter: blur(5px);">
-      Checking storage...
-    </div>
+  <!-- PWA Storage Usage -->
+  <div id="pwa-storage-usage"
+    style="position: fixed; bottom: 10px; left: 30px; background: rgba(16, 23, 42, 0.8); border: 1px solid var(--primary); padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; color: #cbd5e1; z-index: 9999; backdrop-filter: blur(5px);">
+    Checking storage...
+  </div>
 
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-      <div class="loader">
-        <div class="infinity-loader">∞</div>
-        <h2>Algo Infinity Verse</h2>
-        <div class="loading-bar">
-          <div class="loading-progress"></div>
-        </div>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loader">
+      <div class="infinity-loader">∞</div>
+      <h2>Algo Infinity Verse</h2>
+      <div class="loading-bar">
+        <div class="loading-progress"></div>
       </div>
     </div>
+  </div>
 
-    <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
-      <i class="fas fa-circle-chevron-up"></i>
-    </button>
+  <!-- Scroll to Top Button -->
+  <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <i class="fas fa-circle-chevron-up"></i>
+  </button>
 
-    <!-- Back to Top Button -->
-    <button 
-        id="backToTop" 
-        class="back-to-top" 
-        aria-label="Back to top"
-        title="Scroll back to top"
-    >
-        <svg class="progress-ring" viewBox="0 0 44 44" aria-hidden="true">
-            <circle class="progress-ring-bg" cx="22" cy="22" r="20"/>
-            <circle class="progress-ring-fill" cx="22" cy="22" r="20"/>
-        </svg>
-        <i class="fas fa-arrow-up"></i>
-    </button>
+  <!-- Back to Top Button -->
+  <button type="button" id="backToTop" class="back-to-top" aria-label="Back to top" title="Scroll back to top">
+    <svg class="progress-ring" viewBox="0 0 44 44" aria-hidden="true">
+      <circle class="progress-ring-bg" cx="22" cy="22" r="20" />
+      <circle class="progress-ring-fill" cx="22" cy="22" r="20" />
+    </svg>
+    <i class="fas fa-arrow-up"></i>
+  </button>
 
-    <!-- Navigation Bar (loaded from partial) -->
-    <div id="navbar-placeholder"></div>
+  <!-- ===== KEYBOARD SHORTCUTS BUTTON ===== -->
+  <button type="button" id="shortcutsToggle" class="shortcuts-toggle-btn" aria-label="Keyboard shortcuts"
+    title="Keyboard Shortcuts (Press ?)">
+    <i class="fas fa-keyboard"></i>
+    <span>Shortcuts</span>
+    <span class="shortcut-hint">(?)</span>
+  </button>
 
-    <!-- Main content landmark -->
-    <main id="main" tabindex="-1">
+  <!-- ===== KEYBOARD SHORTCUTS MODAL ===== -->
+  <div id="shortcutsModal" class="modal shortcuts-modal" role="dialog" aria-modal="true"
+    aria-labelledby="shortcutsModalTitle" style="display: none;">
+    <div class="modal-content shortcuts-modal-content">
+      <div class="modal-header">
+        <h3 id="shortcutsModalTitle">
+          <i class="fas fa-keyboard"></i> Keyboard Shortcuts
+        </h3>
+        <button type="button" class="modal-close" id="shortcutsModalClose" aria-label="Close shortcuts">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="shortcuts-intro">
+          Use these keyboard shortcuts to navigate faster and boost your productivity.
+        </p>
+
+        <div class="shortcuts-grid">
+          <!-- Navigation Shortcuts -->
+          <div class="shortcuts-section">
+            <h4><i class="fas fa-compass"></i> Navigation</h4>
+            <table class="shortcuts-table">
+              <tbody>
+                <tr>
+                  <td><kbd>Alt</kbd> + <kbd>H</kbd></td>
+                  <td>Go to Home</td>
+                </tr>
+                <tr>
+                  <td><kbd>Alt</kbd> + <kbd>T</kbd></td>
+                  <td>Go to Topics</td>
+                </tr>
+                <tr>
+                  <td><kbd>Alt</kbd> + <kbd>P</kbd></td>
+                  <td>Go to Practice</td>
+                </tr>
+                <tr>
+                  <td><kbd>Alt</kbd> + <kbd>Q</kbd></td>
+                  <td>Go to Quiz</td>
+                </tr>
+                <tr>
+                  <td><kbd>Alt</kbd> + <kbd>D</kbd></td>
+                  <td>Go to Dashboard</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Search Shortcuts -->
+          <div class="shortcuts-section">
+            <h4><i class="fas fa-search"></i> Search</h4>
+            <table class="shortcuts-table">
+              <tbody>
+                <tr>
+                  <td><kbd>Ctrl</kbd> + <kbd>K</kbd></td>
+                  <td>Focus Search</td>
+                </tr>
+                <tr>
+                  <td><kbd>Esc</kbd></td>
+                  <td>Clear Search / Close Modal</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Editor Shortcuts -->
+          <div class="shortcuts-section">
+            <h4><i class="fas fa-code"></i> Code Editor</h4>
+            <table class="shortcuts-table">
+              <tbody>
+                <tr>
+                  <td><kbd>Ctrl</kbd> + <kbd>Enter</kbd></td>
+                  <td>Run Code</td>
+                </tr>
+                <tr>
+                  <td><kbd>Ctrl</kbd> + <kbd>S</kbd></td>
+                  <td>Save/Submit Code</td>
+                </tr>
+                <tr>
+                  <td><kbd>Ctrl</kbd> + <kbd>/</kbd></td>
+                  <td>Toggle Comment</td>
+                </tr>
+                <tr>
+                  <td><kbd>Ctrl</kbd> + <kbd>Z</kbd></td>
+                  <td>Undo</td>
+                </tr>
+                <tr>
+                  <td><kbd>Ctrl</kbd> + <kbd>Y</kbd></td>
+                  <td>Redo</td>
+                </tr>
+                <tr>
+                  <td><kbd>Ctrl</kbd> + <kbd>F</kbd></td>
+                  <td>Find</td>
+                </tr>
+                <tr>
+                  <td><kbd>Ctrl</kbd> + <kbd>H</kbd></td>
+                  <td>Replace</td>
+                </tr>
+                <tr>
+                  <td><kbd>Ctrl</kbd> + <kbd>G</kbd></td>
+                  <td>Go to Line</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- General Shortcuts -->
+          <div class="shortcuts-section">
+            <h4><i class="fas fa-globe"></i> General</h4>
+            <table class="shortcuts-table">
+              <tbody>
+                <tr>
+                  <td><kbd>?</kbd></td>
+                  <td>Open Shortcuts Help</td>
+                </tr>
+                <tr>
+                  <td><kbd>Esc</kbd></td>
+                  <td>Close Modal / Dialog</td>
+                </tr>
+                <tr>
+                  <td><kbd>Tab</kbd></td>
+                  <td>Navigate to Next Element</td>
+                </tr>
+                <tr>
+                  <td><kbd>Shift</kbd> + <kbd>Tab</kbd></td>
+                  <td>Navigate to Previous Element</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="shortcuts-footer">
+          <span class="shortcuts-tip">
+            <i class="fas fa-lightbulb"></i>
+            Tip: Press <kbd>?</kbd> anytime to open this modal
+          </span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="shortcutsModalCloseBtn">
+          Close <kbd>Esc</kbd>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Bar (loaded from partial) -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- Main content landmark -->
+  <main id="main" tabindex="-1">
     <!-- Hero Section -->
-    <section id="home" class="hero">
-      <div class="hero-background">
-        <div class="stars"></div>
-        <div class="stars2"></div>
-        <div class="stars3"></div>
-      </div>
-      <div class="hero-content">
-        <h1 class="hero-title">
-          <span class="title-line">Welcome to</span>
-          <span class="main-title gradient-text">Algo Infinity Verse</span>
-          <span class="subtitle">Master DSA &amp; Crack Interviews</span>
-        </h1>
-        <div class="typing-container">
-          <span class="typing-text" id="typingText"></span>
-          <span class="typing-cursor">|</span>
-        </div>
-        <div class="hero-buttons">
-          <a href="#practice" class="btn btn-primary">
-            <i class="fas fa-rocket"></i> Start Practice
-          </a>
-          <a href="#roadmap" class="btn btn-secondary">
-            <i class="fas fa-map"></i> Explore Roadmap
-          </a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-box big-box">
-            <span class="stat-number" data-target="22">0</span>
-            <span class="stat-label">Problems</span>
-          </div>
-          <div class="stat-box big-box"> 
-            <span class="stat-number" data-target="6">0</span>
-            <span class="stat-label">DSA Topics</span>
-          </div>
-          <div class="stat-box big-box">
-            <span class="stat-number" data-target="60">0</span>
-            <span class="stat-label">Quiz Questions</span>
-          </div>
-        </div>
-      </div>
-      <div class="scroll-indicator">
-        <i class="fas fa-chevron-down"></i>
-      </div>
-    </section>
+    <div id="hero-placeholder"></div>
 
     <!-- Topic of the Day Section -->
-    <section id="topic-of-the-day" class="section totd-section">
-      <div class="container">
-        <div class="totd-card glass-card big-box">
-          <div class="totd-badge">
-            <i class="fas fa-calendar-day"></i>
-            Topic of the Day
-          </div>
-          <div class="totd-content">
-            <div class="totd-icon" id="totdIcon"></div>
-            <div class="totd-info">
-              <h2 class="totd-title" id="totdTitle"></h2>
-              <p class="totd-desc" id="totdDesc"></p>
-              <div class="totd-meta">
-                <span class="totd-difficulty" id="totdDifficulty"></span>
-                <span class="totd-problems" id="totdProblems"></span>
-              </div>
-            </div>
-          </div>
-          <button class="btn btn-primary totd-btn" id="totdBtn">
-            <i class="fas fa-book-open"></i> Learn Now
-          </button>
-        </div>
-      </div>
-    </section>
+    <div id="topic-of-the-day-placeholder"></div>
 
     <!-- DSA Topics Section -->
-    <section id="topics" class="section topics-section">
-      <div class="container">
-        <h2 class="section-title">
-          <span class="title-icon">🧠</span>
-          DSA Topics
-        </h2>
-        <p class="section-subtitle">
-          Master core data structures and algorithms
-        </p>
-        <div class="topics-grid">
-          <!-- Topics will be generated by JavaScript -->
-        </div>
-      </div>
-    </section>
+    <div id="topics-placeholder"></div>
 
     <!-- Practice Problems Section -->
-    <section id="practice" class="section practice-section">
-      <div class="container">
-        <h2 class="section-title">
-          <span class="title-icon">🧩</span>
-          Practice Problems
-        </h2>
-        <div class="practice-controls">
-          <div class="search-bar">
-            <i class="fas fa-search"></i>
-            <input
-              type="text"
-              id="searchInput"
-              placeholder="Search problems..."
-            />
-            <button
-              id="clearSearchBtn"
-              class="clear-search-btn"
-              aria-label="Clear search"
-            >
-              &times;
-            </button>
-          </div>
-          <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="easy">Easy</button>
-            <button class="filter-btn" data-filter="medium">Medium</button>
-            <button class="filter-btn" data-filter="hard">Hard</button>
-            <button class="filter-btn" data-filter="favorites">
-              <i class="fas fa-heart"></i>
-              Favorites
-            </button>
-          </div>
-        </div>
+    <div id="practice-placeholder"></div>
 
-        <!-- UPDATED: Problem Counter Container -->
-        <div class="problem-counter-container" style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
-          <div class="problem-stats">
-            <span class="problem-count-display">
-              Showing <strong id="visible-count">0</strong> 
-              <span id="problem-label">problems</span>
-              <span class="total-count-display">
-                (Total: <span id="total-count">0</span>)
-              </span>
-            </span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-            <!-- Debounce and abort options -->
-            <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.05); padding: 0.25rem 0.5rem; border-radius: 6px; border: 1px solid var(--glass-border);">
-              <label style="font-size: 0.75rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.25rem; cursor: pointer; user-select: none;">
-                <input type="checkbox" id="ai-recommend-disable-toggle" style="cursor: pointer; accent-color: var(--primary);">
-                Disable button
-              </label>
-              <span style="color: var(--glass-border); font-size: 0.75rem;">|</span>
-              <label style="font-size: 0.75rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.25rem;">
-                Delay:
-                <input type="number" id="ai-recommend-debounce-input" value="500" min="0" max="5000" step="100" style="width: 55px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 4px; color: var(--text-primary); padding: 2px 4px; font-size: 0.75rem; text-align: center;">
-                ms
-              </label>
-            </div>
-            <span id="ai-recommend-status-msg" style="font-size: 0.85rem; font-weight: 500; opacity: 0; transition: opacity 0.2s, color 0.2s; white-space: nowrap;"></span>
-            <button id="ai-recommend-btn" class="submit-btn" style="padding: 0.5rem 1rem; width: auto; font-size: 0.9rem;">
-              <i class="fas fa-magic"></i> AI Recommend Next
-            </button>
-          </div>
-          <p id="ai-recommend-status" class="sr-only" aria-live="polite"></p>
-        </div>
-
-        <!-- Problems Grid -->
-        <div class="problems-grid"></div>
-
-        <!-- Empty State -->
-        <div id="emptyState" class="empty-state hidden">
-            <i class="fas fa-search"></i>
-            <h3>No problems found</h3>
-            <p>Try adjusting your filters or search terms</p>
-            <button class="btn btn-secondary" id="clearFiltersBtn">
-                <i class="fas fa-undo"></i> Clear Filters
-            </button>
-        </div>
-
-        <!-- Pagination Controls -->
-         <div class="pagination-controls" id="paginationControls">
-         <button class="pagination-btn" id="prevPageBtn" disabled>
-          <i class="fas fa-chevron-left"></i> Previous
-         </button>
-          <span class="pagination-info" id="paginationInfo">Page 1 of 1</span>
-          <button class="pagination-btn" id="nextPageBtn">
-           Next <i class="fas fa-chevron-right"></i>
-          </button>
-           </div>
-      </div>
-    </section>
-    
     <!-- DSA Flashcards Revision Section -->
-    <section id="flashcards" class="section flashcards-section">
-      <div class="container">
-        <h2 class="section-title">
-          <span class="title-icon">🗂️</span>
-          DSA Flashcards Revision
-        </h2>
-        <p class="section-subtitle">
-          Reveal answers, navigate cards, and persist your revision progress.
-        </p>
-
-        <div class="flashcards-controls" role="group" aria-label="Flashcard category filters">
-          <button class="filter-btn active" data-flashcards-category="arrays">Arrays</button>
-          <button class="filter-btn" data-flashcards-category="trees">Trees</button>
-          <button class="filter-btn" data-flashcards-category="graphs">Graphs</button>
-          <button class="filter-btn" data-flashcards-category="dp">DP</button>
-        </div>
-
-        <div class="flashcards-shell">
-          <div class="flashcards-header">
-            <div class="flashcards-meta">
-              <div class="flashcards-progress" id="flashcardsProgressText">Reviewed 0 / 0</div>
-              <div class="flashcards-total" id="flashcardsTotalText"></div>
-            </div>
-            <div class="flashcards-nav">
-              <button id="flashcardsPrevBtn" class="pagination-btn" disabled>
-                <i class="fas fa-chevron-left"></i> Prev
-              </button>
-              <button id="flashcardsNextBtn" class="pagination-btn">
-                Next <i class="fas fa-chevron-right"></i>
-              </button>
-            </div>
-          </div>
-
-          <div class="flashcards-stage">
-            <div class="flashcard" id="flashcardRoot" aria-live="polite">
-              <div class="flashcard-inner">
-                <div class="flashcard-face flashcard-front" id="flashcardQuestion"></div>
-                <div class="flashcard-face flashcard-back" id="flashcardAnswer"></div>
-              </div>
-            </div>
-
-            <div class="flashcards-actions">
-              <button id="flashcardsRevealBtn" class="btn btn-primary">
-                <i class="fas fa-eye"></i> Reveal Answer
-              </button>
-              <div class="flashcards-small muted" id="flashcardsSmallHint"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div id="flashcards-placeholder"></div>
 
     <!-- Rust Playground Section -->
-    <section id="rust-playground" class="section rust-playground-section">
-
-      <div class="container">
-        <div class="rust-hero">
-          <h2 class="section-title">
-            <span class="title-icon">🦀</span>
-            Rust Code Playground
-          </h2>
-          <p class="section-subtitle">
-            Write, compile, and run Rust programs directly in the browser using
-            a sandboxed execution API.
-          </p>
-        </div>
-
-        <div class="rust-playground">
-          <div class="rust-editor-panel">
-            <div class="panel-header">
-              <h2>Editor</h2>
-              <label for="rustExampleSelect" class="visually-hidden"
-                >Choose a Rust example</label
-              >
-              <select id="rustExampleSelect">
-                <option value="hello">Hello World</option>
-                <option value="ownership">Ownership & Borrowing</option>
-                <option value="structs">Structs & Enums</option>
-                <option value="concurrency">Basic Concurrency</option>
-              </select>
-            </div>
-
-            <label for="rustEditor" class="visually-hidden"
-              >Rust code editor</label
-            >
-            <textarea id="rustEditor" spellcheck="false"></textarea>
-
-            <div class="rust-actions">
-              <button id="runRustBtn">Run Code</button>
-              <button id="resetRustBtn">Reset</button>
-              <button id="clearRustOutputBtn">Clear Output</button>
-            </div>
-          </div>
-
-          <div class="rust-output-panel">
-            <h2>Output Console</h2>
-            <pre id="rustOutput">Output will appear here...</pre>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div id="rust-playground-placeholder"></div>
 
     <!-- Quiz Section -->
-    <section id="quiz" class="section quiz-section">
-      <div class="container">
-        <h2 class="section-title">
-          <span class="title-icon">📝</span>
-          Topic Quizzes
-        </h2>
-        <p class="section-subtitle">
-          Test your knowledge with 10 questions per topic
-        </p>
-        <div class="quiz-grid">
-          <!-- Quiz cards will be generated by JavaScript -->
-        </div>
-      </div>
-    </section>
+    <div id="quiz-placeholder"></div>
 
     <!-- Roadmap Section -->
     <section id="roadmap" class="section roadmap-section">
@@ -425,17 +967,7 @@
           <span class="title-icon">🛤️</span>
           Learning Roadmap
         </h2>
-        
-        <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 2.5rem; flex-wrap: wrap;">
-            <a href="/pages/learning/algorithm-universe/algorithm-universe.html" class="btn btn-primary" style="display: flex; align-items: center; gap: 8px;">
-                <i class="fas fa-project-diagram" aria-hidden="true"></i> Interactive Universe Map
-            </a>
-            <a href="/pages/tools/personalized-learning-path/personalized-learning-path.html" class="btn btn-secondary" style="display: flex; align-items: center; gap: 8px;">
-                <i class="fas fa-route" aria-hidden="true"></i> Personalized Learning Path
-            </a>
-        </div>
-
-        <div class="roadmap-container">
+        <!-- <div class="roadmap-container">
           <div class="roadmap-progress">
             <div class="progress-bar"></div>
           </div>
@@ -450,7 +982,7 @@
                 <li>Arrays & Strings</li>
                 <li>Recursion</li>
               </ul>
-              <a href="#" class="btn btn-primary roadmap-btn">
+              <a href="beginner-roadmap.html" class="btn btn-primary">
                 Explore Roadmap
               </a>
             </div>
@@ -467,7 +999,7 @@
                 <li>Greedy Algorithms</li>
               </ul>
 
-              <a href="#" class="btn btn-primary roadmap-btn">
+              <a href="intermediate-roadmap.html" class="btn btn-primary">
                 Explore Roadmap
               </a>
             </div>
@@ -481,31 +1013,12 @@
                 <li>Advanced Graphs</li>
                 <li>Competitive Programming</li>
               </ul>
-              <a href="#" class="btn btn-primary roadmap-btn">
+              <a href="advanced-roadmap.html" class="btn btn-primary">
                 Explore Roadmap
               </a>
             </div>
           </div>
-        </div>
-
-        <!-- Roadmap Controls -->
-        <div class="roadmap-controls" style="margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-          <div class="search-bar">
-            <i class="fas fa-search"></i>
-            <input
-              type="text"
-              id="roadmapSearchInput"
-              placeholder="Search algorithms, data structures, or topics..."
-            />
-            <button
-              id="clearRoadmapSearchBtn"
-              class="clear-search-btn"
-              aria-label="Clear search"
-            >
-              &times;
-            </button>
-          </div>
-        </div>
+        </div> -->
 
         <!-- Roadmap Tabs Selector -->
         <div class="roadmap-selector">
@@ -515,6 +1028,13 @@
             id="roadmapBasicTab"
           >
             <i class="fas fa-seedling"></i> Beginner Roadmap
+          </button>
+          <button
+            class="roadmap-tab"
+            data-tab="advanced"
+            id="roadmapAdvancedTab"
+          >
+            <i class="fas fa-crown"></i> Advanced Roadmap
           </button>
           <button
             class="roadmap-tab"
@@ -542,251 +1062,66 @@
 
           <!-- Overall Stages Roadmap (Original) -->
           <div class="roadmap-content" id="overviewRoadmapContainer">
-
-  <div class="overall-roadmap">
-
-    <div class="overall-stage">
-      <div class="stage-icon">🌱</div>
-      <h3>Beginner</h3>
-      <p>Build programming fundamentals and problem-solving skills.</p>
-
-      <div class="topic-list">
-        <span>Basic Programming</span>
-        <span>Arrays & Strings</span>
-        <span>Recursion</span>
-      </div>
-    </div>
-
-    <div class="road-arrow">
-    <i class="fas fa-arrow-down"></i>
-</div>
-
-    <div class="overall-stage">
-      <div class="stage-icon">⚡</div>
-      <h3>Intermediate</h3>
-      <p>Learn core data structures and optimization techniques.</p>
-
-      <div class="topic-list">
-        <span>Trees</span>
-        <span>Graphs</span>
-        <span>Dynamic Programming</span>
-      </div>
-    </div>
-
-    <div class="road-arrow">
-    <i class="fas fa-arrow-down"></i>
-</div>
-
-    <div class="overall-stage">
-      <div class="stage-icon">🚀</div>
-      <h3>Advanced</h3>
-      <p>Master advanced algorithms and competitive programming.</p>
-
-      <div class="topic-list">
-        <span>System Design</span>
-        <span>Advanced Graphs</span>
-        <span>Competitive Programming</span>
-      </div>
-    </div>
-
-    <div class="road-arrow">
-    <i class="fas fa-arrow-down"></i>
-</div>
-
-<div class="overall-stage">
-  <div class="stage-icon">👑</div>
-
-  <h3>DSA Pro</h3>
-
-  <p>
-    Achieve mastery in data structures and algorithms through
-    competitive programming, advanced optimization techniques,
-    and interview-level problem solving.
-  </p>
-
-  <div class="topic-list">
-    <span>Competitive Programming</span>
-    <span>Advanced Problem Solving</span>
-    <span>Interview Mastery</span>
-    <span>Optimization Techniques</span>
-  </div>
-
-</div>
-
-  </div>
-
-</div>
+            <div class="roadmap-container">
+              <div class="roadmap-progress">
+                <div class="progress-bar" id="roadmapProgress"></div>
+              </div>
+              <div class="roadmap-stages">
+                <div class="stage big-box" data-level="beginner">
+                  <div class="stage-marker">
+                    <i class="fas fa-seedling"></i>
+                  </div>
+                  <h3>Beginner</h3>
+                  <ul>
+                    <li>Basic Programming</li>
+                    <li>Arrays & Strings</li>
+                    <li>Recursion</li>
+                  </ul>
+                  <a href="beginner-roadmap.html" class="btn btn-primary">
+                    Explore Roadmap
+                  </a>
+                </div>
+                <div class="stage big-box" data-level="intermediate">
+                  <div class="stage-marker">
+                    <i class="fas fa-fire"></i>
+                  </div>
+                  <h3>Intermediate</h3>
+                  <ul>
+                    <li>Trees & Graphs</li>
+                    <li>Dynamic Programming</li>
+                    <li>Greedy Algorithms</li>
+                  </ul>
+                  <a href="intermediate-roadmap.html" class="btn btn-primary">
+                    Explore Roadmap
+                  </a>
+                </div>
+                <div class="stage big-box" data-level="advanced">
+                  <div class="stage-marker">
+                    <i class="fas fa-crown"></i>
+                  </div>
+                  <h3>Advanced</h3>
+                  <ul>
+                    <li>System Design</li>
+                    <li>Advanced Graphs</li>
+                    <li>Competitive Programming</li>
+                  </ul>
+                  <a href="advanced-roadmap.html" class="btn btn-primary">
+                    Explore Roadmap
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
+    <div id="roadmap-placeholder"></div>
 
     <!-- Interview Prep Section -->
-    <section id="interview" class="section interview-section">
-      <div class="container">
-        <h2 class="section-title">
-          <span class="title-icon">🎯</span>
-          Interview Preparation
-        </h2>
-        <div class="interview-grid">
-          <div class="interview-card">
-            <div class="card-icon">
-              <i class="fas fa-brain"></i>
-            </div>
-            <h3>Behavioral Questions</h3>
-            <p>
-              Master the STAR method and answer behavioral questions confidently
-            </p>
-            <a
-              href="behavioral-questions.html"
-              class="card-btn"
-              aria-label="Start learning behavioral questions"
-              style="
-                text-decoration: none;
-                display: inline-block;
-                text-align: center;
-              "
-            >
-              Start Learning
-            </a>
-          </div>
-          <div class="interview-card">
-            <div class="card-icon">
-              <i class="fas fa-code"></i>
-            </div>
-            <h3>Technical Interviews</h3>
-            <p>Whiteboard coding practice and problem-solving strategies</p>
-            <button
-              class="card-btn"
-              data-category="technical"
-              aria-label="Start learning technical interviews"
-            >
-              Start Learning
-            </button>
-          </div>
-          <div class="interview-card">
-            <div class="card-icon">
-              <i class="fas fa-file-alt"></i>
-            </div>
-            <h3>Coding Resume</h3>
-            <p>
-              View your coding journey in a beautiful, structured resume layout
-            </p>
-            <a
-              href="/pages/career/resume/resume.html"
-              class="card-btn"
-              style="
-                text-decoration: none;
-                display: inline-block;
-                text-align: center;
-              "
-            >
-              View Resume
-            </a>
-          </div>
-          <div class="interview-card">
-            <div class="card-icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <h3>System Design</h3>
-            <p>Learn to design scalable systems and architecture</p>
-            <a
-              href="system-design.html"
-              class="card-btn"
-              aria-label="Start learning system design"
-              style="
-                text-decoration: none;
-                display: inline-block;
-                text-align: center;
-              "
-            >
-              Start Learning
-            </a>
-          </div>
-          <div class="interview-card">
-            <div class="card-icon">
-              <i class="fas fa-file-pdf"></i>
-            </div>
-            <h3>DSA Cheat Sheets</h3>
-            <p>
-              Quick reference guides with complexity tables and code templates
-            </p>
-            <a
-              href="cheat-sheets.html"
-              class="card-btn"
-              aria-label="Start learning DSA cheat sheets"
-              style="
-                text-decoration: none;
-                display: inline-block;
-                text-align: center;
-              "
-            >
-              Start Learning
-            </a>
-          </div>
-          <div class="interview-card">
-            <div class="card-icon">
-              <i class="fas fa-file-alt"></i>
-            </div>
-
-            <h3>Resume Tips</h3>
-
-            <p>
-              Learn resume structure, ATS-friendly formatting, project
-              presentation, and placement preparation.
-            </p>
-
-            <a
-              href="resume-tips.html"
-              class="card-btn"
-              aria-label="Start learning resume tips"
-              style="
-                text-decoration: none;
-                display: inline-block;
-                text-align: center;
-              ">
-                    Start Learning
-                    </a>
-              </div>
-              <div class="interview-card">
-            <div class="card-icon">
-              <i class="fas fa-shield-halved"></i>
-            </div>
-            <h3>Algorithm Arena</h3>
-            <p>Watch algorithms battle head-to-head with live visualizations and real-time performance metrics.</p>
-            <a href="/pages/tools/algorithm-arena/algorithm-arena.html" class="card-btn" aria-label="Enter Algorithm Gladiator Arena"
-              style="text-decoration: none; display: inline-block; text-align: center;">
-              Enter Arena
-            </a>
-          </div>
-          <div class="interview-card">
-            <div class="card-icon">
-              <i class="fas fa-code-branch"></i>
-            </div>
-            <h3>Repository Analyzer</h3>
-            <p>Scan your GitHub repository for functional CI/CD automation and best practices.</p>
-            <a href="/pages/repo-analyzer/repo-analyzer.html" class="card-btn" aria-label="Open Repository Analyzer"
-              style="text-decoration: none; display: inline-block; text-align: center;">
-              Analyze Repo
-            </a>
-          </div>
-          <div class="interview-card">
-            <div class="card-icon">
-                <i class="fas fa-layer-group"></i>
-            </div>
-            <h3>Bulk Repository Analyzer</h3>
-            <p>Upload a CSV to analyze hundreds of GitHub workflows asynchronously using distributed background workers.</p>
-            <a href="/pages/repo-analyzer/bulk-analyzer.html" class="card-btn" aria-label="Open Bulk Analyzer"
-                style="text-decoration: none; display: inline-block; text-align: center;">
-                Bulk Audit
-            </a>
-          </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div id="interview-placeholder"></div>
 
     <!-- Dashboard Section -->
+
     <section id="dashboard" class="section dashboard-section">
       <div class="container">
         <h2 class="section-title">
@@ -892,14 +1227,32 @@
               </div>
             </div>
           </div>
-          <div class="dashboard-card">
-            <h3>Recent Activity</h3>
-            <div class="activity-list" id="activityList">
-              <p class="empty-state">
-                No recent activity. Start solving problems!
-              </p>
+          
+
+          <!-- UPDATED: Recent Activity Card with Activity Feed -->
+
+          <div class="dashboard-card activity-feed-card">
+            <div class="card-header-with-actions">
+              <h3><i class="fas fa-clock"></i> Recent Activity</h3>
+              <button id="clearActivityBtn" class="btn-clear-activity" title="Clear all activity">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+            <div class="activity-feed" id="activityFeed">
+
+              <!-- Activities will be rendered here -->
+
+              <div class="activity-empty">
+                <i class="fas fa-inbox"></i>
+                <p>No recent activity yet. Start solving problems!</p>
+              </div>
+            </div>
+            <div class="activity-feed-footer">
+              <span id="activityCount">0 activities</span>
+              <button id="viewAllActivityBtn" class="btn-view-all">View All</button>
             </div>
           </div>
+
           <div class="dashboard-card heatmap-card">
             <h3>Activity Heatmap</h3>
             <div class="heatmap-legend">
@@ -950,28 +1303,11 @@
       </div>
     </section>
 
-    
+    <div id="dashboard-placeholder"></div>
+
+
     <!-- Did You Know? Section -->
-    <div class="dashboard-card facts-card">
-      <div class="facts-header">
-        <div class="facts-title">
-            <span class="facts-icon" aria-hidden="true">💡</span>
-            <h3>Did You Know?</h3>
-        </div>
-        <button onclick="showNextFact()" class="facts-btn">
-            Next Fact →
-        </button>
-    </div>
-    <div class="facts-content">
-        <p id="factText" class="fact-text" aria-live="polite" aria-atomic="true">
-            Loading fact...
-        </p>
-        <div class="facts-footer">
-            <span class="facts-date" id="factDate">📅 Fact of the day</span>
-            <span class="facts-counter" id="factCounter">1/15</span>
-        </div>
-    </div>
-</div>
+    <div id="did-you-know-placeholder"></div>
 
     <!-- Gamification Section -->
     <section id="gamification" class="section gamification-section">
@@ -980,9 +1316,14 @@
           <span class="title-icon">🎮</span>
           Gamification
         </h2>
-        <div class="gamification-grid">
+      <div class="gamification-grid">
+
+          <!-- XP & Level Card -->
           <div class="xp-card big-box">
-            <h3>Experience Points</h3>
+            <div class="xp-card-header">
+              <h3>⚡ Experience Points</h3>
+              <span class="xp-next-level" id="xpNextLevel">Next: Novice</span>
+            </div>
             <div class="xp-bar-container">
               <div class="xp-bar" id="xpBar"></div>
               <span class="xp-text" id="xpText">0 / 1000 XP</span>
@@ -993,1062 +1334,222 @@
                 id="levelBadge"
                 onclick="openGameModal()"
                 style="cursor: pointer"
-                title="Click to play DSA games!"
+                title="Click to play DSA games! 🎮"
               >
-                Level 1 - Beginner
+                🎮 Level 1 - Beginner
               </span>
+              <span class="level-hint">Click to play DSA Games!</span>
+            </div>
+            <div class="xp-stats">
+              <div class="xp-stat-item">
+                <span class="xp-stat-value" id="totalProblemsCount">0</span>
+                <span class="xp-stat-label">Problems Solved</span>
+              </div>
+              <div class="xp-stat-item">
+                <span class="xp-stat-value" id="streakCount">0🔥</span>
+                <span class="xp-stat-label">Day Streak</span>
+              </div>
+              <div class="xp-stat-item">
+                <span class="xp-stat-value" id="totalXPCount">0</span>
+                <span class="xp-stat-label">Total XP</span>
+              </div>
             </div>
           </div>
+
+          <!-- Badges Card -->
           <div class="badges-showcase big-box">
-            <h3>Badges</h3>
+            <div class="badges-header">
+              <h3>🏆 Badges</h3>
+              <span class="badges-earned-count" id="badgesEarnedCount">0/6 earned</span>
+            </div>
             <div class="badges-grid" id="badgesGrid">
               <!-- Badges will be generated by JavaScript -->
             </div>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Game Modal -->
-    <div
-      class="modal game-modal"
-      id="gameModal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="gameModalTitle"
-    >
-      <div class="game-modal-content">
-        <div class="game-modal-header">
-          <h3 id="gameModalTitle">🎮 DSA Game</h3>
-          <button
-            class="modal-close"
-            onclick="closeGameModal()"
-            aria-label="Close game modal"
-          >
-            ×
-          </button>
-        </div>
-        <div class="game-modal-body" id="gameModalBody">
-          <!-- Level Selection Screen -->
-          <div id="levelSelector" style="display: none">
-            <div
-              style="display: flex; align-items: center; margin-bottom: 1.5rem"
-            >
-              <button
-                class="btn btn-outline"
-                onclick="showGameTypeSelector()"
-                style="font-size: 0.85rem; padding: 0.4rem 0.8rem"
-              >
-                ← Back to Game Modes
-              </button>
-              <h4
-                style="
-                  flex: 1;
-                  text-align: center;
-                  color: var(--accent);
-                  margin: 0;
-                "
-              >
-                Choose Your Game Mode
-              </h4>
+          <!-- Streak Card -->
+          <div class="streak-card big-box">
+            <h3>🔥 Daily Streak</h3>
+            <div class="streak-display">
+              <div class="streak-number" id="streakNumber">0</div>
+              <div class="streak-label">day streak</div>
             </div>
-            <div class="level-selection-grid" id="levelSelectionGrid">
+            <div class="streak-week" id="streakWeek">
               <!-- Generated by JS -->
             </div>
-            <p
-              style="
-                text-align: center;
-                margin-top: 1rem;
-                color: var(--text-secondary);
-                font-size: 0.85rem;
-              "
-            >
-              🔒 Locked levels unlock as you earn more XP!
-            </p>
-          </div>
-
-          <!-- Game Type Selector -->
-          <div id="gameTypeSelector">
-            <h4
-              style="
-                text-align: center;
-                margin-bottom: 1.5rem;
-                color: var(--accent);
-              "
-            >
-              Choose Your Game Mode
-            </h4>
-            <div class="game-type-grid">
-              <div class="game-type-card" onclick="startGame('quiz')">
-                <div class="game-type-icon">🧩</div>
-                <h4>Quiz Game</h4>
-                <p>Answer MCQ questions with a 30s timer</p>
-                <span class="game-xp-reward">+20 XP per question</span>
-              </div>
-              <div class="game-type-card" onclick="startGame('speed')">
-                <div class="game-type-icon">⚡</div>
-                <h4>Speed Round</h4>
-                <p>Solve as many as possible in 60 seconds</p>
-                <span class="game-xp-reward">+10 XP per correct</span>
-              </div>
-              <div class="game-type-card" onclick="startGame('complexity')">
-                <div class="game-type-icon">🎯</div>
-                <h4>Complexity Guesser</h4>
-                <p>Guess the Big O of code snippets</p>
-                <span class="game-xp-reward">+15 XP per correct</span>
-              </div>
-              <div class="game-type-card" onclick="startGame('memory')">
-                <div class="game-type-icon">🧠</div>
-                <h4>Memory Game</h4>
-                <p>Match DSA concepts with definitions</p>
-                <span class="game-xp-reward">+25 XP per match</span>
-              </div>
-              <div class="game-type-card" onclick="startGame('code')">
-                <div class="game-type-icon">✍️</div>
-                <h4>Code Completion</h4>
-                <p>Fill in the missing code from options</p>
-                <span class="game-xp-reward">+30 XP per correct</span>
-              </div>
-            </div>
-
-            <!-- Topic & Difficulty Info -->
-            <div class="game-level-info" id="gameLevelInfo">
-              <span id="gameLevelTopic">📚 Topic: Arrays</span>
-              <span id="gameLevelDifficulty">⚡ Difficulty: Easy</span>
+            <div class="streak-best">
+              🏅 Best Streak: <span id="bestStreak">0</span> days
             </div>
           </div>
 
-          <!-- Memory Game Area -->
-          <div id="memoryGameArea" style="display: none">
-            <div class="game-stats-bar">
-              <span class="game-stat"
-                >⏱️ <span id="memoryTimer">60</span>s</span
-              >
-              <span class="game-stat"
-                >✅ Matches: <span id="memoryMatches">0</span></span
-              >
-              <span class="game-stat"
-                >🎯 Moves: <span id="memoryMoves">0</span></span
-              >
+          <!-- Recent Activity Card -->
+          <div class="activity-card big-box">
+            <h3>📊 Recent Activity</h3>
+            <div class="activity-list" id="activityList">
+              <p class="activity-empty">No activity yet. Start solving problems! 🚀</p>
             </div>
-            <div class="memory-grid" id="memoryGrid"></div>
           </div>
 
-          <!-- Code Completion Area -->
-          <div id="codeGameArea" style="display: none">
-            <div class="game-stats-bar">
-              <span class="game-stat">⏱️ <span id="codeTimer">30</span>s</span>
-              <span class="game-stat"
-                >✅ Score: <span id="codeScore">0</span></span
-              >
-              <span class="game-stat"
-                >❓ Q: <span id="codeQuestion">1</span>/5</span
-              >
-            </div>
-            <div class="code-game-area">
-              <div class="code-snippet" id="codeSnippet"></div>
-              <div class="code-options-grid" id="codeOptionsGrid"></div>
-            </div>
-            <div
-              class="game-explanation"
-              id="codeExplanation"
-              style="display: none"
-            ></div>
-          </div>
-
-          <!-- Game Play Area -->
-          <div id="gamePlayArea" style="display: none">
-            <div class="game-stats-bar">
-              <span class="game-stat">⏱️ <span id="gameTimer">30</span>s</span>
-              <span class="game-stat"
-                >✅ Score: <span id="gameScore">0</span></span
-              >
-              <span class="game-stat"
-                >❓ Q: <span id="gameQuestion">1</span>/10</span
-              >
-            </div>
-            <div class="game-question-area">
-              <div class="game-question-text" id="gameQuestionText"></div>
-              <div class="game-options-grid" id="gameOptionsGrid"></div>
-            </div>
-            <div
-              class="game-explanation"
-              id="gameExplanation"
-              style="display: none"
-            ></div>
-          </div>
-
-          <!-- Game Results -->
-          <div id="gameResults" style="display: none">
-            <div class="game-results-content">
-              <div class="game-results-icon">🏆</div>
-              <h3 id="gameResultsTitle">Game Complete!</h3>
-              <div class="game-results-stats">
-                <div class="result-stat">
-                  <span class="result-stat-value" id="resultScore">0</span>
-                  <span class="result-stat-label">Score</span>
-                </div>
-                <div class="result-stat">
-                  <span class="result-stat-value" id="resultXP">0</span>
-                  <span class="result-stat-label">XP Earned</span>
-                </div>
-                <div class="result-stat">
-                  <span class="result-stat-value" id="resultAccuracy">0%</span>
-                  <span class="result-stat-label">Accuracy</span>
-                </div>
-              </div>
-              <div class="game-results-buttons">
-                <button class="btn btn-primary" onclick="restartGame()">
-                  🔄 Play Again
-                </button>
-                <button
-                  class="btn btn-secondary"
-                  onclick="showGameTypeSelector()"
-                >
-                  🎮 Change Mode
-                </button>
-                <button class="btn btn-outline" onclick="closeGameModal()">
-                  ✖ Close
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
+    </section>
+    <div id="gamification-placeholder"></div>
 
-    <!-- Chatbot Widget -->
+    <!-- Game Modal -->
+    <div id="game-modal-placeholder"></div>
 
     <!-- Code Editor Shortcuts Panel -->
-    <div class="shortcuts-panel" id="shortcutsPanel">
-      <div class="shortcuts-title">Keyboard Shortcuts</div>
-      <ul class="shortcuts-list">
-        <li>
-          <span>Run Code</span><span class="shortcut-key">Ctrl+Enter</span>
-        </li>
-        <li><span>Submit</span><span class="shortcut-key">Ctrl+S</span></li>
-        <li>
-          <span>Format Code</span><span class="shortcut-key">Ctrl+Shift+F</span>
-        </li>
-        <li>
-          <span>Toggle Comment</span><span class="shortcut-key">Ctrl+/</span>
-        </li>
-        <li><span>Find</span><span class="shortcut-key">Ctrl+F</span></li>
-        <li><span>Replace</span><span class="shortcut-key">Ctrl+H</span></li>
-        <li><span>Go to Line</span><span class="shortcut-key">Ctrl+G</span></li>
-        <li><span>Undo</span><span class="shortcut-key">Ctrl+Z</span></li>
-        <li><span>Redo</span><span class="shortcut-key">Ctrl+Y</span></li>
-      </ul>
-    </div>
+    <div id="shortcuts-panel-placeholder"></div>
 
     <!-- Topic Modal -->
-    <div class="modal" id="topicModal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 id="modalTitle"></h3>
-          <button class="modal-close" id="modalClose">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div class="topic-theory">
-            <h4>Theory</h4>
-            <div id="modalTheory"></div>
-          </div>
-          <div class="topic-problems">
-            <h4>Sample Problems</h4>
-            <ul id="modalProblems"></ul>
-          </div>
-          <div class="topic-difficulty">
-            <h4>Difficulty Level</h4>
-            <div id="modalDifficulty"></div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" id="startPracticeBtn">
-            Start Practicing
-          </button>
-        </div>
-      </div>
-    </div>
+    <div id="topic-modal-placeholder"></div>
 
     <!-- Roadmap Step Details Modal -->
-    <div class="modal" id="roadmapStepModal">
-      <div class="modal-content roadmap-modal-content">
-        <div class="modal-header">
-          <div class="step-badge-tag" id="roadmapStepBadge">Step 1</div>
-          <h3 id="roadmapStepModalTitle">Introduction to DSA</h3>
-          <button
-            class="modal-close"
-            id="roadmapStepModalClose"
-            aria-label="Close roadmap step modal"
-          >
-            &times;
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="roadmap-step-theory">
-            <h4><i class="fas fa-book-open"></i> Theory & Key Concepts</h4>
-            <div id="roadmapStepTheoryContent" class="theory-text"></div>
-          </div>
-
-          <div
-            id="roadmapStepComplexitySection"
-            class="roadmap-step-complexity hidden"
-          >
-            <h4><i class="fas fa-table"></i> Complexity Reference</h4>
-            <div class="table-responsive">
-              <table class="complexity-table">
-                <thead>
-                  <tr>
-                    <th>Operation</th>
-                    <th>Time Complexity</th>
-                    <th>Space Complexity</th>
-                  </tr>
-                </thead>
-                <tbody id="roadmapStepComplexityBody"></tbody>
-              </table>
-            </div>
-          </div>
-
-          <div id="roadmapStepQuizSection" class="roadmap-step-quiz hidden">
-            <h4>
-              <i class="fas fa-graduation-cap"></i> Concept Verification Quiz
-            </h4>
-            <p class="quiz-instruction-text">
-              Answer the questions below correctly to complete this step and
-              earn +50 XP!
-            </p>
-            <div id="roadmapStepQuizContent"></div>
-            <button class="btn btn-primary" id="roadmapStepSubmitQuizBtn">
-              Submit Quiz
-            </button>
-          </div>
-
-          <div
-            id="roadmapStepProblemsSection"
-            class="roadmap-step-problems hidden"
-          >
-            <h4><i class="fas fa-code"></i> Curated Coding Practice</h4>
-            <p class="problems-instruction-text">
-              Solve at least one of the coding problems below to complete this
-              step!
-            </p>
-            <ul class="roadmap-problems-list" id="roadmapStepProblemsList"></ul>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" id="roadmapStepModalCloseBtn">
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
+    <div id="roadmap-step-modal-placeholder"></div>
 
     <!-- Quiz Editor Modal -->
-    <div class="modal quiz-modal" id="quizEditorModal">
-      <div class="quiz-modal-content">
-        <div id="quizLoadingScreen" class="quiz-loading hidden">
-          <div class="quiz-spinner"></div>
-          <h3 class="loading-text">Vectoring Challenge...</h3>
-          <p id="loadingTopicName"></p>
-        </div>
-        <div class="quiz-modal-header">
-          <div class="quiz-problem-info">
-            <span class="quiz-topic-badge" id="quizTopicBadge"></span>
-            <span class="quiz-difficulty" id="quizDifficulty"></span>
-            <h3 id="quizTitle">Problem Title</h3>
-            <button type="button" class="quiz-modal-close" id="quizModalClose" aria-label="Close">&times;</button>
-          </div>
-        </div>
-        <div class="quiz-modal-body">
-          <div class="quiz-layout">
-            <div class="quiz-problem-panel">
-              <!-- Tab Navigation -->
-              <div class="quiz-panel-tabs" style="display: flex; border-bottom: 1px solid var(--glass-border); margin-bottom: 1rem; gap: 0.5rem;">
-                <button id="btnQuizTabProblem" class="quiz-tab-btn active" onclick="switchQuizTab('problem')" type="button">Description</button>
-                <button id="btnQuizTabNotes" class="quiz-tab-btn" onclick="switchQuizTab('notes')" type="button">Notes & Mnemonics</button>
-              </div>
-
-              <!-- Problem Content Area -->
-              <div id="quizTabProblemContent">
-                <div class="problem-description">
-                  <h4>Problem Description</h4>
-                  <p id="quizDescription"></p>
-                  <div class="problem-examples">
-                    <h5>Examples</h5>
-                    <div id="quizExamples"></div>
-                  </div>
-                </div>
-                <div class="test-cases-section">
-                  <h5 class="test-cases-heading">Test Cases</h5>
-                  <div class="test-cases-container" id="quizTestCasesContainer"></div>
-                </div>
-              </div>
-
-              <!-- Notes & Mnemonics Content Area -->
-              <div id="quizTabNotesContent" style="display: none; padding-right: 0.5rem; max-height: 480px; overflow-y: auto;">
-                <h4 style="margin-top:0; font-family:'Orbitron',sans-serif; color:var(--accent);">Problem Study Guide</h4>
-                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom: 1rem;">Attach study hooks, traps, and guidelines below. Notes are saved to your profile.</p>
-                
-                <div class="control-group" style="margin-bottom: 0.75rem;">
-                  <label for="noteText" style="display:block; font-size:0.8rem; margin-bottom:0.25rem;">My Notes</label>
-                  <textarea id="noteText" class="control-input" placeholder="General observations, explanations, or approach summaries..." style="height: 70px; resize: vertical; width: 100%; border-radius: 6px; padding: 0.5rem; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: var(--text-primary); font-family: inherit; font-size: 0.9rem;"></textarea>
-                </div>
-                
-                <div class="control-group" style="margin-bottom: 0.75rem;">
-                  <label for="mnemonicText" style="display:block; font-size:0.8rem; margin-bottom:0.25rem;">Mnemonics / Memory Hooks</label>
-                  <textarea id="mnemonicText" class="control-input" placeholder="e.g. 'FAST/SLOW pointers: Slow moves 1, Fast moves 2'..." style="height: 60px; resize: vertical; width: 100%; border-radius: 6px; padding: 0.5rem; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: var(--text-primary); font-family: inherit; font-size: 0.9rem;"></textarea>
-                </div>
-                
-                <div class="control-group" style="margin-bottom: 0.75rem;">
-                  <label for="pitfallsText" style="display:block; font-size:0.8rem; margin-bottom:0.25rem;">Common Pitfalls & Traps</label>
-                  <textarea id="pitfallsText" class="control-input" placeholder="What to watch out for (e.g. integer overflow, empty checks)..." style="height: 60px; resize: vertical; width: 100%; border-radius: 6px; padding: 0.5rem; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: var(--text-primary); font-family: inherit; font-size: 0.9rem;"></textarea>
-                </div>
-                
-                <div class="control-group" style="margin-bottom: 0.75rem;">
-                  <label for="whenToUseText" style="display:block; font-size:0.8rem; margin-bottom:0.25rem;">When to use this Pattern?</label>
-                  <textarea id="whenToUseText" class="control-input" placeholder="Characteristics of problems that need this solution pattern..." style="height: 60px; resize: vertical; width: 100%; border-radius: 6px; padding: 0.5rem; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: var(--text-primary); font-family: inherit; font-size: 0.9rem;"></textarea>
-                </div>
-
-                <div class="control-group" style="margin-bottom: 1rem;">
-                  <label for="noteTags" style="display:block; font-size:0.8rem; margin-bottom:0.25rem;">Tags (Comma-separated)</label>
-                  <input type="text" id="noteTags" class="control-input" placeholder="e.g. sliding-window, hash-map" style="width: 100%; border-radius: 6px; padding: 0.5rem; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: var(--text-primary); font-family: inherit; font-size: 0.9rem;">
-                </div>
-                
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 1rem;">
-                  <span id="noteSaveStatus" style="font-size:0.8rem; color:#10b981; font-style:italic;"></span>
-                  <button id="btnSaveProblemNotes" class="btn btn-primary" onclick="saveActiveProblemNotes()" type="button" style="padding: 0.4rem 0.8rem; font-size: 0.82rem;"><i class="fas fa-save"></i> Save Notes</button>
-                </div>
-              </div>
-            </div>
-            <div class="quiz-editor-panel">
-              <div class="code-editor-container">
-                <div class="editor-header">
-                  <div class="problem-details">
-                    <select id="languageSelect" class="language-select">
-                      <option value="javascript">JavaScript</option>
-                      <option value="python">Python</option>
-                      <option value="java">Java</option>
-                      <option value="cpp">C++</option>
-                      <option value="c">C</option>
-                      <option value="swift">Swift</option>
-                    </select>
-                  </div>
-                  <div class="editor-actions">
-                    <button
-                      class="editor-btn"
-                      onclick="insertSnippet('function')"
-                      title="Insert function"
-                    >
-                      <i class="fas fa-code"></i><span class="btn-text"> Function</span>
-                    </button>
-                    <button
-                      class="editor-btn"
-                      onclick="formatCode()"
-                      title="Format code"
-                    >
-                      <i class="fas fa-indent"></i><span class="btn-text"> Format</span>
-                    </button>
-                    <button class="editor-btn" id="aiInterviewerToggle" type="button" onclick="toggleAiInterviewer()" title="Invite AI Interviewer" aria-pressed="false" style="color: #10b981; border: 1px solid #10b981;">
-                     <i class="fas fa-user-tie"></i><span class="btn-text"> AI Interviewer</span>
-                    </button>
-                  
-                    <button
-                      class="editor-btn"
-                      onclick="toggleLineComment()"
-                      title="Toggle comment"
-                    >
-                      <i class="fas fa-comment"></i><span class="btn-text"> //</span>
-                    </button>
-                  </div>
-                </div>
-                <div class="code-editor">
-                  <div class="line-numbers" id="lineNumbers"></div>
-                  <textarea
-                    id="codeEditor"
-                    class="code-textarea"
-                    spellcheck="false"
-                    placeholder="// Write your solution here...&#10;&#10;function twoSum(nums, target) {&#10;    // Your code here&#10;}"
-                  ></textarea>
-                  <div class="syntax-highlight" id="syntaxHighlight"></div>
-                  <div class="current-line-indicator" id="currentLineIndicator"></div>
-                </div>
-                <div class="editor-shortcuts">
-                  <span aria-label="Run Code shortcut: Control plus Enter"><kbd>Ctrl</kbd>+<kbd>Enter</kbd><span class="shortcut-label"> Run Code</span></span>
-                  <span aria-label="Submit shortcut: Control plus S"><kbd>Ctrl</kbd>+<kbd>S</kbd><span class="shortcut-label"> Submit</span></span>
-                </div>
-                <div class="output-panel" id="outputPanel">
-                  <button
-                    type="button"
-                    class="output-header"
-                    id="outputHeader"
-                    aria-controls="quizOutputContent"
-                    aria-expanded="true"
-                  >
-                    <span>Output</span>
-                    <i class="fas fa-chevron-down" id="outputToggleIcon"></i>
-                  </button>
-                  </div>
-                  <div class="output-content" id="quizOutputContent">
-                    <p class="output-placeholder">
-                      Run your code to see output...
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="quiz-modal-footer">
-          <div class="quiz-actions" style="display:flex; justify-content:flex-end; align-items:center; width:100%; gap: 1rem; flex-wrap: wrap;">
-            <div style="display:flex; gap:0.5rem; margin-left: auto;">
-              <button class="btn btn-outline" onclick="runQuizCode()">
-                <i class="fas fa-play"></i> Run
-              </button>
-              <button class="btn btn-primary" onclick="submitQuizCode()">
-                <i class="fas fa-paper-plane"></i> Submit
-              </button>
-            </div>
-            
-            <div id="sm2RatingContainer" style="display:none; align-items:center; gap:0.6rem; background:rgba(255,255,255,0.03); padding:0.4rem 0.8rem; border-radius:8px; border:1px solid var(--glass-border);">
-              <span style="font-size:0.8rem; color:var(--text-secondary); font-weight:600; font-family:'Orbitron',sans-serif;">SM-2 Schedule:</span>
-              <button class="btn" style="background:rgba(239, 68, 68, 0.2); color:#ef4444; border:1px solid rgba(239,68,68,0.4); padding:0.25rem 0.5rem; font-size:0.75rem; font-family:'Orbitron',sans-serif; cursor:pointer;" onclick="rateRecallDifficulty(1)" type="button">Again</button>
-              <button class="btn" style="background:rgba(245, 158, 11, 0.2); color:#f59e0b; border:1px solid rgba(245,158,11,0.4); padding:0.25rem 0.5rem; font-size:0.75rem; font-family:'Orbitron',sans-serif; cursor:pointer;" onclick="rateRecallDifficulty(3)" type="button">Good</button>
-              <button class="btn" style="background:rgba(16, 185, 129, 0.2); color:#10b981; border:1px solid rgba(16,185,129,0.4); padding:0.25rem 0.5rem; font-size:0.75rem; font-family:'Orbitron',sans-serif; cursor:pointer;" onclick="rateRecallDifficulty(5)" type="button">Easy</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="quiz-editor-modal-placeholder"></div>
 
     <!-- Quiz Modal -->
-    <div class="modal quiz-modal" id="quizModal">
-      <div class="quiz-modal-content">
-        <div class="quiz-modal-header">
-          <div class="quiz-problem-info">
-            <span class="quiz-topic-badge" id="topicQuizBadge">Arrays</span>
-            <span class="quiz-difficulty" id="topicQuizDifficulty">Medium</span>
-          </div>
-          <h3 id="topicQuizTitle">Topic Quiz</h3>
-          <button
-            class="modal-close"
-            id="topicQuizModalClose"
-            aria-label="Close quiz modal"
-          >
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-        <div class="quiz-modal-body">
-          <div class="quiz-layout">
-            <!-- Quiz Panel -->
-            <div class="quiz-problem-panel">
-              <div class="quiz-container">
-                <div class="quiz-progress-bar-container">
-                  <div class="quiz-progress-bar" id="topicQuizProgress"></div>
-                </div>
-                <div class="quiz-counter" id="topicQuizCounter">1 / 10</div>
-                <div class="quiz-question" id="topicQuizQuestionText">
-                  Question will appear here
-                </div>
-                <div class="quiz-options" id="topicQuizOptions">
-                  <!-- Options generated by JS -->
-                </div>
-              </div>
-            </div>
-
-            <!-- Right: Quiz Info Panel -->
-            <div class="quiz-editor-panel">
-              <div class="quiz-info-panel">
-                <h4>Quiz Instructions</h4>
-                <ul>
-                  <li>Select the correct answer for each question</li>
-                  <li>You earn 10 XP per correct answer</li>
-                  <li>Your best score is saved</li>
-                  <li>Retake to improve your score</li>
-                </ul>
-                <div class="quiz-xp-display">
-                  <i class="fas fa-star"></i> 10 XP per correct answer
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="quiz-modal-footer">
-          <div class="quiz-result hidden" id="topicQuizResult"></div>
-          <div class="quiz-actions">
-            <button class="btn btn-secondary" onclick="closeQuizModal()">
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="quiz-modal-placeholder"></div>
 
     <!-- Profile Edit Modal -->
-    <div class="modal" id="profileEditModal">
-      <div class="modal-content profile-edit-modal">
-        <div class="modal-header">
-          <h3>Edit Profile</h3>
-          <button
-            class="modal-close"
-            id="profileModalClose"
-            aria-label="Close edit profile modal"
-          >
-            &times;
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="profile-edit-form">
-            <div class="avatar-selector">
-              <h4>Choose Avatar</h4>
-              <div class="avatar-options" id="avatarOptions"></div>
-            </div>
-            <div class="name-editor">
-              <label for="profileNameInput">Display Name</label>
-              <input
-                type="text"
-                id="profileNameInput"
-                placeholder="Enter your name"
-                maxlength="20"
-              />
-            </div>
-            <div class="languages-selector" style="margin-top: 1.5rem;">
-              <h4 style="margin-bottom: 0.5rem;">Programming Languages Known</h4>
-              <div class="languages-edit-options" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                <label class="lang-edit-label" style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer; color: var(--text-light);">
-                  <input type="checkbox" class="lang-edit-checkbox" value="C++" /> C++
-                </label>
-                <label class="lang-edit-label" style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer; color: var(--text-light);">
-                  <input type="checkbox" class="lang-edit-checkbox" value="Java" /> Java
-                </label>
-                <label class="lang-edit-label" style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer; color: var(--text-light);">
-                  <input type="checkbox" class="lang-edit-checkbox" value="Python" /> Python
-                </label>
-                <label class="lang-edit-label" style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer; color: var(--text-light);">
-                  <input type="checkbox" class="lang-edit-checkbox" value="JavaScript" /> JavaScript
-                </label>
-                <label class="lang-edit-label" style="display: flex; align-items: center; gap: 0.35rem; cursor: pointer; color: var(--text-light);">
-                  <input type="checkbox" class="lang-edit-checkbox" value="Rust" /> Rust
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" onclick="closeProfileModal()">
-            Cancel
-          </button>
-          <button class="btn btn-primary" onclick="saveProfileChanges()">
-            <i class="fas fa-save"></i> Save Changes
-          </button>
-        </div>
-      </div>
-    </div>
+    <div id="profile-edit-modal-placeholder"></div>
 
     <!-- Profile Section -->
-    <section id="profile" class="section profile-section">
-      <div class="container">
-        <h2 class="section-title">
-          <span class="title-icon">👤</span>
-          Profile
-        </h2>
-        <div class="profile-container">
-          <!-- Profile Header -->
-          <div class="profile-header">
-            <div class="profile-avatar">
-              <span class="avatar-icon">🚀</span>
-            </div>
-            <div class="profile-info">
-              <h3 id="profileSectionName">Learner</h3>
-              <p class="profile-level" id="profileLevelSection">
-                Level 1 - Beginner
-              </p>
-              <p class="profile-join">
-                Joined: <span id="joinDateSection">Today</span>
-              </p>
-            </div>
-            <button
-              class="profile-edit-btn"
-              id="profileSectionEditBtn"
-              title="Edit Profile"
-              aria-label="Edit Profile"
-            >
-              <i class="fas fa-pen"></i>
-            </button>
-          </div>
-          <div class="profile-stats">
-            <div class="profile-stat big-box">
-              <span class="profile-stat-value" id="profileTotalXPSection"
-                >0</span
-              >
-              <span class="profile-stat-label">Total XP</span>
-            </div>
-            <div class="profile-stat big-box">
-              <span class="profile-stat-value" id="profileProblemsSection"
-                >0</span
-              >
-              <span class="profile-stat-label">Problems</span>
-            </div>
-            <div class="profile-stat big-box">
-              <span class="profile-stat-value" id="profileStreakSection"
-                >0</span
-              >
-              <span class="profile-stat-label">Day Streak</span>
-            </div>
-            <div class="profile-stat big-box">
-              <span class="profile-stat-value" id="profileBadgesSection"
-                >0</span
-              >
-              <span class="profile-stat-label">Badges</span>
-            </div>
-          </div>
-          <div class="profile-progress">
-            <div class="progress-bar-container big-box">
-              <div class="progress-label">
-                <span>Level Progress</span>
-                <span id="profileLevelProgress">0%</span>
-              </div>
-              <div class="progress-bar">
-                <div class="progress-fill" id="profileProgressBar"></div>
-              </div>
-            </div>
-            <div class="account-actions">
-              <button id="changePasswordBtn" class="btn btn-secondary">
-  <i class="fas fa-key"></i>
-  Change Password
-</button>
-              <button id="deactivateAccountBtn" class="btn btn-danger">
-                <i class="fas fa-user-slash"></i>
-                Deactivate Account
-              </button>
-              <button id="deleteAccountBtn" class="btn btn-danger">
-    <i class="fas fa-trash"></i>
-    Delete Account
-  </button>
-</div>
-            </div>
-          </div>
-          
-          <!-- Languages Section -->
-          <div class="profile-languages big-box" style="margin-top: 1.5rem; padding: 1.5rem; text-align: left; border-radius: var(--border-radius); border: 1px solid var(--glass-border); background: var(--dark-card);">
-            <h4 style="margin: 0 0 1rem 0; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--text-light); display: flex; align-items: center; gap: 0.5rem;">
-              <span>💻</span> Known Languages
-            </h4>
-            <div id="profileLanguagesSection" class="languages-list" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-              <!-- Dynamic chips -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div id="profile-placeholder"></div>
 
-    <div
-      class="modal"
-      id="notesModal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="notesModalTitle"
-    >
-      <div class="modal-content notes-modal-content">
-        <div class="modal-header">
-          <h3 id="notesModalTitle">Problem Notes</h3>
+    <!-- Notes Modal -->
+    <div id="notes-modal-placeholder"></div>
 
-          <button
-            class="modal-close"
-            id="notesModalClose"
-            aria-label="Close notes modal"
-          >
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
+    <!-- Change Password Modal -->
+    <div id="change-password-modal-placeholder"></div>
 
-        <div class="modal-body">
-          <label for="problemNotesInput">Problem notes</label>
+    <!-- Study Timer Section -->
+    <div id="study-timer-placeholder"></div>
+  </main>
 
-          <textarea
-            id="problemNotesInput"
-            class="notes-textarea"
-            placeholder="Write your notes, hints, observations, or edge cases here..."
-          ></textarea>
-        </div>
+  <!-- Footer -->
+  <div id="footer-placeholder"></div>
 
-        <div class="modal-footer">
-          <button class="btn btn-secondary" id="closeNotesBtn">Close</button>
-
-          <button class="btn btn-primary" id="saveNotesBtn">
-            <i class="fas fa-save"></i>
-            Save Notes
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal" id="changePasswordModal">
-  <div class="modal-content">
-
-    <div class="modal-header">
-      <h3>Change Password</h3>
-
-      <button
-        class="modal-close"
-        id="changePasswordClose"
-        aria-label="Close"
-      >
+  <!-- Auth Gate Modal -->
+  <div class="modal" id="authGateModal" role="dialog" aria-modal="true" aria-labelledby="authGateTitle">
+    <div class="modal-content auth-gate-modal-content">
+      <button type="button" class="modal-close" id="authGateModalClose" aria-label="Close">
         &times;
       </button>
-    </div>
-
-    <div class="modal-body">
-      <div class="profile-edit-form">
-
-        <div
-          id="changePasswordMessage"
-          class="password-message"
-          role="alert"
-        ></div>
-
-        <!-- Current Password -->
-        <div class="password-field">
-          <label for="currentPassword">Current Password</label>
-
-          <div class="password-input-wrapper">
-            <input
-              type="password"
-              id="currentPassword"
-              placeholder="Enter current password"
-            />
-
-            <button
-              type="button"
-              class="password-toggle"
-              data-target="currentPassword"
-            >
-              <i class="fas fa-eye"></i>
-            </button>
-          </div>
+      <div class="auth-gate-icon">
+        <div class="auth-gate-lock-ring">
+          <i class="fas fa-lock"></i>
         </div>
-
-        <!-- New Password -->
-        <div class="password-field">
-          <label for="newPassword">New Password</label>
-
-          <div class="password-input-wrapper">
-            <input
-              type="password"
-              id="newPassword"
-              placeholder="Create a strong password"
-            />
-
-            <button
-              type="button"
-              class="password-toggle"
-              data-target="newPassword"
-            >
-              <i class="fas fa-eye"></i>
-            </button>
-          </div>
-
-          <div class="password-strength">
-            <div
-              id="passwordStrengthBar"
-              class="strength-bar"
-            ></div>
-          </div>
-
-          <span
-            id="passwordStrengthText"
-            class="strength-text"
-          >
-            Password strength
-          </span>
-
-          <ul class="password-rules">
-            <li id="ruleLength">Minimum 8 characters</li>
-            <li id="ruleUpper">One uppercase letter</li>
-            <li id="ruleLower">One lowercase letter</li>
-            <li id="ruleNumber">One number</li>
-            <li id="ruleSpecial">One special character</li>
-          </ul>
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="password-field">
-          <label for="confirmNewPassword">
-            Confirm New Password
-          </label>
-
-          <div class="password-input-wrapper">
-            <input
-              type="password"
-              id="confirmNewPassword"
-              placeholder="Confirm new password"
-            />
-
-            <button
-              type="button"
-              class="password-toggle"
-              data-target="confirmNewPassword"
-            >
-              <i class="fas fa-eye"></i>
-            </button>
-          </div>
-
-          <small
-            id="confirmPasswordError"
-            class="field-error"
-          ></small>
-        </div>
-
       </div>
-    </div>
-
-    <div class="modal-footer">
-      <button
-        class="btn btn-secondary"
-        id="cancelPasswordChange"
-      >
-        Cancel
-      </button>
-
-      <button
-        class="btn btn-primary"
-        id="savePasswordBtn"
-      >
-        Change Password
-      </button>
-    </div>
-
-  </div>
-</div>
-<section id="study-timer" class="glass-card" style="margin: 20px auto; padding: 20px; text-align: center; max-width: 600px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
-    <h3 style="margin-bottom: 15px; color: var(--text-primary);">Focus Mode</h3>
-    <div class="timer-display" id="timer-display" role="timer" aria-live="polite" aria-atomic="true" aria-label="Focus session time remaining" style="font-size: 2.5rem; font-weight: bold; margin-bottom: 15px;">25:00</div>
-    <div class="timer-controls" style="display: flex; gap: 10px; justify-content: center;">
-        <button id="start-btn" class="btn btn-primary">Start</button>
-        <button id="pause-btn" class="btn btn-secondary">Pause</button>
-        <button id="reset-btn" class="btn btn-secondary">Reset</button>
-    </div>
-</section>
-    </main>
-
-    <!-- Footer -->
-    <div id="footer-placeholder"></div>
-
-    <!-- Auth Gate Modal -->
-    <div
-      class="modal"
-      id="authGateModal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="authGateTitle"
-    >
-      <div class="modal-content auth-gate-modal-content">
-        <button class="modal-close" id="authGateModalClose" aria-label="Close">
-          &times;
+      <h2 class="auth-gate-title" id="authGateTitle">Sign in to track progress</h2>
+      <p class="auth-gate-subtitle" id="authGateSubtitle">
+        Continue as guest to explore, or sign in to save your progress.
+      </p>
+      <div class="auth-gate-perks">
+        <div class="auth-gate-perk">
+          <i class="fas fa-chart-line"></i> Track your progress &amp; streaks
+        </div>
+        <div class="auth-gate-perk">
+          <i class="fas fa-trophy"></i> Earn XP &amp; unlock badges
+        </div>
+        <div class="auth-gate-perk">
+          <i class="fas fa-users"></i> Join the leaderboard
+        </div>
+      </div>
+      <div class="auth-gate-actions">
+        <a href="login.html" id="authGateLoginBtn" class="btn btn-primary auth-gate-btn">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+        <a href="signup.html" id="authGateSignupBtn" class="btn btn-secondary auth-gate-btn">
+          <i class="fas fa-user-plus"></i> Sign Up Free
+        </a>
+        <button type="button" id="authGateGuestBtn" class="btn btn-secondary auth-gate-btn">
+          <i class="fas fa-user-astronaut"></i> Continue as Guest
         </button>
-        <div class="auth-gate-icon">
-          <div class="auth-gate-lock-ring">
-            <i class="fas fa-lock"></i>
-          </div>
-        </div>
-        <h2 class="auth-gate-title" id="authGateTitle">Login Required</h2>
-        <p class="auth-gate-subtitle" id="authGateSubtitle">
-          Sign in to unlock this feature and track your progress.
-        </p>
-        <div class="auth-gate-perks">
-          <div class="auth-gate-perk">
-            <i class="fas fa-chart-line"></i> Track your progress &amp; streaks
-          </div>
-          <div class="auth-gate-perk">
-            <i class="fas fa-trophy"></i> Earn XP &amp; unlock badges
-          </div>
-          <div class="auth-gate-perk">
-            <i class="fas fa-users"></i> Join the leaderboard
-          </div>
-        </div>
-        <div class="auth-gate-actions">
-          <a
-            href="login.html"
-            id="authGateLoginBtn"
-            class="btn btn-primary auth-gate-btn"
-          >
-            <i class="fas fa-sign-in-alt"></i> Login
-          </a>
-          <a
-            href="signup.html"
-            id="authGateSignupBtn"
-            class="btn btn-secondary auth-gate-btn"
-          >
-            <i class="fas fa-user-plus"></i> Sign Up Free
-          </a>
-        </div>
-        <p class="auth-gate-dismiss">
-          <button class="auth-gate-dismiss-btn" id="authGateDismiss">
-            Maybe later
-          </button>
-        </p>
       </div>
+      <p class="auth-gate-dismiss">
+        <button type="button" class="auth-gate-dismiss-btn" id="authGateDismiss">
+          Maybe later
+        </button>
+      </p>
     </div>
+  </div>
 
-    <script src="/pages/learning/rust-learning.js"></script>
-    <script type="module" src="./modules/firebase-client.js"></script>
-<script src="interceptors.js"></script>
-<script src="auth.js"></script>
-<script src="utils/virtualList.js"></script>
-<script src="utils/navigationManager.js"></script>
-    <script src="timer.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="utils/searchEngine.js"></script>
-    <script type="module" src="modules/domSanitizer.js"></script>
-    <script src="script.js"></script>
-    <script src="theme.js"></script>
-    <script src="auth-gate.js"></script>
-    <script src="/scripts/lazy-load.js" defer></script>
+  <!-- Data files (plain scripts, globals) -->
+  <script src="data/quiz-questions.js"></script>
+  <script src="data/dsa-topics.js"></script>
+  <script src="data/practice-problems.js"></script>
+  <script src="data/daily-challenges.js"></script>
+  <script src="data/chatbot-responses.js"></script>
+  <script src="data/roadmap-steps.js"></script>
+  <script src="data/profile-avatars.js"></script>
+  <script src="data/facts.js"></script>
+  <script src="data/personality-questions.js"></script>
+  <script src="data/revision-intervals.js"></script>
+  <script src="data/filters.js"></script>
+  <script src="data/levels.js"></script>
 
-    <script>
-      loadPartial("navbar-placeholder", "/partials/navbar.html").then(() => {
-        if (typeof initNavbar === "function") initNavbar();
-      });
-      loadPartial("footer-placeholder", "/partials/footer.html");
-    </script>
-    <!-- Keyboard Shortcut Modal -->
-<div id="shortcutModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:999;">
-    <div style="background:white; padding:30px; border-radius:12px; max-width:400px; width:90%;">
-        <h3>⌨️ Keyboard Shortcuts</h3>
-        <div style="margin:15px 0;">
-            <div style="display:flex; justify-content:space-between; padding:6px 0;"><span>Search</span><kbd>Ctrl+K</kbd></div>
-            <div style="display:flex; justify-content:space-between; padding:6px 0;"><span>Home</span><kbd>Alt+H</kbd></div>
-            <div style="display:flex; justify-content:space-between; padding:6px 0;"><span>Topics</span><kbd>Alt+T</kbd></div>
-            <div style="display:flex; justify-content:space-between; padding:6px 0;"><span>Practice</span><kbd>Alt+P</kbd></div>
-            <div style="display:flex; justify-content:space-between; padding:6px 0;"><span>Quiz</span><kbd>Alt+Q</kbd></div>
-            <div style="display:flex; justify-content:space-between; padding:6px 0;"><span>Dashboard</span><kbd>Alt+D</kbd></div>
-        </div>
-        <button onclick="closeShortcutModal()" style="padding:8px 20px; background:#7c3aed; color:white; border:none; border-radius:6px; cursor:pointer;">Close</button>
-    </div>
-</div>
+  <!-- Utility modules (plain scripts, globals) -->
+  <script src="modules/abortManager.js"></script>
+  <script src="modules/cacheManager.js"></script>
+  <script src="modules/userProgress.js"></script>
+  <script src="modules/spaced-repetition.js"></script>
+  <script src="modules/utils.js"></script>
 
-<!-- Back to Top Button -->
-<button 
-    id="backToTop" 
-    class="back-to-top" 
-<!-- Back to Top Button -->
-<button 
-    id="backToTop" 
-    class="back-to-top" 
-    aria-label="Back to top"
-    title="Scroll back to top"
->
-    <svg class="progress-ring" viewBox="0 0 44 44" aria-hidden="true">
-        <circle cx="22" cy="22" r="20"></circle>
-        <circle class="progress-ring-fill" cx="22" cy="22" r="20"></circle>
-    </svg>
-    <i class="fas fa-arrow-up" aria-hidden="true"></i>
-</button>
-<!-- Footer Shortcut Trigger -->
-<footer>
-    <button onclick="openShortcutModal()" style="background:none; border:none; color:#6b7280; cursor:pointer; text-decoration:underline;">
-        ⌨️ Keyboard Shortcuts
-    </button>
-</footer>
+  <script src="/pages/learning/rust-learning.js"></script>
+  <script type="module" src="./modules/firebase-client.js"></script>
+  <script src="interceptors.js"></script>
+  <script src="auth.js"></script>
+  <script src="utils/virtualList.js"></script>
+  <script src="utils/navigationManager.js"></script>
+  <script src="timer.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="utils/searchEngine.js"></script>
+  <script type="module" src="modules/domSanitizer.js"></script>
+  <script src="theme.js"></script>
+  <script src="auth-gate.js"></script>
+  <script src="/scripts/lazy-load.js" defer></script>
 
-  </body>
+  <!-- Feature modules orchestrator (ES module) -->
+  <script type="module" src="modules/init.js"></script>
+
+  <script>
+    (async function() {
+      const partials = [
+        loadPartial("navbar-placeholder", "/partials/navbar.html"),
+        loadPartial("hero-placeholder", "/partials/hero.html"),
+        loadPartial("topic-of-the-day-placeholder", "/partials/topic-of-the-day.html"),
+        loadPartial("topics-placeholder", "/partials/topics.html"),
+        loadPartial("practice-placeholder", "/partials/practice.html"),
+        loadPartial("flashcards-placeholder", "/partials/flashcards.html"),
+        loadPartial("rust-playground-placeholder", "/partials/rust-playground.html"),
+        loadPartial("quiz-placeholder", "/partials/quiz.html"),
+        loadPartial("roadmap-placeholder", "/partials/roadmap.html"),
+        loadPartial("interview-placeholder", "/partials/interview.html"),
+        loadPartial("dashboard-placeholder", "/partials/dashboard.html"),
+        loadPartial("did-you-know-placeholder", "/partials/did-you-know.html"),
+        loadPartial("gamification-placeholder", "/partials/gamification.html"),
+        loadPartial("game-modal-placeholder", "/partials/game-modal.html"),
+        loadPartial("shortcuts-panel-placeholder", "/partials/shortcuts-panel.html"),
+        loadPartial("topic-modal-placeholder", "/partials/topic-modal.html"),
+        loadPartial("roadmap-step-modal-placeholder", "/partials/roadmap-step-modal.html"),
+        loadPartial("quiz-editor-modal-placeholder", "/partials/quiz-editor-modal.html"),
+        loadPartial("quiz-modal-placeholder", "/partials/quiz-modal.html"),
+        loadPartial("profile-edit-modal-placeholder", "/partials/profile-edit-modal.html"),
+        loadPartial("profile-placeholder", "/partials/profile.html"),
+        loadPartial("notes-modal-placeholder", "/partials/notes-modal.html"),
+        loadPartial("change-password-modal-placeholder", "/partials/change-password-modal.html"),
+        loadPartial("study-timer-placeholder", "/partials/study-timer.html"),
+        loadPartial("footer-placeholder", "/partials/footer.html")
+      ];
+      await Promise.all(partials);
+      window.partialsLoadedFlag = true;
+      document.dispatchEvent(new Event('partialsLoaded'));
+    })();
+  </script>
+
+
+</body>
+
 </html>

@@ -48,7 +48,7 @@
     <div id="particles-js"></div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -284,7 +284,7 @@
             <div class="bit-code-block">
               <div class="bit-code-header">
                 <span class="bit-code-lang">cpp</span>
-                <button class="bit-code-copy" data-target="code-trick-1">
+                <button type="button" class="bit-code-copy" data-target="code-trick-1">
                   <i class="fa-regular fa-copy"></i> Copy
                 </button>
               </div>
@@ -298,7 +298,7 @@
             <div class="bit-code-block">
               <div class="bit-code-header">
                 <span class="bit-code-lang">python</span>
-                <button class="bit-code-copy" data-target="code-trick-2">
+                <button type="button" class="bit-code-copy" data-target="code-trick-2">
                   <i class="fa-regular fa-copy"></i> Copy
                 </button>
               </div>
@@ -312,7 +312,7 @@
             <div class="bit-code-block">
               <div class="bit-code-header">
                 <span class="bit-code-lang">java</span>
-                <button class="bit-code-copy" data-target="code-trick-3">
+                <button type="button" class="bit-code-copy" data-target="code-trick-3">
                   <i class="fa-regular fa-copy"></i> Copy
                 </button>
               </div>
@@ -357,7 +357,7 @@
               </div>
               <p>Given an array of integers where every element appears twice except for one, find that single one. You must implement a solution with a linear runtime complexity and use only constant extra space.</p>
               
-              <button class="bit-exercise-toggle" data-target="sol-1">
+              <button type="button" class="bit-exercise-toggle" data-target="sol-1">
                 <i class="fa-solid fa-eye"></i> View Solution
               </button>
               
@@ -384,7 +384,7 @@
               </div>
               <p>Reverse the bits of a given 32 bits unsigned integer.</p>
               
-              <button class="bit-exercise-toggle" data-target="sol-2">
+              <button type="button" class="bit-exercise-toggle" data-target="sol-2">
                 <i class="fa-solid fa-eye"></i> View Solution
               </button>
               
@@ -416,7 +416,11 @@
     <!-- Footer -->
     <div id="footer-placeholder"></div>
 
+    <script src="/bootstrap-legacy.js"></script>
+
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="bit-manipulation-learning.js"></script>

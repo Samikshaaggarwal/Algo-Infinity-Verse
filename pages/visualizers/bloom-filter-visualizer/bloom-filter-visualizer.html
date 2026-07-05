@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -99,17 +99,17 @@
                             <label class="bf-label" for="bfInsertInput">Add Item to Filter</label>
                             <div class="bf-input-wrap">
                                 <input type="text" id="bfInsertInput" class="bf-input" placeholder="e.g. apple" />
-                                <button class="btn btn-primary" id="btnBfInsert"><i class="fas fa-plus"></i> Add</button>
+                                <button type="button" class="btn btn-primary" id="btnBfInsert"><i class="fas fa-plus"></i> Add</button>
                             </div>
                         </div>
                         <div class="bf-control-group">
                             <label class="bf-label" for="bfQueryInput">Test Membership</label>
                             <div class="bf-input-wrap">
                                 <input type="text" id="bfQueryInput" class="bf-input" placeholder="e.g. apple" />
-                                <button class="btn btn-outline" id="btnBfQuery" style="border: 1px solid var(--glass-border); color: #fff;"><i class="fas fa-search"></i> Check</button>
+                                <button type="button" class="btn btn-outline" id="btnBfQuery" style="border: 1px solid var(--glass-border); color: #fff;"><i class="fas fa-search"></i> Check</button>
                             </div>
                         </div>
-                        <button class="btn btn-danger bf-w100" id="btnBfReset"><i class="fas fa-redo"></i> Clear Bloom Filter</button>
+                        <button type="button" class="btn btn-danger bf-w100" id="btnBfReset"><i class="fas fa-redo"></i> Clear Bloom Filter</button>
                     </div>
                 </div>
 
@@ -140,10 +140,10 @@
 
                         <div class="bf-formula-card">
                             <span class="bf-formula-title">False Positive Probability Formula:</span>
-                            <div class="bf-formula-latex">\(P \approx \left(1 - e^{-kn/m}\right)^k\)</div>
+                            <div class="bf-formula-latex">\(P pprox \left(1 - e^{-kn/m}ight)^k\)</div>
                         </div>
 
-                        <button class="btn btn-outline bf-w100" id="btnBfSimulate" style="margin-top: 1rem; border: 1px solid rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.05); color: #c084fc;">
+                        <button type="button" class="btn btn-outline bf-w100" id="btnBfSimulate" style="margin-top: 1rem; border: 1px solid rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.05); color: #c084fc;">
                             <i class="fas fa-flask"></i> Run Empirical FPR Simulation
                         </button>
                     </div>
@@ -197,7 +197,9 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
     <script src="/script.js?v=20260601"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="/auth-gate.js"></script>
     <script src="bloom-filter-visualizer.js"></script>

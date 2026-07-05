@@ -30,7 +30,7 @@
             <i class="fas fa-exclamation-triangle"></i>
             <h2>SharedArrayBuffer Unavailable</h2>
             <p>Your browser environment is missing Cross-Origin Isolation headers required for true lock-free shared memory. The engine will gracefully fall back to <code>postMessage</code> to simulate the architecture.</p>
-            <button class="btn btn-primary" id="btnAcceptFallback">Continue in Fallback Mode</button>
+            <button type="button" class="btn btn-primary" id="btnAcceptFallback">Continue in Fallback Mode</button>
         </div>
     </div>
 
@@ -48,10 +48,10 @@
                 </p>
 
                 <div class="action-grid">
-                    <button class="btn btn-primary w-100" id="btnStartTrading">
+                    <button type="button" class="btn btn-primary w-100" id="btnStartTrading">
                         <i class="fas fa-play"></i> Start Trading Bots
                     </button>
-                    <button class="btn btn-danger w-100 hidden" id="btnStopTrading">
+                    <button type="button" class="btn btn-danger w-100 hidden" id="btnStopTrading">
                         <i class="fas fa-stop"></i> Halt Market
                     </button>
                 </div>

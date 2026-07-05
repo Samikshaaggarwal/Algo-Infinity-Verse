@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -58,12 +58,12 @@
         <div class="ag-filter-inner">
           <span class="ag-filter-label"><i class="fas fa-filter"></i> Filter:</span>
           <div class="ag-filter-btns">
-            <button class="ag-filter-btn active" data-cat="all">All Exhibits</button>
-            <button class="ag-filter-btn" data-cat="search">🔍 Search</button>
-            <button class="ag-filter-btn" data-cat="sort">⚔️ Sorting</button>
-            <button class="ag-filter-btn" data-cat="graph">🌐 Graphs</button>
-            <button class="ag-filter-btn" data-cat="dp">🧠 DP</button>
-            <button class="ag-filter-btn" data-cat="structure">🏛️ Structures</button>
+            <button type="button" class="ag-filter-btn active" data-cat="all">All Exhibits</button>
+            <button type="button" class="ag-filter-btn" data-cat="search">🔍 Search</button>
+            <button type="button" class="ag-filter-btn" data-cat="sort">⚔️ Sorting</button>
+            <button type="button" class="ag-filter-btn" data-cat="graph">🌐 Graphs</button>
+            <button type="button" class="ag-filter-btn" data-cat="dp">🧠 DP</button>
+            <button type="button" class="ag-filter-btn" data-cat="structure">🏛️ Structures</button>
           </div>
         </div>
       </div>
@@ -79,7 +79,7 @@
     <!-- Exhibit Modal -->
     <div class="modal ag-modal" id="agModal">
       <div class="modal-content ag-modal-content">
-        <button class="modal-close ag-modal-close" id="agModalClose" aria-label="Close">&times;</button>
+        <button type="button" class="modal-close ag-modal-close" id="agModalClose" aria-label="Close">&times;</button>
         <div id="agModalBody"></div>
       </div>
     </div>
@@ -87,7 +87,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="algorithm-graveyard.js"></script>

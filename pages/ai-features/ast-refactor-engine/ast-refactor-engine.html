@@ -37,7 +37,7 @@
 <body class="ast-body">
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
         <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -70,8 +70,8 @@
                 <div class="control-group">
                     <label><i class="fas fa-language"></i> Language mode</label>
                     <div class="lang-toggle-group">
-                        <button class="btn btn-lang active" id="btnLangJS" data-lang="javascript">JavaScript</button>
-                        <button class="btn btn-lang" id="btnLangPY" data-lang="python">Python</button>
+                        <button type="button" class="btn btn-lang active" id="btnLangJS" data-lang="javascript">JavaScript</button>
+                        <button type="button" class="btn btn-lang" id="btnLangPY" data-lang="python">Python</button>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
 
             <div class="panel-section bottom-actions">
                 <!-- Optimization triggers -->
-                <button class="btn btn-primary w-100" id="btnOptimize">
+                <button type="button" class="btn btn-primary w-100" id="btnOptimize">
                     <i class="fas fa-rocket"></i> Optimize AST &amp; Refactor
                 </button>
                 
@@ -177,7 +177,10 @@
     
     <!-- Platform scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     
     <!-- Custom AST Refactoring JS logic -->

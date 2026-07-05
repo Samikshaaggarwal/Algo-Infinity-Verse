@@ -918,7 +918,7 @@ class ConcurrencySimulator {
         const name = this.dom.taskName.value.trim() || "CustomTask";
         if (this.customTaskSteps.length === 0) {
             this.log("Error: Cannot enqueue task with no steps.", "err");
-            alert("Please add at least one step to build a task!");
+            console.warn("Alert:", "Please add at least one step to build a task!");
             return;
         }
 

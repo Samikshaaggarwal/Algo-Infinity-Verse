@@ -40,7 +40,7 @@
         </div>
         <ul class="nav-links" id="navLinks">
             <li class="nav-item"><a href="/index.html" class="nav-link">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link active" style="color:var(--multi-primary);">Interview Room</a></li>
+            <li class="nav-item"><a href="javascript:void(0)" class="nav-link active" style="color:var(--multi-primary);">Interview Room</a></li>
             <li class="nav-item"><a href="/index.html#practice" class="nav-link">Practice</a></li>
         </ul>
     </nav>
@@ -55,7 +55,7 @@
             <div class="room-link-container">
                 <span class="room-label">Room:</span>
                 <code id="roomIdDisplay">...</code>
-                <button id="btnCopyLink" class="btn-icon" title="Copy invite link">
+                <button type="button" id="btnCopyLink" class="btn-icon" title="Copy invite link">
                     <i class="fas fa-link"></i> Copy
                 </button>
             </div>
@@ -70,7 +70,7 @@
             <div class="participants-list" id="participantsList">
                 <div class="avatar my-avatar" title="You (Host)">You</div>
             </div>
-            <button class="btn btn-end btn-sm" id="btnEndSession">
+            <button type="button" class="btn btn-end btn-sm" id="btnEndSession">
                 <i class="fas fa-sign-out-alt"></i> End
             </button>
         </div>
@@ -148,13 +148,13 @@
                 <div class="voice-body">
                     <div class="voice-participants" id="voiceParticipants"></div>
                     <div class="voice-controls">
-                        <button class="voice-btn voice-btn-join" id="btnJoinVoice">
+                        <button type="button" class="voice-btn voice-btn-join" id="btnJoinVoice">
                             <i class="fas fa-microphone"></i> Join Voice
                         </button>
-                        <button class="voice-btn voice-btn-leave" id="btnLeaveVoice" style="display:none;">
+                        <button type="button" class="voice-btn voice-btn-leave" id="btnLeaveVoice" style="display:none;">
                             <i class="fas fa-phone-slash"></i> Leave
                         </button>
-                        <button class="voice-btn voice-btn-mute" id="btnToggleMute" style="display:none;">
+                        <button type="button" class="voice-btn voice-btn-mute" id="btnToggleMute" style="display:none;">
                             <i class="fas fa-microphone"></i> Mute
                         </button>
                     </div>
@@ -171,7 +171,7 @@
                 </div>
                 <div class="chat-input-area">
                     <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off" />
-                    <button id="btnSendChat" title="Send"><i class="fas fa-paper-plane"></i></button>
+                    <button type="button" id="btnSendChat" title="Send"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
 
@@ -184,10 +184,10 @@
             <!-- Editor Header / Tabs -->
             <div class="editor-header">
                 <div class="editor-tabs">
-                    <button class="editor-tab active" id="tabCode">
+                    <button type="button" class="editor-tab active" id="tabCode">
                         <i class="fas fa-code"></i> solution.js
                     </button>
-                    <button class="editor-tab" id="tabBoard">
+                    <button type="button" class="editor-tab" id="tabBoard">
                         <i class="fas fa-paint-brush"></i> Whiteboard
                         <span class="tab-badge pulse-badge" id="wbTabBadge">New ✨</span>
                     </button>
@@ -199,7 +199,7 @@
                         <option value="cpp">C++</option>
                         <option value="java">Java</option>
                     </select>
-                    <button class="btn btn-success btn-sm" id="btnRunCode">
+                    <button type="button" class="btn btn-success btn-sm" id="btnRunCode">
                         <i class="fas fa-play"></i> Run
                     </button>
                 </div>
@@ -213,19 +213,19 @@
                 <!-- Whiteboard Toolbar -->
                 <div class="wb-toolbar">
                     <!-- Draw tools -->
-                    <button class="wb-tool active" data-tool="pen" title="Pen">
+                    <button type="button" class="wb-tool active" data-tool="pen" title="Pen">
                         <i class="fas fa-pen"></i>
                     </button>
-                    <button class="wb-tool" data-tool="eraser" title="Eraser">
+                    <button type="button" class="wb-tool" data-tool="eraser" title="Eraser">
                         <i class="fas fa-eraser"></i>
                     </button>
-                    <button class="wb-tool" data-tool="rect" title="Rectangle">
+                    <button type="button" class="wb-tool" data-tool="rect" title="Rectangle">
                         <i class="far fa-square"></i>
                     </button>
-                    <button class="wb-tool" data-tool="arrow" title="Arrow">
+                    <button type="button" class="wb-tool" data-tool="arrow" title="Arrow">
                         <i class="fas fa-long-arrow-alt-right"></i>
                     </button>
-                    <button class="wb-tool" data-tool="line" title="Line">
+                    <button type="button" class="wb-tool" data-tool="line" title="Line">
                         <i class="fas fa-minus"></i>
                     </button>
 
@@ -246,22 +246,22 @@
 
                     <!-- Stroke size -->
                     <div class="wb-stroke-size">
-                        <button class="wb-stroke-btn" data-size="1" title="Thin">1</button>
-                        <button class="wb-stroke-btn active" data-size="3" title="Medium">3</button>
-                        <button class="wb-stroke-btn" data-size="6" title="Thick">6</button>
+                        <button type="button" class="wb-stroke-btn" data-size="1" title="Thin">1</button>
+                        <button type="button" class="wb-stroke-btn active" data-size="3" title="Medium">3</button>
+                        <button type="button" class="wb-stroke-btn" data-size="6" title="Thick">6</button>
                     </div>
 
                     <!-- Right-side actions -->
                     <div class="wb-toolbar-right">
                         <div class="wb-undo-redo">
-                            <button class="wb-tool" id="btnWbUndo" title="Undo (last stroke)">
+                            <button type="button" class="wb-tool" id="btnWbUndo" title="Undo (last stroke)">
                                 <i class="fas fa-undo"></i>
                             </button>
-                            <button class="wb-tool" id="btnWbRedo" title="Redo">
+                            <button type="button" class="wb-tool" id="btnWbRedo" title="Redo">
                                 <i class="fas fa-redo"></i>
                             </button>
                         </div>
-                        <button class="wb-tool" id="btnWbClear" title="Clear board" style="color:#ef4444;">
+                        <button type="button" class="wb-tool" id="btnWbClear" title="Clear board" style="color:#ef4444;">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </div>
@@ -277,7 +277,7 @@
             <div class="console-panel">
                 <div class="console-header">
                     <span><i class="fas fa-terminal"></i> Console</span>
-                    <button class="btn-icon" id="btnClearConsole" title="Clear console">
+                    <button type="button" class="btn-icon" id="btnClearConsole" title="Clear console">
                         <i class="fas fa-eraser"></i>
                     </button>
                 </div>

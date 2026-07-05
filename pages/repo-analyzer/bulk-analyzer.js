@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!csvInput.files || csvInput.files.length === 0) return;
     const file = csvInput.files[0];
     if (!file.name.endsWith('.csv')) {
-      alert("Please upload a valid CSV file.");
+      console.warn("Alert:", "Please upload a valid CSV file.");
       return;
     }
 
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pollProgress(data.batchId);
 
     } catch (err) {
-      alert(err.message);
+      console.warn("Alert:", err.message);
       dropZone.style.display = 'block';
       progressSection.style.display = 'none';
     }

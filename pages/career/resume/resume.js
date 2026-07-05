@@ -245,7 +245,7 @@ async function initResumeAnalyzer(){
 
 
     if(!file){
-      alert("Please upload your resume first");
+      console.warn("Alert:", "Please upload your resume first");
       return;
     }
 
@@ -327,7 +327,7 @@ async function initResumeAnalyzer(){
     catch(error){
 
       console.error(error);
-      alert(error.message || "Something went wrong");
+      console.warn("Alert:", error.message || "Something went wrong");
 
       button.innerHTML="Analyze Resume";
 

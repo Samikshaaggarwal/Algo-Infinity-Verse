@@ -45,7 +45,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -241,7 +241,7 @@
               <div class="sliding-window-code-block">
                 <div class="sliding-window-code-header">
                   <span class="sliding-window-code-lang">Python</span>
-                  <button
+                  <button type="button"
                     class="sliding-window-code-copy"
                     aria-label="Copy code"
                     data-code="def max_sum_subarray(arr, k):
@@ -278,11 +278,11 @@
                 <h4>🎬 Sliding Window Motion Visualizer</h4>
 
                 <div class="visualizer-controls">
-                  <button id="swStartBtn" class="btn btn-primary">Start</button>
-                  <button id="swNextBtn" class="btn btn-secondary">
+                  <button type="button" id="swStartBtn" class="btn btn-primary">Start</button>
+                  <button type="button" id="swNextBtn" class="btn btn-secondary">
                     Next Step
                   </button>
-                  <button id="swResetBtn" class="btn btn-secondary">
+                  <button type="button" id="swResetBtn" class="btn btn-secondary">
                     Reset
                   </button>
                 </div>
@@ -352,7 +352,7 @@
               <div class="sliding-window-code-block">
                 <div class="sliding-window-code-header">
                   <span class="sliding-window-code-lang">JavaScript</span>
-                  <button
+                  <button type="button"
                     class="sliding-window-code-copy"
                     aria-label="Copy code"
                     data-code="function minSubArrayLen(target, nums) {
@@ -459,7 +459,7 @@
                   <code>K = 3</code>, what is the maximum sum of any contiguous
                   subarray of size K?
                 </p>
-                <button
+                <button type="button"
                   class="sliding-window-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-ex1"
@@ -484,7 +484,7 @@
                   Is the problem "Find the longest substring without repeating
                   characters" a Fixed or Variable window problem?
                 </p>
-                <button
+                <button type="button"
                   class="sliding-window-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-ex2"
@@ -510,7 +510,10 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="sliding-window-learning.js"></script>

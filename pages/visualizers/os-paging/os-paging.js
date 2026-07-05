@@ -192,7 +192,7 @@ async function handleFetch() {
     if (state.isExecuting) return;
     
     const parsed = updateAddressBreakdown();
-    if (!parsed) return alert("Please enter a valid 16-bit hex address (0x0000 - 0xFFFF).");
+    if (!parsed) return console.warn("Alert:", "Please enter a valid 16-bit hex address (0x0000 - 0xFFFF).");
     
     state.isExecuting = true;
     els.btnFetch.disabled = true;

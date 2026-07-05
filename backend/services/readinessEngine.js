@@ -2,7 +2,7 @@
  * Calculates individual readiness scores and provides feedback/suggestions.
  * @param {Object} userData - Contains metrics like quizzes, problemsSolved, streak, topicCoverage, xp
  */
-function calculateReadinessScore(userData) {
+export function calculateReadinessScore(userData) {
   const {
     quizPerformance = 0,    // percentage (0-100)
     problemsSolved = 0,     // count
@@ -52,5 +52,3 @@ function calculateReadinessScore(userData) {
     suggestions: suggestions.length > 0 ? suggestions : ["Looking sharp! Keep maintaining your current pace."]
   };
 }
-
-module.exports = { calculateReadinessScore };

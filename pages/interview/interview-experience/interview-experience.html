@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -81,15 +81,15 @@
                 <div class="iep-filter-group">
                   <label class="iep-filter-label">Company</label>
                   <div class="filter-buttons" id="iepCompanyFilters">
-                    <button class="filter-btn active" data-company="all">All</button>
-                    <button class="filter-btn" data-company="Amazon"><i class="fab fa-amazon"></i> Amazon</button>
-                    <button class="filter-btn" data-company="Google"><i class="fab fa-google"></i> Google</button>
-                    <button class="filter-btn" data-company="Microsoft"><i class="fab fa-microsoft"></i> Microsoft</button>
-                    <button class="filter-btn" data-company="Meta"><i class="fab fa-meta"></i> Meta</button>
-                    <button class="filter-btn" data-company="Adobe"><i class="fas fa-bezier-curve"></i> Adobe</button>
-                    <button class="filter-btn" data-company="Walmart"><i class="fas fa-shopping-cart"></i> Walmart</button>
-                    <button class="filter-btn" data-company="Flipkart"><i class="fas fa-shopping-bag"></i> Flipkart</button>
-                    <button class="filter-btn" data-company="Other">Other</button>
+                    <button type="button" class="filter-btn active" data-company="all">All</button>
+                    <button type="button" class="filter-btn" data-company="Amazon"><i class="fab fa-amazon"></i> Amazon</button>
+                    <button type="button" class="filter-btn" data-company="Google"><i class="fab fa-google"></i> Google</button>
+                    <button type="button" class="filter-btn" data-company="Microsoft"><i class="fab fa-microsoft"></i> Microsoft</button>
+                    <button type="button" class="filter-btn" data-company="Meta"><i class="fab fa-meta"></i> Meta</button>
+                    <button type="button" class="filter-btn" data-company="Adobe"><i class="fas fa-bezier-curve"></i> Adobe</button>
+                    <button type="button" class="filter-btn" data-company="Walmart"><i class="fas fa-shopping-cart"></i> Walmart</button>
+                    <button type="button" class="filter-btn" data-company="Flipkart"><i class="fas fa-shopping-bag"></i> Flipkart</button>
+                    <button type="button" class="filter-btn" data-company="Other">Other</button>
                   </div>
                 </div>
               </div>
@@ -97,10 +97,10 @@
                 <div class="iep-filter-group">
                   <label class="iep-filter-label">Difficulty</label>
                   <div class="filter-buttons" id="iepDiffFilters">
-                    <button class="filter-btn active" data-diff="all">All</button>
-                    <button class="filter-btn" data-diff="easy">Easy</button>
-                    <button class="filter-btn" data-diff="medium">Medium</button>
-                    <button class="filter-btn" data-diff="hard">Hard</button>
+                    <button type="button" class="filter-btn active" data-diff="all">All</button>
+                    <button type="button" class="filter-btn" data-diff="easy">Easy</button>
+                    <button type="button" class="filter-btn" data-diff="medium">Medium</button>
+                    <button type="button" class="filter-btn" data-diff="hard">Hard</button>
                   </div>
                 </div>
                 <div class="iep-filter-group">
@@ -224,7 +224,12 @@
     <script src="interview-experience.js"></script>
   
 
+  <script src="/bootstrap-legacy.js"></script>
+
+  
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script>
     loadPartial('navbar-placeholder', '/partials/navbar.html');
     loadPartial('footer-placeholder', '/partials/footer.html');

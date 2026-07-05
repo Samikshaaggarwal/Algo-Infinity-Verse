@@ -45,7 +45,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -161,7 +161,7 @@
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT * FROM users;">Copy</button>
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT * FROM users;">Copy</button>
                 </div>
                 <pre><code><span class="tok-kw">SELECT</span> * <span class="tok-kw">FROM</span> users;</code></pre>
               </div>
@@ -175,12 +175,12 @@
                   <i class="fas fa-dumbbell"></i> Practice: Introduction to SQL
                 </div>
                 <p>Write a query that selects all columns from a table named <code>employees</code>.</p>
-                <button class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Solution</button>
+                <button type="button" class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Solution</button>
                 <div class="sql-exercise-solution" id="solution-intro">
                   <div class="sql-code-block">
                     <div class="sql-code-header">
                       <span class="sql-code-lang">SQL</span>
-                      <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT * FROM employees;">Copy</button>
+                      <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT * FROM employees;">Copy</button>
                     </div>
                     <pre><code><span class="tok-kw">SELECT</span> * <span class="tok-kw">FROM</span> employees;</code></pre>
                   </div>
@@ -217,7 +217,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Database Fundamentals
                 </div>
                 <p>Identify which of the following is typically a Primary Key in a `users` table: <code>first_name</code>, <code>user_id</code>, <code>age</code>.</p>
-                <button class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-fundamentals">Show Solution</button>
+                <button type="button" class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-fundamentals">Show Solution</button>
                 <div class="sql-exercise-solution" id="solution-fundamentals">
                   <p><strong>user_id</strong> is the best candidate for a Primary Key because it uniquely identifies each user. <code>first_name</code> or <code>age</code> can have duplicate values.</p>
                 </div>
@@ -252,7 +252,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Setup
                 </div>
                 <p>Which database engine is best if you want a lightweight solution that runs without a server?</p>
-                <button class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-setup">Show Solution</button>
+                <button type="button" class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-setup">Show Solution</button>
                 <div class="sql-exercise-solution" id="solution-setup">
                   <p><strong>SQLite</strong> is the best choice for a lightweight, serverless database.</p>
                 </div>
@@ -271,7 +271,7 @@
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="CREATE DATABASE company_db;
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="CREATE DATABASE company_db;
 USE company_db;">Copy</button>
                 </div>
                 <pre><code><span class="tok-kw">CREATE DATABASE</span> company_db;
@@ -281,7 +281,7 @@ USE company_db;">Copy</button>
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="CREATE TABLE employees (
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="CREATE TABLE employees (
     id INT PRIMARY KEY,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
@@ -303,12 +303,12 @@ USE company_db;">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Create Table
                 </div>
                 <p>Write a query to create a table named <code>products</code> with an <code>id</code> (INT, PRIMARY KEY), <code>name</code> (VARCHAR(100)), and <code>price</code> (DECIMAL).</p>
-                <button class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-create">Show Solution</button>
+                <button type="button" class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-create">Show Solution</button>
                 <div class="sql-exercise-solution" id="solution-create">
                   <div class="sql-code-block">
                     <div class="sql-code-header">
                       <span class="sql-code-lang">SQL</span>
-                      <button class="sql-code-copy" aria-label="Copy code" data-code="CREATE TABLE products (
+                      <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="CREATE TABLE products (
     id INT PRIMARY KEY,
     name VARCHAR(100),
     price DECIMAL
@@ -360,7 +360,7 @@ USE company_db;">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Data Types
                 </div>
                 <p>What data type would you use to store a user's biography (which could be long text)?</p>
-                <button class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-datatypes">Show Solution</button>
+                <button type="button" class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-datatypes">Show Solution</button>
                 <div class="sql-exercise-solution" id="solution-datatypes">
                   <p>You would typically use <code>TEXT</code> or <code>VARCHAR(n)</code> with a large number for <em>n</em>.</p>
                 </div>
@@ -383,7 +383,7 @@ USE company_db;">Copy</button>
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="INSERT INTO employees (id, first_name, last_name, age, hire_date)
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="INSERT INTO employees (id, first_name, last_name, age, hire_date)
 VALUES (1, 'John', 'Doe', 28, '2023-01-15');">Copy</button>
                 </div>
                 <pre><code><span class="tok-kw">INSERT INTO</span> employees (id, first_name, last_name, age, hire_date)
@@ -397,7 +397,7 @@ VALUES (1, 'John', 'Doe', 28, '2023-01-15');">Copy</button>
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="UPDATE employees
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="UPDATE employees
 SET age = 29
 WHERE id = 1;">Copy</button>
                 </div>
@@ -413,7 +413,7 @@ WHERE id = 1;">Copy</button>
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="DELETE FROM employees
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="DELETE FROM employees
 WHERE id = 1;">Copy</button>
                 </div>
                 <pre><code><span class="tok-kw">DELETE FROM</span> employees
@@ -426,12 +426,12 @@ WHERE id = 1;">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: INSERT
                 </div>
                 <p>Write an <code>INSERT</code> statement to add a product to the <code>products</code> table with id 10, name 'Laptop', and price 1200.50.</p>
-                <button class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-crud">Show Solution</button>
+                <button type="button" class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-crud">Show Solution</button>
                 <div class="sql-exercise-solution" id="solution-crud">
                   <div class="sql-code-block">
                     <div class="sql-code-header">
                       <span class="sql-code-lang">SQL</span>
-                      <button class="sql-code-copy" aria-label="Copy code" data-code="INSERT INTO products (id, name, price)
+                      <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="INSERT INTO products (id, name, price)
 VALUES (10, 'Laptop', 1200.50);">Copy</button>
                     </div>
                     <pre><code><span class="tok-kw">INSERT INTO</span> products (id, name, price)
@@ -453,7 +453,7 @@ VALUES (10, 'Laptop', 1200.50);">Copy</button>
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="-- Select specific columns
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="-- Select specific columns
 SELECT first_name, last_name FROM employees;
 
 -- Select all columns
@@ -469,7 +469,7 @@ SELECT * FROM employees;">Copy</button>
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT DISTINCT age FROM employees;">Copy</button>
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT DISTINCT age FROM employees;">Copy</button>
                 </div>
                 <pre><code><span class="tok-kw">SELECT DISTINCT</span> age <span class="tok-kw">FROM</span> employees;</code></pre>
               </div>
@@ -479,12 +479,12 @@ SELECT * FROM employees;">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: SELECT
                 </div>
                 <p>Write a query to fetch only the <code>name</code> and <code>price</code> of all products from the <code>products</code> table.</p>
-                <button class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-select">Show Solution</button>
+                <button type="button" class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-select">Show Solution</button>
                 <div class="sql-exercise-solution" id="solution-select">
                   <div class="sql-code-block">
                     <div class="sql-code-header">
                       <span class="sql-code-lang">SQL</span>
-                      <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT name, price FROM products;">Copy</button>
+                      <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT name, price FROM products;">Copy</button>
                     </div>
                     <pre><code><span class="tok-kw">SELECT</span> name, price <span class="tok-kw">FROM</span> products;</code></pre>
                   </div>
@@ -508,7 +508,7 @@ SELECT * FROM employees;">Copy</button>
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT * FROM employees
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT * FROM employees
 WHERE age >= 30 AND last_name = 'Smith';">Copy</button>
                 </div>
                 <pre><code><span class="tok-kw">SELECT</span> * <span class="tok-kw">FROM</span> employees
@@ -522,7 +522,7 @@ WHERE age >= 30 AND last_name = 'Smith';">Copy</button>
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT * FROM employees
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT * FROM employees
 ORDER BY age DESC;">Copy</button>
                 </div>
                 <pre><code><span class="tok-kw">SELECT</span> * <span class="tok-kw">FROM</span> employees
@@ -536,7 +536,7 @@ ORDER BY age DESC;">Copy</button>
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT * FROM employees
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT * FROM employees
 ORDER BY hire_date DESC
 LIMIT 5;">Copy</button>
                 </div>
@@ -551,12 +551,12 @@ LIMIT 5;">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Filtering and Sorting
                 </div>
                 <p>Write a query to select the names of products that cost more than 500, ordered by price from highest to lowest, and limit the result to 10 rows.</p>
-                <button class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-where">Show Solution</button>
+                <button type="button" class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-where">Show Solution</button>
                 <div class="sql-exercise-solution" id="solution-where">
                   <div class="sql-code-block">
                     <div class="sql-code-header">
                       <span class="sql-code-lang">SQL</span>
-                      <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT name FROM products
+                      <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT name FROM products
 WHERE price &gt; 500
 ORDER BY price DESC
 LIMIT 10;">Copy</button>
@@ -589,7 +589,7 @@ LIMIT 10;">Copy</button>
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT 
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT 
     COUNT(*) as total_employees,
     AVG(age) as average_age,
     MAX(age) as oldest_employee
@@ -607,12 +607,12 @@ FROM employees;">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Aggregate Functions
                 </div>
                 <p>Write a query to find the total (SUM) price of all products in the <code>products</code> table.</p>
-                <button class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-aggregate">Show Solution</button>
+                <button type="button" class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-aggregate">Show Solution</button>
                 <div class="sql-exercise-solution" id="solution-aggregate">
                   <div class="sql-code-block">
                     <div class="sql-code-header">
                       <span class="sql-code-lang">SQL</span>
-                      <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT SUM(price) FROM products;">Copy</button>
+                      <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT SUM(price) FROM products;">Copy</button>
                     </div>
                     <pre><code><span class="tok-kw">SELECT</span> <span class="tok-fn">SUM</span>(price) <span class="tok-kw">FROM</span> products;</code></pre>
                   </div>
@@ -632,7 +632,7 @@ FROM employees;">Copy</button>
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT department, COUNT(id) as emp_count
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT department, COUNT(id) as emp_count
 FROM employees
 GROUP BY department
 HAVING COUNT(id) > 5;">Copy</button>
@@ -652,12 +652,12 @@ HAVING COUNT(id) > 5;">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: GROUP BY
                 </div>
                 <p>Group a <code>sales</code> table by <code>category</code> and select the category along with the SUM of <code>revenue</code> for each.</p>
-                <button class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-groupby">Show Solution</button>
+                <button type="button" class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-groupby">Show Solution</button>
                 <div class="sql-exercise-solution" id="solution-groupby">
                   <div class="sql-code-block">
                     <div class="sql-code-header">
                       <span class="sql-code-lang">SQL</span>
-                      <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT category, SUM(revenue) 
+                      <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT category, SUM(revenue) 
 FROM sales
 GROUP BY category;">Copy</button>
                     </div>
@@ -686,7 +686,7 @@ GROUP BY category;">Copy</button>
               <div class="sql-code-block">
                 <div class="sql-code-header">
                   <span class="sql-code-lang">SQL</span>
-                  <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT orders.order_id, customers.customer_name
+                  <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT orders.order_id, customers.customer_name
 FROM orders
 INNER JOIN customers ON orders.customer_id = customers.customer_id;">Copy</button>
                 </div>
@@ -704,12 +704,12 @@ INNER JOIN customers ON orders.customer_id = customers.customer_id;">Copy</butto
                   <i class="fas fa-dumbbell"></i> Practice: JOINs
                 </div>
                 <p>Write a query using a LEFT JOIN to list all <code>students</code> and any <code>courses</code> they are enrolled in (using an <code>enrollments</code> table on student_id).</p>
-                <button class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-joins">Show Solution</button>
+                <button type="button" class="sql-exercise-toggle" aria-expanded="false" aria-controls="solution-joins">Show Solution</button>
                 <div class="sql-exercise-solution" id="solution-joins">
                   <div class="sql-code-block">
                     <div class="sql-code-header">
                       <span class="sql-code-lang">SQL</span>
-                      <button class="sql-code-copy" aria-label="Copy code" data-code="SELECT students.name, enrollments.course_id
+                      <button type="button" class="sql-code-copy" aria-label="Copy code" data-code="SELECT students.name, enrollments.course_id
 FROM students
 LEFT JOIN enrollments ON students.student_id = enrollments.student_id;">Copy</button>
                     </div>
@@ -730,7 +730,10 @@ LEFT JOIN enrollments ON students.student_id = enrollments.student_id;">Copy</bu
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="sql-learning.js"></script>

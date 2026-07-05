@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -68,23 +68,23 @@
     <!-- Algorithm Selector -->
     <div class="drs-algo-selector">
 
-      <button class="drs-algo-btn active" data-algo="binarySearch">
+      <button type="button" class="drs-algo-btn active" data-algo="binarySearch">
         <i class="fas fa-search"></i> Binary Search
       </button>
 
-      <button class="drs-algo-btn" data-algo="bubbleSort">
+      <button type="button" class="drs-algo-btn" data-algo="bubbleSort">
         <i class="fas fa-sort"></i> Bubble Sort
       </button>
 
-      <button class="drs-algo-btn" data-algo="mergeSort">
+      <button type="button" class="drs-algo-btn" data-algo="mergeSort">
         <i class="fas fa-code"></i> Merge Sort
       </button>
 
-      <button class="drs-algo-btn" data-algo="bfs">
+      <button type="button" class="drs-algo-btn" data-algo="bfs">
         <i class="fas fa-project-diagram"></i> BFS
       </button>
 
-      <button class="drs-algo-btn" data-algo="dfs">
+      <button type="button" class="drs-algo-btn" data-algo="dfs">
         <i class="fas fa-code-branch"></i> DFS
       </button>
 
@@ -172,7 +172,7 @@
             aria-label="Graph adjacency list (format: node:neighbors)"
           >
 
-          <button
+          <button type="button"
             id="drsGenerateBtn"
             class="btn btn-primary"
             style="margin-top:10px;width:100%;"
@@ -216,7 +216,7 @@
 
           <div class="btn-control-row">
 
-            <button
+            <button type="button"
               id="drsPrevBtn"
               class="btn btn-secondary btn-control"
               aria-label="Previous step"
@@ -224,7 +224,7 @@
               <i class="fas fa-step-backward"></i>
             </button>
 
-            <button
+            <button type="button"
               id="drsPlayBtn"
               class="btn btn-primary btn-control"
               aria-label="Play or pause simulation"
@@ -232,7 +232,7 @@
               <i class="fas fa-play"></i>
             </button>
 
-            <button
+            <button type="button"
               id="drsNextBtn"
               class="btn btn-secondary btn-control"
               aria-label="Next step"
@@ -244,7 +244,7 @@
 
           <div class="btn-control-row">
 
-            <button
+            <button type="button"
               id="drsResetBtn"
               class="btn btn-secondary btn-control"
             >
@@ -315,7 +315,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./dry-run-simulator.js"></script>
   

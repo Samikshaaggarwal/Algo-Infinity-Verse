@@ -85,7 +85,7 @@ function initCoursePlatform() {
         });
         saveProgress();
         renderSyllabus();
-        alert("All modules unlocked for dev testing.");
+        console.warn("Alert:", "All modules unlocked for dev testing.");
     });
 }
 
@@ -353,7 +353,7 @@ function goToNextItem() {
         if (progressState.unlockedModules.includes(nextMod.id) || !nextMod.locked) {
             loadItem(currentModuleIndex + 1, 0);
         } else {
-            alert("The next module is locked. You must complete the evaluation.");
+            console.warn("Alert:", "The next module is locked. You must complete the evaluation.");
         }
     }
 }

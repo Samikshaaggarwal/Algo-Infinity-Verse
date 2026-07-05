@@ -31,7 +31,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -49,17 +49,17 @@
             </p>
 
             <div class="mirror-view-switcher" role="tablist" aria-label="Mirror time views">
-              <button class="mirror-view-btn active" data-view="30">30 Days</button>
-              <button class="mirror-view-btn" data-view="60">60 Days</button>
-              <button class="mirror-view-btn" data-view="90">90 Days</button>
+              <button type="button" class="mirror-view-btn active" data-view="30">30 Days</button>
+              <button type="button" class="mirror-view-btn" data-view="60">60 Days</button>
+              <button type="button" class="mirror-view-btn" data-view="90">90 Days</button>
             </div>
 
             <div class="mirror-hero-actions">
-              <button id="replayBtn" class="mirror-primary-btn">
+              <button type="button" id="replayBtn" class="mirror-primary-btn">
                 <i class="fas fa-play"></i>
                 Replay Journey
               </button>
-              <button id="resetBtn" class="mirror-secondary-btn">
+              <button type="button" id="resetBtn" class="mirror-secondary-btn">
                 <i class="fas fa-rotate-left"></i>
                 Reset View
               </button>
@@ -254,7 +254,10 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="/auth-gate.js"></script>

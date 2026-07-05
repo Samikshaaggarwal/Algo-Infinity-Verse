@@ -838,12 +838,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const initialQueueLevel = clampInt(el.pInitialLevel.value, 0, state.queueCount - 1);
 
     if (!id) {
-      alert('Process ID is required.');
+      console.warn("Alert:", 'Process ID is required.');
       return;
     }
 
     if (state.processes.some((p) => p.id === id)) {
-      alert('Process ID must be unique.');
+      console.warn("Alert:", 'Process ID must be unique.');
       return;
     }
 
@@ -892,7 +892,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // validate processes
     if (!state.processes.length) {
-      alert('Add at least one process (or load an example) before generating the schedule.');
+      console.warn("Alert:", 'Add at least one process (or load an example) before generating the schedule.');
       return;
     }
 

@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -103,7 +103,7 @@
             </div>
 
             <!-- Next -->
-            <button class="btn btn-primary pt-next-btn hidden" id="ptNextBtn">
+            <button type="button" class="btn btn-primary pt-next-btn hidden" id="ptNextBtn">
               Next Question <i class="fas fa-arrow-right"></i>
             </button>
           </div>
@@ -125,8 +125,8 @@
 
             <!-- Actions -->
             <div class="pt-sidebar-card">
-              <button class="btn btn-secondary pt-full-btn" id="ptRestartBtn"><i class="fas fa-undo"></i> Restart</button>
-              <button class="btn btn-secondary pt-full-btn" id="ptSkipBtn" style="margin-top:0.5rem"><i class="fas fa-forward"></i> Skip Question</button>
+              <button type="button" class="btn btn-secondary pt-full-btn" id="ptRestartBtn"><i class="fas fa-undo"></i> Restart</button>
+              <button type="button" class="btn btn-secondary pt-full-btn" id="ptSkipBtn" style="margin-top:0.5rem"><i class="fas fa-forward"></i> Skip Question</button>
             </div>
 
           </div>
@@ -142,7 +142,7 @@
         </div>
         <div class="modal-body pt-result-body" id="ptResultBody"></div>
         <div class="modal-footer">
-          <button class="btn btn-primary" id="ptPlayAgainBtn"><i class="fas fa-redo"></i> Play Again</button>
+          <button type="button" class="btn btn-primary" id="ptPlayAgainBtn"><i class="fas fa-redo"></i> Play Again</button>
         </div>
       </div>
     </div>
@@ -150,7 +150,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./pattern-trainer.js"></script>
   

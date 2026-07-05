@@ -20,8 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // Guest User Fallback
+    // Guest User Fallback
     sessionNotice.className = "session-notice guest";
-    sessionNotice.innerHTML = `<i class="fas fa-circle-exclamation"></i> Submitting as <strong>Guest</strong>. <a href="login.html?next=feedback.html">Log in</a> to link this submission with your profile.`;
+    sessionNotice.innerHTML = `<i class="fas fa-circle-exclamation"></i> Submitting as <strong>Guest</strong>. <a href="login.html?next=feedback.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a> to link this submission with your profile.`;
   }
   
   verifySession();

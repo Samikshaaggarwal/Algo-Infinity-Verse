@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const type = interviewType.value;
 
     if (!type) {
-      alert("Please select an interview type.");
+      console.warn("Alert:", "Please select an interview type.");
       return;
     }
 
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (time <= 0) {
         clearInterval(window.interviewTimer);
 
-        alert("Interview session completed!");
+        console.warn("Alert:", "Interview session completed!");
       }
 
       time--;

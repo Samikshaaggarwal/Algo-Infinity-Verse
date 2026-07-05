@@ -52,7 +52,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -81,7 +81,7 @@
             Visualize your progress, statistics, DSA mastery, and accomplishments in a resume layout.
           </p>
           <div class="header-actions">
-            <button id="exportPdfBtn" class="btn btn-primary">
+            <button type="button" id="exportPdfBtn" class="btn btn-primary">
               <i class="fas fa-file-pdf"></i> Export to PDF
             </button>
           </div>
@@ -123,7 +123,7 @@
                   accept=".json"
                   style="display: none;"
                 />
-                <button id="browseJsonBtn" class="btn btn-secondary">
+                <button type="button" id="browseJsonBtn" class="btn btn-secondary">
                   Browse Files
                 </button>
               </div>
@@ -149,7 +149,7 @@
       accept=".pdf,.docx"
     />
 
-    <button id="analyzeResumeBtn" class="btn btn-primary">
+    <button type="button" id="analyzeResumeBtn" class="btn btn-primary">
       <i class="fas fa-search"></i>
       Analyze Resume
     </button>
@@ -300,7 +300,10 @@
 
     <script type="module" src="resume.js"></script>
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script>
       loadPartial('navbar-placeholder', '/partials/navbar.html');

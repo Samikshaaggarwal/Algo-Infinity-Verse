@@ -149,15 +149,15 @@ async function handleCreateOffer() {
 
 async function handleProcessAnswer() {
     const token = els.hostAnswerToken.value.trim();
-    if (!token) return alert("Paste the reply token.");
+    if (!token) return console.warn("Alert:", "Paste the reply token.");
     try {
         await peerConnection.setRemoteDescription(JSON.parse(atob(token)));
-    } catch (err) { alert("Invalid Reply Token."); }
+    } catch (err) { console.warn("Alert:", "Invalid Reply Token."); }
 }
 
 async function handleAcceptOffer() {
     const token = els.guestOfferToken.value.trim();
-    if (!token) return alert("Paste the host token.");
+    if (!token) return console.warn("Alert:", "Paste the host token.");
     
     els.btnAcceptOffer.disabled = true;
     els.btnAcceptOffer.textContent = 'Processing...';
@@ -175,7 +175,7 @@ async function handleAcceptOffer() {
                 els.guestReplySection.classList.remove('hidden');
             }
         };
-    } catch (err) { alert("Invalid Invite Token."); els.btnAcceptOffer.disabled = false; }
+    } catch (err) { console.warn("Alert:", "Invalid Invite Token."); els.btnAcceptOffer.disabled = false; }
 }
 
 // ==========================================

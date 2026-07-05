@@ -519,9 +519,7 @@ function initEdgeCaseGenerator() {
 
   runBtn.addEventListener("click", async () => {
     if (currentLanguage === "cpp" || currentLanguage === "java") {
-      const proceed = confirm(
-        "Note: the C++/Java harness for this tool is simplified and may require manual adjustment for custom function signatures. JavaScript and Python give the most complete automated results. Continue anyway?"
-      );
+      const proceed = false /* confirm removed */;
       if (!proceed) return;
     }
 

@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -156,7 +156,7 @@
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     printf(&quot;Hello, World!\n&quot;);
@@ -200,7 +200,7 @@ int main() {
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">Bash</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="# Verify your compiler installation
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="# Verify your compiler installation
 gcc --version
 clang --version">Copy</button>
                 </div>
@@ -219,7 +219,7 @@ clang --version</code></pre>
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">Bash</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="# Compile and run a C program
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="# Compile and run a C program
 gcc hello.c -o hello    # compiles to executable
 ./hello                 # runs the executable">Copy</button>
                 </div>
@@ -244,7 +244,7 @@ gcc hello.c -o hello    <span class="tok-cmt"># compiles to executable</span>
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     int age = 25;               // Whole number
@@ -318,12 +318,12 @@ Alice</pre>
                   <li>Create a <code>char</code> array <code>city[]</code> with value <code>"New York"</code></li>
                   <li>Print each variable using <code>printf</code> with the correct format specifier</li>
                 </ol>
-                <button class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-variables">Show Solution</button>
+                <button type="button" class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-variables">Show Solution</button>
                 <div class="c-exercise-solution" id="solution-variables">
                   <div class="c-code-block">
                     <div class="c-code-header">
                       <span class="c-code-lang">C</span>
-                      <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                      <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     int score = 95;
@@ -368,7 +368,7 @@ int main() {
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     char name[] = &quot;Alice&quot;;
@@ -402,7 +402,7 @@ Name: Alice | Age: 25</pre>
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     char name[50];
@@ -449,12 +449,12 @@ int main() {
                   <li>Ask for name and favorite color using <code>scanf</code></li>
                   <li>Print: <code>"Hello {name}, your favorite color is {color}!"</code></li>
                 </ol>
-                <button class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-io">Show Solution</button>
+                <button type="button" class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-io">Show Solution</button>
                 <div class="c-exercise-solution" id="solution-io">
                   <div class="c-code-block">
                     <div class="c-code-header">
                       <span class="c-code-lang">C</span>
-                      <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                      <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     char name[50];
@@ -520,7 +520,7 @@ int main() {
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     int a = 10, b = 5;
@@ -584,12 +584,12 @@ Both positive? 1</pre>
                   <li>Calculate <code>perimeter = 2 * (width + length)</code></li>
                   <li>Print both results using <code>printf</code></li>
                 </ol>
-                <button class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-operators">Show Solution</button>
+                <button type="button" class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-operators">Show Solution</button>
                 <div class="c-exercise-solution" id="solution-operators">
                   <div class="c-code-block">
                     <div class="c-code-header">
                       <span class="c-code-lang">C</span>
-                      <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                      <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     int width = 8;
@@ -631,7 +631,7 @@ int main() {
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     int score = 85;
@@ -682,7 +682,7 @@ int main() {
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     int day = 3;
@@ -729,12 +729,12 @@ int main() {
                   <li>Use <code>if</code>/<code>else if</code>/<code>else</code> to check the number</li>
                   <li>Print the result using <code>printf</code></li>
                 </ol>
-                <button class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-conditionals">Show Solution</button>
+                <button type="button" class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-conditionals">Show Solution</button>
                 <div class="c-exercise-solution" id="solution-conditionals">
                   <div class="c-code-block">
                     <div class="c-code-header">
                       <span class="c-code-lang">C</span>
-                      <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                      <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     int num;
@@ -787,7 +787,7 @@ int main() {
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     // Count from 0 to 4
@@ -839,7 +839,7 @@ numbers[4] = 50</pre>
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     // while loop
@@ -891,12 +891,12 @@ int main() {
                   <li>Use a <code>for</code> loop to print all even numbers from 2 to 20</li>
                   <li>Use a <code>while</code> loop to calculate the sum of numbers from 1 to 100</li>
                 </ol>
-                <button class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-loops">Show Solution</button>
+                <button type="button" class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-loops">Show Solution</button>
                 <div class="c-exercise-solution" id="solution-loops">
                   <div class="c-code-block">
                     <div class="c-code-header">
                       <span class="c-code-lang">C</span>
-                      <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                      <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     // Even numbers 2-20
@@ -950,7 +950,7 @@ int main() {
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 // Function declaration (prototype)
 int add(int a, int b);
@@ -1015,12 +1015,12 @@ Hello, Alice!</pre>
                   <li>Write a function <code>int isEven(int n)</code> that returns 1 if n is even, 0 otherwise</li>
                   <li>Call both functions from <code>main()</code> and print the results</li>
                 </ol>
-                <button class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-functions">Show Solution</button>
+                <button type="button" class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-functions">Show Solution</button>
                 <div class="c-exercise-solution" id="solution-functions">
                   <div class="c-code-block">
                     <div class="c-code-header">
                       <span class="c-code-lang">C</span>
-                      <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                      <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int square(int n);
 int isEven(int n);
@@ -1079,7 +1079,7 @@ int main() {
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     // Creating arrays
@@ -1122,7 +1122,7 @@ int main() {
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 #include &lt;string.h&gt;
 
 int main() {
@@ -1157,12 +1157,12 @@ int main() {
                   <li>Create an array of 5 integers and calculate their sum using a for loop</li>
                   <li>Write code to count how many vowels are in a given string</li>
                 </ol>
-                <button class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-arrays-strings">Show Solution</button>
+                <button type="button" class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-arrays-strings">Show Solution</button>
                 <div class="c-exercise-solution" id="solution-arrays-strings">
                   <div class="c-code-block">
                     <div class="c-code-header">
                       <span class="c-code-lang">C</span>
-                      <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                      <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 #include &lt;string.h&gt;
 
 int main() {
@@ -1237,7 +1237,7 @@ int main() {
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     int x = 42;
@@ -1286,7 +1286,7 @@ New value of x: 100</pre>
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     int arr[] = {10, 20, 30, 40, 50};
@@ -1334,12 +1334,12 @@ int main() {
                   <li>Use the pointer to change the variable's value</li>
                   <li>Print the variable's value before and after the change</li>
                 </ol>
-                <button class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-pointers">Show Solution</button>
+                <button type="button" class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-pointers">Show Solution</button>
                 <div class="c-exercise-solution" id="solution-pointers">
                   <div class="c-code-block">
                     <div class="c-code-header">
                       <span class="c-code-lang">C</span>
-                      <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                      <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 int main() {
     int num = 50;
@@ -1383,7 +1383,7 @@ int main() {
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 #include &lt;string.h&gt;
 
 // Define a struct
@@ -1448,7 +1448,7 @@ GPA: 3.85</pre>
               <div class="c-code-block">
                 <div class="c-code-header">
                   <span class="c-code-lang">C</span>
-                  <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                  <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 #include &lt;string.h&gt;
 
 typedef struct {
@@ -1496,12 +1496,12 @@ int main() {
                   <i class="fas fa-dumbbell"></i> Practice: Structures
                 </div>
                 <p>Define a <code>Rectangle</code> struct with <code>width</code> and <code>height</code> (both <code>int</code>). Write a function that takes a <code>Rectangle</code> and returns its area. Create a rectangle and print its area.</p>
-                <button class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-structs">Show Solution</button>
+                <button type="button" class="c-exercise-toggle" aria-expanded="false" aria-controls="solution-structs">Show Solution</button>
                 <div class="c-exercise-solution" id="solution-structs">
                   <div class="c-code-block">
                     <div class="c-code-header">
                       <span class="c-code-lang">C</span>
-                      <button class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
+                      <button type="button" class="c-code-copy" aria-label="Copy code" data-code="#include &lt;stdio.h&gt;
 
 typedef struct {
     int width;
@@ -1565,7 +1565,10 @@ int main() {
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./c-learning.js"></script>
   

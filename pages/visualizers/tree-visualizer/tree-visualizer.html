@@ -62,24 +62,24 @@
               <input type="number" id="node-value" placeholder="e.g., 50" />
             </div>
             <div class="button-grid">
-              <button class="btn-vis btn-insert" id="btn-insert"><i class="fas fa-plus"></i> Insert</button>
-              <button class="btn-vis btn-delete" id="btn-delete"><i class="fas fa-trash"></i> Delete</button>
-              <button class="btn-vis btn-search" id="btn-search"><i class="fas fa-search"></i> Search</button>
+              <button type="button" class="btn-vis btn-insert" id="btn-insert"><i class="fas fa-plus"></i> Insert</button>
+              <button type="button" class="btn-vis btn-delete" id="btn-delete"><i class="fas fa-trash"></i> Delete</button>
+              <button type="button" class="btn-vis btn-search" id="btn-search"><i class="fas fa-search"></i> Search</button>
             </div>
           </div>
 
           <div class="control-group">
             <label>Traversals & Animations</label>
             <div class="button-grid">
-              <button class="btn-vis" id="btn-preorder">Pre-order</button>
-              <button class="btn-vis" id="btn-inorder">In-order</button>
-              <button class="btn-vis" id="btn-postorder">Post-order</button>
-              <button class="btn-vis" id="btn-levelorder">Level-order</button>
+              <button type="button" class="btn-vis" id="btn-preorder">Pre-order</button>
+              <button type="button" class="btn-vis" id="btn-inorder">In-order</button>
+              <button type="button" class="btn-vis" id="btn-postorder">Post-order</button>
+              <button type="button" class="btn-vis" id="btn-levelorder">Level-order</button>
             </div>
           </div>
 
           <div class="control-group">
-            <button class="btn-vis btn-danger" id="btn-reset"><i class="fas fa-undo"></i> Reset Tree</button>
+            <button type="button" class="btn-vis btn-danger" id="btn-reset"><i class="fas fa-undo"></i> Reset Tree</button>
           </div>
 
           <div class="control-group">
@@ -106,10 +106,10 @@
               <span id="dbgStepCounter" class="step-counter">Step 0 / 0</span>
             </div>
             <div class="debugger-controls" style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
-              <button id="dbgPrevBtn" class="btn btn-secondary btn-control-mini" disabled style="padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-step-backward"></i> Prev</button>
-              <button id="dbgPlayBtn" class="btn btn-primary btn-control-mini" style="padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-play"></i> Play</button>
-              <button id="dbgPauseBtn" class="btn btn-secondary btn-control-mini" style="display: none; padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-pause"></i> Pause</button>
-              <button id="dbgNextBtn" class="btn btn-secondary btn-control-mini" style="padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-step-forward"></i> Next</button>
+              <button type="button" id="dbgPrevBtn" class="btn btn-secondary btn-control-mini" disabled style="padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-step-backward"></i> Prev</button>
+              <button type="button" id="dbgPlayBtn" class="btn btn-primary btn-control-mini" style="padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-play"></i> Play</button>
+              <button type="button" id="dbgPauseBtn" class="btn btn-secondary btn-control-mini" style="display: none; padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-pause"></i> Pause</button>
+              <button type="button" id="dbgNextBtn" class="btn btn-secondary btn-control-mini" style="padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fas fa-step-forward"></i> Next</button>
             </div>
             <div class="debugger-slider-group" style="margin-bottom: 1.25rem;">
               <input type="range" id="dbgStepSlider" min="0" max="0" value="0" class="slider-custom" style="width: 100%;">
@@ -134,7 +134,11 @@
 
     <div id="footer-placeholder"></div>
     
+    <script src="/bootstrap-legacy.js"></script>
+
+    
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="tree-visualizer.js"></script>

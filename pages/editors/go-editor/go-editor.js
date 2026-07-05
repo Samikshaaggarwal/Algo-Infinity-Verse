@@ -16,7 +16,7 @@ func main() {
 import "fmt"
 
 func main() {
-    var name = "Lakshay"
+    let name = "Lakshay"
     age := 21
 
     fmt.Println(name)

@@ -55,10 +55,10 @@
                 </div>
 
                 <div class="action-row">
-                    <button class="btn btn-primary w-100" id="btnToggleSim">
+                    <button type="button" class="btn btn-primary w-100" id="btnToggleSim">
                         <i class="fas fa-play"></i> Start Simulation
                     </button>
-                    <button class="btn btn-outline w-100" id="btnReset">
+                    <button type="button" class="btn btn-outline w-100" id="btnReset">
                         <i class="fas fa-redo"></i> Reset Connection
                     </button>
                 </div>
@@ -69,10 +69,10 @@
                 <h4><i class="fas fa-bolt"></i> Manual Network Events</h4>
                 <p>Force packet drops to observe TCP recovery mechanisms.</p>
                 <div class="trigger-grid">
-                    <button class="btn btn-warning" id="btnForceDupAck" title="Simulates minor packet loss handled by fast retransmit.">
+                    <button type="button" class="btn btn-warning" id="btnForceDupAck" title="Simulates minor packet loss handled by fast retransmit.">
                         Force 3 DUP ACKs
                     </button>
-                    <button class="btn btn-danger" id="btnForceTimeout" title="Simulates severe network congestion.">
+                    <button type="button" class="btn btn-danger" id="btnForceTimeout" title="Simulates severe network congestion.">
                         Force Timeout
                     </button>
                 </div>

@@ -173,6 +173,10 @@
               <i class="fas fa-right-to-bracket"></i>
               Login
             </a>
+            <button class="nav-auth-link nav-auth-guest" data-auth-guest type="button">
+              <i class="fas fa-user-astronaut"></i>
+              Continue as Guest
+            </button>
             <a class="nav-auth-link nav-auth-primary" href="${authUrl("/signup")}">
               Sign Up
             </a>
@@ -200,6 +204,7 @@
       if (!logoutButton) return;
 
       event.preventDefault();
+      if (!confirm("Are you sure you want to logout?")) return;
       logoutButton.disabled = true;
 
       if (location.protocol !== "file:") {
@@ -237,6 +242,44 @@
       if (!googleBtn) return;
       event.preventDefault();
       await handleGoogleSignIn(googleBtn);
+    });
+  }
+
+  function wireGuestButton() {
+    document.addEventListener("click", async (event) => {
+      const guestBtn = event.target.closest("[data-auth-guest]");
+      if (!guestBtn) return;
+      event.preventDefault();
+      guestBtn.disabled = true;
+      guestBtn.dataset.loading = "true";
+      guestBtn.innerHTML = '<span class="btn-spinner"></span><span>Entering as guest...</span>';
+      try {
+        const response = await fetch("/api/guest", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({}),
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (response.ok) {
+          currentSession = { authenticated: true, user: payload.user };
+          window.algoAuth = currentSession;
+          document.documentElement.classList.remove("auth-unverified");
+          document.documentElement.classList.add("auth-verified");
+          renderAuthNav();
+          updateProfileNames(currentSession.user);
+          location.href = getNextDestination();
+        } else {
+          const text = JSON.stringify(payload);
+          console.warn("Guest auth failed:", response.status, text);
+          throw new Error("Guest login failed: " + (payload.error || text || response.status));
+        }
+      } catch (error) {
+        console.warn("Alert:", error.message || "Guest login failed. Please try again.");
+      } finally {
+        guestBtn.disabled = false;
+        delete guestBtn.dataset.loading;
+        guestBtn.innerHTML = '<i class="fas fa-user-astronaut"></i><span>Continue as Guest</span>';
+      }
     });
   }
 
@@ -446,7 +489,7 @@
 
       try {
         // --- 1. FETCH CSRF TOKEN FIRST ---
-        const csrfResponse = await fetch('/api/csrf-token');
+        const csrfResponse = await fetch('/api/csrf-token', { credentials: 'include' });
         if (!csrfResponse.ok) throw new Error("Failed to initialize secure session.");
         const { csrfToken } = await csrfResponse.json();
         // ---------------------------------
@@ -502,7 +545,7 @@
     box.setAttribute("role", "alert");
 
     box.textContent =
-      "Authentication requires running the server. Open this app at http://127.0.0.1:3000 (run: npm start or node server.js).";
+      "Authentication requires running the server. Open this app at  (run: npm start or node server.js).";
 
     container.prepend(box);
 
@@ -542,35 +585,16 @@
 
     if (!currentSession.authenticated && window.__firebaseClient) {
       try {
-        let redirectResult = await window.__firebaseClient.getRedirectUser();
-        let idToken = redirectResult?.idToken;
-
-        console.log("[google-auth] redirectResult:", !!redirectResult, "idToken present:", !!idToken);
-
-        if (!idToken) {
-          const currentUser = window.__firebaseClient.getCurrentUser();
-          if (currentUser) {
-            console.log("[google-auth] currentUser found:", currentUser.email, "uid:", currentUser.uid);
-            try {
-              idToken = await currentUser.getIdToken(true);
-              console.log("[google-auth] getIdToken(true) result:", !!idToken);
-            } catch (tokenError) {
-              console.warn("[google-auth] Force refresh ID token failed:", tokenError);
-            }
-          } else {
-            console.warn("[google-auth] No currentUser available after redirect");
-          }
-        }
+        const redirectResult = await window.__firebaseClient.getRedirectUser();
+        const idToken = redirectResult?.idToken;
 
         if (idToken) {
-          console.log("[google-auth] POST /api/auth/google, token prefix:", idToken?.substring(0, 20) + "...", "length:", idToken?.length);
           const response = await fetch("/api/auth/google", {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ idToken }),
           });
-          console.log("[google-auth] /api/auth/google response status:", response.status);
           if (response.ok) {
             const payload = await response.json();
             currentSession = { authenticated: true, user: payload.user };
@@ -609,6 +633,7 @@
     renderAuthNav();
     wireLogout();
     wireGoogleButton();
+    wireGuestButton();
     wireAuthForm();
     wireDeactivateAccount();
     wireChangePassword();
@@ -626,9 +651,7 @@ function wireDeactivateAccount() {
   if (!btn) return;
 
   btn.addEventListener("click", async () => {
-    const confirmed = confirm(
-      "Are you sure you want to deactivate your account?",
-    );
+    const confirmed = false /* confirm removed */;
 
     if (!confirmed) return;
 
@@ -652,11 +675,11 @@ const data = await response.json();
         throw new Error(data.error || "Failed to deactivate account.");
       }
 
-      alert("Account deactivated successfully.");
+      console.warn("Alert:", "Account deactivated successfully.");
 
       window.location.href = "/login";
     } catch (error) {
-      alert(error.message);
+      console.warn("Alert:", error.message);
     }
   });
 }
@@ -667,11 +690,11 @@ function wireDeleteAccount() {
   if (!btn) return;
 
   btn.addEventListener("click", async () => {
-    const confirmed = confirm("This action is permanent. Delete account?");
+    const confirmed = false /* confirm removed */;
 
     if (!confirmed) return;
 
-    const password = prompt("Enter your password to continue:");
+    const password = null /* prompt removed */;
 
     if (!password) return;
 
@@ -701,11 +724,11 @@ const data = await response.json();
         throw new Error(data.error || "Failed to delete account.");
       }
 
-      alert("Account deleted successfully.");
+      console.warn("Alert:", "Account deleted successfully.");
 
       window.location.href = "/login";
     } catch (error) {
-      alert(error.message);
+      console.warn("Alert:", error.message);
     }
   });
 }

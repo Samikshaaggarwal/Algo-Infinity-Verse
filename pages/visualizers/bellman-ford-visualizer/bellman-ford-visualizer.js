@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── Speed ─── */
-var BF_SPEED = { 1: 1200, 2: 700, 3: 400, 4: 180, 5: 60 };
-var BF_SPEED_LABEL = { 1: 'Slowest', 2: 'Slow', 3: 'Normal', 4: 'Fast', 5: 'Blazing' };
+let BF_SPEED = { 1: 1200, 2: 700, 3: 400, 4: 180, 5: 60 };
+let BF_SPEED_LABEL = { 1: 'Slowest', 2: 'Slow', 3: 'Normal', 4: 'Fast', 5: 'Blazing' };
 
 /* ─── Graph presets ─── */
-var BF_PRESETS = {
+let BF_PRESETS = {
   basic: {
     nodes: [
       { id:0, x:60,  y:140 },
@@ -102,7 +102,7 @@ var BF_PRESETS = {
 };
 
 /* ─── State ─── */
-var bfState = {
+let bfState = {
   algo    : 'bf',
   preset  : 'basic',
   graph   : null,
@@ -117,13 +117,13 @@ var bfState = {
 
 /* Bellman-Ford */
 function bfGenBFSteps(graph, src) {
-  var nodes = graph.nodes;
-  var edges = graph.edges;
-  var V     = nodes.length;
-  var INF   = Infinity;
-  var dist  = {};
-  var prev  = {};
-  var steps = [];
+  let nodes = graph.nodes;
+  let edges = graph.edges;
+  let V     = nodes.length;
+  let INF   = Infinity;
+  let dist  = {};
+  let prev  = {};
+  let steps = [];
 
   nodes.forEach(function(n) { dist[n.id] = INF; prev[n.id] = -1; });
   dist[src] = 0;
@@ -134,8 +134,8 @@ function bfGenBFSteps(graph, src) {
     msg: 'Initialize: dist[' + src + '] = 0, all others = ∞'
   });
 
-  for (var pass = 1; pass <= V - 1; pass++) {
-    var anyUpdate = false;
+  for (let pass = 1; pass <= V - 1; pass++) {
+    let anyUpdate = false;
 
     steps.push({
       type: 'pass-start', dist: bfCloneDist(dist), prev: bfCloneDist(prev),
@@ -143,9 +143,9 @@ function bfGenBFSteps(graph, src) {
       msg: 'Pass ' + pass + ' of ' + (V-1) + ': relaxing all ' + edges.length + ' edges'
     });
 
-    for (var ei = 0; ei < edges.length; ei++) {
-      var e  = edges[ei];
-      var nd = dist[e.u] + e.w;
+    for (let ei = 0; ei < edges.length; ei++) {
+      let e  = edges[ei];
+      let nd = dist[e.u] + e.w;
 
       steps.push({
         type: 'relaxing', dist: bfCloneDist(dist), prev: bfCloneDist(prev),
@@ -179,15 +179,15 @@ function bfGenBFSteps(graph, src) {
   }
 
   // Negative cycle check: pass V
-  var negCycleNodes = [];
+  let negCycleNodes = [];
   steps.push({
     type: 'neg-check-start', dist: bfCloneDist(dist), prev: bfCloneDist(prev),
     active: -1, relaxingEdge: null, pass: V,
     msg: 'Pass ' + V + ' (negative cycle check): if any distance still decreases, negative cycle exists.'
   });
 
-  for (var ei = 0; ei < edges.length; ei++) {
-    var e  = edges[ei];
+  for (let ei = 0; ei < edges.length; ei++) {
+    let e  = edges[ei];
     if (dist[e.u] !== INF && dist[e.u] + e.w < dist[e.v]) {
       negCycleNodes.push(e.u, e.v);
       steps.push({
@@ -199,7 +199,7 @@ function bfGenBFSteps(graph, src) {
     }
   }
 
-  var hasCycle = negCycleNodes.length > 0;
+  let hasCycle = negCycleNodes.length > 0;
   steps.push({
     type: 'done', dist: bfCloneDist(dist), prev: bfCloneDist(prev),
     active: -1, relaxingEdge: null, negCycle: hasCycle,
@@ -214,15 +214,15 @@ function bfGenBFSteps(graph, src) {
 
 /* SPFA */
 function bfGenSPFASteps(graph, src) {
-  var nodes = graph.nodes;
-  var edges = graph.edges;
-  var V     = nodes.length;
-  var INF   = Infinity;
-  var dist  = {};
-  var prev  = {};
-  var inQueue = {};
-  var visitCount = {};
-  var steps = [];
+  let nodes = graph.nodes;
+  let edges = graph.edges;
+  let V     = nodes.length;
+  let INF   = Infinity;
+  let dist  = {};
+  let prev  = {};
+  let inQueue = {};
+  let visitCount = {};
+  let steps = [];
 
   nodes.forEach(function(n) {
     dist[n.id] = INF;
@@ -233,11 +233,11 @@ function bfGenSPFASteps(graph, src) {
   dist[src] = 0;
 
   // Build adjacency list
-  var adj = {};
+  let adj = {};
   nodes.forEach(function(n) { adj[n.id] = []; });
   edges.forEach(function(e) { adj[e.u].push({ to: e.v, w: e.w, edge: e }); });
 
-  var queue = [src];
+  let queue = [src];
   inQueue[src] = true;
   visitCount[src]++;
 
@@ -247,13 +247,13 @@ function bfGenSPFASteps(graph, src) {
     msg: 'SPFA Initialize: dist[' + src + '] = 0. Enqueue source node ' + src + '.'
   });
 
-  var negCycleNodes = [];
-  var hasCycle = false;
-  var iter = 0;
+  let negCycleNodes = [];
+  let hasCycle = false;
+  let iter = 0;
 
   while (queue.length > 0 && !hasCycle && iter < V * edges.length + 10) {
     iter++;
-    var u = queue.shift();
+    let u = queue.shift();
     inQueue[u] = false;
 
     steps.push({
@@ -262,10 +262,10 @@ function bfGenSPFASteps(graph, src) {
       msg: 'Dequeue node ' + u + '. Relaxing its ' + (adj[u] || []).length + ' outgoing edges.'
     });
 
-    var nbrs = adj[u] || [];
-    for (var ni = 0; ni < nbrs.length; ni++) {
-      var nb  = nbrs[ni];
-      var nd  = dist[u] + nb.w;
+    let nbrs = adj[u] || [];
+    for (let ni = 0; ni < nbrs.length; ni++) {
+      let nb  = nbrs[ni];
+      let nd  = dist[u] + nb.w;
 
       steps.push({
         type: 'relaxing', dist: bfCloneDist(dist), prev: bfCloneDist(prev),
@@ -326,47 +326,47 @@ function bfGenSPFASteps(graph, src) {
 }
 
 function bfCloneDist(d) {
-  var c = {};
+  let c = {};
   Object.keys(d).forEach(function(k) { c[k] = d[k]; });
   return c;
 }
 
 /* ─── Canvas drawing ─── */
-var BF_NODE_R = 18;
+let BF_NODE_R = 18;
 
 function bfDraw(step) {
-  var canvas = document.getElementById('bfCanvas');
+  let canvas = document.getElementById('bfCanvas');
   if (!canvas || !bfState.graph) return;
-  var ctx    = canvas.getContext('2d');
-  var graph  = bfState.graph;
-  var src    = bfState.source;
-  var dist   = step.dist || {};
-  var negCycleNodes = step.negCycleNodes || [];
-  var relaxingEdge  = step.relaxingEdge;
+  let ctx    = canvas.getContext('2d');
+  let graph  = bfState.graph;
+  let src    = bfState.source;
+  let dist   = step.dist || {};
+  let negCycleNodes = step.negCycleNodes || [];
+  let relaxingEdge  = step.relaxingEdge;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw edges
   graph.edges.forEach(function(e) {
-    var na = graph.nodes[e.u]; var nb = graph.nodes[e.v];
+    let na = graph.nodes[e.u]; let nb = graph.nodes[e.v];
     if (!na || !nb) return;
 
-    var isRelaxing = relaxingEdge && relaxingEdge.u === e.u && relaxingEdge.v === e.v;
-    var isNeg      = e.w < 0;
+    let isRelaxing = relaxingEdge && relaxingEdge.u === e.u && relaxingEdge.v === e.v;
+    let isNeg      = e.w < 0;
 
     ctx.strokeStyle = isRelaxing ? '#f59e0b' : isNeg ? '#ef4444' : 'rgba(100,116,139,0.35)';
     ctx.lineWidth   = isRelaxing ? 3 : isNeg ? 2 : 1.5;
     if (isNeg && !isRelaxing) { ctx.setLineDash([5, 3]); }
 
     // Draw directed arrow
-    var dx = nb.x - na.x; var dy = nb.y - na.y;
-    var len = Math.sqrt(dx*dx + dy*dy);
-    var ux = dx/len; var uy = dy/len;
+    let dx = nb.x - na.x; let dy = nb.y - na.y;
+    let len = Math.sqrt(dx*dx + dy*dy);
+    let ux = dx/len; let uy = dy/len;
 
-    var startX = na.x + ux * BF_NODE_R;
-    var startY = na.y + uy * BF_NODE_R;
-    var endX   = nb.x - ux * BF_NODE_R;
-    var endY   = nb.y - uy * BF_NODE_R;
+    let startX = na.x + ux * BF_NODE_R;
+    let startY = na.y + uy * BF_NODE_R;
+    let endX   = nb.x - ux * BF_NODE_R;
+    let endY   = nb.y - uy * BF_NODE_R;
 
     ctx.beginPath();
     ctx.moveTo(startX, startY);
@@ -375,16 +375,16 @@ function bfDraw(step) {
     ctx.setLineDash([]);
 
     // Arrow head
-    var ax = endX - ux*10 - uy*5;
-    var ay = endY - uy*10 + ux*5;
-    var bx = endX - ux*10 + uy*5;
-    var by = endY - uy*10 - ux*5;
+    let ax = endX - ux*10 - uy*5;
+    let ay = endY - uy*10 + ux*5;
+    let bx = endX - ux*10 + uy*5;
+    let by = endY - uy*10 - ux*5;
     ctx.fillStyle = isRelaxing ? '#f59e0b' : isNeg ? '#ef4444' : 'rgba(100,116,139,0.5)';
     ctx.beginPath(); ctx.moveTo(endX, endY); ctx.lineTo(ax, ay); ctx.lineTo(bx, by); ctx.closePath(); ctx.fill();
 
     // Weight label
-    var mx = (na.x + nb.x) / 2 + uy * 12;
-    var my = (na.y + nb.y) / 2 - ux * 12;
+    let mx = (na.x + nb.x) / 2 + uy * 12;
+    let my = (na.y + nb.y) / 2 - ux * 12;
     ctx.fillStyle = isRelaxing ? '#f59e0b' : isNeg ? '#ef4444' : 'rgba(148,163,184,0.7)';
     ctx.font = 'bold 10px Fira Code,monospace';
     ctx.textAlign = 'center';
@@ -393,16 +393,16 @@ function bfDraw(step) {
 
   // Draw nodes
   graph.nodes.forEach(function(node) {
-    var isSrc      = node.id === src;
-    var isActive   = step.active === node.id;
-    var isNegCycle = negCycleNodes.indexOf(node.id) !== -1;
-    var d          = dist[node.id];
-    var hasFinite  = d !== undefined && d !== Infinity;
+    let isSrc      = node.id === src;
+    let isActive   = step.active === node.id;
+    let isNegCycle = negCycleNodes.indexOf(node.id) !== -1;
+    let d          = dist[node.id];
+    let hasFinite  = d !== undefined && d !== Infinity;
 
-    var fillColor   = 'rgba(255,255,255,0.04)';
-    var strokeColor = 'rgba(100,116,139,0.4)';
-    var textColor   = 'rgba(148,163,184,0.8)';
-    var lineWidth   = 1.5;
+    let fillColor   = 'rgba(255,255,255,0.04)';
+    let strokeColor = 'rgba(100,116,139,0.4)';
+    let textColor   = 'rgba(148,163,184,0.8)';
+    let lineWidth   = 1.5;
 
     if (isNegCycle)    { fillColor = 'rgba(239,68,68,0.3)'; strokeColor = '#ef4444'; textColor = '#fca5a5'; lineWidth = 3; }
     else if (isActive) { fillColor = 'rgba(245,158,11,0.3)'; strokeColor = '#f59e0b'; textColor = '#fde68a'; lineWidth = 2.5; }
@@ -425,7 +425,7 @@ function bfDraw(step) {
     ctx.fillText(node.id, node.x, node.y);
 
     // Distance label below node
-    var dLabel = d === Infinity || d === undefined ? '∞' : d;
+    let dLabel = d === Infinity || d === undefined ? '∞' : d;
     ctx.fillStyle    = isNegCycle ? '#ef4444' : hasFinite ? '#06b6d4' : 'rgba(148,163,184,0.5)';
     ctx.font         = '9px Fira Code,monospace';
     ctx.textBaseline = 'top';
@@ -435,23 +435,23 @@ function bfDraw(step) {
 
 /* ─── Update distance table ─── */
 function bfUpdateDistTable(step) {
-  var tbody = document.getElementById('bfDistBody');
+  let tbody = document.getElementById('bfDistBody');
   if (!tbody || !bfState.graph) return;
-  var dist  = step.dist || {};
-  var prev  = step.prev || {};
-  var negCycleNodes = step.negCycleNodes || [];
-  var src   = bfState.source;
+  let dist  = step.dist || {};
+  let prev  = step.prev || {};
+  let negCycleNodes = step.negCycleNodes || [];
+  let src   = bfState.source;
 
   tbody.innerHTML = bfState.graph.nodes.map(function(node) {
-    var d       = dist[node.id];
-    var dStr    = d === Infinity || d === undefined ? '∞' : d;
-    var p       = prev[node.id];
-    var pStr    = p === -1 || p === undefined ? '—' : p;
-    var isActive   = step.active === node.id;
-    var isNeg      = negCycleNodes.indexOf(node.id) !== -1;
-    var isSrc      = node.id === src;
-    var isUpdated  = step.type === 'updated' && step.active === node.id;
-    var rowCls = isNeg ? 'bf-row-negcycle' : isUpdated ? 'bf-row-updated' : isActive && step.type === 'relaxing' ? 'bf-row-relaxing' : isSrc ? 'bf-row-source' : '';
+    let d       = dist[node.id];
+    let dStr    = d === Infinity || d === undefined ? '∞' : d;
+    let p       = prev[node.id];
+    let pStr    = p === -1 || p === undefined ? '—' : p;
+    let isActive   = step.active === node.id;
+    let isNeg      = negCycleNodes.indexOf(node.id) !== -1;
+    let isSrc      = node.id === src;
+    let isUpdated  = step.type === 'updated' && step.active === node.id;
+    let rowCls = isNeg ? 'bf-row-negcycle' : isUpdated ? 'bf-row-updated' : isActive && step.type === 'relaxing' ? 'bf-row-relaxing' : isSrc ? 'bf-row-source' : '';
     return '<tr class="' + rowCls + '">' +
       '<td>' + node.id + (isSrc ? ' (S)' : '') + '</td>' +
       '<td>' + dStr + '</td>' +
@@ -462,13 +462,13 @@ function bfUpdateDistTable(step) {
 
 /* ─── Update SPFA queue ─── */
 function bfUpdateQueue(step) {
-  var queueWrap = document.getElementById('bfQueueWrap');
-  var queueRow  = document.getElementById('bfQueueRow');
+  let queueWrap = document.getElementById('bfQueueWrap');
+  let queueRow  = document.getElementById('bfQueueRow');
   if (!queueWrap || !queueRow) return;
 
   if (bfState.algo === 'spfa') {
     queueWrap.classList.remove('hidden');
-    var queue = step.queue || [];
+    let queue = step.queue || [];
     queueRow.innerHTML = queue.map(function(id) {
       return '<div class="bf-queue-node">' + id + '</div>';
     }).join('');
@@ -480,7 +480,7 @@ function bfUpdateQueue(step) {
 
 /* ─── Update pass label ─── */
 function bfUpdatePassLabel(step) {
-  var el = document.getElementById('bfPassLabel');
+  let el = document.getElementById('bfPassLabel');
   if (!el) return;
   if (bfState.algo === 'bf') {
     if (step.pass) el.textContent = 'Pass: ' + step.pass + (step.pass === bfState.graph.nodes.length ? ' (neg cycle check)' : '');
@@ -492,19 +492,19 @@ function bfUpdatePassLabel(step) {
 
 /* ─── Add to relaxation log ─── */
 function bfAddRelaxLog(step) {
-  var log = document.getElementById('bfRelaxLog');
+  let log = document.getElementById('bfRelaxLog');
   if (!log) return;
-  var empty = log.querySelector('.bf-relax-empty');
+  let empty = log.querySelector('.bf-relax-empty');
   if (empty) empty.remove();
 
-  var cls = 'bf-relax-entry ';
+  let cls = 'bf-relax-entry ';
   if (step.type === 'pass-start')  cls += 'pass';
   else if (step.type === 'updated') cls += 'updated';
   else if (step.type === 'relaxing' || step.type === 'relax') cls += 'relaxing';
   else if (step.type === 'neg-cycle') cls += 'negcycle';
   else return; // don't log init/done/early-stop here
 
-  var entry = document.createElement('div');
+  let entry = document.createElement('div');
   entry.className = cls;
   entry.textContent = step.msg;
   log.insertBefore(entry, log.firstChild);
@@ -516,10 +516,10 @@ function bfAddRelaxLog(step) {
 /* ─── Apply step ─── */
 function bfApplyStep(step) {
   // Status
-  var statusEl = document.getElementById('bfStatus');
+  let statusEl = document.getElementById('bfStatus');
   if (statusEl && step.msg) {
     statusEl.textContent = step.msg;
-    var cls = 'bf-status ';
+    let cls = 'bf-status ';
     if (step.type === 'updated')                 cls += 'updated';
     else if (step.type === 'relaxing')           cls += 'relax';
     else if (step.type === 'neg-cycle')          cls += 'negcycle';
@@ -529,7 +529,7 @@ function bfApplyStep(step) {
   }
 
   // Negative cycle banner
-  var banner = document.getElementById('bfNegCycleBanner');
+  let banner = document.getElementById('bfNegCycleBanner');
   if (banner) {
     banner.classList.toggle('hidden', !step.negCycle);
   }
@@ -544,7 +544,7 @@ function bfApplyStep(step) {
 
 /* ─── Playback ─── */
 function bfGetDelay() {
-  var el = document.getElementById('bfSpeed');
+  let el = document.getElementById('bfSpeed');
   return BF_SPEED[el ? el.value : 3] || 400;
 }
 
@@ -583,16 +583,16 @@ function bfStep() {
 }
 
 function bfUpdatePBBtns() {
-  var stepBtn  = document.getElementById('bfStepBtn');
-  var pauseBtn = document.getElementById('bfPauseBtn');
-  var has = bfState.steps.length > 0;
+  let stepBtn  = document.getElementById('bfStepBtn');
+  let pauseBtn = document.getElementById('bfPauseBtn');
+  let has = bfState.steps.length > 0;
   if (stepBtn)  stepBtn.disabled  = !has || bfState.stepIdx >= bfState.steps.length;
   if (pauseBtn) pauseBtn.disabled = !bfState.playing;
 }
 
 function bfUpdateStepCounter() {
-  var n = document.getElementById('bfStepNum');
-  var t = document.getElementById('bfStepTotal');
+  let n = document.getElementById('bfStepNum');
+  let t = document.getElementById('bfStepTotal');
   if (n) n.textContent = bfState.stepIdx;
   if (t) t.textContent = bfState.steps.length;
 }
@@ -601,10 +601,10 @@ function bfUpdateStepCounter() {
 function bfRun() {
   bfPause();
 
-  var srcEl = document.getElementById('bfSource');
-  var src   = parseInt(srcEl ? srcEl.value : 0);
-  var graph = BF_PRESETS[bfState.preset];
-  var maxId = graph.nodes.length - 1;
+  let srcEl = document.getElementById('bfSource');
+  let src   = parseInt(srcEl ? srcEl.value : 0);
+  let graph = BF_PRESETS[bfState.preset];
+  let maxId = graph.nodes.length - 1;
 
   if (isNaN(src) || src < 0 || src > maxId) src = 0;
 
@@ -614,23 +614,23 @@ function bfRun() {
   bfState.playing = false;
 
   // Scale node positions to canvas
-  var canvas = document.getElementById('bfCanvas');
-  var wrap   = canvas && canvas.parentElement;
+  let canvas = document.getElementById('bfCanvas');
+  let wrap   = canvas && canvas.parentElement;
   if (canvas && wrap) {
     canvas.width  = wrap.clientWidth;
     canvas.height = Math.min(320, Math.max(240, Math.floor(canvas.width * 0.55)));
   }
 
-  var cw = canvas ? canvas.width  : 500;
-  var ch = canvas ? canvas.height : 280;
-  var minX = Infinity, maxX = 0, minY = Infinity, maxY = 0;
+  let cw = canvas ? canvas.width  : 500;
+  let ch = canvas ? canvas.height : 280;
+  let minX = Infinity, maxX = 0, minY = Infinity, maxY = 0;
   bfState.graph.nodes.forEach(function(n) {
     if (n.x < minX) minX = n.x; if (n.x > maxX) maxX = n.x;
     if (n.y < minY) minY = n.y; if (n.y > maxY) maxY = n.y;
   });
-  var scaleX = (cw - 80) / Math.max(maxX - minX, 1);
-  var scaleY = (ch - 80) / Math.max(maxY - minY, 1);
-  var scale  = Math.min(scaleX, scaleY);
+  let scaleX = (cw - 80) / Math.max(maxX - minX, 1);
+  let scaleY = (ch - 80) / Math.max(maxY - minY, 1);
+  let scale  = Math.min(scaleX, scaleY);
   bfState.graph.nodes = bfState.graph.nodes.map(function(n) {
     return { id: n.id, x: Math.round(40 + (n.x - minX) * scale), y: Math.round(40 + (n.y - minY) * scale) };
   });
@@ -643,17 +643,17 @@ function bfRun() {
   }
 
   // Clear log
-  var log = document.getElementById('bfRelaxLog');
+  let log = document.getElementById('bfRelaxLog');
   if (log) log.innerHTML = '<div class="bf-relax-empty">No relaxations yet.</div>';
 
   // Hide neg cycle banner
-  var banner = document.getElementById('bfNegCycleBanner');
+  let banner = document.getElementById('bfNegCycleBanner');
   if (banner) banner.classList.add('hidden');
 
   bfUpdateStepCounter();
   bfUpdatePBBtns();
 
-  var statusEl = document.getElementById('bfStatus');
+  let statusEl = document.getElementById('bfStatus');
   if (statusEl) { statusEl.textContent = 'Ready. Press Step or watch auto-play.'; statusEl.className = 'bf-status'; }
 
   bfPlay();
@@ -666,28 +666,28 @@ function bfReset() {
   bfState.stepIdx = 0;
   bfState.graph   = null;
 
-  var canvas = document.getElementById('bfCanvas');
-  if (canvas) { var ctx = canvas.getContext('2d'); ctx.clearRect(0, 0, canvas.width, canvas.height); }
+  let canvas = document.getElementById('bfCanvas');
+  if (canvas) { let ctx = canvas.getContext('2d'); ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
-  var log = document.getElementById('bfRelaxLog');
+  let log = document.getElementById('bfRelaxLog');
   if (log) log.innerHTML = '<div class="bf-relax-empty">No relaxations yet.</div>';
 
-  var tbody = document.getElementById('bfDistBody');
+  let tbody = document.getElementById('bfDistBody');
   if (tbody) tbody.innerHTML = '';
 
-  var banner = document.getElementById('bfNegCycleBanner');
+  let banner = document.getElementById('bfNegCycleBanner');
   if (banner) banner.classList.add('hidden');
 
-  var passEl = document.getElementById('bfPassLabel');
+  let passEl = document.getElementById('bfPassLabel');
   if (passEl) passEl.textContent = 'Pass: —';
 
-  var queueWrap = document.getElementById('bfQueueWrap');
+  let queueWrap = document.getElementById('bfQueueWrap');
   if (queueWrap) queueWrap.classList.add('hidden');
 
   bfUpdateStepCounter();
   bfUpdatePBBtns();
 
-  var statusEl = document.getElementById('bfStatus');
+  let statusEl = document.getElementById('bfStatus');
   if (statusEl) { statusEl.textContent = 'Select a preset and click Run to begin.'; statusEl.className = 'bf-status'; }
 }
 
@@ -709,19 +709,19 @@ function bfInit() {
       document.querySelectorAll('.bf-preset-btn').forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
       bfState.preset = btn.getAttribute('data-preset');
-      var p = BF_PRESETS[bfState.preset];
-      var srcEl = document.getElementById('bfSource');
+      let p = BF_PRESETS[bfState.preset];
+      let srcEl = document.getElementById('bfSource');
       if (srcEl) srcEl.value = p.defaultSource;
       bfReset();
     });
   });
 
   // Playback
-  var runBtn   = document.getElementById('bfRunBtn');
-  var stepBtn  = document.getElementById('bfStepBtn');
-  var pauseBtn = document.getElementById('bfPauseBtn');
-  var resetBtn = document.getElementById('bfResetBtn');
-  var speedSl  = document.getElementById('bfSpeed');
+  let runBtn   = document.getElementById('bfRunBtn');
+  let stepBtn  = document.getElementById('bfStepBtn');
+  let pauseBtn = document.getElementById('bfPauseBtn');
+  let resetBtn = document.getElementById('bfResetBtn');
+  let speedSl  = document.getElementById('bfSpeed');
 
   if (runBtn)   runBtn.addEventListener('click',   bfRun);
   if (stepBtn)  stepBtn.addEventListener('click',  bfStep);
@@ -730,7 +730,7 @@ function bfInit() {
 
   if (speedSl) {
     speedSl.addEventListener('input', function() {
-      var lbl = document.getElementById('bfSpeedVal');
+      let lbl = document.getElementById('bfSpeedVal');
       if (lbl) lbl.textContent = BF_SPEED_LABEL[speedSl.value] || 'Normal';
       if (bfState.playing) { bfPause(); bfPlay(); }
     });
@@ -738,8 +738,8 @@ function bfInit() {
 
   window.addEventListener('resize', function() {
     if (!bfState.graph || bfState.steps.length === 0) return;
-    var canvas = document.getElementById('bfCanvas');
-    var wrap   = canvas && canvas.parentElement;
+    let canvas = document.getElementById('bfCanvas');
+    let wrap   = canvas && canvas.parentElement;
     if (canvas && wrap) {
       canvas.width  = wrap.clientWidth;
       canvas.height = Math.min(320, Math.max(240, Math.floor(canvas.width * 0.55)));

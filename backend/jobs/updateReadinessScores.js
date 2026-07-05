@@ -1,11 +1,11 @@
-const { calculateReadinessScore } = require('../services/readinessEngine');
+import { calculateReadinessScore } from '../services/readinessEngine.js';
 // Assuming a DB connection or model is available globally or via an import
-// const db = require('../models'); 
+// import db from '../models/index.js';
 
 /**
  * Background job to process and update interview readiness scores for users
  */
-async function processUserReadinessScores() {
+export async function processUserReadinessScores() {
   console.log('Starting automated readiness score updates...');
   
   try {
@@ -40,5 +40,4 @@ async function processUserReadinessScores() {
   }
 }
 
-// Export the job to be registered by your main worker/scheduler
-module.exports = { processUserReadinessScores };
+// The job is exported above to be registered by your main worker/scheduler.

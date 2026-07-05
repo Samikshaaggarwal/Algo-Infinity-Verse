@@ -141,3 +141,5 @@ export function executeSandboxedCode(code, timeoutMs = 3000) {
         worker.postMessage({ code });
     });
 }
+// Legacy global exports
+window.executeSandboxedCode = executeSandboxedCode;

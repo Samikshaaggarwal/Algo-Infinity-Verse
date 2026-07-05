@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -62,9 +62,9 @@
             <div class="ipm-timer-progress-bar" id="ipmTimerBar"></div>
           </div>
           <div class="ipm-timer-controls">
-            <button class="btn ipm-btn-start" id="ipmStartBtn"><i class="fas fa-play"></i> Start 30-Min Revision</button>
-            <button class="btn ipm-btn-pause hidden" id="ipmPauseBtn"><i class="fas fa-pause"></i> Pause</button>
-            <button class="btn ipm-btn-reset" id="ipmResetBtn"><i class="fas fa-undo"></i> Reset</button>
+            <button type="button" class="btn ipm-btn-start" id="ipmStartBtn"><i class="fas fa-play"></i> Start 30-Min Revision</button>
+            <button type="button" class="btn ipm-btn-pause hidden" id="ipmPauseBtn"><i class="fas fa-pause"></i> Pause</button>
+            <button type="button" class="btn ipm-btn-reset" id="ipmResetBtn"><i class="fas fa-undo"></i> Reset</button>
           </div>
         </div>
 
@@ -382,7 +382,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="interview-panic-mode.js"></script>

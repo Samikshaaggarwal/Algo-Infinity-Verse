@@ -46,7 +46,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -166,10 +166,10 @@
       <p id="timer">15:00</p>
     </div>
 
-    <button id="startInterviewBtn" class="btn btn-primary">
+    <button type="button" id="startInterviewBtn" class="btn btn-primary">
       Start Interview
     </button>
-    <button id="submitInterviewBtn" class="btn btn-secondary"
+    <button type="button" id="submitInterviewBtn" class="btn btn-secondary"
     style="display:none;"
     >
   Submit Interview
@@ -215,7 +215,10 @@
     <script src="mock-interview-simulator.js" defer></script>
   
   <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   <script>
     loadPartial('navbar-placeholder', '/partials/navbar.html');

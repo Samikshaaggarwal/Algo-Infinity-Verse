@@ -52,7 +52,7 @@
   </div>
 
   <!-- Scroll to Top Button -->
-  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+  <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
     <i class="fas fa-arrow-up"></i>
   </button>
 
@@ -77,7 +77,7 @@
         <span class="typing-cursor">|</span>
       </div>
       <div class="hero-buttons">
-        <button class="btn btn-primary" onclick="document.getElementById('api-design-learning').scrollIntoView({behavior: 'smooth'})">
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('api-design-learning').scrollIntoView({behavior: 'smooth'})">
           <i class="fas fa-play"></i> Start Learning
         </button>
       </div>
@@ -131,19 +131,19 @@
         <aside class="api-sidebar" aria-label="Topic navigation">
           <div class="api-sidebar-title">Topics</div>
           <ul class="api-sidebar-nav" id="topicNav">
-            <li><a href="#" class="api-nav-link active" data-topic-id="hub"><span class="nav-icon">🏠</span> Hub Dashboard</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="1"><span class="nav-icon">📖</span> Introduction</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="2"><span class="nav-icon">🌐</span> REST Principles</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="3"><span class="nav-icon">⚡</span> HTTP Methods</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="4"><span class="nav-icon">🏷️</span> Resource Naming</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="5"><span class="nav-icon">🚦</span> Status Codes</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="6"><span class="nav-icon">🔄</span> Versioning</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="7"><span class="nav-icon">📄</span> Pagination</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="8"><span class="nav-icon">🔐</span> Authentication</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="9"><span class="nav-icon">⏳</span> Rate Limiting</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="10"><span class="nav-icon">🚀</span> Caching</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="11"><span class="nav-icon">❌</span> Error Handling</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="12"><span class="nav-icon">⭐</span> Interview Tips</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link active" data-topic-id="hub"><span class="nav-icon">🏠</span> Hub Dashboard</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="1"><span class="nav-icon">📖</span> Introduction</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="2"><span class="nav-icon">🌐</span> REST Principles</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="3"><span class="nav-icon">⚡</span> HTTP Methods</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="4"><span class="nav-icon">🏷️</span> Resource Naming</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="5"><span class="nav-icon">🚦</span> Status Codes</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="6"><span class="nav-icon">🔄</span> Versioning</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="7"><span class="nav-icon">📄</span> Pagination</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="8"><span class="nav-icon">🔐</span> Authentication</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="9"><span class="nav-icon">⏳</span> Rate Limiting</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="10"><span class="nav-icon">🚀</span> Caching</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="11"><span class="nav-icon">❌</span> Error Handling</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="12"><span class="nav-icon">⭐</span> Interview Tips</a></li>
           </ul>
         </aside>
 
@@ -158,7 +158,10 @@
   <div id="footer-placeholder"></div>
 
   <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   <script src="./api-design-learning.js"></script>
 

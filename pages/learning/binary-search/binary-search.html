@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -91,10 +91,10 @@
 
         <div class="mode-toggle-wrapper">
           <div class="mode-toggle-segmented" role="tablist" aria-label="Learning Modes">
-            <button class="mode-toggle-btn active" data-set-mode="learning" role="tab" aria-selected="true" aria-controls="mainContent topicNav">
+            <button type="button" class="mode-toggle-btn active" data-set-mode="learning" role="tab" aria-selected="true" aria-controls="mainContent topicNav">
               <i class="fas fa-book-open"></i> Learning Mode
             </button>
-            <button class="mode-toggle-btn" data-set-mode="interview" role="tab" aria-selected="false" aria-controls="mainContent topicNav">
+            <button type="button" class="mode-toggle-btn" data-set-mode="interview" role="tab" aria-selected="false" aria-controls="mainContent topicNav">
               <i class="fas fa-briefcase"></i> Interview Mode
             </button>
             <span class="mode-toggle-glider" aria-hidden="true"></span>
@@ -169,7 +169,7 @@
               <div class="binary-search-code-block" style="margin-bottom: 40px;">
                 <div class="binary-search-code-header">
                   <span class="binary-search-code-lang">JavaScript</span>
-                  <button class="binary-search-code-copy" aria-label="Copy code" data-code="function binarySearch(arr, target) {
+                  <button type="button" class="binary-search-code-copy" aria-label="Copy code" data-code="function binarySearch(arr, target) {
   let low = 0;
   let high = arr.length - 1;
 
@@ -203,8 +203,8 @@
                   <p style="margin-bottom: 20px;">Let's simulate the algorithm. We are searching for the target number <strong>88</strong>.</p>
                   
                   <div class="controls" style="margin-bottom: 20px;">
-                      <button id="step-btn" class="btn btn-primary">Step Forward</button>
-                      <button id="reset-btn" class="btn btn-secondary">Reset</button>
+                      <button type="button" id="step-btn" class="btn btn-primary">Step Forward</button>
+                      <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
                   </div>
 
                   <div class="array-container" id="array-container" style="padding: 20px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;"></div>
@@ -371,7 +371,7 @@
 
               <div class="faq-accordion">
                 <div class="faq-item">
-                  <button class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-1">
+                  <button type="button" class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-1">
                     Can Binary Search be used on a Linked List?
                     <i class="fas fa-chevron-down faq-icon"></i>
                   </button>
@@ -388,7 +388,7 @@
                 </div>
 
                 <div class="faq-item">
-                  <button class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-2">
+                  <button type="button" class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-2">
                     When should I use iterative vs recursive binary search?
                     <i class="fas fa-chevron-down faq-icon"></i>
                   </button>
@@ -405,7 +405,7 @@
                 </div>
 
                 <div class="faq-item">
-                  <button class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-3">
+                  <button type="button" class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-3">
                     What is "binary search on search space" (or binary search on answers)?
                     <i class="fas fa-chevron-down faq-icon"></i>
                   </button>
@@ -422,7 +422,7 @@
                 </div>
 
                 <div class="faq-item">
-                  <button class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-4">
+                  <button type="button" class="faq-question-btn" aria-expanded="false" aria-controls="faq-ans-4">
                     How do you perform binary search in a rotated sorted array?
                     <i class="fas fa-chevron-down faq-icon"></i>
                   </button>
@@ -454,7 +454,7 @@
                   <i class="fas fa-dumbbell"></i> Basic Implementation (LeetCode 704)
                 </div>
                 <p>Given an array of integers <code>nums</code> which is sorted in ascending order, and an integer <code>target</code>, write a function to search target in nums.</p>
-                <a href="https://leetcode.com/problems/binary-search/" target="_blank" class="btn btn-outline" style="margin-top: 10px;">Solve on LeetCode</a>
+                <a href="https://leetcode.com/problems/binary-search/" target="_blank" class="btn btn-outline" style="margin-top: 10px;" rel="noopener noreferrer">Solve on LeetCode</a>
               </div>
 
               <div class="binary-search-exercise">
@@ -462,7 +462,7 @@
                   <i class="fas fa-dumbbell"></i> Search Insert Position (LeetCode 35)
                 </div>
                 <p>Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.</p>
-                <a href="https://leetcode.com/problems/search-insert-position/" target="_blank" class="btn btn-outline" style="margin-top: 10px;">Solve on LeetCode</a>
+                <a href="https://leetcode.com/problems/search-insert-position/" target="_blank" class="btn btn-outline" style="margin-top: 10px;" rel="noopener noreferrer">Solve on LeetCode</a>
               </div>
 
               <div class="binary-search-exercise">
@@ -470,7 +470,7 @@
                     <i class="fas fa-dumbbell"></i> Find First/Last Position (LeetCode 34)
                 </div>
                 <p>Find the starting and ending position of a given target value in a sorted array.</p>
-                <a href="https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" target="_blank" class="btn btn-outline" style="margin-top: 10px;">Solve on LeetCode</a>
+                <a href="https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" target="_blank" class="btn btn-outline" style="margin-top: 10px;" rel="noopener noreferrer">Solve on LeetCode</a>
               </div>
 
               <div class="binary-search-exercise">
@@ -478,7 +478,7 @@
                     <i class="fas fa-dumbbell"></i> Search in Rotated Sorted Array (LeetCode 33)
                 </div>
                 <p>Search for a target value in a sorted array that has been rotated at an unknown pivot.</p>
-                <a href="https://leetcode.com/problems/search-in-rotated-sorted-array/" target="_blank" class="btn btn-outline" style="margin-top: 10px;">Solve on LeetCode</a>
+                <a href="https://leetcode.com/problems/search-in-rotated-sorted-array/" target="_blank" class="btn btn-outline" style="margin-top: 10px;" rel="noopener noreferrer">Solve on LeetCode</a>
               </div>              
 
             </article>
@@ -490,7 +490,11 @@
 
     <div id="footer-placeholder"></div>
 
+    <script src="/bootstrap-legacy.js"></script>
+
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="binary-search.js"></script>

@@ -212,7 +212,7 @@ function buildBVH() {
         let root = {
             leftFirst: 0,
             triCount: rawTriangles.length,
-            firstTri: 0, // Temp var for builder
+            firstTri: 0, // Temp let for builder
             depth: 0
         };
         bvhNodes.push(root);
@@ -418,13 +418,13 @@ async function setupWebGPUPipeline() {
             let rayDir = normalize(camera.forward.xyz + uv.x * camera.right.xyz - uv.y * camera.up.xyz);
             let invDir = 1.0 / rayDir;
             
-            var tMin = 999999.0;
-            var hitTri = -1;
-            var heat = 0u;
+            let tMin = 999999.0;
+            let hitTri = -1;
+            let heat = 0u;
 
             if (config.mode == 1u) {
                 // BRUTE FORCE O(N)
-                for(var i = 0u; i < config.numTris; i++) {
+                for(let i = 0u; i < config.numTris; i++) {
                     heat++;
                     let t = intersectTriangle(camera.pos.xyz, rayDir, triangles[i]);
                     if (t > 0.0 && t < tMin) {
@@ -434,8 +434,8 @@ async function setupWebGPUPipeline() {
                 }
             } else {
                 // ACCELERATED BVH O(log N)
-                var stack: array<u32, 64>;
-                var stackPtr = 0u;
+                let stack: array<u32, 64>;
+                let stackPtr = 0u;
                 stack[stackPtr] = 0u; // Push root
                 stackPtr++;
 
@@ -450,7 +450,7 @@ async function setupWebGPUPipeline() {
                     
                     if (node.triCount > 0u) {
                         // Leaf Node
-                        for(var i = 0u; i < node.triCount; i++) {
+                        for(let i = 0u; i < node.triCount; i++) {
                             heat++;
                             let triIdx = node.leftFirst + i;
                             let t = intersectTriangle(camera.pos.xyz, rayDir, triangles[triIdx]);

@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -132,7 +132,7 @@
               </select>
             </div>
 
-            <button class="btn btn-primary sds-btn-primary sds-start-btn" id="sdsStartBtn">
+            <button type="button" class="btn btn-primary sds-btn-primary sds-start-btn" id="sdsStartBtn">
               <i class="fas fa-play"></i> Begin Interview
             </button>
           </div>
@@ -151,7 +151,7 @@
               <i class="fas fa-clock"></i>
               <span class="sds-timer" id="sdsTimer">45:00</span>
             </div>
-            <button class="btn btn-secondary sds-end-btn" id="sdsEndBtn">
+            <button type="button" class="btn btn-secondary sds-end-btn" id="sdsEndBtn">
               <i class="fas fa-flag-checkered"></i> End & Score
             </button>
           </div>
@@ -189,11 +189,11 @@
 
           <!-- Phase nav -->
           <div class="sds-phase-nav">
-            <button class="btn btn-secondary sds-nav-btn" id="sdsPrevPhaseBtn" disabled>
+            <button type="button" class="btn btn-secondary sds-nav-btn" id="sdsPrevPhaseBtn" disabled>
               <i class="fas fa-arrow-left"></i> Previous Phase
             </button>
             <div class="sds-phase-dots" id="sdsPhaseDots"></div>
-            <button class="btn btn-primary sds-btn-primary sds-nav-btn" id="sdsNextPhaseBtn">
+            <button type="button" class="btn btn-primary sds-btn-primary sds-nav-btn" id="sdsNextPhaseBtn">
               Next Phase <i class="fas fa-arrow-right"></i>
             </button>
           </div>
@@ -228,10 +228,10 @@
 
           <!-- Actions -->
           <div class="sds-result-actions">
-            <button class="btn btn-primary sds-btn-primary" id="sdsTryAgainBtn">
+            <button type="button" class="btn btn-primary sds-btn-primary" id="sdsTryAgainBtn">
               <i class="fas fa-redo"></i> Try Again
             </button>
-            <button class="btn btn-secondary" id="sdsNewPromptBtn">
+            <button type="button" class="btn btn-secondary" id="sdsNewPromptBtn">
               <i class="fas fa-dice"></i> New Prompt
             </button>
           </div>
@@ -267,7 +267,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="system-design-simulator.js"></script>

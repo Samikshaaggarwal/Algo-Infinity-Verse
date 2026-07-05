@@ -814,7 +814,7 @@
       <a href="/pages/community/support/index.html" class="btn btn-primary">
         <i class="fas fa-headset"></i> Get Support
       </a>
-      <a href="https://github.com/Eshajha19/Algo-Infinity-Verse" target="_blank" class="btn btn-secondary">
+      <a href="https://github.com/Eshajha19/Algo-Infinity-Verse" target="_blank" class="btn btn-secondary" rel="noopener noreferrer">
         <i class="fab fa-github"></i> Contribute
       </a>
     </div>
@@ -1171,16 +1171,16 @@
 
       <div class="au-social-row">
         <a href="https://github.com/Eshajha19/Algo-Infinity-Verse" target="_blank"
-           class="au-social-btn" aria-label="GitHub">
+           class="au-social-btn" aria-label="GitHub" rel="noopener noreferrer">
           <i class="fab fa-github"></i>
         </a>
-        <a href="#" class="au-social-btn" aria-label="Twitter/X">
+        <a href="javascript:void(0)" class="au-social-btn" aria-label="Twitter/X">
           <i class="fab fa-x-twitter"></i>
         </a>
-        <a href="#" class="au-social-btn" aria-label="LinkedIn">
+        <a href="javascript:void(0)" class="au-social-btn" aria-label="LinkedIn">
           <i class="fab fa-linkedin-in"></i>
         </a>
-        <a href="#" class="au-social-btn" aria-label="YouTube">
+        <a href="javascript:void(0)" class="au-social-btn" aria-label="YouTube">
           <i class="fab fa-youtube"></i>
         </a>
         <a href="mailto:support@algoinfinityverse.com" class="au-social-btn" aria-label="Email">
@@ -1198,7 +1198,11 @@
 <!-- FOOTER -->
 <div id="footer-placeholder"></div>
 
+<script src="/bootstrap-legacy.js"></script>
+
+
 <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
 <script src="/auth.js"></script>
 <script src="/theme.js"></script>
 
@@ -1704,7 +1708,7 @@
 <body data-page="about-us">
 
 <!-- NAVBAR -->
-<div id="navbar-placeholder"></div>
+<div id="navbar-placeholder-1"></div>
 
 <!-- HERO -->
 <section class="hero about-hero">
@@ -1932,7 +1936,7 @@
       </div>
 
       <div style="text-align:center; margin-top:1rem;">
-        <button class="btn-randomise" id="newQuoteBtn">
+        <button type="button" class="btn-randomise" id="newQuoteBtn">
           <i class="fas fa-shuffle"></i> Random
         </button>
       </div>
@@ -1950,10 +1954,10 @@
       <div class="stories-carousel-header">
         <p class="dash-subtitle">🏆 Success Stories</p>
         <div class="story-nav-btns">
-          <button class="story-arrow" id="storyPrevBtn" aria-label="Previous story">
+          <button type="button" class="story-arrow" id="storyPrevBtn" aria-label="Previous story">
             <i class="fas fa-chevron-left"></i>
           </button>
-          <button class="story-arrow" id="storyNextBtn" aria-label="Next story">
+          <button type="button" class="story-arrow" id="storyNextBtn" aria-label="Next story">
             <i class="fas fa-chevron-right"></i>
           </button>
         </div>
@@ -1986,10 +1990,10 @@
       </p>
 
       <div class="social-links">
-        <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="javascript:void(0)" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="javascript:void(0)" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="javascript:void(0)" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="javascript:void(0)" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
       </div>
 
       <br>
@@ -2004,9 +2008,10 @@
 </section>
 
 <!-- FOOTER -->
-<div id="footer-placeholder"></div>
+<div id="footer-placeholder-1"></div>
 
 <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
 <script src="/theme.js"></script>
 

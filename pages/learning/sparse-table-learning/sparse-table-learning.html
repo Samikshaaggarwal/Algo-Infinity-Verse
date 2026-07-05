@@ -45,7 +45,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -127,12 +127,12 @@
           <aside class="sparse-table-sidebar" aria-label="Topic navigation">
             <div class="sparse-table-sidebar-title">Topics</div>
             <ul class="sparse-table-sidebar-nav" id="topicNav">
-              <li><a href="#" class="sparse-table-nav-link active" data-topic-id="hub"><span class="nav-icon">🏠</span> Hub Dashboard</a></li>
-              <li><a href="#" class="sparse-table-nav-link" data-topic-id="1"><span class="nav-icon">📖</span> Fundamentals</a></li>
-              <li><a href="#" class="sparse-table-nav-link" data-topic-id="2"><span class="nav-icon">⚡</span> Log Preprocessing</a></li>
-              <li><a href="#" class="sparse-table-nav-link" data-topic-id="3"><span class="nav-icon">🏗️</span> Construction Process</a></li>
-              <li><a href="#" class="sparse-table-nav-link" data-topic-id="4"><span class="nav-icon">🎯</span> Range Minimum Query</a></li>
-              <li><a href="#" class="sparse-table-nav-link" data-topic-id="5"><span class="nav-icon">⏳</span> Complexity Analysis</a></li>
+              <li><a href="javascript:void(0)" class="sparse-table-nav-link active" data-topic-id="hub"><span class="nav-icon">🏠</span> Hub Dashboard</a></li>
+              <li><a href="javascript:void(0)" class="sparse-table-nav-link" data-topic-id="1"><span class="nav-icon">📖</span> Fundamentals</a></li>
+              <li><a href="javascript:void(0)" class="sparse-table-nav-link" data-topic-id="2"><span class="nav-icon">⚡</span> Log Preprocessing</a></li>
+              <li><a href="javascript:void(0)" class="sparse-table-nav-link" data-topic-id="3"><span class="nav-icon">🏗️</span> Construction Process</a></li>
+              <li><a href="javascript:void(0)" class="sparse-table-nav-link" data-topic-id="4"><span class="nav-icon">🎯</span> Range Minimum Query</a></li>
+              <li><a href="javascript:void(0)" class="sparse-table-nav-link" data-topic-id="5"><span class="nav-icon">⏳</span> Complexity Analysis</a></li>
             </ul>
           </aside>
 
@@ -148,7 +148,10 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="sparse-table-learning.js"></script>

@@ -1,11 +1,7 @@
 /* AST Refactoring Engine Stylesheet */
+@import "../../styles/design-tokens.css";
+
 :root {
-    --glass-bg: rgba(15, 23, 42, 0.65);
-    --glass-border: rgba(30, 41, 59, 0.7);
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --dark-surface: #020617;
-    
     /* AST Category Colors */
     --ast-decl: #10b981; /* Green */
     --ast-loop: #f97316; /* Orange */
@@ -35,22 +31,7 @@ body.ast-body {
     background: #020617;
 }
 
-.panel-column {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    height: 100%;
-}
 
-/* Left Panel: Inputs and Presets */
-.panel-left {
-    width: 380px;
-    min-width: 380px;
-    background: rgba(15, 23, 42, 0.85);
-    border-right: 1px solid var(--glass-border);
-    backdrop-filter: blur(20px);
-    z-index: 10;
-}
 
 .panel-header {
     padding: 1rem 1.5rem;
@@ -200,6 +181,7 @@ body.ast-body {
     background-image: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
     border-right: 1px solid var(--glass-border);
     position: relative;
+    overflow: auto; /* Enable scrolling */
 }
 
 .formula-badge {
@@ -217,7 +199,7 @@ body.ast-body {
     position: relative;
     width: 100%;
     height: calc(100% - 50px);
-    overflow: hidden;
+    overflow: auto; /* Enable scrolling for content */
 }
 
 .ast-svg-canvas {

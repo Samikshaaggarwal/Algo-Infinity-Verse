@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -237,7 +237,7 @@
               <div class="hl-code-block">
                 <div class="hl-code-header">
                   <span class="hl-code-lang">Pattern Triggers</span
-                  ><button
+                  ><button type="button"
                     class="hl-code-copy"
                     data-code="Two Pointers      → sorted array, pair with target sum, palindrome check
 Sliding Window    → subarray/substring, contiguous, window of size k
@@ -268,7 +268,7 @@ Problem → identify constraint type → pick pattern → fill template → code
                   longest substring with at most K distinct characters." (b)
                   "Given a sorted array, find two numbers that sum to a target."
                 </p>
-                <button
+                <button type="button"
                   class="js-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-intro"
@@ -279,7 +279,7 @@ Problem → identify constraint type → pick pattern → fill template → code
                   <div class="hl-code-block">
                     <div class="hl-code-header">
                       <span class="hl-code-lang">Answer</span
-                      ><button
+                      ><button type="button"
                         class="hl-code-copy"
                         data-code="(a) Sliding Window — 'longest substring' + 'at most K' = variable-size window
 (b) Two Pointers  — sorted array + pair that satisfies a sum condition"
@@ -356,7 +356,7 @@ Problem → identify constraint type → pick pattern → fill template → code
               <div class="hl-code-block">
                 <div class="hl-code-header">
                   <span class="hl-code-lang">Python</span
-                  ><button
+                  ><button type="button"
                     class="hl-code-copy"
                     data-code="def two_sum_sorted(arr, target):\n    L, R = 0, len(arr) - 1\n    while L < R:\n        s = arr[L] + arr[R]\n        if s == target:\n            return L, R\n        elif s < target:\n            L += 1   # need bigger sum\n        else:\n            R -= 1   # need smaller sum\n    return -1, -1\n\n# Time: O(n)   Space: O(1)"
                   >
@@ -394,7 +394,7 @@ L=0 (1), R=4 (8)  →  9 = 9 ✅  →  return (0, 4)</pre
                   zero. How do you extend the two-pointer approach? What is the
                   time complexity?
                 </p>
-                <button
+                <button type="button"
                   class="js-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-two-pointers"
@@ -405,7 +405,7 @@ L=0 (1), R=4 (8)  →  9 = 9 ✅  →  return (0, 4)</pre
                   <div class="hl-code-block">
                     <div class="hl-code-header">
                       <span class="hl-code-lang">Python</span
-                      ><button
+                      ><button type="button"
                         class="hl-code-copy"
                         data-code="def threeSum(nums):\n    nums.sort()\n    result = []\n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i-1]: continue  # skip duplicates\n        L, R = i + 1, len(nums) - 1\n        while L < R:\n            s = nums[i] + nums[L] + nums[R]\n            if s == 0:\n                result.append([nums[i], nums[L], nums[R]])\n                while L < R and nums[L] == nums[L+1]: L += 1\n                while L < R and nums[R] == nums[R-1]: R -= 1\n                L += 1; R -= 1\n            elif s < 0: L += 1\n            else: R -= 1\n    return result\n# Time: O(n²)   Space: O(1) extra"
                       >
@@ -461,7 +461,7 @@ L=0 (1), R=4 (8)  →  9 = 9 ✅  →  return (0, 4)</pre
               <div class="hl-code-block">
                 <div class="hl-code-header">
                   <span class="hl-code-lang">Python</span
-                  ><button
+                  ><button type="button"
                     class="hl-code-copy"
                     data-code="# Fixed window — max sum subarray of size k\ndef max_sum_window(arr, k):\n    window = sum(arr[:k])\n    best = window\n    for i in range(k, len(arr)):\n        window += arr[i] - arr[i - k]  # slide\n        best = max(best, window)\n    return best\n\n# Variable window — longest substring with at most k distinct chars\ndef longest_k_distinct(s, k):\n    freq = {}\n    L = best = 0\n    for R, ch in enumerate(s):\n        freq[ch] = freq.get(ch, 0) + 1\n        while len(freq) > k:            # shrink\n            freq[s[L]] -= 1\n            if freq[s[L]] == 0: del freq[s[L]]\n            L += 1\n        best = max(best, R - L + 1)\n    return best"
                   >
@@ -510,7 +510,7 @@ Answer: 9</pre
                   <code>t</code>. Which window variant applies and what is the
                   shrink condition?
                 </p>
-                <button
+                <button type="button"
                   class="js-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-sliding-window"
@@ -521,7 +521,7 @@ Answer: 9</pre
                   <div class="hl-code-block">
                     <div class="hl-code-header">
                       <span class="hl-code-lang">Python</span
-                      ><button
+                      ><button type="button"
                         class="hl-code-copy"
                         data-code="from collections import Counter\ndef minWindow(s, t):\n    need = Counter(t)\n    have, total = 0, len(need)\n    freq = {}\n    L = best_len = float('inf')\n    best = ''\n    for R, ch in enumerate(s):\n        freq[ch] = freq.get(ch, 0) + 1\n        if ch in need and freq[ch] == need[ch]:\n            have += 1\n        while have == total:          # valid window — try to shrink\n            if R - L + 1 < best_len:\n                best_len = R - L + 1\n                best = s[L:R+1]\n            freq[s[L]] -= 1\n            if s[L] in need and freq[s[L]] < need[s[L]]:\n                have -= 1\n            L += 1\n    return best\n# Time: O(n)  Variable window, shrink while window is valid"
                       >
@@ -585,7 +585,7 @@ Answer: 9</pre
               <div class="hl-code-block">
                 <div class="hl-code-header">
                   <span class="hl-code-lang">Python</span
-                  ><button
+                  ><button type="button"
                     class="hl-code-copy"
                     data-code="def build_prefix(arr):\n    prefix = [0] * (len(arr) + 1)\n    for i, v in enumerate(arr):\n        prefix[i + 1] = prefix[i] + v\n    return prefix\n\ndef range_sum(prefix, L, R):\n    return prefix[R + 1] - prefix[L]  # O(1)\n\n# Harder: count subarrays summing to k\ndef subarray_sum_k(nums, k):\n    count = 0\n    prefix = 0\n    seen = {0: 1}       # prefix_sum -> frequency\n    for n in nums:\n        prefix += n\n        count += seen.get(prefix - k, 0)\n        seen[prefix] = seen.get(prefix, 0) + 1\n    return count\n# Time: O(n)   Space: O(n)"
                   >
@@ -629,7 +629,7 @@ range_sum(prefix, 1, 3) = prefix[4] - prefix[1] = 9 - 3 = 6 ✅</pre
                   For <code>nums = [1, 2, 3], k = 3</code>, trace the hashmap
                   approach and count how many subarrays sum to 3.
                 </p>
-                <button
+                <button type="button"
                   class="js-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-prefix-sum"
@@ -640,7 +640,7 @@ range_sum(prefix, 1, 3) = prefix[4] - prefix[1] = 9 - 3 = 6 ✅</pre
                   <div class="hl-code-block">
                     <div class="hl-code-header">
                       <span class="hl-code-lang">Trace</span
-                      ><button
+                      ><button type="button"
                         class="hl-code-copy"
                         data-code="seen={0:1}, prefix=0, count=0\nn=1: prefix=1, need=1-3=-2, seen[-2]=0,  seen={0:1,1:1}\nn=2: prefix=3, need=3-3=0,  seen[0]=1 → count=1, seen={0:1,1:1,3:1}\nn=3: prefix=6, need=6-3=3,  seen[3]=1 → count=2, seen={0:1,1:1,3:1,6:1}\nAnswer: 2  ([1,2] and [3])"
                       >
@@ -690,7 +690,7 @@ Answer: <span class="tok-num">2</span> ✅</code></pre>
               <div class="hl-code-block">
                 <div class="hl-code-header">
                   <span class="hl-code-lang">Python</span
-                  ><button
+                  ><button type="button"
                     class="hl-code-copy"
                     data-code="# Template: find minimum value x such that feasible(x) is True\ndef binary_search_answer(lo, hi):\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if feasible(mid):\n            hi = mid        # try smaller\n        else:\n            lo = mid + 1    # need bigger\n    return lo               # minimum feasible\n\n# Example: Koko Eating Bananas\n# feasible(speed) = can Koko eat all piles in h hours at this speed?\ndef minEatingSpeed(piles, h):\n    def feasible(speed):\n        return sum((p + speed - 1) // speed for p in piles) <= h\n    lo, hi = 1, max(piles)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if feasible(mid): hi = mid\n        else: lo = mid + 1\n    return lo\n# Time: O(n log(max_pile))"
                   >
@@ -740,7 +740,7 @@ lo=4, hi=4  → done → answer = 4 ✅</pre
                   minimum ship capacity? Define <code>feasible(cap)</code> in
                   one sentence.
                 </p>
-                <button
+                <button type="button"
                   class="js-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-binary-search"
@@ -751,7 +751,7 @@ lo=4, hi=4  → done → answer = 4 ✅</pre
                   <div class="hl-code-block">
                     <div class="hl-code-header">
                       <span class="hl-code-lang">Python</span
-                      ><button
+                      ><button type="button"
                         class="hl-code-copy"
                         data-code="def shipWithinDays(weights, days):\n    def feasible(cap):\n        # Can we ship all packages in 'days' days with this capacity?\n        trips, cur = 1, 0\n        for w in weights:\n            if cur + w > cap: trips += 1; cur = 0\n            cur += w\n        return trips <= days\n    lo, hi = max(weights), sum(weights)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if feasible(mid): hi = mid\n        else: lo = mid + 1\n    return lo   # Answer: 15"
                       >
@@ -813,7 +813,7 @@ lo=4, hi=4  → done → answer = 4 ✅</pre
               <div class="hl-code-block">
                 <div class="hl-code-header">
                   <span class="hl-code-lang">Python</span
-                  ><button
+                  ><button type="button"
                     class="hl-code-copy"
                     data-code="def hasCycle(head):\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n        if slow == fast:\n            return True\n    return False\n\ndef detectCycleStart(head):\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n        if slow == fast: break\n    else:\n        return None  # no cycle\n    slow = head\n    while slow != fast:\n        slow = slow.next\n        fast = fast.next\n    return slow  # cycle entry\n# Time: O(n)   Space: O(1)"
                   >
@@ -850,7 +850,7 @@ lo=4, hi=4  → done → answer = 4 ✅</pre
                   list of length 5. Which node does slow point to when fast
                   reaches the end?
                 </p>
-                <button
+                <button type="button"
                   class="js-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-fast-slow"
@@ -861,7 +861,7 @@ lo=4, hi=4  → done → answer = 4 ✅</pre
                   <div class="hl-code-block">
                     <div class="hl-code-header">
                       <span class="hl-code-lang">Trace</span
-                      ><button
+                      ><button type="button"
                         class="hl-code-copy"
                         data-code="List: 1 → 2 → 3 → 4 → 5\nStep 0: slow=1, fast=1\nStep 1: slow=2, fast=3\nStep 2: slow=3, fast=5\nfast.next = None → loop ends. slow = node 3 (middle) ✅\ndef middleNode(head):\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n    return slow"
                       >
@@ -914,7 +914,7 @@ slow = node <span class="tok-num">3</span> ← middle ✅</code></pre>
               <div class="hl-code-block">
                 <div class="hl-code-header">
                   <span class="hl-code-lang">Python</span
-                  ><button
+                  ><button type="button"
                     class="hl-code-copy"
                     data-code="def nextGreaterElement(nums):\n    result = [-1] * len(nums)\n    stack = []  # indices, monotonically decreasing values\n    for i, val in enumerate(nums):\n        while stack and nums[stack[-1]] < val:\n            idx = stack.pop()\n            result[idx] = val  # val is the next greater for idx\n        stack.append(i)\n    return result\n\n# Example: [2, 1, 5, 3, 4]\n# Result:  [5, 5,-1, 4,-1]\n# Time: O(n)   Space: O(n)"
                   >
@@ -953,7 +953,7 @@ result = [5, 5, -1] ✅</pre
                   find how many days to wait for a warmer temperature at each
                   index. Use a monotonic stack.
                 </p>
-                <button
+                <button type="button"
                   class="js-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-mono-stack"
@@ -964,7 +964,7 @@ result = [5, 5, -1] ✅</pre
                   <div class="hl-code-block">
                     <div class="hl-code-header">
                       <span class="hl-code-lang">Python</span
-                      ><button
+                      ><button type="button"
                         class="hl-code-copy"
                         data-code="def dailyTemperatures(temps):\n    result = [0] * len(temps)\n    stack = []  # indices, decreasing temperatures\n    for i, t in enumerate(temps):\n        while stack and temps[stack[-1]] < t:\n            idx = stack.pop()\n            result[idx] = i - idx\n        stack.append(i)\n    return result\n# [73,74,75,71,69,72,76,73] → [1,1,4,2,1,1,0,0]"
                       >
@@ -1066,7 +1066,7 @@ result = [5, 5, -1] ✅</pre
                   the minimum time per fence?" (c) "Count subarrays with exactly
                   k odd numbers."
                 </p>
-                <button
+                <button type="button"
                   class="js-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-decision"
@@ -1077,7 +1077,7 @@ result = [5, 5, -1] ✅</pre
                   <div class="hl-code-block">
                     <div class="hl-code-header">
                       <span class="hl-code-lang">Answer</span
-                      ><button
+                      ><button type="button"
                         class="hl-code-copy"
                         data-code="(a) Sliding Window (variable) — shortest subarray with sum >= target\n    Expand right, shrink left while sum >= target\n(b) Binary Search on Answer — minimise(time) where feasible(time) = can finish in k days\n    lo=1, hi=max_time, check feasibility with greedy\n(c) Prefix Sum + hashmap — count subarrays with exact sum k\n    prefix[j] - prefix[i] = k  →  same as subarray sum equals k"
                       >
@@ -1106,7 +1106,10 @@ result = [5, 5, -1] ✅</pre
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./cp-patterns-learning.js"></script>
   

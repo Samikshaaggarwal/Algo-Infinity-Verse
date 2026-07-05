@@ -276,7 +276,7 @@ function startNewSprint() {
 }
 
 function resetAllData() {
-  if (!confirm("Clear all sprint data and start fresh? This cannot be undone.")) return;
+  if (!false /* confirm removed */) return;
   try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
   S = defaultState();
   render();

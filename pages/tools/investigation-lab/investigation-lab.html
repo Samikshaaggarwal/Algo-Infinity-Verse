@@ -108,7 +108,7 @@
                             </div>
 
                             <div class="hint-section">
-                                <button class="btn-hint" id="btnHint"><i class="fas fa-lightbulb"></i> Request Hint</button>
+                                <button type="button" class="btn-hint" id="btnHint"><i class="fas fa-lightbulb"></i> Request Hint</button>
                                 <div class="hint-display" id="hintDisplay"></div>
                             </div>
 
@@ -123,7 +123,7 @@
                                     <h5 id="feedbackTitle">Verdict</h5>
                                     <p id="feedbackText">Explanation will appear here.</p>
                                 </div>
-                                <button class="btn-next-case" id="btnNextCase" style="display: none;">Next Case <i class="fas fa-arrow-right"></i></button>
+                                <button type="button" class="btn-next-case" id="btnNextCase" style="display: none;">Next Case <i class="fas fa-arrow-right"></i></button>
                             </div>
                         </div>
 
@@ -135,7 +135,10 @@
     </section>
     
     <!-- External Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="investigation-lab.js"></script>

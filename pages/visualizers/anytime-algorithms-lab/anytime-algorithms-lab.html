@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -51,16 +51,16 @@
           <div class="aal-row">
             <span class="aal-row-label">Cities</span>
             <div class="aal-city-btns">
-              <button class="aal-city-btn active" data-cities="8">8 cities</button>
-              <button class="aal-city-btn" data-cities="9">9 cities</button>
-              <button class="aal-city-btn" data-cities="10">10 cities</button>
+              <button type="button" class="aal-city-btn active" data-cities="8">8 cities</button>
+              <button type="button" class="aal-city-btn" data-cities="9">9 cities</button>
+              <button type="button" class="aal-city-btn" data-cities="10">10 cities</button>
             </div>
-            <button class="btn btn-secondary aal-shuffle-btn" id="aalShuffleBtn">
+            <button type="button" class="btn btn-secondary aal-shuffle-btn" id="aalShuffleBtn">
               <i class="fas fa-shuffle"></i> New Random Cities
             </button>
           </div>
           <div class="aal-row">
-            <button class="btn aal-btn-primary aal-run-btn" id="aalRunBtn">
+            <button type="button" class="btn aal-btn-primary aal-run-btn" id="aalRunBtn">
               <i class="fas fa-play"></i> Precompute All 3 Algorithms
             </button>
             <span class="aal-precompute-status" id="aalPrecomputeStatus"></span>
@@ -79,7 +79,7 @@
             <span>50%</span>
             <span>100% (full time)</span>
           </div>
-          <button class="aal-interrupt-btn" id="aalInterruptBtn" disabled>
+          <button type="button" class="aal-interrupt-btn" id="aalInterruptBtn" disabled>
             <i class="fas fa-bolt"></i> Interrupt at Random Moment
           </button>
         </div>
@@ -177,7 +177,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="anytime-algorithms-lab.js"></script>

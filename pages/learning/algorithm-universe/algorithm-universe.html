@@ -63,10 +63,10 @@
       </div>
 
       <div class="universe-controls">
-        <button onclick="window.location.href='/pages/tools/personalized-learning-path/personalized-learning-path.html'" title="Create Custom Roadmap" aria-label="Create Custom Roadmap" style="margin-bottom: 15px; border-color: var(--primary); color: var(--primary);"><i class="fas fa-route" aria-hidden="true" focusable="false"></i></button>
-        <button id="zoomIn" title="Zoom In" aria-label="Zoom In"><i class="fas fa-plus" aria-hidden="true" focusable="false"></i></button>
-        <button id="zoomOut" title="Zoom Out" aria-label="Zoom Out"><i class="fas fa-minus" aria-hidden="true" focusable="false"></i></button>
-        <button id="zoomReset" title="Reset View" aria-label="Reset View"><i class="fas fa-expand" aria-hidden="true" focusable="false"></i></button>
+        <button type="button" onclick="window.location.href='/pages/tools/personalized-learning-path/personalized-learning-path.html'" title="Create Custom Roadmap" aria-label="Create Custom Roadmap" style="margin-bottom: 15px; border-color: var(--primary); color: var(--primary);"><i class="fas fa-route" aria-hidden="true" focusable="false"></i></button>
+        <button type="button" id="zoomIn" title="Zoom In" aria-label="Zoom In"><i class="fas fa-plus" aria-hidden="true" focusable="false"></i></button>
+        <button type="button" id="zoomOut" title="Zoom Out" aria-label="Zoom Out"><i class="fas fa-minus" aria-hidden="true" focusable="false"></i></button>
+        <button type="button" id="zoomReset" title="Reset View" aria-label="Reset View"><i class="fas fa-expand" aria-hidden="true" focusable="false"></i></button>
       </div>
       
       <div class="universe-legend">
@@ -84,7 +84,7 @@
     <div id="learningOutcomePanel" class="outcome-panel hidden">
       <div class="panel-header">
         <h2 id="panelTitle">Topic Title</h2>
-        <button id="closePanelBtn" aria-label="Close panel"><i class="fas fa-times" aria-hidden="true" focusable="false"></i></button>
+        <button type="button" id="closePanelBtn" aria-label="Close panel"><i class="fas fa-times" aria-hidden="true" focusable="false"></i></button>
       </div>
       <div class="panel-body">
         <h3>Learning Outcome</h3>
@@ -96,7 +96,7 @@
         </div>
       </div>
       <div class="panel-footer">
-        <a href="#" id="startLearningBtn" class="btn btn-primary"><i class="fas fa-rocket"></i> Start Learning</a>
+        <a href="javascript:void(0)" id="startLearningBtn" class="btn btn-primary"><i class="fas fa-rocket"></i> Start Learning</a>
       </div>
     </div>
   </section>
@@ -106,6 +106,7 @@
 
   <script src="/auth.js"></script>
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   <script type="module" src="/modules/theme.js"></script>
   <script src="algorithm-universe.js"></script>

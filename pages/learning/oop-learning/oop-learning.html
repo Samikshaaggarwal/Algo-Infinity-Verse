@@ -45,7 +45,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -205,7 +205,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Paradigms
                 </div>
                 <p>Which concept defines the procedural paradigm compared to the Object-Oriented paradigm?</p>
-                <button class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Solution</button>
+                <button type="button" class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Solution</button>
                 <div class="oop-exercise-solution" id="solution-intro">
                   <p><strong>Answer: Linear execution of procedures operating on separate data.</strong></p>
                   <p>Explanation: Procedural programming separates data structures and procedures (functions), whereas OOP binds state (data) and behavior (functions) directly together into unified objects.</p>
@@ -265,7 +265,7 @@
               <div class="oop-code-block">
                 <div class="oop-code-header">
                   <span class="oop-code-lang">Pseudocode</span>
-                  <button class="oop-code-copy" data-code="class Car
+                  <button type="button" class="oop-code-copy" data-code="class Car
     // Constructor definition
     constructor(colorInput, speedInput)
         color = colorInput
@@ -293,7 +293,7 @@ Car myBlueCar = new Car(&quot;Blue&quot;, 95)">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Blueprint vs. Instance
                 </div>
                 <p>True or False: A Class allocates memory space for attributes as soon as it is defined.</p>
-                <button class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-classes">Show Solution</button>
+                <button type="button" class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-classes">Show Solution</button>
                 <div class="oop-exercise-solution" id="solution-classes">
                   <p><strong>Answer: False</strong></p>
                   <p>Explanation: A Class is simply a design template. Memory is only allocated when an object is instantiated (created) using the <code>new</code> keyword or equivalent construct.</p>
@@ -317,7 +317,7 @@ Car myBlueCar = new Car(&quot;Blue&quot;, 95)">Copy</button>
               <div class="oop-code-block">
                 <div class="oop-code-header">
                   <span class="oop-code-lang">Pseudocode</span>
-                  <button class="oop-code-copy" data-code="class BankAccount
+                  <button type="button" class="oop-code-copy" data-code="class BankAccount
     // Attributes (State)
     attribute accountNumber: String
     attribute balance: Decimal
@@ -356,7 +356,7 @@ end class">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Methods
                 </div>
                 <p>Which concept represents the behavior of an object?</p>
-                <button class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-attributes">Show Solution</button>
+                <button type="button" class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-attributes">Show Solution</button>
                 <div class="oop-exercise-solution" id="solution-attributes">
                   <p><strong>Answer: Methods</strong></p>
                   <p>Explanation: Attributes model the current state or values of an object, while methods model the actions, procedures, or behaviors that the object can execute.</p>
@@ -390,7 +390,7 @@ end class">Copy</button>
               <div class="oop-code-block">
                 <div class="oop-code-header">
                   <span class="oop-code-lang">Pseudocode</span>
-                  <button class="oop-code-copy" data-code="class Employee
+                  <button type="button" class="oop-code-copy" data-code="class Employee
     // Private attributes cannot be accessed directly from outside
     private attribute salary: Decimal
 
@@ -429,7 +429,7 @@ end class">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Data Hiding
                 </div>
                 <p>Why is encapsulation useful in software engineering?</p>
-                <button class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-encapsulation">Show Solution</button>
+                <button type="button" class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-encapsulation">Show Solution</button>
                 <div class="oop-exercise-solution" id="solution-encapsulation">
                   <p><strong>Answer: It protects the internal state of an object from corruption.</strong></p>
                   <p>Explanation: By hiding variables behind private scopes, we prevent external objects from setting invalid values (e.g., negative balance or empty names) without going through validation logic in setters.</p>
@@ -481,7 +481,7 @@ end class">Copy</button>
               <div class="oop-code-block">
                 <div class="oop-code-header">
                   <span class="oop-code-lang">Pseudocode</span>
-                  <button class="oop-code-copy" data-code="class Vehicle
+                  <button type="button" class="oop-code-copy" data-code="class Vehicle
     public method move()
         print &quot;Moving...&quot;
 end class
@@ -508,7 +508,7 @@ end class">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Hierarchies
                 </div>
                 <p>If class <code>B</code> extends class <code>A</code>, and class <code>C</code> extends class <code>B</code>, does <code>C</code> have access to public methods defined in <code>A</code>?</p>
-                <button class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-inheritance">Show Solution</button>
+                <button type="button" class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-inheritance">Show Solution</button>
                 <div class="oop-exercise-solution" id="solution-inheritance">
                   <p><strong>Answer: Yes</strong></p>
                   <p>Explanation: Inheritance is transitive. Subclasses inherit all public and protected properties and methods from their ancestor classes up the hierarchy chain.</p>
@@ -535,7 +535,7 @@ end class">Copy</button>
               <div class="oop-code-block">
                 <div class="oop-code-header">
                   <span class="oop-code-lang">Pseudocode</span>
-                  <button class="oop-code-copy" data-code="class Animal
+                  <button type="button" class="oop-code-copy" data-code="class Animal
     public method speak()
         print &quot;Generic sound&quot;
 end class
@@ -574,7 +574,7 @@ end class">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Polymorphism
                 </div>
                 <p>Which mechanism is used to perform dynamic method dispatching at runtime?</p>
-                <button class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-polymorphism">Show Solution</button>
+                <button type="button" class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-polymorphism">Show Solution</button>
                 <div class="oop-exercise-solution" id="solution-polymorphism">
                   <p><strong>Answer: Method Overriding</strong></p>
                   <p>Explanation: Method overriding allows the runtime compiler to look up the exact type of an instantiated object and call its specific overridden method, rather than the base method.</p>
@@ -605,7 +605,7 @@ end class">Copy</button>
               <div class="oop-code-block">
                 <div class="oop-code-header">
                   <span class="oop-code-lang">Pseudocode</span>
-                  <button class="oop-code-copy" data-code="abstract class Appliance
+                  <button type="button" class="oop-code-copy" data-code="abstract class Appliance
     // Abstract method: no body defined
     abstract method turnOn()
     
@@ -630,7 +630,7 @@ end class">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Abstraction
                 </div>
                 <p>Can you directly create an object instance from an abstract class?</p>
-                <button class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-abstraction">Show Solution</button>
+                <button type="button" class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-abstraction">Show Solution</button>
                 <div class="oop-exercise-solution" id="solution-abstraction">
                   <p><strong>Answer: No</strong></p>
                   <p>Explanation: Abstract classes are incomplete by design. They can only be used as base classes for concrete subclasses that provide implementations for the abstract methods.</p>
@@ -653,7 +653,7 @@ end class">Copy</button>
               <div class="oop-code-block">
                 <div class="oop-code-header">
                   <span class="oop-code-lang">Pseudocode</span>
-                  <button class="oop-code-copy" data-code="interface Printable
+                  <button type="button" class="oop-code-copy" data-code="interface Printable
     method printDocument()
 end interface
 
@@ -678,7 +678,7 @@ end class">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Interfaces
                 </div>
                 <p>What is a key difference between an Interface and an Abstract Class?</p>
-                <button class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-interfaces">Show Solution</button>
+                <button type="button" class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-interfaces">Show Solution</button>
                 <div class="oop-exercise-solution" id="solution-interfaces">
                   <p><strong>Answer: State maintenance</strong></p>
                   <p>Explanation: Abstract classes can maintain state (have normal instance attributes/fields) and contain concrete, implemented methods. Interfaces cannot maintain instance state and only declare method contracts.</p>
@@ -725,7 +725,7 @@ end class">Copy</button>
               <div class="oop-code-block">
                 <div class="oop-code-header">
                   <span class="oop-code-lang">Pseudocode</span>
-                  <button class="oop-code-copy" data-code="class Engine
+                  <button type="button" class="oop-code-copy" data-code="class Engine
     public method start()
         print &quot;Engine starts vroom!&quot;
 end class
@@ -768,7 +768,7 @@ end class">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Composition
                 </div>
                 <p>Which statement best characterizes Composition?</p>
-                <button class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-composition">Show Solution</button>
+                <button type="button" class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-composition">Show Solution</button>
                 <div class="oop-exercise-solution" id="solution-composition">
                   <p><strong>Answer: A "has-a" relationship where components are contained inside a composite class.</strong></p>
                   <p>Explanation: Inheritance models an "is-a" taxonomy, while composition models a "has-a" structural arrangement of sub-parts (e.g. computer has RAM).</p>
@@ -788,7 +788,7 @@ end class">Copy</button>
               <div class="oop-code-block">
                 <div class="oop-code-header">
                   <span class="oop-code-lang">Pseudocode</span>
-                  <button class="oop-code-copy" data-code="interface PaymentProcessor
+                  <button type="button" class="oop-code-copy" data-code="interface PaymentProcessor
     method processPayment(amount)
 end interface
 
@@ -851,7 +851,7 @@ end class">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Real World Design
                 </div>
                 <p>Which OOP principle allows the <code>Order</code> class to call <code>processPayment()</code> without knowing whether it is a CreditCard, PayPal, or Crypto processor?</p>
-                <button class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-realworld">Show Solution</button>
+                <button type="button" class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-realworld">Show Solution</button>
                 <div class="oop-exercise-solution" id="solution-realworld">
                   <p><strong>Answer: Polymorphism (or Interface Abstraction)</strong></p>
                   <p>Explanation: The <code>Order</code> class references the interface <code>PaymentProcessor</code>. Due to polymorphism, the call resolves to the actual implementation class passed in at runtime, decopuling the classes.</p>
@@ -874,7 +874,7 @@ end class">Copy</button>
                   <i class="fas fa-dumbbell"></i> Exercise 1: Design Decision
                 </div>
                 <p>Scenario: You are designing a simulation containing <code>Printer</code>, <code>Scanner</code>, and a hybrid <code>Copier</code>. Since a Copier must execute printing and scanning, but most languages do not support multiple inheritance, how would you design this relation?</p>
-                <button class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-comp-1">Show Solution</button>
+                <button type="button" class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-comp-1">Show Solution</button>
                 <div class="oop-exercise-solution" id="solution-comp-1">
                   <p><strong>Solution: Interfaces or Composition</strong></p>
                   <p>Explanation: Rather than inheriting from Printer and Scanner classes directly, you should define <code>Printable</code> and <code>Scannable</code> as Interfaces. The <code>Copier</code> class can then implement both interfaces, or contain (compose) instances of <code>Printer</code> and <code>Scanner</code> classes internally to delegate calls.</p>
@@ -886,7 +886,7 @@ end class">Copy</button>
                   <i class="fas fa-dumbbell"></i> Exercise 2: Encapsulation Checking
                 </div>
                 <p>Scenario: Why is a subclass not allowed to access <code>private</code> attributes declared in its base class directly?</p>
-                <button class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-comp-2">Show Solution</button>
+                <button type="button" class="oop-exercise-toggle" aria-expanded="false" aria-controls="solution-comp-2">Show Solution</button>
                 <div class="oop-exercise-solution" id="solution-comp-2">
                   <p><strong>Solution: Scope security and decoupling</strong></p>
                   <p>Explanation: <code>private</code> ensures that *only* the class itself has direct visibility. This prevents subclasses from coupling themselves directly to the internal representations of parent fields. If subclass visibility is required, the base class can declare those fields as <code>protected</code>.</p>
@@ -1057,8 +1057,8 @@ end class">Copy</button>
               </div>
 
               <div class="oop-quiz-actions">
-                <button class="oop-quiz-btn" id="submitQuizBtn">Submit Quiz</button>
-                <button class="oop-quiz-btn-secondary" id="resetQuizBtn" style="display: none;">Reset Quiz</button>
+                <button type="button" class="oop-quiz-btn" id="submitQuizBtn">Submit Quiz</button>
+                <button type="button" class="oop-quiz-btn-secondary" id="resetQuizBtn" style="display: none;">Reset Quiz</button>
               </div>
 
               <!-- Score Banner -->
@@ -1079,7 +1079,10 @@ end class">Copy</button>
 
     <!-- Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="oop-learning.js"></script>
   

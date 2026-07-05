@@ -37,7 +37,7 @@
       </p>
     </div>
     <div>
-      <button id="resume-learning-btn" style="padding: 10px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+      <button type="button" id="resume-learning-btn" style="padding: 10px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         Continue Learning →
       </button>
     </div>
@@ -66,12 +66,12 @@
                 <div class="panel-header">
                     <span>📝 Code Editor</span>
                     <div class="panel-actions">
-                        <button id="runBtn" class="btn btn-run">▶ Run</button>
-                        <button id="prevBtn" class="btn btn-step" style="background: #4b5563;" disabled>⏮ Prev</button>
-                        <button id="stepBtn" class="btn btn-step">⏭ Step</button>
-                        <button id="playBtn" class="btn btn-step" style="background: #8b5cf6;">▶ Play</button>
-                        <button id="pauseBtn" class="btn btn-step" style="background: #ea580c; display: none;">⏸ Pause</button>
-                        <button id="resetBtn" class="btn btn-reset">🔄 Reset</button>
+                        <button type="button" id="runBtn" class="btn btn-run">▶ Run</button>
+                        <button type="button" id="prevBtn" class="btn btn-step" style="background: #4b5563;" disabled>⏮ Prev</button>
+                        <button type="button" id="stepBtn" class="btn btn-step">⏭ Step</button>
+                        <button type="button" id="playBtn" class="btn btn-step" style="background: #8b5cf6;">▶ Play</button>
+                        <button type="button" id="pauseBtn" class="btn btn-step" style="background: #ea580c; display: none;">⏸ Pause</button>
+                        <button type="button" id="resetBtn" class="btn btn-reset">🔄 Reset</button>
                     </div>
                 </div>
                 <div class="editor-container">
@@ -182,7 +182,10 @@
 </div>
 
     <script src="editor.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
 </body>
 </html>

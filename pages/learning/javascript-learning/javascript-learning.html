@@ -51,7 +51,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -168,7 +168,7 @@
               <div class="js-code-block">
                 <div class="js-code-header">
                   <span class="js-code-lang">JavaScript</span>
-                  <button class="js-code-copy" aria-label="Copy code" data-code="console.log('Welcome to JavaScript!');">Copy</button>
+                  <button type="button" class="js-code-copy" aria-label="Copy code" data-code="console.log('Welcome to JavaScript!');">Copy</button>
                 </div>
                 <pre><code><span class="tok-bi">console</span>.<span class="tok-fn">log</span>(<span class="tok-str">'Welcome to JavaScript!'</span>);</code></pre>
               </div>
@@ -187,12 +187,12 @@
                   <i class="fas fa-dumbbell"></i> Practice: Hello World
                 </div>
                 <p>Log a greeting message to the console using <code>console.log()</code>.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-intro">
                   <div class="js-code-block">
                     <div class="js-code-header">
                       <span class="js-code-lang">JavaScript</span>
-                      <button class="js-code-copy" aria-label="Copy code" data-code="console.log(&quot;Hello, JavaScript Learner!&quot;);">Copy</button>
+                      <button type="button" class="js-code-copy" aria-label="Copy code" data-code="console.log(&quot;Hello, JavaScript Learner!&quot;);">Copy</button>
                     </div>
                     <pre><code><span class="tok-bi">console</span>.<span class="tok-fn">log</span>(<span class="tok-str">"Hello, JavaScript Learner!"</span>);</code></pre>
                   </div>
@@ -221,8 +221,8 @@
               <div class="js-code-block">
                 <div class="js-code-header">
                   <span class="js-code-lang">HTML</span>
-                  <button class="js-code-copy" aria-label="Copy code" data-code="<!DOCTYPE html>
-<html>
+                  <button type="button" class="js-code-copy" aria-label="Copy code" data-code="<!DOCTYPE html>
+<html lang="en">
 <head>
   <title>My First JS Page</title>
 </head>
@@ -250,12 +250,12 @@
                   <i class="fas fa-dumbbell"></i> Practice: Logging Active Status
                 </div>
                 <p>Write a script statement that outputs <code>"Console is active!"</code> to verify your understanding of console logging.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-setup">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-setup">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-setup">
                   <div class="js-code-block">
                     <div class="js-code-header">
                       <span class="js-code-lang">JavaScript</span>
-                      <button class="js-code-copy" aria-label="Copy code" data-code="console.log(&quot;Console is active!&quot;);">Copy</button>
+                      <button type="button" class="js-code-copy" aria-label="Copy code" data-code="console.log(&quot;Console is active!&quot;);">Copy</button>
                     </div>
                     <pre><code><span class="tok-bi">console</span>.<span class="tok-fn">log</span>(<span class="tok-str">"Console is active!"</span>);</code></pre>
                   </div>
@@ -283,7 +283,7 @@
               <div class="js-code-block">
                 <div class="js-code-header">
                   <span class="js-code-lang">JavaScript</span>
-                  <button class="js-code-copy" aria-label="Copy code" data-code="let score = 10;
+                  <button type="button" class="js-code-copy" aria-label="Copy code" data-code="let score = 10;
 score = 15; // Reassignment is allowed
 
 const pi = 3.14159;
@@ -304,12 +304,12 @@ score = <span class="tok-num">15</span>; <span class="tok-cmt">// Allowed</span>
                   <i class="fas fa-dumbbell"></i> Practice: Declaring Variables
                 </div>
                 <p>Create a mutable variable named <code>userAge</code> set to <code>20</code>, and an immutable variable named <code>countryOfBirth</code> set to <code>"India"</code>.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-variables">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-variables">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-variables">
                   <div class="js-code-block">
                     <div class="js-code-header">
                       <span class="js-code-lang">JavaScript</span>
-                      <button class="js-code-copy" aria-label="Copy code" data-code="let userAge = 20;
+                      <button type="button" class="js-code-copy" aria-label="Copy code" data-code="let userAge = 20;
 const countryOfBirth = &quot;India&quot;;">Copy</button>
                     </div>
                     <pre><code><span class="tok-kw">let</span> userAge = <span class="tok-num">20</span>;
@@ -351,7 +351,7 @@ const countryOfBirth = &quot;India&quot;;">Copy</button>
               <div class="js-code-block">
                 <div class="js-code-header">
                   <span class="js-code-lang">JavaScript</span>
-                  <button class="js-code-copy" aria-label="Copy code" data-code="console.log(typeof 'Hello'); // 'string'
+                  <button type="button" class="js-code-copy" aria-label="Copy code" data-code="console.log(typeof 'Hello'); // 'string'
 console.log(typeof 42);      // 'number'
 console.log(typeof true);    // 'boolean'
 console.log(typeof null);    // 'object' (historic quirk)">Copy</button>
@@ -367,12 +367,12 @@ console.log(typeof null);    // 'object' (historic quirk)">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Type Checking
                 </div>
                 <p>Check the data type of the value <code>99.9</code> using the <code>typeof</code> operator.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-types">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-types">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-types">
                   <div class="js-code-block">
                     <div class="js-code-header">
                       <span class="js-code-lang">JavaScript</span>
-                      <button class="js-code-copy" aria-label="Copy code" data-code="console.log(typeof 99.9);">Copy</button>
+                      <button type="button" class="js-code-copy" aria-label="Copy code" data-code="console.log(typeof 99.9);">Copy</button>
                     </div>
                     <pre><code><span class="tok-bi">console</span>.<span class="tok-fn">log</span>(<span class="tok-kw">typeof</span> <span class="tok-num">99.9</span>); <span class="tok-cmt">// Outputs: "number"</span></code></pre>
                   </div>
@@ -399,7 +399,7 @@ console.log(typeof null);    // 'object' (historic quirk)">Copy</button>
               <div class="js-code-block">
                 <div class="js-code-header">
                   <span class="js-code-lang">JavaScript</span>
-                  <button class="js-code-copy" aria-label="Copy code" data-code="let sum = 10 + 5; // Arithmetic
+                  <button type="button" class="js-code-copy" aria-label="Copy code" data-code="let sum = 10 + 5; // Arithmetic
 let count = 0;
 count += 1;        // Assignment
 
@@ -417,12 +417,12 @@ console.log(10 == '10');  // true (Loose)">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Calculations
                 </div>
                 <p>Calculate the area of a rectangle with a width of <code>8</code> and length of <code>12</code>, storing it in a variable named <code>area</code>.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-operators">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-operators">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-operators">
                   <div class="js-code-block">
                     <div class="js-code-header">
                       <span class="js-code-lang">JavaScript</span>
-                      <button class="js-code-copy" aria-label="Copy code" data-code="const width = 8;
+                      <button type="button" class="js-code-copy" aria-label="Copy code" data-code="const width = 8;
 const length = 12;
 const area = width * length;
 console.log(area); // 96">Copy</button>
@@ -448,7 +448,7 @@ console.log(area); // 96">Copy</button>
               <div class="js-code-block">
                 <div class="js-code-header">
                   <span class="js-code-lang">JavaScript</span>
-                  <button class="js-code-copy" aria-label="Copy code" data-code="// Display an alert modal
+                  <button type="button" class="js-code-copy" aria-label="Copy code" data-code="// Display an alert modal
 alert('Welcome to Algo Infinity!');
 
 // Ask for user input (returns a string or null)
@@ -475,12 +475,12 @@ if (userName) {
                   <i class="fas fa-dumbbell"></i> Practice: User Prompt
                 </div>
                 <p>Prompt the user for their favorite programming language and alert it back to them.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-io">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-io">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-io">
                   <div class="js-code-block">
                     <div class="js-code-header">
                       <span class="js-code-lang">JavaScript</span>
-                      <button class="js-code-copy" aria-label="Copy code" data-code="let favLang = prompt(&quot;What is your favorite language?&quot;);
+                      <button type="button" class="js-code-copy" aria-label="Copy code" data-code="let favLang = prompt(&quot;What is your favorite language?&quot;);
 if (favLang) {
   alert(&quot;You like &quot; + favLang + &quot;!&quot;);
 }">Copy</button>
@@ -506,7 +506,7 @@ if (favLang) {
               <div class="js-code-block">
                 <div class="js-code-header">
                   <span class="js-code-lang">JavaScript</span>
-                  <button class="js-code-copy" aria-label="Copy code" data-code="let score = 85;
+                  <button type="button" class="js-code-copy" aria-label="Copy code" data-code="let score = 85;
 
 if (score >= 90) {
   console.log('Grade: A');
@@ -532,12 +532,12 @@ if (score >= 90) {
                   <i class="fas fa-dumbbell"></i> Practice: Even or Odd
                 </div>
                 <p>Write an <code>if/else</code> condition that logs <code>"Even"</code> if a variable <code>num</code> is even, or <code>"Odd"</code> otherwise.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-conditionals">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-conditionals">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-conditionals">
                   <div class="js-code-block">
                     <div class="js-code-header">
                       <span class="js-code-lang">JavaScript</span>
-                      <button class="js-code-copy" aria-label="Copy code" data-code="let num = 17;
+                      <button type="button" class="js-code-copy" aria-label="Copy code" data-code="let num = 17;
 if (num % 2 === 0) {
   console.log(&quot;Even&quot;);
 } else {
@@ -567,7 +567,7 @@ if (num % 2 === 0) {
               <div class="js-code-block">
                 <div class="js-code-header">
                   <span class="js-code-lang">JavaScript</span>
-                  <button class="js-code-copy" aria-label="Copy code" data-code="// Classic for loop
+                  <button type="button" class="js-code-copy" aria-label="Copy code" data-code="// Classic for loop
 for (let i = 0; i < 5; i++) {
   console.log(i);
 }
@@ -596,12 +596,12 @@ for (const color of colors) {
                   <i class="fas fa-dumbbell"></i> Practice: Count to Ten
                 </div>
                 <p>Write a loop that logs numbers from <code>1</code> to <code>10</code> to the console.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-loops">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-loops">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-loops">
                   <div class="js-code-block">
                     <div class="js-code-header">
                       <span class="js-code-lang">JavaScript</span>
-                      <button class="js-code-copy" aria-label="Copy code" data-code="for (let i = 1; i <= 10; i++) {
+                      <button type="button" class="js-code-copy" aria-label="Copy code" data-code="for (let i = 1; i <= 10; i++) {
   console.log(i);
 }">Copy</button>
                     </div>
@@ -625,7 +625,7 @@ for (const color of colors) {
               <div class="js-code-block">
                 <div class="js-code-header">
                   <span class="js-code-lang">JavaScript</span>
-                  <button class="js-code-copy" aria-label="Copy code" data-code="// Traditional function declaration
+                  <button type="button" class="js-code-copy" aria-label="Copy code" data-code="// Traditional function declaration
 function add(a, b) {
   return a + b;
 }
@@ -651,12 +651,12 @@ console.log(multiply(4, 5)); // 20">Copy</button>
                   <i class="fas fa-dumbbell"></i> Practice: Square Function
                 </div>
                 <p>Create an arrow function named <code>square</code> that accepts a single number and returns its squared value.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-functions">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-functions">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-functions">
                   <div class="js-code-block">
                     <div class="js-code-header">
                       <span class="js-code-lang">JavaScript</span>
-                      <button class="js-code-copy" aria-label="Copy code" data-code="const square = (n) => n * n;
+                      <button type="button" class="js-code-copy" aria-label="Copy code" data-code="const square = (n) => n * n;
 console.log(square(5)); // 25">Copy</button>
                     </div>
                     <pre><code><span class="tok-kw">const</span> <span class="tok-fn">square</span> = (n) =&gt; n * n;
@@ -678,7 +678,7 @@ console.log(square(5)); // 25">Copy</button>
               <div class="js-code-block">
                 <div class="js-code-header">
                   <span class="js-code-lang">JavaScript</span>
-                  <button class="js-code-copy" aria-label="Copy code" data-code="// Array
+                  <button type="button" class="js-code-copy" aria-label="Copy code" data-code="// Array
 const fruits = ['apple', 'banana'];
 fruits.push('orange'); // Append
 console.log(fruits[0]); // 'apple'
@@ -712,12 +712,12 @@ fruits.<span class="tok-fn">push</span>(<span class="tok-str">'orange'</span>);
                   <i class="fas fa-dumbbell"></i> Practice: Object Attributes
                 </div>
                 <p>Create an object representing a <code>car</code> with properties <code>brand</code>, <code>model</code>, and <code>year</code>. Log the <code>model</code> value.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-collections">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-collections">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-collections">
                   <div class="js-code-block">
                     <div class="js-code-header">
                       <span class="js-code-lang">JavaScript</span>
-                      <button class="js-code-copy" aria-label="Copy code" data-code="const car = {
+                      <button type="button" class="js-code-copy" aria-label="Copy code" data-code="const car = {
   brand: &quot;Tesla&quot;,
   model: &quot;Model 3&quot;,
   year: 2023
@@ -747,7 +747,7 @@ console.log(car.model); // &quot;Model 3&quot;">Copy</button>
               <div class="js-code-block">
                 <div class="js-code-header">
                   <span class="js-code-lang">JavaScript</span>
-                  <button class="js-code-copy" aria-label="Copy code" data-code="// Select element by ID
+                  <button type="button" class="js-code-copy" aria-label="Copy code" data-code="// Select element by ID
 const element = document.getElementById('my-heading');
 
 // Change text content
@@ -771,12 +771,12 @@ title.style.color = <span class="tok-str">'#7c3aed'</span>;</code></pre>
                   <i class="fas fa-dumbbell"></i> Practice: Modifying Content
                 </div>
                 <p>Write a JS statement to select an element with the ID <code>main-heading</code> and change its text content to <code>"Welcome to JavaScript!"</code>.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-dom">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-dom">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-dom">
                   <div class="js-code-block">
                     <div class="js-code-header">
                       <span class="js-code-lang">JavaScript</span>
-                      <button class="js-code-copy" aria-label="Copy code" data-code="document.getElementById(&quot;main-heading&quot;).textContent = &quot;Welcome to JavaScript!&quot;;">Copy</button>
+                      <button type="button" class="js-code-copy" aria-label="Copy code" data-code="document.getElementById(&quot;main-heading&quot;).textContent = &quot;Welcome to JavaScript!&quot;;">Copy</button>
                     </div>
                     <pre><code><span class="tok-bi">document</span>.<span class="tok-fn">getElementById</span>(<span class="tok-str">"main-heading"</span>).textContent = <span class="tok-str">"Welcome to JavaScript!"</span>;</code></pre>
                   </div>
@@ -796,7 +796,7 @@ title.style.color = <span class="tok-str">'#7c3aed'</span>;</code></pre>
               <div class="js-code-block">
                 <div class="js-code-header">
                   <span class="js-code-lang">JavaScript</span>
-                  <button class="js-code-copy" aria-label="Copy code" data-code="const btn = document.querySelector('#action-btn');
+                  <button type="button" class="js-code-copy" aria-label="Copy code" data-code="const btn = document.querySelector('#action-btn');
 
 btn.addEventListener('click', (event) => {
   console.log('Button was clicked!');
@@ -816,12 +816,12 @@ btn.<span class="tok-fn">addEventListener</span>(<span class="tok-str">'click'</
                   <i class="fas fa-dumbbell"></i> Practice: Click Listener
                 </div>
                 <p>Register a click event listener on a button with ID <code>"submit-btn"</code> that alerts <code>"Form Submitted!"</code>.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-events">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-events">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-events">
                   <div class="js-code-block">
                     <div class="js-code-header">
                       <span class="js-code-lang">JavaScript</span>
-                      <button class="js-code-copy" aria-label="Copy code" data-code="document.getElementById(&quot;submit-btn&quot;).addEventListener(&quot;click&quot;, () => {
+                      <button type="button" class="js-code-copy" aria-label="Copy code" data-code="document.getElementById(&quot;submit-btn&quot;).addEventListener(&quot;click&quot;, () => {
   alert(&quot;Form Submitted!&quot;);
 });">Copy</button>
                     </div>
@@ -855,7 +855,10 @@ btn.<span class="tok-fn">addEventListener</span>(<span class="tok-str">'click'</
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script type="module" src="./javascript-learning.js"></script>
     <script>

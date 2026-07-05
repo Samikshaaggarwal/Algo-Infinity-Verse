@@ -534,7 +534,7 @@
   // ── Restart ──
   function restart() {
     currentStep = 0;
-    for (var key in answers) {
+    for (let key in answers) {
       delete answers[key];
     }
 

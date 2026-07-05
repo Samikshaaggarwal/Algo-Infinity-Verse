@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── App Data ─── */
-var EA_APPS = [
+let EA_APPS = [
   {
     id: 'instagram',
     name: 'Instagram',
@@ -310,7 +310,7 @@ function eaDiagramAmazon() {
 }
 
 /* ─── Topics Data ─── */
-var EA_TOPICS = [
+let EA_TOPICS = [
   { name: 'Graphs (BFS/DFS)', icon: '🕸️', apps: ['Instagram', 'Google Maps', 'Spotify', 'WhatsApp'], link: '/graph-learning.html' },
   { name: "Dijkstra's / A*",  icon: '📍', apps: ['Google Maps', 'Amazon'],                           link: '/shortest-path-learning.html' },
   { name: 'Heaps / Max-Heap', icon: '🔥', apps: ['Instagram', 'Spotify', 'Amazon'],                  link: '/heaps-learning.html' },
@@ -324,11 +324,11 @@ var EA_TOPICS = [
 
 /* ─── Render App Cards ─── */
 function eaRenderApps() {
-  var grid = document.getElementById('eaAppsGrid');
+  let grid = document.getElementById('eaAppsGrid');
   if (!grid) return;
 
   grid.innerHTML = EA_APPS.map(function(app) {
-    var tagsHtml = app.dsaTags.map(function(t) {
+    let tagsHtml = app.dsaTags.map(function(t) {
       return '<span class="ea-dsa-tag">' + t + '</span>';
     }).join('');
 
@@ -351,8 +351,8 @@ function eaRenderApps() {
   }).join('');
 
   grid.querySelectorAll('.ea-app-card').forEach(function(card) {
-    var open = function() {
-      var id = card.getAttribute('data-app');
+    let open = function() {
+      let id = card.getAttribute('data-app');
       eaOpenModal(id);
     };
     card.addEventListener('click', open);
@@ -364,11 +364,11 @@ function eaRenderApps() {
 
 /* ─── Render Topics ─── */
 function eaRenderTopics() {
-  var grid = document.getElementById('eaTopicsGrid');
+  let grid = document.getElementById('eaTopicsGrid');
   if (!grid) return;
 
   grid.innerHTML = EA_TOPICS.map(function(t) {
-    var appBadges = t.apps.map(function(a) {
+    let appBadges = t.apps.map(function(a) {
       return '<span class="ea-topic-app-badge">' + a + '</span>';
     }).join('');
 
@@ -382,8 +382,8 @@ function eaRenderTopics() {
 
 /* ─── Modal ─── */
 function eaInitModal() {
-  var modal   = document.getElementById('eaModal');
-  var closeBtn = document.getElementById('eaModalClose');
+  let modal   = document.getElementById('eaModal');
+  let closeBtn = document.getElementById('eaModalClose');
   if (!modal || !closeBtn) return;
 
   closeBtn.addEventListener('click', function() {
@@ -398,23 +398,23 @@ function eaInitModal() {
 }
 
 function eaOpenModal(id) {
-  var app = null;
-  for (var i = 0; i < EA_APPS.length; i++) {
+  let app = null;
+  for (let i = 0; i < EA_APPS.length; i++) {
     if (EA_APPS[i].id === id) { app = EA_APPS[i]; break; }
   }
   if (!app) return;
 
-  var modal   = document.getElementById('eaModal');
-  var titleEl = document.getElementById('eaModalTitle');
-  var iconEl  = document.getElementById('eaModalIcon');
-  var bodyEl  = document.getElementById('eaModalBody');
+  let modal   = document.getElementById('eaModal');
+  let titleEl = document.getElementById('eaModalTitle');
+  let iconEl  = document.getElementById('eaModalIcon');
+  let bodyEl  = document.getElementById('eaModalBody');
   if (!modal || !titleEl || !iconEl || !bodyEl) return;
 
   titleEl.textContent = app.name;
   iconEl.textContent  = app.icon;
 
   // Build flow HTML
-  var flowHtml = '<div class="ea-section-title"><i class="fas fa-sitemap"></i> Architecture Flow</div>';
+  let flowHtml = '<div class="ea-section-title"><i class="fas fa-sitemap"></i> Architecture Flow</div>';
   flowHtml += '<div class="ea-flow">';
   app.flow.forEach(function(step, idx) {
     flowHtml += '<div class="ea-flow-step">' +
@@ -429,7 +429,7 @@ function eaOpenModal(id) {
   flowHtml += '</div>';
 
   // DSA table
-  var tableHtml = '<div class="ea-section-title"><i class="fas fa-table"></i> DSA Concepts Used</div>';
+  let tableHtml = '<div class="ea-section-title"><i class="fas fa-table"></i> DSA Concepts Used</div>';
   tableHtml += '<table class="ea-dsa-table"><thead><tr>' +
     '<th>DSA Concept</th><th>Feature</th><th>Why It Fits</th>' +
     '</tr></thead><tbody>';
@@ -439,11 +439,11 @@ function eaOpenModal(id) {
   tableHtml += '</tbody></table>';
 
   // Insight
-  var insightHtml = '<div class="ea-section-title"><i class="fas fa-lightbulb"></i> Real-World Insight</div>' +
+  let insightHtml = '<div class="ea-section-title"><i class="fas fa-lightbulb"></i> Real-World Insight</div>' +
     '<div class="ea-insight"><span class="ea-insight-icon">💡</span><span>' + app.insight + '</span></div>';
 
   // Learn more
-  var learnHtml = '<div class="ea-section-title"><i class="fas fa-book-open"></i> Learn These Topics</div>' +
+  let learnHtml = '<div class="ea-section-title"><i class="fas fa-book-open"></i> Learn These Topics</div>' +
     '<div class="ea-learn-links">';
   app.learnLinks.forEach(function(l) {
     learnHtml += '<a href="' + l.href + '" class="ea-learn-link"><i class="fas fa-arrow-right"></i>' + l.label + '</a>';

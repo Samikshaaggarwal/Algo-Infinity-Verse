@@ -48,7 +48,7 @@
     <!-- Workspace Toolbar -->
     <div class="p2p-toolbar">
         <div class="toolbar-left">
-            <button class="btn btn-primary" id="btnShareInvite"><i class="fas fa-link"></i> Share Invite Link</button>
+            <button type="button" class="btn btn-primary" id="btnShareInvite"><i class="fas fa-link"></i> Share Invite Link</button>
             <div class="status-indicator">
                 <span class="dot" id="statusDot"></span>
                 <span id="statusText">Disconnected</span>
@@ -58,7 +58,7 @@
             <div class="latency-meter hidden" id="latencyMeter">
                 <i class="fas fa-tachometer-alt"></i> Ping: <span id="pingValue">--</span> ms
             </div>
-            <button class="btn btn-danger hidden" id="btnDisconnect"><i class="fas fa-times"></i> Disconnect</button>
+            <button type="button" class="btn btn-danger hidden" id="btnDisconnect"><i class="fas fa-times"></i> Disconnect</button>
         </div>
     </div>
 
@@ -79,7 +79,7 @@
                 <div class="chat-messages" id="chatMessages"></div>
                 <div class="chat-input-area">
                     <input type="text" id="chatInput" placeholder="Send P2P message..." disabled>
-                    <button id="btnSendChat" disabled><i class="fas fa-paper-plane"></i></button>
+                    <button type="button" id="btnSendChat" disabled><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
         </div>
@@ -88,7 +88,7 @@
         <div class="panel-right">
             <div class="editor-header">
                 <div class="editor-tabs">
-                    <button class="editor-tab active"><i class="fab fa-js" style="color: #f1fa8c;"></i> p2p_sync.js</button>
+                    <button type="button" class="editor-tab active"><i class="fab fa-js" style="color: #f1fa8c;"></i> p2p_sync.js</button>
                 </div>
                 <div class="editor-controls">
                     <span class="sync-badge" id="syncBadge"><i class="fas fa-lock"></i> End-to-End Encrypted</span>

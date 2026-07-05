@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -46,7 +46,7 @@
       <ul class="nav-links" id="navLinks">
         <li class="nav-item"><a href="index.html#home" class="nav-link">Home</a></li>
         <li class="nav-item has-dropdown">
-          <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
             <span>Learn</span><i class="fas fa-chevron-down dropdown-icon"></i>
           </button>
           <div class="dropdown-menu" role="menu">
@@ -67,7 +67,7 @@
         </div>
         </li>
         <li class="nav-item has-dropdown">
-          <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
             <span>Interview</span><i class="fas fa-chevron-down dropdown-icon"></i>
           </button>
           <div class="dropdown-menu" role="menu">
@@ -80,7 +80,7 @@
           </div>
         </li>
         <li class="nav-item has-dropdown">
-          <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
             <span>Community</span><i class="fas fa-chevron-down dropdown-icon"></i>
           </button>
           <div class="dropdown-menu" role="menu">
@@ -90,7 +90,7 @@
           </div>
         </li>
         <li class="nav-item has-dropdown nav-profile-dropdown">
-          <button class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
             <span>Profile</span><i class="fas fa-chevron-down dropdown-icon"></i>
           </button>
           <div class="dropdown-menu dropdown-menu-end" role="menu">
@@ -108,8 +108,8 @@
         </li>
       </ul>
       <div class="nav-buttons">
-        <button id="darkModeToggle" class="dark-mode-btn" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
-        <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+        <button type="button" id="darkModeToggle" class="dark-mode-btn" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+        <button type="button" id="menuToggle" class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
       </div>
     </nav>
 
@@ -180,7 +180,7 @@ Match History
       <label for="joinBattleId">Got a Battle ID? Join here</label>
       <input type="text" id="joinBattleId" class="search-bar" placeholder="Paste Battle ID">
     </div>
-    <button id="joinBattleBtn" class="btn btn-secondary" style="margin:auto; min-width:250px;">
+    <button type="button" id="joinBattleBtn" class="btn btn-secondary" style="margin:auto; min-width:250px;">
       Join Battle
     </button>
     <div class="battle-card">
@@ -254,7 +254,7 @@ Match History
         </div>
 
         <!-- Start Button -->
-        <button
+        <button type="button"
             id="startBattleBtn"
             class="btn btn-primary"
         >
@@ -266,14 +266,14 @@ Match History
 
         <div class="input-group" style="margin-top:2rem">
             <label for="joinBattleId">Got a Battle ID? Join here</label>
-            <input type="text" id="joinBattleId" class="search-bar" placeholder="Paste Battle ID">
+            <input type="text" id="joinBattleId-1" class="search-bar" placeholder="Paste Battle ID">
         </div>
-        <button id="joinBattleBtn" class="btn btn-secondary"
+        <button type="button" id="joinBattleBtn" class="btn btn-secondary"
                 style="margin:auto;min-width:250px;">
             Join Battle
         </button>
         <p
-            id="battleStatusMsg"
+            id="battleStatusMsg-1"
             role="status"
             aria-live="polite"
             style="color:`#06b6d4`;text-align:center;margin-top:1rem;"
@@ -323,7 +323,7 @@ Match History
           placeholder="Write your solution here..."
         ></textarea>
 
-        <button
+        <button type="button"
           id="submitSolutionBtn"
           class="btn btn-primary"
         >
@@ -381,9 +381,13 @@ Match History
 <div id="footer-placeholder"></div>
 
 <script src="dsa-battle-mode.js"></script>
+<script src="/bootstrap-legacy.js"></script>
+
 <script src="script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
 <script src="/theme.js"></script>
 <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
 <script src="/auth.js"></script>
 <script src="/theme.js"></script>
 <script>

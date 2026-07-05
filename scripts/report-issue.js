@@ -91,7 +91,7 @@
             if (typeof window.showNotification === 'function') {
                 window.showNotification("Issue reported successfully! Thank you for your feedback.", "success");
             } else {
-                alert("Issue reported successfully!");
+                console.warn("Alert:", "Issue reported successfully!");
             }
 
             form.reset();

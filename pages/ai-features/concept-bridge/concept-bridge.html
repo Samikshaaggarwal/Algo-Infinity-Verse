@@ -42,7 +42,7 @@
   </div>
 
   <!-- Scroll to Top Button -->
-  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+  <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
     <i class="fas fa-arrow-up"></i>
   </button>
 
@@ -188,9 +188,9 @@
             </p>
             
             <div class="evolver-tabs">
-              <button class="evolver-tab active" data-evolve="recursion">1. Pure Recursion</button>
-              <button class="evolver-tab" data-evolve="memo">2. Memoization (Top-Down)</button>
-              <button class="evolver-tab" data-evolve="tab">3. Tabulation (Bottom-Up)</button>
+              <button type="button" class="evolver-tab active" data-evolve="recursion">1. Pure Recursion</button>
+              <button type="button" class="evolver-tab" data-evolve="memo">2. Memoization (Top-Down)</button>
+              <button type="button" class="evolver-tab" data-evolve="tab">3. Tabulation (Bottom-Up)</button>
             </div>
 
             <div class="code-editor-mock">
@@ -219,7 +219,7 @@ def fib(n):
             </p>
 
             <div class="tree-controls" style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-              <button id="toggleMemoBtn" class="btn btn-primary btn-sm"><i class="fas fa-brain"></i> Enable Memoization</button>
+              <button type="button" id="toggleMemoBtn" class="btn btn-primary btn-sm"><i class="fas fa-brain"></i> Enable Memoization</button>
               <div style="color: #fff; font-size: 0.9rem;">
                 Total operations: <span id="opCounter" class="text-accent" style="font-weight: bold; font-family: 'Fira Code';">15</span>
               </div>
@@ -247,13 +247,13 @@ def fib(n):
           <div class="quiz-questions-wrap" id="quiz-rec-dp">
             <!-- Dynamic quiz questions -->
           </div>
-          <button class="btn btn-primary submit-quiz-btn" data-quiz="recursion-dp">Check Answers</button>
+          <button type="button" class="btn btn-primary submit-quiz-btn" data-quiz="recursion-dp">Check Answers</button>
           <div class="quiz-feedback-box" id="feedback-rec-dp"></div>
         </div>
       </div>
 
       <!-- BRIDGE 2: TREES -> GRAPHS -->
-      <div id="bridge-trees-graphs" class="bridge-view">
+      <div id="bridge-trees-graphs-1" class="bridge-view">
         <div class="bridge-header">
           <span class="bridge-badge badge-cyan"><i class="fas fa-sitemap"></i> Bridge 02</span>
           <h2>Trees &rarr; Graphs</h2>
@@ -271,9 +271,9 @@ def fib(n):
             </p>
 
             <div class="sandbox-buttons" style="margin-bottom: 1rem; display: flex; gap: 0.8rem; flex-wrap: wrap;">
-              <button id="btnSetTree" class="btn btn-secondary btn-sm"><i class="fas fa-sitemap"></i> Reset to Tree</button>
-              <button id="btnToggleCycle" class="btn btn-secondary btn-sm"><i class="fas fa-redo"></i> Toggle Cycle (Node 4 &rarr; 1)</button>
-              <button id="btnToggleMultiRoot" class="btn btn-secondary btn-sm"><i class="fas fa-share-nodes"></i> Toggle Multi-Parent (Node 1 &rarr; 5)</button>
+              <button type="button" id="btnSetTree" class="btn btn-secondary btn-sm"><i class="fas fa-sitemap"></i> Reset to Tree</button>
+              <button type="button" id="btnToggleCycle" class="btn btn-secondary btn-sm"><i class="fas fa-redo"></i> Toggle Cycle (Node 4 &rarr; 1)</button>
+              <button type="button" id="btnToggleMultiRoot" class="btn btn-secondary btn-sm"><i class="fas fa-share-nodes"></i> Toggle Multi-Parent (Node 1 &rarr; 5)</button>
             </div>
 
             <div class="svg-sandbox-container">
@@ -330,13 +330,13 @@ def fib(n):
           <div class="quiz-questions-wrap" id="quiz-trees-graphs">
             <!-- Dynamic quiz questions -->
           </div>
-          <button class="btn btn-primary submit-quiz-btn" data-quiz="trees-graphs">Check Answers</button>
+          <button type="button" class="btn btn-primary submit-quiz-btn" data-quiz="trees-graphs">Check Answers</button>
           <div class="quiz-feedback-box" id="feedback-trees-graphs"></div>
         </div>
       </div>
 
       <!-- BRIDGE 3: SORTING -> DIVIDE & CONQUER -->
-      <div id="bridge-sort-dc" class="bridge-view">
+      <div id="bridge-sort-dc-1" class="bridge-view">
         <div class="bridge-header">
           <span class="bridge-badge badge-orange"><i class="fas fa-arrow-down-up-lock"></i> Bridge 03</span>
           <h2>Sorting &rarr; Divide &amp; Conquer</h2>
@@ -351,9 +351,9 @@ def fib(n):
             <h3 class="card-title"><i class="fas fa-cubes-stacked"></i> Divide &amp; Conquer Visualizer (Merge Sort)</h3>
             
             <div class="dc-controls" style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-              <button id="btnDcPlay" class="btn btn-primary btn-sm"><i class="fas fa-play"></i> Play</button>
-              <button id="btnDcNext" class="btn btn-secondary btn-sm"><i class="fas fa-chevron-right"></i> Next Phase</button>
-              <button id="btnDcReset" class="btn btn-secondary btn-sm"><i class="fas fa-rotate-left"></i> Reset</button>
+              <button type="button" id="btnDcPlay" class="btn btn-primary btn-sm"><i class="fas fa-play"></i> Play</button>
+              <button type="button" id="btnDcNext" class="btn btn-secondary btn-sm"><i class="fas fa-chevron-right"></i> Next Phase</button>
+              <button type="button" id="btnDcReset" class="btn btn-secondary btn-sm"><i class="fas fa-rotate-left"></i> Reset</button>
               <div class="phase-display">
                 Current Phase: <strong id="dcPhaseName" class="text-orange">1. Divide (Split Array)</strong>
               </div>
@@ -379,7 +379,7 @@ def fib(n):
           <div class="quiz-questions-wrap" id="quiz-sort-dc">
             <!-- Dynamic quiz questions -->
           </div>
-          <button class="btn btn-primary submit-quiz-btn" data-quiz="sort-dc">Check Answers</button>
+          <button type="button" class="btn btn-primary submit-quiz-btn" data-quiz="sort-dc">Check Answers</button>
           <div class="quiz-feedback-box" id="feedback-sort-dc"></div>
         </div>
       </div>
@@ -392,7 +392,10 @@ def fib(n):
 
   <!-- Scripts -->
   <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   <script src="/auth-gate.js"></script>
   <script src="concept-bridge.js"></script>

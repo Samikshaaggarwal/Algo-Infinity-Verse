@@ -209,9 +209,9 @@ function initMyths() {
 
   /* Accordion */
   grid.querySelectorAll(".mb-myth-header").forEach(function(header) {
-    var card = header.closest(".mb-myth-card");
+    let card = header.closest(".mb-myth-card");
     function toggleCard() {
-      var isOpen = card.classList.toggle("open");
+      let isOpen = card.classList.toggle("open");
       header.setAttribute("aria-expanded", isOpen ? "true" : "false");
     }
     header.addEventListener("click", toggleCard);
@@ -223,13 +223,13 @@ function initMyths() {
   /* Run demos */
   grid.querySelectorAll(".mb-demo-run").forEach(function(btn) {
     btn.addEventListener("click", function() {
-      var id = parseInt(btn.getAttribute("data-myth"));
-      var myth = null;
-      for (var i = 0; i < MB_MYTHS.length; i++) { if (MB_MYTHS[i].id === id) { myth = MB_MYTHS[i]; break; } }
+      let id = parseInt(btn.getAttribute("data-myth"));
+      let myth = null;
+      for (let i = 0; i < MB_MYTHS.length; i++) { if (MB_MYTHS[i].id === id) { myth = MB_MYTHS[i]; break; } }
       if (!myth) return;
-      var output = document.getElementById("demo-output-" + id);
+      let output = document.getElementById("demo-output-" + id);
       if (!output) return;
-      var lines = myth.demoFn();
+      let lines = myth.demoFn();
       output.innerHTML = lines.map(function(l) {
         return '<span class="mb-output-line ' + (l.cls || "") + '">' + mbEscapeHtml(l.text) + '</span>';
       }).join("\n");
@@ -239,8 +239,8 @@ function initMyths() {
   /* Clear demos */
   grid.querySelectorAll(".mb-demo-clear").forEach(function(btn) {
     btn.addEventListener("click", function() {
-      var id = parseInt(btn.getAttribute("data-myth"));
-      var output = document.getElementById("demo-output-" + id);
+      let id = parseInt(btn.getAttribute("data-myth"));
+      let output = document.getElementById("demo-output-" + id);
       if (output) output.textContent = "Click the button to run the demo...";
     });
   });
@@ -248,8 +248,8 @@ function initMyths() {
   /* Copy buttons */
   grid.querySelectorAll(".js-code-copy").forEach(function(btn) {
     btn.addEventListener("click", function() {
-      var code = decodeURIComponent(btn.getAttribute("data-code") || "");
-      var finish = function() {
+      let code = decodeURIComponent(btn.getAttribute("data-code") || "");
+      let finish = function() {
         btn.textContent = "Copied!";
         btn.classList.add("copied");
         setTimeout(function() { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 2000);
@@ -257,7 +257,7 @@ function initMyths() {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(code).then(finish).catch(finish);
       } else {
-        var ta = document.createElement("textarea");
+        let ta = document.createElement("textarea");
         ta.value = code;
         ta.style.cssText = "position:fixed;opacity:0";
         document.body.appendChild(ta);
@@ -272,24 +272,24 @@ function initMyths() {
 
 /* ─── Quiz ─── */
 function initMythQuiz() {
-  var questionEl = document.getElementById("mbQuizQuestion");
-  var optionsEl  = document.getElementById("mbQuizOptions");
-  var feedbackEl = document.getElementById("mbQuizFeedback");
-  var nextBtn    = document.getElementById("mbQuizNext");
-  var counterEl  = document.getElementById("mbQuizCounter");
-  var fillEl     = document.getElementById("mbQuizFill");
-  var resultEl   = document.getElementById("mbQuizResult");
-  var quizCard   = document.querySelector(".mb-quiz-card");
+  let questionEl = document.getElementById("mbQuizQuestion");
+  let optionsEl  = document.getElementById("mbQuizOptions");
+  let feedbackEl = document.getElementById("mbQuizFeedback");
+  let nextBtn    = document.getElementById("mbQuizNext");
+  let counterEl  = document.getElementById("mbQuizCounter");
+  let fillEl     = document.getElementById("mbQuizFill");
+  let resultEl   = document.getElementById("mbQuizResult");
+  let quizCard   = document.querySelector(".mb-quiz-card");
 
   if (!questionEl || !optionsEl || !feedbackEl || !nextBtn || !counterEl || !fillEl || !resultEl || !quizCard) return;
 
-  var questions = mbShuffle(MB_QUIZ.slice());
-  var idx = 0, score = 0, answered = false;
+  let questions = mbShuffle(MB_QUIZ.slice());
+  let idx = 0, score = 0, answered = false;
 
   function renderQuestion() {
     if (idx >= questions.length) { showResult(); return; }
     answered = false;
-    var q = questions[idx];
+    let q = questions[idx];
     counterEl.textContent = "Question " + (idx + 1) + " / " + questions.length;
     fillEl.style.width = Math.round(((idx + 1) / questions.length) * 100) + "%";
     questionEl.textContent = q.q;
@@ -314,12 +314,12 @@ function initMythQuiz() {
   function handleAnswer(selected, q) {
     if (answered) return;
     answered = true;
-    var isCorrect = selected === q.correct;
+    let isCorrect = selected === q.correct;
     if (isCorrect) score++;
 
     optionsEl.querySelectorAll(".mb-quiz-option").forEach(function(btn) {
       btn.disabled = true;
-      var i = parseInt(btn.getAttribute("data-idx"));
+      let i = parseInt(btn.getAttribute("data-idx"));
       if (i === q.correct && isCorrect)  btn.classList.add("correct");
       if (i === selected  && !isCorrect) btn.classList.add("wrong");
       if (i === q.correct && !isCorrect) btn.classList.add("reveal");
@@ -334,8 +334,8 @@ function initMythQuiz() {
 
   function showResult() {
     quizCard.classList.add("hidden");
-    var pct = Math.round((score / questions.length) * 100);
-    var grade = "📚 Keep Learning";
+    let pct = Math.round((score / questions.length) * 100);
+    let grade = "📚 Keep Learning";
     if (pct >= 90)      grade = "🏆 Myth Master";
     else if (pct >= 70) grade = "🔥 Sharp Thinker";
     else if (pct >= 50) grade = "👍 Good Effort";
@@ -351,7 +351,7 @@ function initMythQuiz() {
       '<button class="btn btn-primary mb-play-again" id="mbPlayAgain"><i class="fas fa-redo"></i> Try Again</button>';
     resultEl.classList.remove("hidden");
 
-    var playAgain = document.getElementById("mbPlayAgain");
+    let playAgain = document.getElementById("mbPlayAgain");
     if (playAgain) {
       playAgain.addEventListener("click", function() {
         idx = 0; score = 0; answered = false;

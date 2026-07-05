@@ -297,7 +297,7 @@ function submitExperience() {
   }
 
   if (!company || !role || !difficulty || !rating || !title || !content) {
-    alert('Please fill in all required fields.');
+    console.warn("Alert:", 'Please fill in all required fields.');
     return;
   }
 

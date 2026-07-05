@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -123,7 +123,7 @@
               </div>
               <p>The array representation of a heap uses index math: for a node at index <code>i</code>:</p>
               <div class="hl-code-block">
-                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button class="hl-code-copy" data-code="parent = Math.floor((i - 1) / 2)\nleftChild = 2 * i + 1\nrightChild = 2 * i + 2">Copy</button></div>
+                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button type="button" class="hl-code-copy" data-code="parent = Math.floor((i - 1) / 2)\nleftChild = 2 * i + 1\nrightChild = 2 * i + 2">Copy</button></div>
                 <pre><code><span class="tok-cmt">// Index relationships in heap array</span>
 parent     = Math.floor((i - <span class="tok-num">1</span>) / <span class="tok-num">2</span>)
 leftChild  = <span class="tok-num">2</span> * i + <span class="tok-num">1</span>
@@ -136,10 +136,10 @@ rightChild = <span class="tok-num">2</span> * i + <span class="tok-num">2</span>
               <div class="js-exercise" id="exercise-intro">
                 <div class="js-exercise-title"><i class="fas fa-dumbbell"></i> Practice: Identify Heap Type</div>
                 <p>Given array <code>[4, 8, 6, 10, 12, 9]</code>, is this a min-heap or max-heap? What is the parent of index 3?</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-intro">
                   <div class="hl-code-block">
-                    <div class="hl-code-header"><span class="hl-code-lang">Answer</span><button class="hl-code-copy" data-code="Min-heap: 4 < 8 and 4 < 6. Parent of index 3 = Math.floor((3-1)/2) = 1">Copy</button></div>
+                    <div class="hl-code-header"><span class="hl-code-lang">Answer</span><button type="button" class="hl-code-copy" data-code="Min-heap: 4 < 8 and 4 < 6. Parent of index 3 = Math.floor((3-1)/2) = 1">Copy</button></div>
                     <pre><code><span class="tok-cmt">// Min-heap: every parent ≤ children</span>
 <span class="tok-cmt">// 4 &lt; 8 ✓, 4 &lt; 6 ✓, 8 &lt; 10 ✓, 8 &lt; 12 ✓, 6 &lt; 9 ✓</span>
 parent(<span class="tok-num">3</span>) = Math.floor((<span class="tok-num">3</span> - <span class="tok-num">1</span>) / <span class="tok-num">2</span>) = <span class="tok-num">1</span>  <span class="tok-cmt">// value = 8</span></code></pre>
@@ -172,7 +172,7 @@ parent(<span class="tok-num">3</span>) = Math.floor((<span class="tok-num">3</sp
                 <p><strong>JavaScript trick:</strong> JS has no built-in heap. To simulate a max-heap using min-heap logic, negate all values on insert and negate back on extract.</p>
               </div>
               <div class="hl-code-block">
-                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button class="hl-code-copy" data-code="// Simulate max-heap by negating\nminHeap.push(-value);     // insert\nconst max = -minHeap.pop(); // extract max">Copy</button></div>
+                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button type="button" class="hl-code-copy" data-code="// Simulate max-heap by negating\nminHeap.push(-value);     // insert\nconst max = -minHeap.pop(); // extract max">Copy</button></div>
                 <pre><code><span class="tok-cmt">// Simulate max-heap by negating values</span>
 minHeap.push(-value);           <span class="tok-cmt">// insert negative</span>
 <span class="tok-kw">const</span> max = -minHeap.pop();     <span class="tok-cmt">// negate back = max</span></code></pre>
@@ -180,10 +180,10 @@ minHeap.push(-value);           <span class="tok-cmt">// insert negative</span>
               <div class="js-exercise" id="exercise-types">
                 <div class="js-exercise-title"><i class="fas fa-dumbbell"></i> Practice: When to Use Which</div>
                 <p>You need the K largest elements from a stream of numbers. Should you use a min-heap or max-heap of size K? Why?</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-types">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-types">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-types">
                   <div class="hl-code-block">
-                    <div class="hl-code-header"><span class="hl-code-lang">Answer</span><button class="hl-code-copy" data-code="Use a MIN-heap of size K.\nPush each element. If heap size > K, pop the minimum.\nAt the end, the heap contains the K largest elements.\nThe root (minimum of heap) is the K-th largest.">Copy</button></div>
+                    <div class="hl-code-header"><span class="hl-code-lang">Answer</span><button type="button" class="hl-code-copy" data-code="Use a MIN-heap of size K.\nPush each element. If heap size > K, pop the minimum.\nAt the end, the heap contains the K largest elements.\nThe root (minimum of heap) is the K-th largest.">Copy</button></div>
                     <pre><code><span class="tok-cmt">// Use a MIN-heap of size K</span>
 <span class="tok-cmt">// Keep the K largest seen so far</span>
 <span class="tok-cmt">// If new element > heap root, pop root and push new</span>
@@ -210,7 +210,7 @@ minHeap.push(-value);           <span class="tok-cmt">// insert negative</span>
                 </ul>
               </div>
               <div class="hl-code-block">
-                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button class="hl-code-copy" data-code="class MinHeap {\n  constructor() { this.heap = []; }\n  peek() { return this.heap[0]; }\n  size() { return this.heap.length; }\n  push(val) {\n    this.heap.push(val);\n    this._siftUp(this.heap.length - 1);\n  }\n  pop() {\n    const min = this.heap[0];\n    const last = this.heap.pop();\n    if (this.heap.length > 0) {\n      this.heap[0] = last;\n      this._siftDown(0);\n    }\n    return min;\n  }\n  _siftUp(i) {\n    while (i > 0) {\n      const parent = Math.floor((i - 1) / 2);\n      if (this.heap[parent] > this.heap[i]) {\n        [this.heap[parent], this.heap[i]] = [this.heap[i], this.heap[parent]];\n        i = parent;\n      } else break;\n    }\n  }\n  _siftDown(i) {\n    const n = this.heap.length;\n    while (true) {\n      let smallest = i;\n      const l = 2*i+1, r = 2*i+2;\n      if (l < n && this.heap[l] < this.heap[smallest]) smallest = l;\n      if (r < n && this.heap[r] < this.heap[smallest]) smallest = r;\n      if (smallest === i) break;\n      [this.heap[smallest], this.heap[i]] = [this.heap[i], this.heap[smallest]];\n      i = smallest;\n    }\n  }\n}">Copy</button></div>
+                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button type="button" class="hl-code-copy" data-code="class MinHeap {\n  constructor() { this.heap = []; }\n  peek() { return this.heap[0]; }\n  size() { return this.heap.length; }\n  push(val) {\n    this.heap.push(val);\n    this._siftUp(this.heap.length - 1);\n  }\n  pop() {\n    const min = this.heap[0];\n    const last = this.heap.pop();\n    if (this.heap.length > 0) {\n      this.heap[0] = last;\n      this._siftDown(0);\n    }\n    return min;\n  }\n  _siftUp(i) {\n    while (i > 0) {\n      const parent = Math.floor((i - 1) / 2);\n      if (this.heap[parent] > this.heap[i]) {\n        [this.heap[parent], this.heap[i]] = [this.heap[i], this.heap[parent]];\n        i = parent;\n      } else break;\n    }\n  }\n  _siftDown(i) {\n    const n = this.heap.length;\n    while (true) {\n      let smallest = i;\n      const l = 2*i+1, r = 2*i+2;\n      if (l < n && this.heap[l] < this.heap[smallest]) smallest = l;\n      if (r < n && this.heap[r] < this.heap[smallest]) smallest = r;\n      if (smallest === i) break;\n      [this.heap[smallest], this.heap[i]] = [this.heap[i], this.heap[smallest]];\n      i = smallest;\n    }\n  }\n}">Copy</button></div>
                 <pre><code><span class="tok-kw">class</span> <span class="tok-bi">MinHeap</span> {
   <span class="tok-fn">constructor</span>() { <span class="tok-kw">this</span>.heap = []; }
   <span class="tok-fn">peek</span>()  { <span class="tok-kw">return this</span>.heap[<span class="tok-num">0</span>]; }
@@ -258,10 +258,10 @@ minHeap.push(-value);           <span class="tok-cmt">// insert negative</span>
               <div class="js-exercise" id="exercise-heap-ops">
                 <div class="js-exercise-title"><i class="fas fa-dumbbell"></i> Practice: Heapify</div>
                 <p>Insert <code>[5, 3, 8, 1, 4]</code> one by one into a min-heap. What does the array look like after all insertions?</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-heap-ops">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-heap-ops">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-heap-ops">
                   <div class="hl-code-block">
-                    <div class="hl-code-header"><span class="hl-code-lang">Trace</span><button class="hl-code-copy" data-code="Insert 5: [5]\nInsert 3: [3, 5]  → sift up: 3 < 5, swap\nInsert 8: [3, 5, 8]  → 8 > 3, no swap\nInsert 1: [1, 3, 8, 5] → sift up: 1 < 5 swap, 1 < 3 swap\nInsert 4: [1, 3, 8, 5, 4] → 4 > 3, no swap\nFinal: [1, 3, 8, 5, 4]">Copy</button></div>
+                    <div class="hl-code-header"><span class="hl-code-lang">Trace</span><button type="button" class="hl-code-copy" data-code="Insert 5: [5]\nInsert 3: [3, 5]  → sift up: 3 < 5, swap\nInsert 8: [3, 5, 8]  → 8 > 3, no swap\nInsert 1: [1, 3, 8, 5] → sift up: 1 < 5 swap, 1 < 3 swap\nInsert 4: [1, 3, 8, 5, 4] → 4 > 3, no swap\nFinal: [1, 3, 8, 5, 4]">Copy</button></div>
                     <pre><code>Insert <span class="tok-num">5</span>:  [<span class="tok-num">5</span>]
 Insert <span class="tok-num">3</span>:  [<span class="tok-num">3</span>, <span class="tok-num">5</span>]        <span class="tok-cmt">// 3 &lt; 5, sift up</span>
 Insert <span class="tok-num">8</span>:  [<span class="tok-num">3</span>, <span class="tok-num">5</span>, <span class="tok-num">8</span>]     <span class="tok-cmt">// 8 > 3, no swap</span>
@@ -289,7 +289,7 @@ Final:   [<span class="tok-num">1</span>, <span class="tok-num">3</span>, <span 
                 </ul>
               </div>
               <div class="hl-code-block">
-                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button class="hl-code-copy" data-code="// Priority queue for task scheduling\n// Each task: [priority, name]\nconst pq = new MinHeap(); // lower number = higher priority\npq.push([1, 'Critical bug fix']);\npq.push([3, 'Feature request']);\npq.push([2, 'Code review']);\nwhile (pq.size()) {\n  const [pri, task] = pq.pop();\n  console.log(`Processing: ${task} (priority ${pri})`);\n}\n// Critical bug fix → Code review → Feature request">Copy</button></div>
+                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button type="button" class="hl-code-copy" data-code="// Priority queue for task scheduling\n// Each task: [priority, name]\nconst pq = new MinHeap(); // lower number = higher priority\npq.push([1, 'Critical bug fix']);\npq.push([3, 'Feature request']);\npq.push([2, 'Code review']);\nwhile (pq.size()) {\n  const [pri, task] = pq.pop();\n  console.log(`Processing: ${task} (priority ${pri})`);\n}\n// Critical bug fix → Code review → Feature request">Copy</button></div>
                 <pre><code><span class="tok-cmt">// Task scheduler — lower number = higher priority</span>
 <span class="tok-kw">const</span> pq = <span class="tok-kw">new</span> <span class="tok-bi">MinHeap</span>();
 pq.push([<span class="tok-num">1</span>, <span class="tok-str">'Critical bug fix'</span>]);
@@ -304,10 +304,10 @@ pq.push([<span class="tok-num">2</span>, <span class="tok-str">'Code review'</sp
               <div class="js-exercise" id="exercise-pq">
                 <div class="js-exercise-title"><i class="fas fa-dumbbell"></i> Practice: Dijkstra Setup</div>
                 <p>In Dijkstra's algorithm, what is stored in the priority queue and what determines priority?</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-pq">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-pq">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-pq">
                   <div class="hl-code-block">
-                    <div class="hl-code-header"><span class="hl-code-lang">Answer</span><button class="hl-code-copy" data-code="Store [distance, node] pairs.\nPriority = distance (min-heap).\nAlways expand the node with the smallest known distance.\n// pq.push([0, startNode]);\n// const [dist, node] = pq.pop();">Copy</button></div>
+                    <div class="hl-code-header"><span class="hl-code-lang">Answer</span><button type="button" class="hl-code-copy" data-code="Store [distance, node] pairs.\nPriority = distance (min-heap).\nAlways expand the node with the smallest known distance.\n// pq.push([0, startNode]);\n// const [dist, node] = pq.pop();">Copy</button></div>
                     <pre><code><span class="tok-cmt">// Store [distance, node] in min-heap</span>
 <span class="tok-cmt">// Priority = accumulated distance from source</span>
 pq.push([<span class="tok-num">0</span>, startNode]);
@@ -326,7 +326,7 @@ pq.push([<span class="tok-num">0</span>, startNode]);
               </div>
               <p>One of the most common heap interview problems. Given an array, find the K most frequent elements. Sorting is O(n log n) — heaps let us do O(n log k).</p>
               <div class="hl-code-block">
-                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button class="hl-code-copy" data-code="function topKFrequent(nums, k) {\n  const freq = new Map();\n  for (const n of nums) freq.set(n, (freq.get(n) || 0) + 1);\n  const minHeap = new MinHeap(); // stores [frequency, value]\n  for (const [val, count] of freq) {\n    minHeap.push([count, val]);\n    if (minHeap.size() > k) minHeap.pop();\n  }\n  return minHeap.heap.map(([, val]) => val);\n}">Copy</button></div>
+                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button type="button" class="hl-code-copy" data-code="function topKFrequent(nums, k) {\n  const freq = new Map();\n  for (const n of nums) freq.set(n, (freq.get(n) || 0) + 1);\n  const minHeap = new MinHeap(); // stores [frequency, value]\n  for (const [val, count] of freq) {\n    minHeap.push([count, val]);\n    if (minHeap.size() > k) minHeap.pop();\n  }\n  return minHeap.heap.map(([, val]) => val);\n}">Copy</button></div>
                 <pre><code><span class="tok-kw">function</span> <span class="tok-fn">topKFrequent</span>(nums, k) {
   <span class="tok-kw">const</span> freq = <span class="tok-kw">new</span> Map();
   <span class="tok-kw">for</span> (<span class="tok-kw">const</span> n <span class="tok-kw">of</span> nums)
@@ -349,10 +349,10 @@ pq.push([<span class="tok-num">0</span>, startNode]);
               <div class="js-exercise" id="exercise-topk">
                 <div class="js-exercise-title"><i class="fas fa-dumbbell"></i> Practice: K Closest Points</div>
                 <p>Find K closest points to the origin from an array of points. Write the approach using a max-heap.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-topk">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-topk">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-topk">
                   <div class="hl-code-block">
-                    <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button class="hl-code-copy" data-code="function kClosest(points, k) {\n  // Max-heap by distance (keep K smallest = use max-heap)\n  const maxHeap = []; // [dist, point]\n  const dist = ([x, y]) => x*x + y*y;\n  for (const p of points) {\n    maxHeap.push([dist(p), p]);\n    maxHeap.sort((a, b) => b[0] - a[0]); // simulate max-heap\n    if (maxHeap.length > k) maxHeap.shift();\n  }\n  return maxHeap.map(([, p]) => p);\n}">Copy</button></div>
+                    <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button type="button" class="hl-code-copy" data-code="function kClosest(points, k) {\n  // Max-heap by distance (keep K smallest = use max-heap)\n  const maxHeap = []; // [dist, point]\n  const dist = ([x, y]) => x*x + y*y;\n  for (const p of points) {\n    maxHeap.push([dist(p), p]);\n    maxHeap.sort((a, b) => b[0] - a[0]); // simulate max-heap\n    if (maxHeap.length > k) maxHeap.shift();\n  }\n  return maxHeap.map(([, p]) => p);\n}">Copy</button></div>
                     <pre><code><span class="tok-kw">function</span> <span class="tok-fn">kClosest</span>(points, k) {
   <span class="tok-kw">const</span> dist = ([x, y]) => x*x + y*y;
   <span class="tok-cmt">// Max-heap of size K — evict farthest</span>
@@ -386,7 +386,7 @@ pq.push([<span class="tok-num">0</span>, startNode]);
                 </ul>
               </div>
               <div class="hl-code-block">
-                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button class="hl-code-copy" data-code="function mergeKSorted(lists) {\n  const result = [];\n  const heap = new MinHeap(); // [value, listIndex, elementIndex]\n  for (let i = 0; i < lists.length; i++) {\n    if (lists[i].length > 0)\n      heap.push([lists[i][0], i, 0]);\n  }\n  while (heap.size()) {\n    const [val, li, ei] = heap.pop();\n    result.push(val);\n    if (ei + 1 < lists[li].length)\n      heap.push([lists[li][ei + 1], li, ei + 1]);\n  }\n  return result;\n}">Copy</button></div>
+                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button type="button" class="hl-code-copy" data-code="function mergeKSorted(lists) {\n  const result = [];\n  const heap = new MinHeap(); // [value, listIndex, elementIndex]\n  for (let i = 0; i < lists.length; i++) {\n    if (lists[i].length > 0)\n      heap.push([lists[i][0], i, 0]);\n  }\n  while (heap.size()) {\n    const [val, li, ei] = heap.pop();\n    result.push(val);\n    if (ei + 1 < lists[li].length)\n      heap.push([lists[li][ei + 1], li, ei + 1]);\n  }\n  return result;\n}">Copy</button></div>
                 <pre><code><span class="tok-kw">function</span> <span class="tok-fn">mergeKSorted</span>(lists) {
   <span class="tok-kw">const</span> result = [];
   <span class="tok-kw">const</span> heap = <span class="tok-kw">new</span> <span class="tok-bi">MinHeap</span>(); <span class="tok-cmt">// [value, listIdx, elemIdx]</span>
@@ -411,10 +411,10 @@ pq.push([<span class="tok-num">0</span>, startNode]);
               <div class="js-exercise" id="exercise-mergek">
                 <div class="js-exercise-title"><i class="fas fa-dumbbell"></i> Practice: Why O(n log K)?</div>
                 <p>Explain why merging K sorted arrays with a heap is O(n log K) where n is the total number of elements.</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-mergek">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-mergek">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-mergek">
                   <div class="hl-code-block">
-                    <div class="hl-code-header"><span class="hl-code-lang">Answer</span><button class="hl-code-copy" data-code="n = total elements across all lists.\nEach element is pushed and popped from the heap exactly once.\nHeap size is always ≤ K (one element per list).\nPush/pop = O(log K) each.\nTotal: n pushes × O(log K) = O(n log K)">Copy</button></div>
+                    <div class="hl-code-header"><span class="hl-code-lang">Answer</span><button type="button" class="hl-code-copy" data-code="n = total elements across all lists.\nEach element is pushed and popped from the heap exactly once.\nHeap size is always ≤ K (one element per list).\nPush/pop = O(log K) each.\nTotal: n pushes × O(log K) = O(n log K)">Copy</button></div>
                     <pre><code><span class="tok-cmt">// n = total elements, K = number of lists</span>
 <span class="tok-cmt">// Heap size ≤ K at all times (one entry per list)</span>
 <span class="tok-cmt">// Each element: 1 push + 1 pop = 2 × O(log K)</span>
@@ -441,7 +441,7 @@ pq.push([<span class="tok-num">0</span>, startNode]);
                 </ul>
               </div>
               <div class="hl-code-block">
-                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button class="hl-code-copy" data-code="class MedianFinder {\n  constructor() {\n    this.lo = new MaxHeap(); // lower half\n    this.hi = new MinHeap(); // upper half\n  }\n  addNum(num) {\n    this.lo.push(num);\n    this.hi.push(this.lo.pop()); // balance\n    if (this.lo.size() < this.hi.size())\n      this.lo.push(this.hi.pop());\n  }\n  findMedian() {\n    if (this.lo.size() > this.hi.size()) return this.lo.peek();\n    return (this.lo.peek() + this.hi.peek()) / 2;\n  }\n}">Copy</button></div>
+                <div class="hl-code-header"><span class="hl-code-lang">JavaScript</span><button type="button" class="hl-code-copy" data-code="class MedianFinder {\n  constructor() {\n    this.lo = new MaxHeap(); // lower half\n    this.hi = new MinHeap(); // upper half\n  }\n  addNum(num) {\n    this.lo.push(num);\n    this.hi.push(this.lo.pop()); // balance\n    if (this.lo.size() < this.hi.size())\n      this.lo.push(this.hi.pop());\n  }\n  findMedian() {\n    if (this.lo.size() > this.hi.size()) return this.lo.peek();\n    return (this.lo.peek() + this.hi.peek()) / 2;\n  }\n}">Copy</button></div>
                 <pre><code><span class="tok-kw">class</span> <span class="tok-bi">MedianFinder</span> {
   <span class="tok-fn">constructor</span>() {
     <span class="tok-kw">this</span>.lo = <span class="tok-kw">new</span> <span class="tok-bi">MaxHeap</span>(); <span class="tok-cmt">// lower half</span>
@@ -466,10 +466,10 @@ pq.push([<span class="tok-num">0</span>, startNode]);
               <div class="js-exercise" id="exercise-median">
                 <div class="js-exercise-title"><i class="fas fa-dumbbell"></i> Practice: Trace</div>
                 <p>Add <code>[5, 15, 1, 3]</code> one by one using MedianFinder. What is the median after each insertion?</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-median">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-median">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-median">
                   <div class="hl-code-block">
-                    <div class="hl-code-header"><span class="hl-code-lang">Trace</span><button class="hl-code-copy" data-code="Add 5:  lo=[5], hi=[]      median=5\nAdd 15: lo=[5], hi=[15]   median=(5+15)/2=10\nAdd 1:  lo=[5,1], hi=[15] median=5\nAdd 3:  lo=[5,3,1], hi=[15] → rebalance: lo=[3,1], hi=[5,15] median=(3+5)/2=4">Copy</button></div>
+                    <div class="hl-code-header"><span class="hl-code-lang">Trace</span><button type="button" class="hl-code-copy" data-code="Add 5:  lo=[5], hi=[]      median=5\nAdd 15: lo=[5], hi=[15]   median=(5+15)/2=10\nAdd 1:  lo=[5,1], hi=[15] median=5\nAdd 3:  lo=[5,3,1], hi=[15] → rebalance: lo=[3,1], hi=[5,15] median=(3+5)/2=4">Copy</button></div>
                     <pre><code>Add <span class="tok-num">5</span>:  lo=[<span class="tok-num">5</span>],    hi=[]      median = <span class="tok-num">5</span>
 Add <span class="tok-num">15</span>: lo=[<span class="tok-num">5</span>],    hi=[<span class="tok-num">15</span>]   median = (<span class="tok-num">5</span>+<span class="tok-num">15</span>)/<span class="tok-num">2</span> = <span class="tok-num">10</span>
 Add <span class="tok-num">1</span>:  lo=[<span class="tok-num">5</span>,<span class="tok-num">1</span>],  hi=[<span class="tok-num">15</span>]   median = <span class="tok-num">5</span>
@@ -506,10 +506,10 @@ Add <span class="tok-num">3</span>:  lo=[<span class="tok-num">3</span>,<span cl
               <div class="js-exercise" id="exercise-vs">
                 <div class="js-exercise-title"><i class="fas fa-dumbbell"></i> Practice: Decision</div>
                 <p>Given 1 billion numbers on disk and you need the top 100 — sort or heap? Why?</p>
-                <button class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-vs">Show Solution</button>
+                <button type="button" class="js-exercise-toggle" aria-expanded="false" aria-controls="solution-vs">Show Solution</button>
                 <div class="js-exercise-solution" id="solution-vs">
                   <div class="hl-code-block">
-                    <div class="hl-code-header"><span class="hl-code-lang">Answer</span><button class="hl-code-copy" data-code="Heap. Use a min-heap of size 100.\nStream each number from disk — O(1) memory per read.\nPush to heap. If size > 100, pop the minimum.\nFinal heap contains top 100.\nSorting 1B numbers = impractical memory + time.\nHeap = O(n log 100) = O(n) effectively, with O(100) = O(1) memory.">Copy</button></div>
+                    <div class="hl-code-header"><span class="hl-code-lang">Answer</span><button type="button" class="hl-code-copy" data-code="Heap. Use a min-heap of size 100.\nStream each number from disk — O(1) memory per read.\nPush to heap. If size > 100, pop the minimum.\nFinal heap contains top 100.\nSorting 1B numbers = impractical memory + time.\nHeap = O(n log 100) = O(n) effectively, with O(100) = O(1) memory.">Copy</button></div>
                     <pre><code><span class="tok-cmt">// Min-heap of size 100 — O(n log 100) ≈ O(n)</span>
 <span class="tok-cmt">// Memory: O(100) = O(1) — never load all 1B into RAM</span>
 <span class="tok-cmt">// Sorting 1B elements requires O(n) memory → impractical</span>
@@ -528,7 +528,10 @@ Add <span class="tok-num">3</span>:  lo=[<span class="tok-num">3</span>,<span cl
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./heaps-learning.js"></script>
   

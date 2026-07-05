@@ -278,7 +278,7 @@ function checkCompileStatus() {
 // ==========================================
 function compileGraph() {
     if (!state.gpuDevice) {
-        alert("WebGPU device not initialized. Cannot compile.");
+        console.warn("Alert:", "WebGPU device not initialized. Cannot compile.");
         return;
     }
 
@@ -326,8 +326,8 @@ fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
     }
 
     // Compute Dot Product
-    var sum: f32 = 0.0;
-    for (var i: u32 = 0u; i < config.in_features; i = i + 1u) {
+    let sum: f32 = 0.0;
+    for (let i: u32 = 0u; i < config.in_features; i = i + 1u) {
         let in_val = inputs[i];
         
         // Flattened 2D weight matrix access: weights[row * cols + col]

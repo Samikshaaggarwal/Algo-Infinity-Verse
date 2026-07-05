@@ -59,7 +59,7 @@
                     <label for="regexInput">Regular Expression</label>
                     <div class="input-with-btn">
                         <input type="text" id="regexInput" value="(a|b)*abb" placeholder="e.g., (a|b)*abb" />
-                        <button class="btn btn-primary" id="btnCompile">Compile NFA</button>
+                        <button type="button" class="btn btn-primary" id="btnCompile">Compile NFA</button>
                     </div>
                     <small class="help-text">Supported ops: <code>*</code>, <code>+</code>, <code>?</code>, <code>|</code>, <code>()</code> and concat.</small>
                 </div>
@@ -80,8 +80,8 @@
                 </div>
                 
                 <div class="simulation-controls">
-                    <button class="btn btn-secondary" id="btnReset" disabled><i class="fas fa-undo"></i> Reset</button>
-                    <button class="btn btn-primary w-100" id="btnStep" disabled>Step Forward <i class="fas fa-step-forward"></i></button>
+                    <button type="button" class="btn btn-secondary" id="btnReset" disabled><i class="fas fa-undo"></i> Reset</button>
+                    <button type="button" class="btn btn-primary w-100" id="btnStep" disabled>Step Forward <i class="fas fa-step-forward"></i></button>
                 </div>
 
                 <div class="string-tracker">

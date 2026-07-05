@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── Personality Definitions ─── */
-var AP_PERSONALITIES = {
+let AP_PERSONALITIES = {
   quicksort: {
     name: 'QuickSort',
     emoji: '⚡',
@@ -202,7 +202,7 @@ var AP_PERSONALITIES = {
 };
 
 /* ─── Questions ─── */
-var AP_QUESTIONS = [
+let AP_QUESTIONS = [
   {
     q: 'You get a complex project with no clear instructions. What do you do?',
     options: [
@@ -341,7 +341,7 @@ var AP_QUESTIONS = [
 ];
 
 /* ─── State ─── */
-var apState = {
+let apState = {
   answers  : [],   // index = question idx, value = selected option idx or -1
   current  : 0,
   scores   : {},
@@ -349,24 +349,24 @@ var apState = {
 
 /* ─── Helpers ─── */
 function apEscape(str) {
-  var d = document.createElement('div');
+  let d = document.createElement('div');
   d.textContent = str;
   return d.innerHTML;
 }
 
 function apScrollToQuiz() {
-  var el = document.getElementById('quiz');
+  let el = document.getElementById('quiz');
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 /* ─── Init ─── */
 function apInitControls() {
-  var startHeroBtn = document.getElementById('apStartHeroBtn');
-  var startMainBtn = document.getElementById('apStartMainBtn');
-  var prevBtn      = document.getElementById('apPrevBtn');
-  var nextBtn      = document.getElementById('apNextBtn');
-  var retakeBtn    = document.getElementById('apRetakeBtn');
-  var shareBtn     = document.getElementById('apShareBtn');
+  let startHeroBtn = document.getElementById('apStartHeroBtn');
+  let startMainBtn = document.getElementById('apStartMainBtn');
+  let prevBtn      = document.getElementById('apPrevBtn');
+  let nextBtn      = document.getElementById('apNextBtn');
+  let retakeBtn    = document.getElementById('apRetakeBtn');
+  let shareBtn     = document.getElementById('apShareBtn');
 
   if (startHeroBtn) startHeroBtn.addEventListener('click', function() {
     apScrollToQuiz();
@@ -398,29 +398,29 @@ function apStartQuiz() {
 
 /* ─── Render Question ─── */
 function apRenderQuestion() {
-  var q       = AP_QUESTIONS[apState.current];
-  var total   = AP_QUESTIONS.length;
-  var current = apState.current;
-  var pct     = Math.round((current / total) * 100);
+  let q       = AP_QUESTIONS[apState.current];
+  let total   = AP_QUESTIONS.length;
+  let current = apState.current;
+  let pct     = Math.round((current / total) * 100);
 
   // Progress
-  var bar = document.getElementById('apProgressBar');
-  var ctr = document.getElementById('apQuizCounter');
-  var pctEl = document.getElementById('apQuizPct');
+  let bar = document.getElementById('apProgressBar');
+  let ctr = document.getElementById('apQuizCounter');
+  let pctEl = document.getElementById('apQuizPct');
   if (bar) bar.style.width = pct + '%';
   if (ctr) ctr.textContent = 'Question ' + (current + 1) + ' of ' + total;
   if (pctEl) pctEl.textContent = pct + '% complete';
 
   // Question text
-  var qEl = document.getElementById('apQuestion');
+  let qEl = document.getElementById('apQuestion');
   if (qEl) qEl.textContent = q.q;
 
   // Options
-  var optEl = document.getElementById('apOptions');
+  let optEl = document.getElementById('apOptions');
   if (optEl) {
-    var letters = ['A', 'B', 'C', 'D'];
+    let letters = ['A', 'B', 'C', 'D'];
     optEl.innerHTML = q.options.map(function(opt, i) {
-      var isSelected = apState.answers[current] === i;
+      let isSelected = apState.answers[current] === i;
       return '<button class="ap-option' + (isSelected ? ' selected' : '') + '" data-idx="' + i + '" aria-label="Option ' + letters[i] + ': ' + apEscape(opt.text) + '">' +
         '<span class="ap-option-letter">' + letters[i] + '</span>' +
         '<span>' + apEscape(opt.text) + '</span>' +
@@ -429,15 +429,15 @@ function apRenderQuestion() {
 
     optEl.querySelectorAll('.ap-option').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        var idx = parseInt(btn.getAttribute('data-idx'));
+        let idx = parseInt(btn.getAttribute('data-idx'));
         apSelectOption(idx);
       });
     });
   }
 
   // Nav buttons
-  var prevBtn = document.getElementById('apPrevBtn');
-  var nextBtn = document.getElementById('apNextBtn');
+  let prevBtn = document.getElementById('apPrevBtn');
+  let nextBtn = document.getElementById('apNextBtn');
   if (prevBtn) prevBtn.disabled = current === 0;
   if (nextBtn) {
     nextBtn.disabled = apState.answers[current] === -1;
@@ -453,7 +453,7 @@ function apRenderQuestion() {
 
 /* ─── Select Option ─── */
 function apSelectOption(idx) {
-  var current = apState.current;
+  let current = apState.current;
   apState.answers[current] = idx;
 
   // Update option styles
@@ -462,7 +462,7 @@ function apSelectOption(idx) {
   });
 
   // Enable next
-  var nextBtn = document.getElementById('apNextBtn');
+  let nextBtn = document.getElementById('apNextBtn');
   if (nextBtn) nextBtn.disabled = false;
 
   apUpdateDots();
@@ -470,7 +470,7 @@ function apSelectOption(idx) {
 
 /* ─── Dots ─── */
 function apRenderDots() {
-  var dots = document.getElementById('apQuizDots');
+  let dots = document.getElementById('apQuizDots');
   if (!dots) return;
   dots.innerHTML = AP_QUESTIONS.map(function(q, i) {
     return '<div class="ap-quiz-dot" data-dot="' + i + '"></div>';
@@ -479,7 +479,7 @@ function apRenderDots() {
 
 function apUpdateDots() {
   document.querySelectorAll('.ap-quiz-dot').forEach(function(dot) {
-    var i = parseInt(dot.getAttribute('data-dot'));
+    let i = parseInt(dot.getAttribute('data-dot'));
     dot.classList.remove('answered', 'current');
     if (i === apState.current) dot.classList.add('current');
     else if (apState.answers[i] !== -1) dot.classList.add('answered');
@@ -495,7 +495,7 @@ function apPrev() {
 }
 
 function apNext() {
-  var current = apState.current;
+  let current = apState.current;
   if (apState.answers[current] === -1) return;
 
   if (current === AP_QUESTIONS.length - 1) {
@@ -509,13 +509,13 @@ function apNext() {
 /* ─── Calculate Result ─── */
 function apCalculateResult() {
   // Tally scores
-  var scores = {};
+  let scores = {};
   Object.keys(AP_PERSONALITIES).forEach(function(k) { scores[k] = 0; });
 
   AP_QUESTIONS.forEach(function(q, qi) {
-    var ans = apState.answers[qi];
+    let ans = apState.answers[qi];
     if (ans === -1) return;
-    var optScores = q.options[ans].scores;
+    let optScores = q.options[ans].scores;
     Object.keys(optScores).forEach(function(k) {
       if (scores[k] !== undefined) scores[k] += optScores[k];
     });
@@ -524,7 +524,7 @@ function apCalculateResult() {
   apState.scores = scores;
 
   // Find winner
-  var winner = Object.keys(scores).reduce(function(a, b) {
+  let winner = Object.keys(scores).reduce(function(a, b) {
     return scores[a] >= scores[b] ? a : b;
   });
 
@@ -533,38 +533,38 @@ function apCalculateResult() {
 
 /* ─── Show Result ─── */
 function apShowResult(winner, scores) {
-  var p = AP_PERSONALITIES[winner];
+  let p = AP_PERSONALITIES[winner];
 
   document.getElementById('apQuizCard').classList.add('hidden');
-  var resultCard = document.getElementById('apResultCard');
+  let resultCard = document.getElementById('apResultCard');
   resultCard.classList.remove('hidden');
 
   // Top section
-  var topEl = document.getElementById('apResultTop');
+  let topEl = document.getElementById('apResultTop');
   if (topEl) topEl.style.background = p.gradient;
 
-  var emojiEl   = document.getElementById('apResultEmoji');
-  var nameEl    = document.getElementById('apResultName');
-  var taglineEl = document.getElementById('apResultTagline');
+  let emojiEl   = document.getElementById('apResultEmoji');
+  let nameEl    = document.getElementById('apResultName');
+  let taglineEl = document.getElementById('apResultTagline');
   if (emojiEl)   emojiEl.textContent   = p.emoji;
   if (nameEl)    nameEl.textContent    = p.name;
   if (taglineEl) taglineEl.textContent = p.tagline;
 
   // Desc
-  var descEl = document.getElementById('apResultDesc');
+  let descEl = document.getElementById('apResultDesc');
   if (descEl) descEl.textContent = p.desc;
 
   // Traits
-  var traitsEl = document.getElementById('apResultTraits');
+  let traitsEl = document.getElementById('apResultTraits');
   if (traitsEl) {
     traitsEl.innerHTML = p.traits.map(function(t) {
-      var icon = t.type === 'positive' ? '✅' : t.type === 'negative' ? '⚠️' : '💡';
+      let icon = t.type === 'positive' ? '✅' : t.type === 'negative' ? '⚠️' : '💡';
       return '<span class="ap-trait ' + t.type + '">' + icon + ' ' + apEscape(t.label) + '</span>';
     }).join('');
   }
 
   // Complexity
-  var compEl = document.getElementById('apResultComplexity');
+  let compEl = document.getElementById('apResultComplexity');
   if (compEl) {
     compEl.innerHTML = p.complexity.map(function(c) {
       return '<span class="ap-comp-chip">' + apEscape(c) + '</span>';
@@ -572,11 +572,11 @@ function apShowResult(winner, scores) {
   }
 
   // Famous
-  var famousEl = document.getElementById('apResultFamous');
+  let famousEl = document.getElementById('apResultFamous');
   if (famousEl) famousEl.textContent = p.famous;
 
   // Advice
-  var adviceEl = document.getElementById('apResultAdvice');
+  let adviceEl = document.getElementById('apResultAdvice');
   if (adviceEl) adviceEl.textContent = p.advice;
 
   // Score breakdown
@@ -587,21 +587,21 @@ function apShowResult(winner, scores) {
 
 /* ─── Score Breakdown ─── */
 function apRenderScoreBreakdown(scores, winner) {
-  var el = document.getElementById('apScoreBreakdown');
+  let el = document.getElementById('apScoreBreakdown');
   if (!el) return;
 
-  var maxScore = Math.max.apply(null, Object.values(scores));
+  let maxScore = Math.max.apply(null, Object.values(scores));
 
   // Sort by score descending, top 5
-  var sorted = Object.keys(scores).sort(function(a, b) {
+  let sorted = Object.keys(scores).sort(function(a, b) {
     return scores[b] - scores[a];
   }).slice(0, 6);
 
-  var rowsHtml = sorted.map(function(key) {
-    var p    = AP_PERSONALITIES[key];
-    var pct  = maxScore > 0 ? Math.round((scores[key] / maxScore) * 100) : 0;
-    var isWinner = key === winner;
-    var barColor = isWinner ? p.gradient : 'rgba(100,116,139,0.4)';
+  let rowsHtml = sorted.map(function(key) {
+    let p    = AP_PERSONALITIES[key];
+    let pct  = maxScore > 0 ? Math.round((scores[key] / maxScore) * 100) : 0;
+    let isWinner = key === winner;
+    let barColor = isWinner ? p.gradient : 'rgba(100,116,139,0.4)';
     return '<div class="ap-score-row">' +
       '<span class="ap-score-label">' + p.emoji + ' ' + p.name + (isWinner ? ' 🏆' : '') + '</span>' +
       '<div class="ap-score-bar-track">' +
@@ -634,11 +634,11 @@ function apRetake() {
 
 /* ─── Share ─── */
 function apShare() {
-  var winner = Object.keys(apState.scores).reduce(function(a, b) {
+  let winner = Object.keys(apState.scores).reduce(function(a, b) {
     return apState.scores[a] >= apState.scores[b] ? a : b;
   });
-  var p    = AP_PERSONALITIES[winner];
-  var text = 'I just took the Algorithm Personality Assessment on Algo Infinity Verse!\n\n' +
+  let p    = AP_PERSONALITIES[winner];
+  let text = 'I just took the Algorithm Personality Assessment on Algo Infinity Verse!\n\n' +
     '🎯 I am ' + p.name + '!\n' +
     '"' + p.tagline + '"\n\n' +
     'Discover your algorithm personality at: algoinfinityverse.com';
@@ -653,7 +653,7 @@ function apShare() {
 }
 
 function apShareFallback(text) {
-  var ta = document.createElement('textarea');
+  let ta = document.createElement('textarea');
   ta.value = text;
   ta.style.cssText = 'position:fixed;opacity:0';
   document.body.appendChild(ta);
@@ -664,7 +664,7 @@ function apShareFallback(text) {
 }
 
 function apShowShareMsg() {
-  var msg = document.getElementById('apShareMsg');
+  let msg = document.getElementById('apShareMsg');
   if (!msg) return;
   msg.classList.remove('hidden');
   setTimeout(function() { msg.classList.add('hidden'); }, 3000);
@@ -672,12 +672,12 @@ function apShowShareMsg() {
 
 /* ─── Render All Personalities ─── */
 function apRenderPersonalitiesGrid() {
-  var grid = document.getElementById('apPersonalitiesGrid');
+  let grid = document.getElementById('apPersonalitiesGrid');
   if (!grid) return;
 
   grid.innerHTML = Object.keys(AP_PERSONALITIES).map(function(key) {
-    var p    = AP_PERSONALITIES[key];
-    var tags = p.traits.slice(0, 3).map(function(t) {
+    let p    = AP_PERSONALITIES[key];
+    let tags = p.traits.slice(0, 3).map(function(t) {
       return '<span class="ap-personality-trait">' + apEscape(t.label) + '</span>';
     }).join('');
 
@@ -690,10 +690,10 @@ function apRenderPersonalitiesGrid() {
   }).join('');
 
   // Apply gradient border tops
-  var cards = grid.querySelectorAll('.ap-personality-card');
-  var keys  = Object.keys(AP_PERSONALITIES);
+  let cards = grid.querySelectorAll('.ap-personality-card');
+  let keys  = Object.keys(AP_PERSONALITIES);
   cards.forEach(function(card, i) {
-    var p = AP_PERSONALITIES[keys[i]];
+    let p = AP_PERSONALITIES[keys[i]];
     card.style.setProperty('--card-gradient', p.gradient);
     card.style.borderColor = p.color + '33';
     card.querySelector('.ap-personality-emoji').style.cssText += '';
@@ -701,8 +701,8 @@ function apRenderPersonalitiesGrid() {
 
   // Pseudo ::before can't be set via JS — use inline style workaround
   cards.forEach(function(card, i) {
-    var p = AP_PERSONALITIES[keys[i]];
-    var topBar = document.createElement('div');
+    let p = AP_PERSONALITIES[keys[i]];
+    let topBar = document.createElement('div');
     topBar.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:4px;background:' + p.gradient + ';border-radius:18px 18px 0 0';
     card.insertBefore(topBar, card.firstChild);
   });

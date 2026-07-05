@@ -3,16 +3,16 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-var bptNodeIdCounter = 0;
-var bptTree = null;
-var bptCurrentOp = 'insert';
-var bptSteps = [];
-var bptStepIndex = 0;
-var bptPlaying = false;
-var bptTimer = null;
-var bptSpeed = 700;
+let bptNodeIdCounter = 0;
+let bptTree = null;
+let bptCurrentOp = 'insert';
+let bptSteps = [];
+let bptStepIndex = 0;
+let bptPlaying = false;
+let bptTimer = null;
+let bptSpeed = 700;
 
-var BPT_OPS = ['insert', 'delete', 'search'];
+let BPT_OPS = ['insert', 'delete', 'search'];
 
 function bptCreateNode(isLeaf) {
   bptNodeIdCounter++;
@@ -29,7 +29,7 @@ function bptCreateNode(isLeaf) {
 }
 
 function bptCreateTree(order) {
-  var root = bptCreateNode(true);
+  let root = bptCreateNode(true);
   return { root: root, order: order };
 }
 
@@ -42,7 +42,7 @@ function bptMinKeys(tree) {
 }
 
 function bptFindChildIndex(node, key) {
-  var i = 0;
+  let i = 0;
   while (i < node.keys.length && key >= node.keys[i]) {
     i++;
   }
@@ -50,7 +50,7 @@ function bptFindChildIndex(node, key) {
 }
 
 function bptKeyExistsQuiet(tree, key) {
-  var node = tree.root;
+  let node = tree.root;
   while (!node.leaf) {
     node = node.children[bptFindChildIndex(node, key)];
   }
@@ -88,8 +88,8 @@ function bptSnapshot(tree, highlightIds, message, type) {
 function bptInsertKey(tree, key, steps) {
   steps.push(bptSnapshot(tree, [], 'Searching for the correct leaf to insert ' + key, 'active'));
 
-  var node = tree.root;
-  var path = [];
+  let node = tree.root;
+  let path = [];
 
   while (!node.leaf) {
     path.push(node.id);
@@ -99,7 +99,7 @@ function bptInsertKey(tree, key, steps) {
 
   path.push(node.id);
 
-  var idx = node.keys.findIndex(function (k) { return k > key; });
+  let idx = node.keys.findIndex(function (k) { return k > key; });
   if (idx === -1) idx = node.keys.length;
 
   node.keys.splice(idx, 0, key);
@@ -113,15 +113,15 @@ function bptInsertKey(tree, key, steps) {
 }
 
 function bptSplitLeaf(tree, node, steps) {
-  var mid = Math.ceil(node.keys.length / 2);
+  let mid = Math.ceil(node.keys.length / 2);
 
-  var newLeaf = bptCreateNode(true);
+  let newLeaf = bptCreateNode(true);
   newLeaf.keys = node.keys.splice(mid);
   newLeaf.values = node.values.splice(mid);
   newLeaf.next = node.next;
   node.next = newLeaf;
 
-  var upKey = newLeaf.keys[0];
+  let upKey = newLeaf.keys[0];
 
   steps.push(bptSnapshot(tree, [node.id, newLeaf.id], 'Leaf overflowed — splitting, key ' + upKey + ' moves up to parent', 'split'));
 
@@ -129,10 +129,10 @@ function bptSplitLeaf(tree, node, steps) {
 }
 
 function bptSplitInternal(tree, node, steps) {
-  var mid = Math.floor(node.keys.length / 2);
-  var upKey = node.keys[mid];
+  let mid = Math.floor(node.keys.length / 2);
+  let upKey = node.keys[mid];
 
-  var newNode = bptCreateNode(false);
+  let newNode = bptCreateNode(false);
   newNode.keys = node.keys.slice(mid + 1);
   newNode.children = node.children.slice(mid + 1);
   newNode.children.forEach(function (c) { c.parent = newNode; });
@@ -146,10 +146,10 @@ function bptSplitInternal(tree, node, steps) {
 }
 
 function bptInsertIntoParent(tree, left, key, right, steps) {
-  var parent = left.parent;
+  let parent = left.parent;
 
   if (!parent) {
-    var newRoot = bptCreateNode(false);
+    let newRoot = bptCreateNode(false);
     newRoot.keys = [key];
     newRoot.children = [left, right];
     left.parent = newRoot;
@@ -160,7 +160,7 @@ function bptInsertIntoParent(tree, left, key, right, steps) {
     return;
   }
 
-  var idx = parent.children.indexOf(left);
+  let idx = parent.children.indexOf(left);
   parent.keys.splice(idx, 0, key);
   parent.children.splice(idx + 1, 0, right);
   right.parent = parent;
@@ -179,8 +179,8 @@ function bptInsertIntoParent(tree, left, key, right, steps) {
 function bptDeleteKey(tree, key, steps) {
   steps.push(bptSnapshot(tree, [], 'Searching for leaf containing ' + key, 'active'));
 
-  var node = tree.root;
-  var path = [];
+  let node = tree.root;
+  let path = [];
 
   while (!node.leaf) {
     path.push(node.id);
@@ -189,7 +189,7 @@ function bptDeleteKey(tree, key, steps) {
 
   path.push(node.id);
 
-  var idx = node.keys.indexOf(key);
+  let idx = node.keys.indexOf(key);
   if (idx === -1) {
     steps.push(bptSnapshot(tree, [node.id], 'Key ' + key + ' was not found in the tree', 'notfound'));
     return false;
@@ -216,10 +216,10 @@ function bptFixUnderflow(tree, node, steps) {
 
   if (node.keys.length >= bptMinKeys(tree)) return;
 
-  var parent = node.parent;
-  var idx = parent.children.indexOf(node);
-  var leftSibling = idx > 0 ? parent.children[idx - 1] : null;
-  var rightSibling = idx < parent.children.length - 1 ? parent.children[idx + 1] : null;
+  let parent = node.parent;
+  let idx = parent.children.indexOf(node);
+  let leftSibling = idx > 0 ? parent.children[idx - 1] : null;
+  let rightSibling = idx < parent.children.length - 1 ? parent.children[idx + 1] : null;
 
   if (leftSibling && leftSibling.keys.length > bptMinKeys(tree)) {
     bptBorrowFromLeft(tree, parent, idx, steps);
@@ -239,16 +239,16 @@ function bptFixUnderflow(tree, node, steps) {
 }
 
 function bptBorrowFromLeft(tree, parent, idx, steps) {
-  var node = parent.children[idx];
-  var left = parent.children[idx - 1];
+  let node = parent.children[idx];
+  let left = parent.children[idx - 1];
 
   if (node.leaf) {
     node.keys.unshift(left.keys.pop());
     node.values.unshift(left.values.pop());
     parent.keys[idx - 1] = node.keys[0];
   } else {
-    var borrowedChild = left.children.pop();
-    var borrowedKey = left.keys.pop();
+    let borrowedChild = left.children.pop();
+    let borrowedKey = left.keys.pop();
     node.keys.unshift(parent.keys[idx - 1]);
     node.children.unshift(borrowedChild);
     borrowedChild.parent = node;
@@ -259,16 +259,16 @@ function bptBorrowFromLeft(tree, parent, idx, steps) {
 }
 
 function bptBorrowFromRight(tree, parent, idx, steps) {
-  var node = parent.children[idx];
-  var right = parent.children[idx + 1];
+  let node = parent.children[idx];
+  let right = parent.children[idx + 1];
 
   if (node.leaf) {
     node.keys.push(right.keys.shift());
     node.values.push(right.values.shift());
     parent.keys[idx] = right.keys[0];
   } else {
-    var borrowedChild = right.children.shift();
-    var borrowedKey = right.keys.shift();
+    let borrowedChild = right.children.shift();
+    let borrowedKey = right.keys.shift();
     node.keys.push(parent.keys[idx]);
     node.children.push(borrowedChild);
     borrowedChild.parent = node;
@@ -279,8 +279,8 @@ function bptBorrowFromRight(tree, parent, idx, steps) {
 }
 
 function bptMergeNodes(tree, parent, leftIdx, steps) {
-  var left = parent.children[leftIdx];
-  var right = parent.children[leftIdx + 1];
+  let left = parent.children[leftIdx];
+  let right = parent.children[leftIdx + 1];
 
   if (left.leaf) {
     left.keys = left.keys.concat(right.keys);
@@ -305,8 +305,8 @@ function bptMergeNodes(tree, parent, leftIdx, steps) {
 ════════════════════════════════════════════ */
 
 function bptSearchKey(tree, key, steps) {
-  var node = tree.root;
-  var path = [];
+  let node = tree.root;
+  let path = [];
 
   steps.push(bptSnapshot(tree, [], 'Starting search for ' + key + ' at the root', 'active'));
 
@@ -315,7 +315,7 @@ function bptSearchKey(tree, key, steps) {
     steps.push(bptSnapshot(tree, path.slice(), 'Visiting node, comparing against ' + key, 'active'));
 
     if (node.leaf) {
-      var found = node.keys.indexOf(key) > -1;
+      let found = node.keys.indexOf(key) > -1;
       steps.push(bptSnapshot(
         tree,
         path.slice(),
@@ -337,7 +337,7 @@ function bptTreeHeight(node) {
   if (!node) return 0;
   if (node.leaf) return 1;
 
-  var max = 0;
+  let max = 0;
   node.children.forEach(function (c) {
     max = Math.max(max, bptTreeHeight(c));
   });
@@ -348,14 +348,14 @@ function bptCountKeys(node) {
   if (!node) return 0;
   if (node.leaf) return node.keys.length;
 
-  var sum = 0;
+  let sum = 0;
   node.children.forEach(function (c) { sum += bptCountKeys(c); });
   return sum;
 }
 
 function bptUpdateMeta() {
-  var heightEl = document.getElementById('bptHeightVal');
-  var countEl = document.getElementById('bptCountVal');
+  let heightEl = document.getElementById('bptHeightVal');
+  let countEl = document.getElementById('bptCountVal');
   if (heightEl) heightEl.textContent = bptTreeHeight(bptTree.root);
   if (countEl) countEl.textContent = bptCountKeys(bptTree.root);
 }
@@ -365,16 +365,16 @@ function bptUpdateMeta() {
 ════════════════════════════════════════════ */
 
 function bptRenderTree(snapshot) {
-  var area = document.getElementById('bptTreeArea');
+  let area = document.getElementById('bptTreeArea');
   if (!area || !snapshot.root) return;
 
   area.innerHTML = '';
 
-  var levels = [];
-  var queue = [{ node: snapshot.root, depth: 0 }];
+  let levels = [];
+  let queue = [{ node: snapshot.root, depth: 0 }];
 
   while (queue.length) {
-    var item = queue.shift();
+    let item = queue.shift();
     if (!levels[item.depth]) levels[item.depth] = [];
     levels[item.depth].push(item.node);
 
@@ -386,16 +386,16 @@ function bptRenderTree(snapshot) {
   }
 
   levels.forEach(function (levelNodes) {
-    var row = document.createElement('div');
+    let row = document.createElement('div');
     row.className = 'bpt-level';
 
     levelNodes.forEach(function (node) {
-      var hlClass = '';
+      let hlClass = '';
       if (snapshot.highlight.indexOf(node.id) > -1) {
         hlClass = ' bpt-hl-' + snapshot.type;
       }
 
-      var box = document.createElement('div');
+      let box = document.createElement('div');
       box.className = 'bpt-node' + (node.leaf ? ' bpt-leaf' : ' bpt-internal') + hlClass;
       box.id = 'bpt-node-' + node.id;
 
@@ -413,17 +413,17 @@ function bptRenderTree(snapshot) {
 }
 
 function bptDrawConnectors(snapshot) {
-  var svg = document.getElementById('bptLinesSvg');
-  var area = document.getElementById('bptTreeArea');
+  let svg = document.getElementById('bptLinesSvg');
+  let area = document.getElementById('bptTreeArea');
   if (!svg || !area) return;
 
-  var areaRect = area.getBoundingClientRect();
+  let areaRect = area.getBoundingClientRect();
   svg.setAttribute('width', areaRect.width);
   svg.setAttribute('height', areaRect.height);
   svg.innerHTML = '';
 
   function drawLine(x1, y1, x2, y2, cls) {
-    var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    let line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     line.setAttribute('x1', x1);
     line.setAttribute('y1', y1);
     line.setAttribute('x2', x2);
@@ -435,19 +435,19 @@ function bptDrawConnectors(snapshot) {
   function drawParentChildLines(node) {
     if (node.leaf) return;
 
-    var parentEl = document.getElementById('bpt-node-' + node.id);
+    let parentEl = document.getElementById('bpt-node-' + node.id);
     if (!parentEl) return;
 
-    var pRect = parentEl.getBoundingClientRect();
-    var px = pRect.left - areaRect.left + pRect.width / 2;
-    var py = pRect.bottom - areaRect.top;
+    let pRect = parentEl.getBoundingClientRect();
+    let px = pRect.left - areaRect.left + pRect.width / 2;
+    let py = pRect.bottom - areaRect.top;
 
     node.children.forEach(function (child) {
-      var childEl = document.getElementById('bpt-node-' + child.id);
+      let childEl = document.getElementById('bpt-node-' + child.id);
       if (childEl) {
-        var cRect = childEl.getBoundingClientRect();
-        var cx = cRect.left - areaRect.left + cRect.width / 2;
-        var cy = cRect.top - areaRect.top;
+        let cRect = childEl.getBoundingClientRect();
+        let cx = cRect.left - areaRect.left + cRect.width / 2;
+        let cy = cRect.top - areaRect.top;
         drawLine(px, py, cx, cy, 'bpt-link-line');
       }
       drawParentChildLines(child);
@@ -456,19 +456,19 @@ function bptDrawConnectors(snapshot) {
 
   drawParentChildLines(snapshot.root);
 
-  var leaves = [];
+  let leaves = [];
   function collectLeaves(node) {
     if (node.leaf) { leaves.push(node); return; }
     node.children.forEach(collectLeaves);
   }
   collectLeaves(snapshot.root);
 
-  for (var i = 0; i < leaves.length - 1; i++) {
-    var a = document.getElementById('bpt-node-' + leaves[i].id);
-    var b = document.getElementById('bpt-node-' + leaves[i + 1].id);
+  for (let i = 0; i < leaves.length - 1; i++) {
+    let a = document.getElementById('bpt-node-' + leaves[i].id);
+    let b = document.getElementById('bpt-node-' + leaves[i + 1].id);
     if (a && b) {
-      var ar = a.getBoundingClientRect();
-      var br = b.getBoundingClientRect();
+      let ar = a.getBoundingClientRect();
+      let br = b.getBoundingClientRect();
       drawLine(
         ar.right - areaRect.left,
         ar.top - areaRect.top + ar.height / 2,
@@ -485,7 +485,7 @@ function bptDrawConnectors(snapshot) {
 ════════════════════════════════════════════ */
 
 function bptSetStatus(msg, cls) {
-  var el = document.getElementById('bptStatus');
+  let el = document.getElementById('bptStatus');
   if (el) {
     el.textContent = msg;
     el.className = 'bpt-status ' + (cls || '');
@@ -493,7 +493,7 @@ function bptSetStatus(msg, cls) {
 }
 
 function bptUpdateStepCounter() {
-  var el = document.getElementById('bptStepCounter');
+  let el = document.getElementById('bptStepCounter');
   if (el) {
     el.textContent = 'Step ' + (bptSteps.length ? bptStepIndex + 1 : 0) + ' / ' + bptSteps.length;
   }
@@ -514,7 +514,7 @@ function bptLoadSteps(steps) {
 function bptRenderStep() {
   if (!bptSteps.length) return;
 
-  var step = bptSteps[bptStepIndex];
+  let step = bptSteps[bptStepIndex];
   bptRenderTree(step);
   bptSetStatus(step.message, step.type === 'notfound' ? 'error' : 'info');
   bptUpdateStepCounter();
@@ -533,7 +533,7 @@ function bptPlayAuto() {
   if (!bptSteps.length) return;
 
   bptPlaying = true;
-  var playBtn = document.getElementById('bptPlayBtn');
+  let playBtn = document.getElementById('bptPlayBtn');
   if (playBtn) playBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
 
   bptTimer = setInterval(function () {
@@ -549,7 +549,7 @@ function bptPauseAuto() {
   bptPlaying = false;
   clearInterval(bptTimer);
 
-  var playBtn = document.getElementById('bptPlayBtn');
+  let playBtn = document.getElementById('bptPlayBtn');
   if (playBtn) playBtn.innerHTML = '<i class="fas fa-play"></i> Play';
 }
 
@@ -563,8 +563,8 @@ function bptTogglePlay() {
 ════════════════════════════════════════════ */
 
 function bptExecute() {
-  var inputEl = document.getElementById('bptValueInput');
-  var val = parseInt(inputEl.value, 10);
+  let inputEl = document.getElementById('bptValueInput');
+  let val = parseInt(inputEl.value, 10);
 
   if (isNaN(val)) {
     bptSetStatus('Please enter a valid integer value.', 'error');
@@ -576,17 +576,17 @@ function bptExecute() {
       bptSetStatus('Key ' + val + ' already exists in the tree.', 'error');
       return;
     }
-    var insertSteps = [];
+    let insertSteps = [];
     bptInsertKey(bptTree, val, insertSteps);
     bptLoadSteps(insertSteps);
 
   } else if (bptCurrentOp === 'delete') {
-    var deleteSteps = [];
+    let deleteSteps = [];
     bptDeleteKey(bptTree, val, deleteSteps);
     bptLoadSteps(deleteSteps);
 
   } else if (bptCurrentOp === 'search') {
-    var searchSteps = [];
+    let searchSteps = [];
     bptSearchKey(bptTree, val, searchSteps);
     bptLoadSteps(searchSteps);
   }
@@ -594,7 +594,7 @@ function bptExecute() {
 
 function bptReset() {
   bptPauseAuto();
-  var order = parseInt(document.getElementById('bptOrderSelect').value, 10);
+  let order = parseInt(document.getElementById('bptOrderSelect').value, 10);
   bptTree = bptCreateTree(order);
 
   bptSteps = [bptSnapshot(bptTree, [], 'Tree reset. Empty B+ Tree with order ' + order + '.', 'active')];
@@ -606,8 +606,8 @@ function bptReset() {
 function bptRunPreset() {
   bptReset();
 
-  var allSteps = [];
-  for (var v = 1; v <= 20; v++) {
+  let allSteps = [];
+  for (let v = 1; v <= 20; v++) {
     bptInsertKey(bptTree, v, allSteps);
   }
 
@@ -620,11 +620,11 @@ function bptRunPreset() {
 ════════════════════════════════════════════ */
 
 function bptRenderOps() {
-  var wrap = document.getElementById('bptOpsWrap');
+  let wrap = document.getElementById('bptOpsWrap');
   if (!wrap) return;
 
   wrap.innerHTML = BPT_OPS.map(function (op) {
-    var label = op.charAt(0).toUpperCase() + op.slice(1);
+    let label = op.charAt(0).toUpperCase() + op.slice(1);
     return '<button class="bpt-op-btn' + (op === bptCurrentOp ? ' active' : '') + '" data-op="' + op + '">' + label + '</button>';
   }).join('');
 
@@ -641,14 +641,14 @@ function bptInit() {
   bptReset();
   bptRenderOps();
 
-  var execBtn = document.getElementById('bptExecBtn');
-  var stepBtn = document.getElementById('bptStepBtn');
-  var playBtn = document.getElementById('bptPlayBtn');
-  var resetBtn = document.getElementById('bptResetBtn');
-  var presetBtn = document.getElementById('bptPresetBtn');
-  var orderSelect = document.getElementById('bptOrderSelect');
-  var speedSlider = document.getElementById('bptSpeedSlider');
-  var valueInput = document.getElementById('bptValueInput');
+  let execBtn = document.getElementById('bptExecBtn');
+  let stepBtn = document.getElementById('bptStepBtn');
+  let playBtn = document.getElementById('bptPlayBtn');
+  let resetBtn = document.getElementById('bptResetBtn');
+  let presetBtn = document.getElementById('bptPresetBtn');
+  let orderSelect = document.getElementById('bptOrderSelect');
+  let speedSlider = document.getElementById('bptSpeedSlider');
+  let valueInput = document.getElementById('bptValueInput');
 
   if (execBtn) execBtn.addEventListener('click', bptExecute);
   if (stepBtn) stepBtn.addEventListener('click', function () { bptPauseAuto(); bptStepForward(); });

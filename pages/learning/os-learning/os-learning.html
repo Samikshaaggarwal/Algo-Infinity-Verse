@@ -45,7 +45,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -226,7 +226,7 @@
                   <li>What makes Time-Sharing OS different from Batch OS?</li>
                   <li>Name two examples of Mobile Operating Systems.</li>
                 </ol>
-                <button class="os-exercise-toggle" aria-expanded="false" aria-controls="solution-types">Show Solution</button>
+                <button type="button" class="os-exercise-toggle" aria-expanded="false" aria-controls="solution-types">Show Solution</button>
                 <div class="os-exercise-solution" id="solution-types">
                   <p><strong>1.</strong> Real-Time OS (RTOS) – because it guarantees task completion within strict deadlines, which is critical for safety.</p>
                   <p><strong>2.</strong> Time-Sharing OS provides interactive response to multiple users simultaneously by slicing CPU time, whereas Batch OS executes jobs in groups without user interaction.</p>
@@ -362,7 +362,7 @@
                   <li>What is the difference between a process and a thread?</li>
                   <li>Why is context switching considered overhead?</li>
                 </ol>
-                <button class="os-exercise-toggle" aria-expanded="false" aria-controls="solution-process">Show Solution</button>
+                <button type="button" class="os-exercise-toggle" aria-expanded="false" aria-controls="solution-process">Show Solution</button>
                 <div class="os-exercise-solution" id="solution-process">
                   <p><strong>1.</strong> New, Ready, Running, Waiting (Blocked), Terminated.</p>
                   <p><strong>2.</strong> A process has its own separate memory space while threads share memory within a process. Processes are heavyweight; threads are lightweight.</p>
@@ -469,7 +469,7 @@ Completion Times: P1=9, P2=7, P3=16</code></pre>
                   <li>What is the SJF order and average waiting time?</li>
                   <li>With Round Robin (quantum = 4ms), what is the order of execution?</li>
                 </ol>
-                <button class="os-exercise-toggle" aria-expanded="false" aria-controls="solution-scheduling">Show Solution</button>
+                <button type="button" class="os-exercise-toggle" aria-expanded="false" aria-controls="solution-scheduling">Show Solution</button>
                 <div class="os-exercise-solution" id="solution-scheduling">
                   <p><strong>1.</strong> FCFS order: P1 → P2 → P3. Avg wait = (0 + 10 + 15) / 3 = 8.33ms.</p>
                   <p><strong>2.</strong> SJF order: P2 → P3 → P1. Avg wait = (0 + 5 + 13) / 3 = 6ms.</p>
@@ -544,7 +544,7 @@ Completion Times: P1=9, P2=7, P3=16</code></pre>
                   <li>What happens during a page fault?</li>
                   <li>Why is virtual memory useful?</li>
                 </ol>
-                <button class="os-exercise-toggle" aria-expanded="false" aria-controls="solution-memory">Show Solution</button>
+                <button type="button" class="os-exercise-toggle" aria-expanded="false" aria-controls="solution-memory">Show Solution</button>
                 <div class="os-exercise-solution" id="solution-memory">
                   <p><strong>1.</strong> Paging uses fixed-size blocks and eliminates external fragmentation. Segmentation uses variable-sized logical segments (code, data, stack) but can cause external fragmentation.</p>
                   <p><strong>2.</strong> A page fault occurs when a process tries to access a page not in RAM. The OS loads the required page from disk (swap space) into a free frame and updates the page table.</p>
@@ -625,7 +625,7 @@ Completion Times: P1=9, P2=7, P3=16</code></pre>
                   <li>How does deadlock prevention differ from deadlock avoidance?</li>
                   <li>Can a system with only one resource of each type deadlock? Explain.</li>
                 </ol>
-                <button class="os-exercise-toggle" aria-expanded="false" aria-controls="solution-deadlocks">Show Solution</button>
+                <button type="button" class="os-exercise-toggle" aria-expanded="false" aria-controls="solution-deadlocks">Show Solution</button>
                 <div class="os-exercise-solution" id="solution-deadlocks">
                   <p><strong>1.</strong> Mutual Exclusion, Hold and Wait, No Preemption, Circular Wait.</p>
                   <p><strong>2.</strong> Prevention ensures at least one condition never occurs. Avoidance uses the Banker's Algorithm to check for safe states before allocating resources.</p>
@@ -842,7 +842,7 @@ Completion Times: P1=9, P2=7, P3=16</code></pre>
                   <li>What does DMA stand for and why is it important?</li>
                   <li>What is the principle of least privilege?</li>
                 </ol>
-                <button class="os-exercise-toggle" aria-expanded="false" aria-controls="solution-quiz">Show Solutions</button>
+                <button type="button" class="os-exercise-toggle" aria-expanded="false" aria-controls="solution-quiz">Show Solutions</button>
                 <div class="os-exercise-solution" id="solution-quiz">
                   <p><strong>1.</strong> To manage hardware resources and provide services for application programs.</p>
                   <p><strong>2.</strong> Real-Time OS (RTOS).</p>
@@ -867,7 +867,10 @@ Completion Times: P1=9, P2=7, P3=16</code></pre>
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./os-learning.js"></script>
   

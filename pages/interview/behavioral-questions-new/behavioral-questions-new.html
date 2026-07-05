@@ -56,11 +56,11 @@
                 </div>
                 
                 <div class="filter-group" id="categoryFilters">
-                    <button class="filter-btn active" data-category="all">All</button>
-                    <button class="filter-btn" data-category="Leadership">Leadership</button>
-                    <button class="filter-btn" data-category="Conflict">Conflict</button>
-                    <button class="filter-btn" data-category="Failure">Failure</button>
-                    <button class="filter-btn" data-category="Teamwork">Teamwork</button>
+                    <button type="button" class="filter-btn active" data-category="all">All</button>
+                    <button type="button" class="filter-btn" data-category="Leadership">Leadership</button>
+                    <button type="button" class="filter-btn" data-category="Conflict">Conflict</button>
+                    <button type="button" class="filter-btn" data-category="Failure">Failure</button>
+                    <button type="button" class="filter-btn" data-category="Teamwork">Teamwork</button>
                 </div>
             </div>
 
@@ -89,7 +89,10 @@
     </section>
     
     <!-- External Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="/pages/interview/behavioral-questions/behavioral-questions.js"></script>

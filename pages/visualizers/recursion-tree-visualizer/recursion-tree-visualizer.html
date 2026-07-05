@@ -39,7 +39,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -94,10 +94,10 @@
               </div>
 
               <div class="btn-control-row">
-                <button id="rtv-play" class="btn btn-primary btn-control"><i class="fas fa-play"></i> Play</button>
-                <button id="rtv-pause" class="btn btn-secondary btn-control" disabled aria-label="Pause visualization"><i class="fas fa-pause"></i></button>
-                <button id="rtv-step" class="btn btn-secondary btn-control" aria-label="Step visualization forward"><i class="fas fa-step-forward"></i></button>
-                <button id="rtv-reset" class="btn btn-secondary btn-control" aria-label="Reset visualization"><i class="fas fa-undo"></i></button>
+                <button type="button" id="rtv-play" class="btn btn-primary btn-control"><i class="fas fa-play"></i> Play</button>
+                <button type="button" id="rtv-pause" class="btn btn-secondary btn-control" disabled aria-label="Pause visualization"><i class="fas fa-pause"></i></button>
+                <button type="button" id="rtv-step" class="btn btn-secondary btn-control" aria-label="Step visualization forward"><i class="fas fa-step-forward"></i></button>
+                <button type="button" id="rtv-reset" class="btn btn-secondary btn-control" aria-label="Reset visualization"><i class="fas fa-undo"></i></button>
               </div>
 
               <div style="margin-top:0.75rem;">
@@ -184,7 +184,10 @@
 
     <!-- Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="recursion-tree-visualizer.js"></script>
   

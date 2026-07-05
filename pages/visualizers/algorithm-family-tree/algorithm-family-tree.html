@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+  <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
     <i class="fas fa-circle-chevron-up"></i>
   </button>
 
@@ -70,24 +70,24 @@
         <div class="search-box position-relative">
           <i class="fas fa-search search-icon"></i>
           <input type="text" id="search-node" placeholder="Find algorithm (e.g. Dijkstra, Parametric)..." class="ft-search-input" />
-          <button id="btn-clear-search" class="clear-search-btn hidden">&times;</button>
+          <button type="button" id="btn-clear-search" class="clear-search-btn hidden">&times;</button>
         </div>
 
         <!-- Category Filters -->
         <div class="filter-group flex gap-2 wrap">
-          <button class="btn btn-sm filter-btn active" data-family="all">All Families</button>
-          <button class="btn btn-sm filter-btn" data-family="search">Search</button>
-          <button class="btn btn-sm filter-btn" data-family="sort">Sorting</button>
-          <button class="btn btn-sm filter-btn" data-family="graph">Graphs</button>
-          <button class="btn btn-sm filter-btn" data-family="dp">DP & Recursion</button>
+          <button type="button" class="btn btn-sm filter-btn active" data-family="all">All Families</button>
+          <button type="button" class="btn btn-sm filter-btn" data-family="search">Search</button>
+          <button type="button" class="btn btn-sm filter-btn" data-family="sort">Sorting</button>
+          <button type="button" class="btn btn-sm filter-btn" data-family="graph">Graphs</button>
+          <button type="button" class="btn btn-sm filter-btn" data-family="dp">DP & Recursion</button>
         </div>
 
         <!-- Action Panel -->
         <div class="action-buttons">
-          <button id="btn-open-compare" class="btn btn-primary btn-sm">
+          <button type="button" id="btn-open-compare" class="btn btn-primary btn-sm">
             <i class="fas fa-arrows-left-right-to-line"></i> Compare Room
           </button>
-          <button id="btn-reset-tree" class="btn btn-secondary btn-sm">
+          <button type="button" id="btn-reset-tree" class="btn btn-secondary btn-sm">
             <i class="fas fa-rotate-left"></i> Reset Focus
           </button>
         </div>
@@ -130,7 +130,7 @@
                 <span class="badge" id="insp-badge-family">Search</span>
                 <h3 class="m-0 text-glow" id="insp-node-name">Binary Search</h3>
               </div>
-              <button id="btn-insp-compare-shortcut" class="btn btn-sm btn-outline-secondary" title="Compare this algorithm">
+              <button type="button" id="btn-insp-compare-shortcut" class="btn btn-sm btn-outline-secondary" title="Compare this algorithm">
                 <i class="fas fa-exchange-alt"></i> Compare
               </button>
             </div>
@@ -189,7 +189,7 @@
       <div class="compare-modal-content dream-card p-4">
         <div class="modal-header border-bottom pb-3 mb-4 flex justify-between align-center">
           <h3 class="m-0"><i class="fas fa-arrows-left-right-to-line"></i> The Comparative Reunion Room</h3>
-          <button id="btn-close-compare" class="close-modal-btn">&times;</button>
+          <button type="button" id="btn-close-compare" class="close-modal-btn">&times;</button>
         </div>
         
         <div class="modal-body">
@@ -270,7 +270,10 @@
   <div id="footer-placeholder"></div>
 
   <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   <script src="./algorithm-family-tree.js"></script>
 

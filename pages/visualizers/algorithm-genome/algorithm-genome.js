@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── Gene definitions ─── */
-var AG2_GENES = {
+let AG2_GENES = {
   comparison:     { id:'comparison',     icon:'⚖️',  color:'#06b6d4', name:'Comparison',         desc:'Compares two values to determine order, equality, or priority.' },
   divide:         { id:'divide',         icon:'✂️',  color:'#a855f7', name:'Divide',              desc:'Splits the problem into smaller independent subproblems.' },
   merge:          { id:'merge',          icon:'🔗',  color:'#8b5cf6', name:'Merge',               desc:'Combines two sorted or processed halves into one result.' },
@@ -31,7 +31,7 @@ var AG2_GENES = {
 };
 
 /* ─── Algorithm definitions ─── */
-var AG2_ALGOS = [
+let AG2_ALGOS = [
   { id:'bubble-sort',      name:'Bubble Sort',      cat:'sort',    era:1956, inspired:['selection-sort'],    genes:['comparison','swap'] },
   { id:'selection-sort',   name:'Selection Sort',   cat:'sort',    era:1962, inspired:['insertion-sort'],    genes:['comparison','swap'] },
   { id:'insertion-sort',   name:'Insertion Sort',   cat:'sort',    era:1965, inspired:['merge-sort'],        genes:['comparison','swap','two-pointer'] },
@@ -55,14 +55,14 @@ var AG2_ALGOS = [
 ];
 
 /* ─── State ─── */
-var ag2State = {
+let ag2State = {
   selectedA      : null,
   selectedB      : null,
   highlightedGene: null,
 };
 
 /* ─── Build gene-to-algo index ─── */
-var AG2_GENE_TO_ALGOS = {};
+let AG2_GENE_TO_ALGOS = {};
 Object.keys(AG2_GENES).forEach(function(gid) { AG2_GENE_TO_ALGOS[gid] = []; });
 AG2_ALGOS.forEach(function(algo) {
   algo.genes.forEach(function(gid) {
@@ -72,10 +72,10 @@ AG2_ALGOS.forEach(function(algo) {
 
 /* ─── Compute similarity ─── */
 function ag2Similarity(algoA, algoB) {
-  var genesA = new Set(algoA.genes);
-  var genesB = new Set(algoB.genes);
-  var shared = algoA.genes.filter(function(g) { return genesB.has(g); });
-  var union  = new Set(algoA.genes.concat(algoB.genes));
+  let genesA = new Set(algoA.genes);
+  let genesB = new Set(algoB.genes);
+  let shared = algoA.genes.filter(function(g) { return genesB.has(g); });
+  let union  = new Set(algoA.genes.concat(algoB.genes));
   return {
     shared    : shared,
     onlyA     : algoA.genes.filter(function(g) { return !genesB.has(g); }),
@@ -87,11 +87,11 @@ function ag2Similarity(algoA, algoB) {
 
 /* ─── Render algorithm grids ─── */
 function ag2RenderAlgoGrids() {
-  var gridA = document.getElementById('ag2GridA');
-  var gridB = document.getElementById('ag2GridB');
+  let gridA = document.getElementById('ag2GridA');
+  let gridB = document.getElementById('ag2GridB');
   if (!gridA || !gridB) return;
 
-  var html = AG2_ALGOS.map(function(algo) {
+  let html = AG2_ALGOS.map(function(algo) {
     return '<div class="ag2-algo-card" data-id="' + algo.id + '" ' +
       'tabindex="0" role="radio" aria-checked="false" ' +
       'aria-label="' + algo.name + '">' +
@@ -130,7 +130,7 @@ function ag2SelectB(id) {
 }
 
 function ag2UpdateGridHighlights() {
-  var carriers = ag2State.highlightedGene ? (AG2_GENE_TO_ALGOS[ag2State.highlightedGene] || []) : [];
+  let carriers = ag2State.highlightedGene ? (AG2_GENE_TO_ALGOS[ag2State.highlightedGene] || []) : [];
 
   // Grid A
   document.querySelectorAll('`#ag2GridA` .ag2-algo-card').forEach(function(card) {
@@ -173,12 +173,12 @@ function ag2HandleGenePoolClick(geneId) {
   });
 
   // Highlight algo cards in both grids that carry this gene
-  var carriers = ag2State.highlightedGene ? (AG2_GENE_TO_ALGOS[ag2State.highlightedGene] || []) : [];
+  let carriers = ag2State.highlightedGene ? (AG2_GENE_TO_ALGOS[ag2State.highlightedGene] || []) : [];
 
   ['ag2GridA','ag2GridB'].forEach(function(gridId) {
     document.querySelectorAll('#' + gridId + ' .ag2-algo-card').forEach(function(card) {
-      var id = card.getAttribute('data-id');
-      var isSelected = (id === ag2State.selectedA && gridId === 'ag2GridA') ||
+      let id = card.getAttribute('data-id');
+      let isSelected = (id === ag2State.selectedA && gridId === 'ag2GridA') ||
                        (id === ag2State.selectedB && gridId === 'ag2GridB');
       card.classList.remove('ag2-highlighted');
       if (!isSelected && ag2State.highlightedGene && carriers.indexOf(id) !== -1) {
@@ -193,13 +193,13 @@ function ag2HandleGenePoolClick(geneId) {
 
 /* ─── Render DNA strands ─── */
 function ag2RenderStrands() {
-  var algoA = ag2State.selectedA ? AG2_ALGOS.find(function(a){return a.id===ag2State.selectedA;}) : null;
-  var algoB = ag2State.selectedB ? AG2_ALGOS.find(function(a){return a.id===ag2State.selectedB;}) : null;
+  let algoA = ag2State.selectedA ? AG2_ALGOS.find(function(a){return a.id===ag2State.selectedA;}) : null;
+  let algoB = ag2State.selectedB ? AG2_ALGOS.find(function(a){return a.id===ag2State.selectedB;}) : null;
 
-  var nameA = document.getElementById('ag2StrandNameA');
-  var nameB = document.getElementById('ag2StrandNameB');
-  var strandA = document.getElementById('ag2StrandA');
-  var strandB = document.getElementById('ag2StrandB');
+  let nameA = document.getElementById('ag2StrandNameA');
+  let nameB = document.getElementById('ag2StrandNameB');
+  let strandA = document.getElementById('ag2StrandA');
+  let strandB = document.getElementById('ag2StrandB');
   if (!strandA || !strandB) return;
 
   if (nameA) nameA.textContent = algoA ? algoA.name : '—';
@@ -208,30 +208,30 @@ function ag2RenderStrands() {
   if (!algoA) { strandA.innerHTML = '<div class="ag2-strand-placeholder">Select Algorithm A above</div>'; }
   if (!algoB) { strandB.innerHTML = '<div class="ag2-strand-placeholder">Select Algorithm B above</div>'; }
 
-  var genesA = algoA ? new Set(algoA.genes) : new Set();
-  var genesB = algoB ? new Set(algoB.genes) : new Set();
+  let genesA = algoA ? new Set(algoA.genes) : new Set();
+  let genesB = algoB ? new Set(algoB.genes) : new Set();
 
   // Build union gene list (in a consistent order matching gene pool order)
-  var geneOrder = Object.keys(AG2_GENES);
+  let geneOrder = Object.keys(AG2_GENES);
 
   function buildStrand(algo, genesOther, sideClass) {
     if (!algo) return;
-    var el = sideClass === 'A' ? strandA : strandB;
-    var myGenes = new Set(algo.genes);
-    var html = '';
+    let el = sideClass === 'A' ? strandA : strandB;
+    let myGenes = new Set(algo.genes);
+    let html = '';
 
     // Only show genes this algo has, but also show missing shared genes dimly
-    var allRelevantGenes = new Set(algo.genes);
+    let allRelevantGenes = new Set(algo.genes);
     if (ag2State.selectedA && ag2State.selectedB) {
       genesOther.forEach(function(g) { allRelevantGenes.add(g); });
     }
 
     geneOrder.forEach(function(gid) {
       if (!allRelevantGenes.has(gid)) return;
-      var gene     = AG2_GENES[gid];
-      var isIn     = myGenes.has(gid);
-      var isShared = myGenes.has(gid) && genesOther.has(gid);
-      var geneState;
+      let gene     = AG2_GENES[gid];
+      let isIn     = myGenes.has(gid);
+      let isShared = myGenes.has(gid) && genesOther.has(gid);
+      let geneState;
 
       if (!isIn) {
         geneState = 'ag2-gene-dim';
@@ -245,8 +245,8 @@ function ag2RenderStrands() {
         geneState = sideClass === 'A' ? 'ag2-gene-only' : 'ag2-gene-only-b';
       }
 
-      var abbr = gid.split('-').map(function(w){return w[0].toUpperCase();}).join('').substring(0,3);
-      var style = '--gc:' + gene.color + ';background:' + ag2hexToRgba(gene.color, 0.25) + ';border-color:' + gene.color + ';';
+      let abbr = gid.split('-').map(function(w){return w[0].toUpperCase();}).join('').substring(0,3);
+      let style = '--gc:' + gene.color + ';background:' + ag2hexToRgba(gene.color, 0.25) + ';border-color:' + gene.color + ';';
 
       html += '<div class="ag2-gene ' + geneState + '" data-gene="' + gid + '" tabindex="0" role="button" aria-label="Gene: ' + gene.name + '">' +
         '<div class="ag2-gene-seg" style="' + style + '">' +
@@ -277,42 +277,42 @@ function ag2RenderStrands() {
 
 /* ─── Draw SVG connector lines between shared genes ─── */
 function ag2DrawConnectors(algoA, algoB) {
-  var connEl = document.getElementById('ag2Connectors');
+  let connEl = document.getElementById('ag2Connectors');
   if (!connEl) return;
 
   if (!algoA || !algoB) { connEl.innerHTML = ''; return; }
 
-  var genesA   = new Set(algoA.genes);
-  var genesB   = new Set(algoB.genes);
-  var sharedIds = algoA.genes.filter(function(g) { return genesB.has(g); });
+  let genesA   = new Set(algoA.genes);
+  let genesB   = new Set(algoB.genes);
+  let sharedIds = algoA.genes.filter(function(g) { return genesB.has(g); });
 
   if (sharedIds.length === 0) { connEl.innerHTML = ''; return; }
 
   connEl.innerHTML = '<svg></svg>';
-  var svg = connEl.querySelector('svg');
+  let svg = connEl.querySelector('svg');
 
   // After a brief delay to allow DOM layout
   setTimeout(function() {
     svg.innerHTML = '';
-    var connRect = connEl.getBoundingClientRect();
+    let connRect = connEl.getBoundingClientRect();
 
     sharedIds.forEach(function(geneId) {
       // Find gene elements in both strands
-      var elA = document.querySelector('#ag2StrandA [data-gene="' + geneId + '"]');
-      var elB = document.querySelector('#ag2StrandB [data-gene="' + geneId + '"]');
+      let elA = document.querySelector('#ag2StrandA [data-gene="' + geneId + '"]');
+      let elB = document.querySelector('#ag2StrandB [data-gene="' + geneId + '"]');
       if (!elA || !elB) return;
 
-      var rA = elA.getBoundingClientRect();
-      var rB = elB.getBoundingClientRect();
+      let rA = elA.getBoundingClientRect();
+      let rB = elB.getBoundingClientRect();
 
       // Center-X of each gene relative to connectors container
-      var x1 = rA.left + rA.width / 2 - connRect.left;
-      var x2 = rB.left + rB.width / 2 - connRect.left;
-      var y1 = 0;
-      var y2 = connEl.offsetHeight || 24;
-      var color = AG2_GENES[geneId] ? AG2_GENES[geneId].color : '#22c55e';
+      let x1 = rA.left + rA.width / 2 - connRect.left;
+      let x2 = rB.left + rB.width / 2 - connRect.left;
+      let y1 = 0;
+      let y2 = connEl.offsetHeight || 24;
+      let color = AG2_GENES[geneId] ? AG2_GENES[geneId].color : '#22c55e';
 
-      var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      let line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
       line.setAttribute('x1', x1); line.setAttribute('y1', y1);
       line.setAttribute('x2', x2); line.setAttribute('y2', y2);
       line.setAttribute('stroke', color);
@@ -326,12 +326,12 @@ function ag2DrawConnectors(algoA, algoB) {
 
 /* ─── Gene detail panel ─── */
 function ag2ShowGeneDetail(geneId) {
-  var el   = document.getElementById('ag2GeneDetail');
-  var gene = AG2_GENES[geneId];
+  let el   = document.getElementById('ag2GeneDetail');
+  let gene = AG2_GENES[geneId];
   if (!el || !gene) return;
 
-  var carriers = (AG2_GENE_TO_ALGOS[geneId] || []).map(function(id) {
-    var a = AG2_ALGOS.find(function(al){return al.id===id;});
+  let carriers = (AG2_GENE_TO_ALGOS[geneId] || []).map(function(id) {
+    let a = AG2_ALGOS.find(function(al){return al.id===id;});
     return a ? a.name : id;
   });
 
@@ -355,11 +355,11 @@ function ag2HideGeneDetail() {
 
 /* ─── Render similarity score and breakdown ─── */
 function ag2RenderSimilarity() {
-  var algoA = ag2State.selectedA ? AG2_ALGOS.find(function(a){return a.id===ag2State.selectedA;}) : null;
-  var algoB = ag2State.selectedB ? AG2_ALGOS.find(function(a){return a.id===ag2State.selectedB;}) : null;
+  let algoA = ag2State.selectedA ? AG2_ALGOS.find(function(a){return a.id===ag2State.selectedA;}) : null;
+  let algoB = ag2State.selectedB ? AG2_ALGOS.find(function(a){return a.id===ag2State.selectedB;}) : null;
 
-  var simVal = document.getElementById('ag2SimValue');
-  var bkBody = document.getElementById('ag2BreakdownBody');
+  let simVal = document.getElementById('ag2SimValue');
+  let bkBody = document.getElementById('ag2BreakdownBody');
 
   if (!algoA || !algoB) {
     if (simVal) simVal.textContent = '—';
@@ -367,7 +367,7 @@ function ag2RenderSimilarity() {
     return;
   }
 
-  var sim = ag2Similarity(algoA, algoB);
+  let sim = ag2Similarity(algoA, algoB);
   if (simVal) simVal.textContent = sim.pct + '%';
 
   if (!bkBody) return;
@@ -381,7 +381,7 @@ function ag2RenderSimilarity() {
 }
 
 function ag2BkItem(label, count, total, fillClass) {
-  var pct = total > 0 ? Math.round(count / total * 100) : 0;
+  let pct = total > 0 ? Math.round(count / total * 100) : 0;
   return '<div class="ag2-bk-item">' +
     '<div class="ag2-bk-label">' +
       '<span class="ag2-bk-name">' + label + '</span>' +
@@ -395,12 +395,12 @@ function ag2BkItem(label, count, total, fillClass) {
 
 /* ─── Render gene pool ─── */
 function ag2RenderGenePool() {
-  var poolEl = document.getElementById('ag2GenePool');
+  let poolEl = document.getElementById('ag2GenePool');
   if (!poolEl) return;
 
   poolEl.innerHTML = Object.keys(AG2_GENES).map(function(gid) {
-    var gene  = AG2_GENES[gid];
-    var count = (AG2_GENE_TO_ALGOS[gid] || []).length;
+    let gene  = AG2_GENES[gid];
+    let count = (AG2_GENE_TO_ALGOS[gid] || []).length;
     return '<button class="ag2-pool-gene" data-gene="' + gid + '" aria-label="' + gene.name + ': ' + count + ' algorithms">' +
       '<span class="ag2-pool-gene-dot" style="background:' + gene.color + '"></span>' +
       gene.icon + ' ' + gene.name +
@@ -414,7 +414,7 @@ function ag2RenderGenePool() {
 }
 
 /* ─── Evolutionary lineage canvas ─── */
-var AG2_LINEAGE_NODES = [
+let AG2_LINEAGE_NODES = [
   { id:'bubble-sort',    label:'Bubble Sort',    x:0.05, y:0.15 },
   { id:'selection-sort', label:'Selection Sort', x:0.05, y:0.4  },
   { id:'insertion-sort', label:'Insertion Sort', x:0.05, y:0.65 },
@@ -438,43 +438,43 @@ var AG2_LINEAGE_NODES = [
 ];
 
 function ag2DrawLineage() {
-  var canvas = document.getElementById('ag2LineageCanvas');
+  let canvas = document.getElementById('ag2LineageCanvas');
   if (!canvas) return;
 
-  var wrap = canvas.parentElement;
-  var W = wrap.clientWidth || 800;
-  var H = Math.max(220, Math.round(W * 0.28));
+  let wrap = canvas.parentElement;
+  let W = wrap.clientWidth || 800;
+  let H = Math.max(220, Math.round(W * 0.28));
   canvas.width  = W;
   canvas.height = H;
-  var ctx = canvas.getContext('2d');
+  let ctx = canvas.getContext('2d');
 
   ctx.clearRect(0, 0, W, H);
 
   // Build node positions
-  var positions = {};
+  let positions = {};
   AG2_LINEAGE_NODES.forEach(function(n) {
     positions[n.id] = { x: Math.round(n.x * W), y: Math.round(n.y * H) };
   });
 
   // Draw edges first
   AG2_ALGOS.forEach(function(algo) {
-    var from = positions[algo.id];
+    let from = positions[algo.id];
     if (!from) return;
     algo.inspired.forEach(function(toId) {
-      var to = positions[toId];
+      let to = positions[toId];
       if (!to) return;
       ctx.beginPath();
       ctx.moveTo(from.x, from.y);
       // Slight curve
-      var mx = (from.x + to.x) / 2;
-      var my = (from.y + to.y) / 2 - 8;
+      let mx = (from.x + to.x) / 2;
+      let my = (from.y + to.y) / 2 - 8;
       ctx.quadraticCurveTo(mx, my, to.x, to.y);
       ctx.strokeStyle = 'rgba(100,116,139,0.3)';
       ctx.lineWidth   = 1.5;
       ctx.stroke();
 
       // Arrow head at destination
-      var angle = Math.atan2(to.y - my, to.x - mx);
+      let angle = Math.atan2(to.y - my, to.x - mx);
       ctx.beginPath();
       ctx.moveTo(to.x, to.y);
       ctx.lineTo(to.x - 8 * Math.cos(angle - 0.4), to.y - 8 * Math.sin(angle - 0.4));
@@ -487,15 +487,15 @@ function ag2DrawLineage() {
 
   // Draw nodes
   AG2_LINEAGE_NODES.forEach(function(n) {
-    var pos   = positions[n.id];
-    var isA   = n.id === ag2State.selectedA;
-    var isB   = n.id === ag2State.selectedB;
-    var isAnc = ag2IsAncestor(n.id);
+    let pos   = positions[n.id];
+    let isA   = n.id === ag2State.selectedA;
+    let isB   = n.id === ag2State.selectedB;
+    let isAnc = ag2IsAncestor(n.id);
 
-    var fillColor   = 'rgba(255,255,255,0.06)';
-    var strokeColor = 'rgba(100,116,139,0.3)';
-    var textColor   = '#64748b';
-    var radius      = 18;
+    let fillColor   = 'rgba(255,255,255,0.06)';
+    let strokeColor = 'rgba(100,116,139,0.3)';
+    let textColor   = '#64748b';
+    let radius      = 18;
 
     if (isA)   { fillColor = 'rgba(0,212,255,0.2)';  strokeColor = '#00d4ff'; textColor = '#00d4ff'; radius = 22; }
     if (isB)   { fillColor = 'rgba(168,85,247,0.2)'; strokeColor = '#a855f7'; textColor = '#a855f7'; radius = 22; }
@@ -523,7 +523,7 @@ function ag2DrawLineage() {
     ctx.textAlign    = 'center';
     ctx.textBaseline = 'middle';
     // Truncate long names
-    var label = n.label.length > 10 ? n.label.substring(0, 9) + '…' : n.label;
+    let label = n.label.length > 10 ? n.label.substring(0, 9) + '…' : n.label;
     ctx.fillText(label, pos.x, pos.y);
   });
 }
@@ -531,8 +531,8 @@ function ag2DrawLineage() {
 function ag2IsAncestor(id) {
   if (!ag2State.selectedA || !ag2State.selectedB) return false;
   // An ancestor is any node that both A and B are inspired by (transitively simplified)
-  var algoA = AG2_ALGOS.find(function(a){return a.id===ag2State.selectedA;});
-  var algoB = AG2_ALGOS.find(function(a){return a.id===ag2State.selectedB;});
+  let algoA = AG2_ALGOS.find(function(a){return a.id===ag2State.selectedA;});
+  let algoB = AG2_ALGOS.find(function(a){return a.id===ag2State.selectedB;});
   if (!algoA || !algoB) return false;
 
   // Check if id is an ancestor of selectedA or selectedB
@@ -540,14 +540,14 @@ function ag2IsAncestor(id) {
     if (!visited) visited = {};
     if (visited[algoId]) return visited;
     visited[algoId] = true;
-    var algo = AG2_ALGOS.find(function(a){return a.id===algoId;});
+    let algo = AG2_ALGOS.find(function(a){return a.id===algoId;});
     if (!algo) return visited;
     algo.inspired.forEach(function(iId) { getAncestors(iId, visited); });
     return visited;
   }
 
-  var ancestorsA = getAncestors(ag2State.selectedA);
-  var ancestorsB = getAncestors(ag2State.selectedB);
+  let ancestorsA = getAncestors(ag2State.selectedA);
+  let ancestorsB = getAncestors(ag2State.selectedB);
   return ancestorsA[id] && ancestorsB[id] &&
          id !== ag2State.selectedA && id !== ag2State.selectedB;
 }
@@ -558,15 +558,15 @@ function ag2UpdateAll() {
   ag2RenderSimilarity();
   ag2DrawLineage();
   // Reset gene detail
-  var det = document.getElementById('ag2GeneDetail');
+  let det = document.getElementById('ag2GeneDetail');
   if (det) det.innerHTML = '<div class="ag2-gene-detail-placeholder">Hover a gene segment to see details</div>';
 }
 
 /* ─── Hex to rgba ─── */
 function ag2hexToRgba(hex, alpha) {
-  var r = parseInt(hex.slice(1,3),16);
-  var g = parseInt(hex.slice(3,5),16);
-  var b = parseInt(hex.slice(5,7),16);
+  let r = parseInt(hex.slice(1,3),16);
+  let g = parseInt(hex.slice(3,5),16);
+  let b = parseInt(hex.slice(5,7),16);
   return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
 }
 

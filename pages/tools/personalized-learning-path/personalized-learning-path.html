@@ -48,7 +48,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -208,7 +208,7 @@
 
         <!-- Actions -->
         <div class="generate-actions">
-          <button id="generateBtn" class="btn btn-primary">
+          <button type="button" id="generateBtn" class="btn btn-primary">
             <i class="fas fa-route"></i> Generate My Roadmap
           </button>
         </div>
@@ -267,10 +267,10 @@
             </div>
 
             <div class="dashboard-controls">
-              <button id="resetBtn" class="btn btn-danger">
+              <button type="button" id="resetBtn" class="btn btn-danger">
                 <i class="fas fa-redo"></i> Reset Path
               </button>
-              <button id="printBtn" class="btn btn-ghost">
+              <button type="button" id="printBtn" class="btn btn-ghost">
                 <i class="fas fa-print"></i> Export
               </button>
             </div>
@@ -324,7 +324,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="personalized-learning-path.js" defer></script>
   
@@ -334,6 +337,7 @@
           loadPartial('footer-placeholder', '/partials/footer.html');
       } else {
           console.error("loadPartial is not defined. Ensure script.js is loaded.");
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
       }
     </script>
   </body>

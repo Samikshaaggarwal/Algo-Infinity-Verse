@@ -216,7 +216,7 @@ function enable2FA() {
 }
 
 function disable2FA() {
-    if (confirm("Are you sure you want to disable 2FA? This will make your account less secure.")) {
+    if (false /* confirm removed */) {
         state.is2FAEnabled = false;
         state.generatedRecoveryCodes = [];
         

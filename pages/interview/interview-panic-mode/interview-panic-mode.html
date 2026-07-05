@@ -56,10 +56,11 @@
                     Your interview starts in 30 minutes. No time for deep dives. This module forces you through rapid-fire time complexities, core data structure properties, and absolute must-know algorithm patterns.
                 </p>
                 <div class="hero-actions">
-                    <button class="btn btn-panic" id="btnStartRevision">
-                        <i class="fas fa-bolt"></i> Start 30-Min Revision
-                    </button>
-                </div>
+    <button type="button" class="btn btn-panic" id="btnStartRevision">
+        <i class="fas fa-bolt"></i> Start 30-Min Revision
+    </button>
+    <a href="revision-sheet.html" class="btn btn-outline-primary" id="btnOpenRevisionSheet">Revision Sheet</a>
+</div>
             </div>
         </section>
 
@@ -76,7 +77,7 @@
                         <div class="progress-bar-fill" id="flashcardProgressBar" style="width: 5%;"></div>
                     </div>
                 </div>
-                <button class="btn btn-outline-danger" id="btnStopRevision"><i class="fas fa-stop"></i> Abort</button>
+                <button type="button" class="btn btn-outline-danger" id="btnStopRevision"><i class="fas fa-stop"></i> Abort</button>
             </div>
 
             <!-- Flashcard Container -->
@@ -103,9 +104,9 @@
             </div>
 
             <div class="flashcard-controls">
-                <button class="btn btn-secondary" id="btnPrevCard" disabled><i class="fas fa-arrow-left"></i> Previous</button>
-                <button class="btn btn-primary" id="btnFlipCard"><i class="fas fa-sync-alt"></i> Flip Card</button>
-                <button class="btn btn-primary" id="btnNextCard">Next <i class="fas fa-arrow-right"></i></button>
+                <button type="button" class="btn btn-secondary" id="btnPrevCard" disabled><i class="fas fa-arrow-left"></i> Previous</button>
+                <button type="button" class="btn btn-primary" id="btnFlipCard"><i class="fas fa-sync-alt"></i> Flip Card</button>
+                <button type="button" class="btn btn-primary" id="btnNextCard">Next <i class="fas fa-arrow-right"></i></button>
             </div>
 
         </section>
@@ -118,12 +119,15 @@
             <i class="fas fa-rocket success-icon"></i>
             <h2>Time's Up!</h2>
             <p>You survived the panic mode. Take a deep breath, grab a glass of water, and crush that interview. You've got this.</p>
-            <button class="btn btn-primary w-100" id="btnCloseModal">Close & Return</button>
+            <button type="button" class="btn btn-primary w-100" id="btnCloseModal">Close & Return</button>
         </div>
     </div>
 
     <!-- External Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="interview-panic-mode.js"></script>
 </body>
 </html>

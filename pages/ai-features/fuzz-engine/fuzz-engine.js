@@ -102,7 +102,7 @@ function startFuzzing() {
         setupWorkerListeners();
     } catch (e) {
         console.error("Worker failed to start:", e);
-        alert("Could not start Web Worker. Fuzzing requires running this file through a local web server (e.g. Live Server) due to browser CORS policies.");
+        console.warn("Alert:", "Could not start Web Worker. Fuzzing requires running this file through a local web server (e.g. Live Server) due to browser CORS policies.");
         stopFuzzing();
         return;
     }

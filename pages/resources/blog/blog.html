@@ -66,11 +66,11 @@
                         <input type="text" id="searchInput" placeholder="Search articles by title or keyword..." />
                     </div>
                     <div class="filter-tags" id="filterTags">
-                        <button class="tag-btn active" data-tag="all">All</button>
-                        <button class="tag-btn" data-tag="Algorithms">Algorithms</button>
-                        <button class="tag-btn" data-tag="Interviews">Interviews</button>
-                        <button class="tag-btn" data-tag="System Design">System Design</button>
-                        <button class="tag-btn" data-tag="Guides">Guides</button>
+                        <button type="button" class="tag-btn active" data-tag="all">All</button>
+                        <button type="button" class="tag-btn" data-tag="Algorithms">Algorithms</button>
+                        <button type="button" class="tag-btn" data-tag="Interviews">Interviews</button>
+                        <button type="button" class="tag-btn" data-tag="System Design">System Design</button>
+                        <button type="button" class="tag-btn" data-tag="Guides">Guides</button>
                     </div>
                 </div>
 
@@ -89,7 +89,7 @@
 
             <!-- View 2: Individual Blog Post Detail -->
             <div id="blog-detail-view" class="view-hidden">
-                <button class="btn-back" id="btnBack"><i class="fas fa-arrow-left"></i> Back to Articles</button>
+                <button type="button" class="btn-back" id="btnBack"><i class="fas fa-arrow-left"></i> Back to Articles</button>
                 
                 <article class="article-container">
                     <header class="article-header">
@@ -111,8 +111,8 @@
                 
                 <!-- Article Footer / Navigation -->
                 <div class="article-footer">
-                    <button class="btn-nav" id="btnPrev"><i class="fas fa-chevron-left"></i> Previous Post</button>
-                    <button class="btn-nav" id="btnNext">Next Post <i class="fas fa-chevron-right"></i></button>
+                    <button type="button" class="btn-nav" id="btnPrev"><i class="fas fa-chevron-left"></i> Previous Post</button>
+                    <button type="button" class="btn-nav" id="btnNext">Next Post <i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
 
@@ -122,7 +122,11 @@
     <!-- External Scripts -->
     <div id="footer-placeholder"></div>
 
+    <script src="/bootstrap-legacy.js"></script>
+
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="/auth-gate.js"></script>

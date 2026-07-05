@@ -48,10 +48,10 @@
                 </div>
 
                 <div class="action-grid">
-                    <button class="btn btn-primary w-100" id="btnGenerateScene">
+                    <button type="button" class="btn btn-primary w-100" id="btnGenerateScene">
                         <i class="fas fa-cubes"></i> Generate Scene
                     </button>
-                    <button class="btn btn-success w-100" id="btnBuildBVH" disabled>
+                    <button type="button" class="btn btn-success w-100" id="btnBuildBVH" disabled>
                         <i class="fas fa-sitemap"></i> Build BVH
                     </button>
                 </div>
@@ -60,9 +60,9 @@
             <div class="control-section render-controls">
                 <h4><i class="fas fa-camera"></i> Render Mode</h4>
                 <div class="view-toggles">
-                    <button class="view-btn active" data-mode="0" id="btnModeBVH">Accelerated (BVH)</button>
-                    <button class="view-btn" data-mode="1" id="btnModeBrute">Brute Force O(N)</button>
-                    <button class="view-btn" data-mode="2" id="btnModeHeatmap">BVH Heatmap</button>
+                    <button type="button" class="view-btn active" data-mode="0" id="btnModeBVH">Accelerated (BVH)</button>
+                    <button type="button" class="view-btn" data-mode="1" id="btnModeBrute">Brute Force O(N)</button>
+                    <button type="button" class="view-btn" data-mode="2" id="btnModeHeatmap">BVH Heatmap</button>
                 </div>
                 <p class="mode-desc" id="modeDesc">Fast $O(\log N)$ rendering using AABB spatial partitioning.</p>
             </div>

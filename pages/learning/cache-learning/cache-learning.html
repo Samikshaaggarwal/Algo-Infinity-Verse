@@ -53,7 +53,7 @@
   </div>
 
   <!-- Scroll to Top Button -->
-  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+  <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
     <i class="fas fa-arrow-up"></i>
   </button>
 
@@ -78,7 +78,7 @@
         <span class="typing-cursor">|</span>
       </div>
       <div class="hero-buttons">
-        <button class="btn btn-primary" onclick="document.getElementById('cache-learning').scrollIntoView({behavior: 'smooth'})">
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('cache-learning').scrollIntoView({behavior: 'smooth'})">
           <i class="fas fa-play"></i> Start Learning
         </button>
       </div>
@@ -132,14 +132,14 @@
         <aside class="api-sidebar" aria-label="Topic navigation">
           <div class="api-sidebar-title">Topics</div>
           <ul class="api-sidebar-nav" id="topicNav">
-            <li><a href="#" class="api-nav-link active" data-topic-id="hub"><span class="nav-icon">🏠</span> Hub Dashboard</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="1"><span class="nav-icon">📖</span> Introduction</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="2"><span class="nav-icon">🔄</span> LRU Cache Concept</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="3"><span class="nav-icon">⛓️</span> Doubly Linked List</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="4"><span class="nav-icon">💻</span> Implementing LRU</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="5"><span class="nav-icon">📊</span> LFU Cache Concept</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="6"><span class="nav-icon">🚀</span> Implementing LFU</a></li>
-            <li><a href="#" class="api-nav-link" data-topic-id="7"><span class="nav-icon">⭐</span> System Design Prep</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link active" data-topic-id="hub"><span class="nav-icon">🏠</span> Hub Dashboard</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="1"><span class="nav-icon">📖</span> Introduction</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="2"><span class="nav-icon">🔄</span> LRU Cache Concept</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="3"><span class="nav-icon">⛓️</span> Doubly Linked List</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="4"><span class="nav-icon">💻</span> Implementing LRU</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="5"><span class="nav-icon">📊</span> LFU Cache Concept</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="6"><span class="nav-icon">🚀</span> Implementing LFU</a></li>
+            <li><a href="javascript:void(0)" class="api-nav-link" data-topic-id="7"><span class="nav-icon">⭐</span> System Design Prep</a></li>
           </ul>
         </aside>
 
@@ -154,7 +154,10 @@
   <div id="footer-placeholder"></div>
 
   <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   <script src="./cache-learning.js"></script>
 

@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -78,7 +78,7 @@
               <label class="uf-label" for="ufNodeCount">Number of Elements (n)</label>
               <input type="number" id="ufNodeCount" class="uf-input" value="8" min="2" max="12" aria-label="Number of elements" />
             </div>
-            <button class="btn btn-primary uf-btn-primary" id="ufInitBtn">
+            <button type="button" class="btn btn-primary uf-btn-primary" id="ufInitBtn">
               <i class="fas fa-hammer"></i> Initialize
             </button>
           </div>
@@ -93,7 +93,7 @@
                 <input type="number" id="ufUnionA" class="uf-input-sm" value="0" min="0" aria-label="Union element A" placeholder="a" />
                 <span class="uf-op-sep">∪</span>
                 <input type="number" id="ufUnionB" class="uf-input-sm" value="1" min="0" aria-label="Union element B" placeholder="b" />
-                <button class="btn uf-op-btn uf-op-union" id="ufUnionBtn">Union</button>
+                <button type="button" class="btn uf-op-btn uf-op-union" id="ufUnionBtn">Union</button>
               </div>
             </div>
 
@@ -102,7 +102,7 @@
               <div class="uf-op-title"><i class="fas fa-search"></i> Find</div>
               <div class="uf-op-inputs">
                 <input type="number" id="ufFindX" class="uf-input-sm" value="0" min="0" aria-label="Find element" placeholder="x" />
-                <button class="btn uf-op-btn uf-op-find" id="ufFindBtn">Find Root</button>
+                <button type="button" class="btn uf-op-btn uf-op-find" id="ufFindBtn">Find Root</button>
               </div>
             </div>
 
@@ -113,7 +113,7 @@
                 <input type="number" id="ufConnA" class="uf-input-sm" value="0" min="0" aria-label="Connected element A" placeholder="a" />
                 <span class="uf-op-sep">↔</span>
                 <input type="number" id="ufConnB" class="uf-input-sm" value="1" min="0" aria-label="Connected element B" placeholder="b" />
-                <button class="btn uf-op-btn uf-op-conn" id="ufConnBtn">Check</button>
+                <button type="button" class="btn uf-op-btn uf-op-conn" id="ufConnBtn">Check</button>
               </div>
             </div>
 
@@ -121,13 +121,13 @@
 
           <!-- Playback -->
           <div class="uf-playback-row">
-            <button class="btn btn-secondary uf-pb-btn" id="ufStepBtn" disabled>
+            <button type="button" class="btn btn-secondary uf-pb-btn" id="ufStepBtn" disabled>
               <i class="fas fa-step-forward"></i> Step
             </button>
-            <button class="btn btn-secondary uf-pb-btn" id="ufPlayBtn" disabled>
+            <button type="button" class="btn btn-secondary uf-pb-btn" id="ufPlayBtn" disabled>
               <i class="fas fa-play"></i> Play All
             </button>
-            <button class="btn btn-secondary uf-pb-btn" id="ufResetBtn">
+            <button type="button" class="btn btn-secondary uf-pb-btn" id="ufResetBtn">
               <i class="fas fa-undo"></i> Reset
             </button>
             <div class="uf-speed-wrap">
@@ -243,7 +243,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="union-find-visualizer.js"></script>

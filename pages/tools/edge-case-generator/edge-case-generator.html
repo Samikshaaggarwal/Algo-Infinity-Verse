@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -93,14 +93,14 @@
           <div class="ecg-editor-header">
             <span class="ecg-editor-title"><i class="fas fa-terminal"></i> Your Solution</span>
             <div class="ecg-editor-actions">
-              <button id="ecgResetBtn" class="ecg-icon-btn" aria-label="Reset to template"><i class="fas fa-rotate-left"></i></button>
-              <button id="ecgCopyBtn" class="ecg-icon-btn" aria-label="Copy code"><i class="fas fa-copy"></i></button>
+              <button type="button" id="ecgResetBtn" class="ecg-icon-btn" aria-label="Reset to template"><i class="fas fa-rotate-left"></i></button>
+              <button type="button" id="ecgCopyBtn" class="ecg-icon-btn" aria-label="Copy code"><i class="fas fa-copy"></i></button>
             </div>
           </div>
           <textarea id="ecgEditor" class="ecg-textarea" spellcheck="false"></textarea>
           <div class="ecg-editor-footer">
             <span class="ecg-hint" id="ecgFunctionHint"></span>
-            <button id="ecgRunBtn" class="btn btn-primary ecg-run-btn">
+            <button type="button" id="ecgRunBtn" class="btn btn-primary ecg-run-btn">
               <i class="fas fa-flask"></i> Run Stress Test
             </button>
           </div>
@@ -119,7 +119,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./edge-case-generator.js"></script>
   

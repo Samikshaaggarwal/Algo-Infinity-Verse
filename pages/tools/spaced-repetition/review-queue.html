@@ -73,9 +73,9 @@
         <!-- Filter Tabs -->
         <div class="queue-filter-row" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; gap:1rem; flex-wrap:wrap; border-bottom:1px solid var(--glass-border); padding-bottom:0.75rem;">
           <div class="filter-tab-buttons" style="display:flex; gap:0.5rem;">
-            <button id="btnFilterAll" class="queue-tab-btn active" data-filter="all">All Reviews (<span id="countAll">0</span>)</button>
-            <button id="btnFilterDue" class="queue-tab-btn" data-filter="due">Due Now (<span id="countDue">0</span>)</button>
-            <button id="btnFilterUpcoming" class="queue-tab-btn" data-filter="upcoming">Upcoming (<span id="countUpcoming">0</span>)</button>
+            <button type="button" id="btnFilterAll" class="queue-tab-btn active" data-filter="all">All Reviews (<span id="countAll">0</span>)</button>
+            <button type="button" id="btnFilterDue" class="queue-tab-btn" data-filter="due">Due Now (<span id="countDue">0</span>)</button>
+            <button type="button" id="btnFilterUpcoming" class="queue-tab-btn" data-filter="upcoming">Upcoming (<span id="countUpcoming">0</span>)</button>
           </div>
           <div style="font-size:0.85rem; color:var(--text-secondary);">
             <i class="fas fa-info-circle"></i> Ratings update intervals instantly using the SM-2 algorithm.
@@ -104,7 +104,7 @@
             <span class="quiz-topic-badge" id="quizTopicBadge"></span>
             <span class="quiz-difficulty" id="quizDifficulty"></span>
             <h3 id="quizTitle">Problem Title</h3>
-            <button type="button" class="quiz-modal-close" id="quizModalClose" aria-label="Close" onclick="closeQuizEditor()">&times;</button>
+            <button type="button" class="quiz-modal-close" id="quizModalClose" aria-label="Close">&times;</button>
           </div>
         </div>
         <div class="quiz-modal-body">
@@ -185,16 +185,33 @@
                 <div class="code-editor">
                   <textarea id="codeEditor" class="code-textarea" spellcheck="false"></textarea>
                 </div>
+                <div class="output-panel" id="outputPanel">
+                  <button
+                    type="button"
+                    class="output-header"
+                    id="outputHeader"
+                    aria-controls="quizOutputContent"
+                    aria-expanded="true"
+                  >
+                    <span>Output</span>
+                    <i class="fas fa-chevron-down" id="outputToggleIcon"></i>
+                  </button>
+                  <div class="output-content" id="quizOutputContent">
+                    <p class="output-placeholder">
+                      Run your code to see output...
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="quiz-modal-footer" style="padding: 1rem; border-top: 1px solid var(--glass-border); display:flex; justify-content:space-between; align-items:center; background: rgba(0,0,0,0.2);">
           <div style="display:flex; gap:0.5rem;">
-            <button class="btn btn-outline" onclick="runQuizCode()">
+            <button type="button" class="btn btn-outline" id="quizRunBtn">
               <i class="fas fa-play"></i> Run
             </button>
-            <button class="btn btn-primary" onclick="submitQuizCode()">
+            <button type="button" class="btn btn-primary" id="quizSubmitBtn">
               <i class="fas fa-paper-plane"></i> Submit
             </button>
           </div>
@@ -212,7 +229,10 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="review-queue.js"></script>

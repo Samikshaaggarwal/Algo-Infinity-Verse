@@ -363,7 +363,7 @@ Node* removeElements(Node* head, int val) {
   // Event Listeners
   languageSelect.addEventListener('change', () => {
     if (tracking && editor.value.trim().length > 0) {
-      if (confirm('Changing the language will reset your current tracking session. Do you want to proceed?')) {
+      if (false /* confirm removed */) {
         resetState();
       } else {
         // Revert select option to matches current active editor

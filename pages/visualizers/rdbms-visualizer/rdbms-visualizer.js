@@ -168,13 +168,13 @@ function initRDBMS() {
 
 function bindEvents() {
     els.btnExecuteTx.addEventListener('click', () => {
-        if (!isEngineOnline) return alert("Database is offline! Recover from WAL first.");
+        if (!isEngineOnline) return console.warn("Alert:", "Database is offline! Recover from WAL first.");
         
         const rawKey = els.inputKey.value.trim();
         const k = Number(rawKey);
         const v = els.inputValue.value.trim();
         
-        if (!Number.isInteger(k) || !v) return alert("Provide a valid integer Key and Value.");
+        if (!Number.isInteger(k) || !v) return console.warn("Alert:", "Provide a valid integer Key and Value.");
         
         executeTransaction(k, v);
         
@@ -184,7 +184,7 @@ function bindEvents() {
     });
     
     els.btnRandomTx.addEventListener('click', () => {
-        if (!isEngineOnline) return alert("Database is offline! Recover from WAL first.");
+        if (!isEngineOnline) return console.warn("Alert:", "Database is offline! Recover from WAL first.");
         const k = Math.floor(Math.random() * 999) + 1;
         const v = `Data_${Math.random().toString(36).substr(2,4).toUpperCase()}`;
         executeTransaction(k, v);

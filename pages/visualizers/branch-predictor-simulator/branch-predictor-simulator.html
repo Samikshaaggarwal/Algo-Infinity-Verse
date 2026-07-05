@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -52,21 +52,21 @@
           <div class="bp-row">
             <span class="bp-row-label">Sequence Source</span>
             <div class="bp-source-btns">
-              <button class="bp-source-btn active" data-source="pattern">Pattern Generator</button>
-              <button class="bp-source-btn" data-source="random">Random</button>
-              <button class="bp-source-btn" data-source="sorted">Sorted Array Demo</button>
-              <button class="bp-source-btn" data-source="unsorted">Unsorted Array Demo</button>
+              <button type="button" class="bp-source-btn active" data-source="pattern">Pattern Generator</button>
+              <button type="button" class="bp-source-btn" data-source="random">Random</button>
+              <button type="button" class="bp-source-btn" data-source="sorted">Sorted Array Demo</button>
+              <button type="button" class="bp-source-btn" data-source="unsorted">Unsorted Array Demo</button>
             </div>
           </div>
 
           <div class="bp-row" id="bpPatternRow">
             <span class="bp-row-label">Pattern</span>
             <div class="bp-pattern-presets">
-              <button class="bp-pattern-btn active" data-pattern="TTTTTTTTTT">Always Taken</button>
-              <button class="bp-pattern-btn" data-pattern="NNNNNNNNNN">Never Taken</button>
-              <button class="bp-pattern-btn" data-pattern="TNTNTNTNTN">Alternating</button>
-              <button class="bp-pattern-btn" data-pattern="TTNTTNTTNT">Loop (2T1N)</button>
-              <button class="bp-pattern-btn" data-pattern="TTTTTNNNNN">Phase Change</button>
+              <button type="button" class="bp-pattern-btn active" data-pattern="TTTTTTTTTT">Always Taken</button>
+              <button type="button" class="bp-pattern-btn" data-pattern="NNNNNNNNNN">Never Taken</button>
+              <button type="button" class="bp-pattern-btn" data-pattern="TNTNTNTNTN">Alternating</button>
+              <button type="button" class="bp-pattern-btn" data-pattern="TTNTTNTTNT">Loop (2T1N)</button>
+              <button type="button" class="bp-pattern-btn" data-pattern="TTTTTNNNNN">Phase Change</button>
             </div>
           </div>
 
@@ -77,13 +77,13 @@
           </div>
 
           <div class="bp-row">
-            <button class="btn bp-btn-primary bp-run-btn" id="bpRunBtn">
+            <button type="button" class="btn bp-btn-primary bp-run-btn" id="bpRunBtn">
               <i class="fas fa-play"></i> Run All Predictors
             </button>
-            <button class="btn btn-secondary bp-step-btn" id="bpStepBtn" disabled>
+            <button type="button" class="btn btn-secondary bp-step-btn" id="bpStepBtn" disabled>
               <i class="fas fa-step-forward"></i> Step
             </button>
-            <button class="btn btn-secondary bp-reset-btn" id="bpResetBtn">
+            <button type="button" class="btn btn-secondary bp-reset-btn" id="bpResetBtn">
               <i class="fas fa-undo"></i> Reset
             </button>
             <div class="bp-step-ctr">Branch <span id="bpStepNum">0</span>/<span id="bpStepTotal">0</span></div>
@@ -181,7 +181,7 @@
         <div class="bp-demo-card">
           <div class="bp-card-title"><i class="fas fa-bolt"></i> The Famous "Sorted Array" Speedup</div>
           <p class="bp-demo-desc">This is the real-world case that made branch prediction famous on Stack Overflow. A loop filters an array with <code>if (arr[i] &gt;= threshold)</code>. Run it on sorted vs unsorted data — same data, same comparisons, wildly different branch predictability.</p>
-          <button class="btn bp-btn-primary bp-demo-run-btn" id="bpDemoRunBtn">
+          <button type="button" class="btn bp-btn-primary bp-demo-run-btn" id="bpDemoRunBtn">
             <i class="fas fa-flask"></i> Run Sorted vs Unsorted Comparison
           </button>
           <div class="bp-demo-results hidden" id="bpDemoResults">
@@ -208,7 +208,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="branch-predictor-simulator.js"></script>

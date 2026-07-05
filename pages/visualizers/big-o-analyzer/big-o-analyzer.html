@@ -101,7 +101,7 @@
               </select>
             </div>
           </div>
-          <button id="startQuizBtn" class="btn btn-primary"><i class="fas fa-play"></i> Start Quiz</button>
+          <button type="button" id="startQuizBtn" class="btn btn-primary"><i class="fas fa-play"></i> Start Quiz</button>
         </div>
 
         <div class="quiz-container hidden" id="quizContainer">
@@ -127,7 +127,7 @@
             <div class="glass-card explanation-card hidden" id="explanationCard">
               <h3 id="feedbackTitle"><i class="fas fa-check-circle"></i> Correct!</h3>
               <p id="explanationText">Explanation goes here.</p>
-              <button id="nextQuestionBtn" class="btn btn-secondary">Next Question <i class="fas fa-arrow-right"></i></button>
+              <button type="button" id="nextQuestionBtn" class="btn btn-secondary">Next Question <i class="fas fa-arrow-right"></i></button>
             </div>
           </div>
 
@@ -170,8 +170,8 @@
           </div>
           <p id="finalMessage">Great job! Keep practicing to master Big O.</p>
           <div class="game-over-actions">
-            <button id="restartBtn" class="btn btn-primary"><i class="fas fa-redo"></i> Play Again</button>
-            <button id="shareBtn" class="btn btn-secondary"><i class="fas fa-share-alt"></i> Share Score</button>
+            <button type="button" id="restartBtn" class="btn btn-primary"><i class="fas fa-redo"></i> Play Again</button>
+            <button type="button" id="shareBtn" class="btn btn-secondary"><i class="fas fa-share-alt"></i> Share Score</button>
           </div>
         </div>
 
@@ -183,7 +183,10 @@
 
     <!-- Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="big-o-analyzer.js"></script>
   

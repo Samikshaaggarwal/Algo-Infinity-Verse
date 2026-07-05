@@ -87,7 +87,7 @@
                 </div>
               </div>
               
-              <button id="btnClearFilters" class="btn btn-secondary" style="width:100%; justify-content:center; display:flex; align-items:center; gap:0.5rem; margin-top:1rem;">
+              <button type="button" id="btnClearFilters" class="btn btn-secondary" style="width:100%; justify-content:center; display:flex; align-items:center; gap:0.5rem; margin-top:1rem;">
                 <i class="fas fa-undo"></i> Reset Filters
               </button>
             </div>
@@ -113,7 +113,7 @@
             <span id="modalProblemCategory" class="badge">Arrays</span>
             <h2 id="modalProblemTitle" style="margin: 0.5rem 0 0 0; font-family:'Orbitron',sans-serif;">Problem Title</h2>
           </div>
-          <button class="quiz-modal-close" onclick="closeNotesDetailModal()" style="background:none; border:none; color:var(--text-secondary); font-size:1.5rem; cursor:pointer;">&times;</button>
+          <button type="button" class="quiz-modal-close" onclick="closeNotesDetailModal()" style="background:none; border:none; color:var(--text-secondary); font-size:1.5rem; cursor:pointer;">&times;</button>
         </div>
 
         <div id="modalTagsContainer" class="tag-row" style="margin-bottom: 1.5rem; display:flex; gap:0.5rem; flex-wrap:wrap;"></div>
@@ -141,8 +141,8 @@
         </div>
 
         <div style="display:flex; gap:1rem; margin-top:2rem; justify-content:flex-end; border-top:1px solid var(--glass-border); padding-top:1.25rem;">
-          <button class="btn btn-secondary" onclick="closeNotesDetailModal()">Close</button>
-          <button id="btnModalPractice" class="btn btn-primary"><i class="fas fa-rocket"></i> Practice Problem</button>
+          <button type="button" class="btn btn-secondary" onclick="closeNotesDetailModal()">Close</button>
+          <button type="button" id="btnModalPractice" class="btn btn-primary"><i class="fas fa-rocket"></i> Practice Problem</button>
         </div>
       </div>
     </div>
@@ -246,7 +246,7 @@
           </div>
         </div>
         <div class="quiz-modal-footer" style="padding: 1rem; border-top: 1px solid var(--glass-border); text-align: right; background: rgba(0,0,0,0.2);">
-          <button class="btn btn-secondary" onclick="closeQuizEditor()">Close</button>
+          <button type="button" class="btn btn-secondary" onclick="closeQuizEditor()">Close</button>
         </div>
       </div>
     </div>
@@ -254,7 +254,10 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="my-notes.js"></script>

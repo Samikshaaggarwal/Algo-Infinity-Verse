@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── Speed map ─── */
-var SL_SPEED = { 1: 1200, 2: 700, 3: 400, 4: 180, 5: 60 };
-var SL_SPEED_LABEL = { 1: 'Slowest', 2: 'Slow', 3: 'Normal', 4: 'Fast', 5: 'Blazing' };
+let SL_SPEED = { 1: 1200, 2: 700, 3: 400, 4: 180, 5: 60 };
+let SL_SPEED_LABEL = { 1: 'Slowest', 2: 'Slow', 3: 'Normal', 4: 'Fast', 5: 'Blazing' };
 
 /* ─── Colors ─── */
-var SL_COL = {
+let SL_COL = {
   DEFAULT : { fill: 'rgba(100,116,139,0.2)', stroke: '#64748b', text: '#94a3b8' },
   ACTIVE  : { fill: 'rgba(168,85,247,0.3)',  stroke: '#a855f7', text: '#e9d5ff' },
   FOUND   : { fill: 'rgba(34,197,94,0.3)',   stroke: '#22c55e', text: '#bbf7d0' },
@@ -25,7 +25,7 @@ function slMakeNode(val, level) {
   return { val: val, level: level, forward: new Array(level + 1).fill(null) };
 }
 
-var slList = {
+let slList = {
   maxLevel: 6,
   prob    : 0.5,
   level   : 0,
@@ -39,20 +39,20 @@ function slInit(prob) {
 }
 
 function slRandomLevel() {
-  var lvl = 0;
+  let lvl = 0;
   while (Math.random() < slList.prob && lvl < slList.maxLevel) lvl++;
   return lvl;
 }
 
 /* ─── Insert (returns steps) ─── */
 function slGenInsertSteps(val) {
-  var steps = [];
-  var update = new Array(slList.maxLevel + 1).fill(null);
-  var curr   = slList.header;
+  let steps = [];
+  let update = new Array(slList.maxLevel + 1).fill(null);
+  let curr   = slList.header;
 
   steps.push({ type: 'start', msg: 'Insert(' + val + '): Starting from header at level ' + slList.level });
 
-  for (var i = slList.level; i >= 0; i--) {
+  for (let i = slList.level; i >= 0; i--) {
     while (curr.forward[i] !== null && curr.forward[i].val < val) {
       steps.push({ type: 'traverse', node: curr.forward[i].val, level: i, color: 'PATH',
         msg: 'Level ' + i + ': ' + curr.forward[i].val + ' < ' + val + ', move right' });
@@ -64,25 +64,25 @@ function slGenInsertSteps(val) {
   }
 
   // Check duplicate
-  var existing = curr.forward[0];
+  let existing = curr.forward[0];
   if (existing !== null && existing.val === val) {
     steps.push({ type: 'duplicate', msg: 'Insert(' + val + '): Value already exists! Skipping.', result: 'duplicate' });
     return steps;
   }
 
-  var newLevel = slRandomLevel();
+  let newLevel = slRandomLevel();
   steps.push({ type: 'level-gen', newLevel: newLevel,
     msg: 'Coin flip result: new node gets ' + (newLevel + 1) + ' level(s)' });
 
   if (newLevel > slList.level) {
-    for (var j = slList.level + 1; j <= newLevel; j++) update[j] = slList.header;
+    for (let j = slList.level + 1; j <= newLevel; j++) update[j] = slList.header;
     slList.level = newLevel;
     steps.push({ type: 'level-up', level: newLevel,
       msg: 'Skip list height increased to level ' + newLevel });
   }
 
-  var newNode = slMakeNode(val, newLevel);
-  for (var k = 0; k <= newLevel; k++) {
+  let newNode = slMakeNode(val, newLevel);
+  for (let k = 0; k <= newLevel; k++) {
     newNode.forward[k] = update[k].forward[k];
     update[k].forward[k] = newNode;
   }
@@ -95,12 +95,12 @@ function slGenInsertSteps(val) {
 
 /* ─── Search (returns steps) ─── */
 function slGenSearchSteps(val) {
-  var steps = [];
-  var curr  = slList.header;
+  let steps = [];
+  let curr  = slList.header;
 
   steps.push({ type: 'start', msg: 'Search(' + val + '): Starting from header at level ' + slList.level });
 
-  for (var i = slList.level; i >= 0; i--) {
+  for (let i = slList.level; i >= 0; i--) {
     while (curr.forward[i] !== null && curr.forward[i].val < val) {
       steps.push({ type: 'traverse', node: curr.forward[i].val, level: i, color: 'PATH',
         msg: 'Level ' + i + ': ' + curr.forward[i].val + ' < ' + val + ', move right' });
@@ -110,7 +110,7 @@ function slGenSearchSteps(val) {
       msg: 'Level ' + i + ': next ≥ target or null, drop down' });
   }
 
-  var target = curr.forward[0];
+  let target = curr.forward[0];
   if (target !== null && target.val === val) {
     steps.push({ type: 'found', node: val, color: 'FOUND',
       msg: 'Found ' + val + ' at level 0 ✅', result: 'found' });
@@ -123,13 +123,13 @@ function slGenSearchSteps(val) {
 
 /* ─── Delete (returns steps) ─── */
 function slGenDeleteSteps(val) {
-  var steps  = [];
-  var update = new Array(slList.maxLevel + 1).fill(null);
-  var curr   = slList.header;
+  let steps  = [];
+  let update = new Array(slList.maxLevel + 1).fill(null);
+  let curr   = slList.header;
 
   steps.push({ type: 'start', msg: 'Delete(' + val + '): Finding update pointers' });
 
-  for (var i = slList.level; i >= 0; i--) {
+  for (let i = slList.level; i >= 0; i--) {
     while (curr.forward[i] !== null && curr.forward[i].val < val) {
       steps.push({ type: 'traverse', node: curr.forward[i].val, level: i, color: 'PATH',
         msg: 'Level ' + i + ': ' + curr.forward[i].val + ' < ' + val + ', move right' });
@@ -138,7 +138,7 @@ function slGenDeleteSteps(val) {
     update[i] = curr;
   }
 
-  var target = curr.forward[0];
+  let target = curr.forward[0];
   if (target === null || target.val !== val) {
     steps.push({ type: 'not-found', msg: 'Delete(' + val + '): Value not found ❌', result: 'not-found' });
     return steps;
@@ -147,7 +147,7 @@ function slGenDeleteSteps(val) {
   steps.push({ type: 'mark-delete', node: val, color: 'DELETED',
     msg: 'Found ' + val + ', marking for deletion' });
 
-  for (var k = 0; k <= slList.level; k++) {
+  for (let k = 0; k <= slList.level; k++) {
     if (update[k].forward[k] !== target) break;
     update[k].forward[k] = target.forward[k];
     steps.push({ type: 'unlink', node: val, level: k,
@@ -165,7 +165,7 @@ function slGenDeleteSteps(val) {
 }
 
 /* ─── State ─── */
-var slState = {
+let slState = {
   built   : false,
   steps   : [],
   stepIdx : 0,
@@ -175,37 +175,37 @@ var slState = {
 };
 
 /* ─── Canvas Draw ─── */
-var SL_NODE_W  = 46;
-var SL_NODE_H  = 28;
-var SL_LEVEL_H = 52;
-var SL_PAD_X   = 30;
-var SL_PAD_Y   = 20;
+let SL_NODE_W  = 46;
+let SL_NODE_H  = 28;
+let SL_LEVEL_H = 52;
+let SL_PAD_X   = 30;
+let SL_PAD_Y   = 20;
 
 function slGetNodes() {
-  var nodes = [];
-  var curr  = slList.header.forward[0];
+  let nodes = [];
+  let curr  = slList.header.forward[0];
   while (curr) { nodes.push(curr); curr = curr.forward[0]; }
   return nodes;
 }
 
 function slDraw() {
-  var canvas = document.getElementById('slCanvas');
+  let canvas = document.getElementById('slCanvas');
   if (!canvas) return;
-  var ctx    = canvas.getContext('2d');
-  var W      = canvas.width;
-  var maxLev = slList.level;
-  var nodes  = slGetNodes();
-  var n      = nodes.length;
-  var H      = (maxLev + 2) * SL_LEVEL_H + SL_PAD_Y * 2;
+  let ctx    = canvas.getContext('2d');
+  let W      = canvas.width;
+  let maxLev = slList.level;
+  let nodes  = slGetNodes();
+  let n      = nodes.length;
+  let H      = (maxLev + 2) * SL_LEVEL_H + SL_PAD_Y * 2;
   canvas.height = Math.max(240, H);
   ctx.clearRect(0, 0, W, H);
 
   if (!slState.built && n === 0) return;
 
   // X positions: sentinel + nodes
-  var allNodes = ['header'].concat(nodes.map(function(nd) { return nd.val; }));
-  var xPos = {};
-  var gap   = Math.min(80, Math.floor((W - SL_PAD_X * 2 - SL_NODE_W) / Math.max(n + 1, 1)));
+  let allNodes = ['header'].concat(nodes.map(function(nd) { return nd.val; }));
+  let xPos = {};
+  let gap   = Math.min(80, Math.floor((W - SL_PAD_X * 2 - SL_NODE_W) / Math.max(n + 1, 1)));
   gap = Math.max(56, gap);
   allNodes.forEach(function(v, i) { xPos[v === 'header' ? '__header__' : v] = SL_PAD_X + i * gap + SL_NODE_W / 2; });
 
@@ -213,7 +213,7 @@ function slDraw() {
   function yOf(lev) { return H - SL_PAD_Y - (lev + 1) * SL_LEVEL_H + SL_LEVEL_H / 2; }
 
   // Draw level labels
-  for (var lev = 0; lev <= maxLev; lev++) {
+  for (let lev = 0; lev <= maxLev; lev++) {
     ctx.fillStyle = 'rgba(148,163,184,0.5)';
     ctx.font      = '11px Poppins,sans-serif';
     ctx.textAlign = 'left';
@@ -221,8 +221,8 @@ function slDraw() {
   }
 
   // Draw horizontal lines per level
-  for (var lv = 0; lv <= maxLev; lv++) {
-    var y = yOf(lv);
+  for (let lv = 0; lv <= maxLev; lv++) {
+    let y = yOf(lv);
     ctx.strokeStyle = 'rgba(100,116,139,0.15)';
     ctx.lineWidth   = 1;
     ctx.setLineDash([4, 4]);
@@ -242,11 +242,11 @@ function slDraw() {
     ctx.lineTo(x2 - SL_NODE_W / 2, y2);
     ctx.stroke();
     // Arrow head
-    var dx = (x2 - SL_NODE_W / 2) - (x1 + SL_NODE_W / 2);
-    var dy = y2 - y1;
-    var len = Math.sqrt(dx*dx + dy*dy);
+    let dx = (x2 - SL_NODE_W / 2) - (x1 + SL_NODE_W / 2);
+    let dy = y2 - y1;
+    let len = Math.sqrt(dx*dx + dy*dy);
     if (len < 1) return;
-    var ux = dx/len, uy = dy/len;
+    let ux = dx/len, uy = dy/len;
     ctx.fillStyle = col || 'rgba(100,116,139,0.4)';
     ctx.beginPath();
     ctx.moveTo(x2 - SL_NODE_W/2, y2);
@@ -257,10 +257,10 @@ function slDraw() {
   }
 
   // Header arrows
-  for (var lev2 = 0; lev2 <= maxLev; lev2++) {
-    var hx = xOf(-Infinity);
-    var hy = yOf(lev2);
-    var fwd = slList.header.forward[lev2];
+  for (let lev2 = 0; lev2 <= maxLev; lev2++) {
+    let hx = xOf(-Infinity);
+    let hy = yOf(lev2);
+    let fwd = slList.header.forward[lev2];
     if (fwd) {
       drawArrow(hx, hy, xOf(fwd.val), yOf(lev2), 'rgba(245,158,11,0.5)');
     }
@@ -268,21 +268,21 @@ function slDraw() {
 
   // Node arrows
   nodes.forEach(function(nd) {
-    var nx = xOf(nd.val);
-    for (var lev3 = 0; lev3 <= nd.level; lev3++) {
-      var ny = yOf(lev3);
+    let nx = xOf(nd.val);
+    for (let lev3 = 0; lev3 <= nd.level; lev3++) {
+      let ny = yOf(lev3);
       if (nd.forward[lev3]) {
-        var col = slState.nodeCol[nd.val] === 'PATH' ? '#06b6d4' : 'rgba(100,116,139,0.35)';
+        let col = slState.nodeCol[nd.val] === 'PATH' ? '#06b6d4' : 'rgba(100,116,139,0.35)';
         drawArrow(nx, ny, xOf(nd.forward[lev3].val), yOf(lev3), col);
       }
     }
   });
 
   // Draw header sentinel
-  var hxPos = xOf(-Infinity);
-  for (var lev4 = 0; lev4 <= maxLev; lev4++) {
-    var hcol = SL_COL.SENTINEL;
-    var hy2  = yOf(lev4);
+  let hxPos = xOf(-Infinity);
+  for (let lev4 = 0; lev4 <= maxLev; lev4++) {
+    let hcol = SL_COL.SENTINEL;
+    let hy2  = yOf(lev4);
     ctx.beginPath();
     ctx.roundRect(hxPos - SL_NODE_W/2, hy2 - SL_NODE_H/2, SL_NODE_W, SL_NODE_H, 6);
     ctx.fillStyle   = hcol.fill;
@@ -299,12 +299,12 @@ function slDraw() {
 
   // Draw nodes
   nodes.forEach(function(nd) {
-    var nx   = xOf(nd.val);
-    var ckey = slState.nodeCol[nd.val] || 'DEFAULT';
-    var col  = SL_COL[ckey] || SL_COL.DEFAULT;
+    let nx   = xOf(nd.val);
+    let ckey = slState.nodeCol[nd.val] || 'DEFAULT';
+    let col  = SL_COL[ckey] || SL_COL.DEFAULT;
 
-    for (var lev5 = 0; lev5 <= maxLev; lev5++) {
-      var ny = yOf(lev5);
+    for (let lev5 = 0; lev5 <= maxLev; lev5++) {
+      let ny = yOf(lev5);
       if (lev5 <= nd.level) {
         ctx.beginPath();
         ctx.roundRect(nx - SL_NODE_W/2, ny - SL_NODE_H/2, SL_NODE_W, SL_NODE_H, 6);
@@ -332,16 +332,16 @@ function slDraw() {
 
 /* ─── Update Table ─── */
 function slUpdateTable() {
-  var tbody = document.getElementById('slTableBody');
+  let tbody = document.getElementById('slTableBody');
   if (!tbody) return;
-  var nodes = slGetNodes();
+  let nodes = slGetNodes();
   if (nodes.length === 0) {
     tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text-secondary);font-style:italic">No nodes yet.</td></tr>';
     return;
   }
   tbody.innerHTML = nodes.map(function(nd) {
-    var ckey = slState.nodeCol[nd.val] || 'DEFAULT';
-    var statusMap = { DEFAULT: '—', ACTIVE: '🟣 Visiting', FOUND: '✅ Found', PATH: '🔵 In Path', DELETED: '🔴 Deleting' };
+    let ckey = slState.nodeCol[nd.val] || 'DEFAULT';
+    let statusMap = { DEFAULT: '—', ACTIVE: '🟣 Visiting', FOUND: '✅ Found', PATH: '🔵 In Path', DELETED: '🔴 Deleting' };
     return '<tr>' +
       '<td>' + nd.val + '</td>' +
       '<td>' + (nd.level + 1) + ' (0–' + nd.level + ')</td>' +
@@ -352,11 +352,11 @@ function slUpdateTable() {
 
 /* ─── Log ─── */
 function slAddLog(msg, type) {
-  var log = document.getElementById('slLog');
+  let log = document.getElementById('slLog');
   if (!log) return;
-  var empty = log.querySelector('.sl-log-empty');
+  let empty = log.querySelector('.sl-log-empty');
   if (empty) empty.remove();
-  var entry = document.createElement('div');
+  let entry = document.createElement('div');
   entry.className = 'sl-log-entry ' + (type || '');
   entry.textContent = msg;
   log.insertBefore(entry, log.firstChild);
@@ -364,10 +364,10 @@ function slAddLog(msg, type) {
 
 /* ─── Apply step ─── */
 function slApplyStep(step) {
-  var statusEl = document.getElementById('slStatus');
+  let statusEl = document.getElementById('slStatus');
   if (statusEl && step.msg) {
     statusEl.textContent = step.msg;
-    var cls = step.type === 'inserted' || step.type === 'deleted' ? 'done' :
+    let cls = step.type === 'inserted' || step.type === 'deleted' ? 'done' :
               step.type === 'not-found' || step.type === 'duplicate' ? 'error' :
               step.type.indexOf('delete') !== -1 || step.type === 'mark-delete' || step.type === 'unlink' ? 'delete' :
               step.type === 'found' ? 'done' : 'search';
@@ -385,7 +385,7 @@ function slApplyStep(step) {
 
 /* ─── Playback ─── */
 function slGetDelay() {
-  var el = document.getElementById('slSpeed');
+  let el = document.getElementById('slSpeed');
   return SL_SPEED[el ? el.value : 3] || 400;
 }
 
@@ -424,16 +424,16 @@ function slStep() {
 }
 
 function slUpdatePBBtns() {
-  var stepBtn = document.getElementById('slStepBtn');
-  var playBtn = document.getElementById('slPlayBtn');
-  var has = slState.steps.length > 0;
+  let stepBtn = document.getElementById('slStepBtn');
+  let playBtn = document.getElementById('slPlayBtn');
+  let has = slState.steps.length > 0;
   if (stepBtn) stepBtn.disabled = !has || slState.stepIdx >= slState.steps.length;
   if (playBtn) playBtn.disabled = slState.playing || !has || slState.stepIdx >= slState.steps.length;
 }
 
 function slUpdateStepCounter() {
-  var n = document.getElementById('slStepNum');
-  var t = document.getElementById('slStepTotal');
+  let n = document.getElementById('slStepNum');
+  let t = document.getElementById('slStepTotal');
   if (n) n.textContent = slState.stepIdx;
   if (t) t.textContent = slState.steps.length;
 }
@@ -444,8 +444,8 @@ function slResetColors() {
 
 /* ─── Operations ─── */
 function slDoInsert() {
-  var el  = document.getElementById('slInsertVal');
-  var val = parseInt(el ? el.value : 0);
+  let el  = document.getElementById('slInsertVal');
+  let val = parseInt(el ? el.value : 0);
   if (isNaN(val)) { slSetStatus('Please enter a valid integer.', 'error'); return; }
 
   slStopPlay();
@@ -457,11 +457,11 @@ function slDoInsert() {
   slSetStatus('Insert(' + val + ') ready. Press Step or Play.', 'insert');
   slAddLog('Insert(' + val + ')', 'insert');
 
-  var emptyEl = document.getElementById('slCanvasEmpty');
+  let emptyEl = document.getElementById('slCanvasEmpty');
   if (emptyEl) emptyEl.classList.add('hidden');
   slState.built = true;
 
-  var canvas = document.getElementById('slCanvas');
+  let canvas = document.getElementById('slCanvas');
   if (canvas) {
     canvas.width = canvas.parentElement ? canvas.parentElement.clientWidth : 800;
     slDraw();
@@ -469,8 +469,8 @@ function slDoInsert() {
 }
 
 function slDoSearch() {
-  var el  = document.getElementById('slSearchVal');
-  var val = parseInt(el ? el.value : 0);
+  let el  = document.getElementById('slSearchVal');
+  let val = parseInt(el ? el.value : 0);
   if (isNaN(val)) { slSetStatus('Please enter a valid integer.', 'error'); return; }
   if (!slState.built) { slSetStatus('Insert some values first.', 'error'); return; }
 
@@ -486,8 +486,8 @@ function slDoSearch() {
 }
 
 function slDoDelete() {
-  var el  = document.getElementById('slDeleteVal');
-  var val = parseInt(el ? el.value : 0);
+  let el  = document.getElementById('slDeleteVal');
+  let val = parseInt(el ? el.value : 0);
   if (isNaN(val)) { slSetStatus('Please enter a valid integer.', 'error'); return; }
   if (!slState.built) { slSetStatus('Insert some values first.', 'error'); return; }
 
@@ -503,29 +503,29 @@ function slDoDelete() {
 }
 
 function slSetStatus(msg, cls) {
-  var el = document.getElementById('slStatus');
+  let el = document.getElementById('slStatus');
   if (el) { el.textContent = msg; el.className = 'sl-status ' + (cls || ''); }
 }
 
 function slDoReset() {
   slStopPlay();
-  var prob = parseFloat(document.getElementById('slProbVal').textContent.replace('p = ', '')) || 0.5;
+  let prob = parseFloat(document.getElementById('slProbVal').textContent.replace('p = ', '')) || 0.5;
   slInit(prob);
   slState.built   = false;
   slState.steps   = [];
   slState.stepIdx = 0;
   slState.nodeCol = {};
 
-  var emptyEl = document.getElementById('slCanvasEmpty');
+  let emptyEl = document.getElementById('slCanvasEmpty');
   if (emptyEl) emptyEl.classList.remove('hidden');
 
-  var canvas = document.getElementById('slCanvas');
+  let canvas = document.getElementById('slCanvas');
   if (canvas) {
-    var ctx = canvas.getContext('2d');
+    let ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
-  var logEl = document.getElementById('slLog');
+  let logEl = document.getElementById('slLog');
   if (logEl) logEl.innerHTML = '<div class="sl-log-empty">No operations yet.</div>';
 
   slUpdateTable();
@@ -538,16 +538,16 @@ function slDoReset() {
 function slInitControls() {
   slInit(0.5);
 
-  var insertBtn  = document.getElementById('slInsertBtn');
-  var searchBtn  = document.getElementById('slSearchBtn');
-  var deleteBtn  = document.getElementById('slDeleteBtn');
-  var stepBtn    = document.getElementById('slStepBtn');
-  var playBtn    = document.getElementById('slPlayBtn');
-  var resetBtn   = document.getElementById('slResetBtn');
-  var presetBtn  = document.getElementById('slPresetBtn');
-  var clearBtn   = document.getElementById('slClearBtn');
-  var probSl     = document.getElementById('slProb');
-  var speedSl    = document.getElementById('slSpeed');
+  let insertBtn  = document.getElementById('slInsertBtn');
+  let searchBtn  = document.getElementById('slSearchBtn');
+  let deleteBtn  = document.getElementById('slDeleteBtn');
+  let stepBtn    = document.getElementById('slStepBtn');
+  let playBtn    = document.getElementById('slPlayBtn');
+  let resetBtn   = document.getElementById('slResetBtn');
+  let presetBtn  = document.getElementById('slPresetBtn');
+  let clearBtn   = document.getElementById('slClearBtn');
+  let probSl     = document.getElementById('slProb');
+  let speedSl    = document.getElementById('slSpeed');
 
   if (insertBtn) insertBtn.addEventListener('click', slDoInsert);
   if (searchBtn) searchBtn.addEventListener('click', slDoSearch);
@@ -558,8 +558,8 @@ function slInitControls() {
 
   if (probSl) {
     probSl.addEventListener('input', function() {
-      var p = (parseInt(probSl.value) / 10).toFixed(1);
-      var lbl = document.getElementById('slProbVal');
+      let p = (parseInt(probSl.value) / 10).toFixed(1);
+      let lbl = document.getElementById('slProbVal');
       if (lbl) lbl.textContent = 'p = ' + p;
       slList.prob = parseFloat(p);
     });
@@ -567,7 +567,7 @@ function slInitControls() {
 
   if (speedSl) {
     speedSl.addEventListener('input', function() {
-      var lbl = document.getElementById('slSpeedVal');
+      let lbl = document.getElementById('slSpeedVal');
       if (lbl) lbl.textContent = SL_SPEED_LABEL[speedSl.value] || 'Normal';
       if (slState.playing) { slStopPlay(); slPlay(); }
     });
@@ -576,29 +576,29 @@ function slInitControls() {
   if (presetBtn) {
     presetBtn.addEventListener('click', function() {
       slDoReset();
-      var vals = [3, 6, 7, 9, 12, 19, 21, 25];
+      let vals = [3, 6, 7, 9, 12, 19, 21, 25];
       vals.forEach(function(v) {
         // Directly insert without animation for preset
-        var update = new Array(slList.maxLevel + 1).fill(null);
-        var curr   = slList.header;
-        for (var i = slList.level; i >= 0; i--) {
+        let update = new Array(slList.maxLevel + 1).fill(null);
+        let curr   = slList.header;
+        for (let i = slList.level; i >= 0; i--) {
           while (curr.forward[i] !== null && curr.forward[i].val < v) curr = curr.forward[i];
           update[i] = curr;
         }
         if (curr.forward[0] && curr.forward[0].val === v) return;
-        var lvl = slRandomLevel();
+        let lvl = slRandomLevel();
         if (lvl > slList.level) {
-          for (var j = slList.level + 1; j <= lvl; j++) update[j] = slList.header;
+          for (let j = slList.level + 1; j <= lvl; j++) update[j] = slList.header;
           slList.level = lvl;
         }
-        var nd = slMakeNode(v, lvl);
-        for (var k = 0; k <= lvl; k++) { nd.forward[k] = update[k].forward[k]; update[k].forward[k] = nd; }
+        let nd = slMakeNode(v, lvl);
+        for (let k = 0; k <= lvl; k++) { nd.forward[k] = update[k].forward[k]; update[k].forward[k] = nd; }
       });
 
       slState.built = true;
-      var emptyEl = document.getElementById('slCanvasEmpty');
+      let emptyEl = document.getElementById('slCanvasEmpty');
       if (emptyEl) emptyEl.classList.add('hidden');
-      var canvas = document.getElementById('slCanvas');
+      let canvas = document.getElementById('slCanvas');
       if (canvas) {
         canvas.width = canvas.parentElement ? canvas.parentElement.clientWidth : 800;
         slDraw();
@@ -613,7 +613,7 @@ function slInitControls() {
 
   // Allow Enter key in inputs
   ['slInsertVal','slSearchVal','slDeleteVal'].forEach(function(id) {
-    var inp = document.getElementById(id);
+    let inp = document.getElementById(id);
     if (!inp) return;
     inp.addEventListener('keydown', function(e) {
       if (e.key !== 'Enter') return;
@@ -626,7 +626,7 @@ function slInitControls() {
   // Resize
   window.addEventListener('resize', function() {
     if (!slState.built) return;
-    var canvas = document.getElementById('slCanvas');
+    let canvas = document.getElementById('slCanvas');
     if (!canvas) return;
     canvas.width = canvas.parentElement ? canvas.parentElement.clientWidth : 800;
     slDraw();

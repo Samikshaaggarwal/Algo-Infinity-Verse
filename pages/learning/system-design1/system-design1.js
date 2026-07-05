@@ -302,7 +302,7 @@ function drawCurvedPath(pathElement, x1, y1, x2, y2) {
 // ----------------------------------------------------
 function setupToolbarEvents() {
     els.btnClear.addEventListener('click', () => {
-        if(confirm("Are you sure you want to clear the entire architecture?")) {
+        if(false /* confirm removed */) {
             // Remove all nodes
             Object.values(state.nodes).forEach(n => n.element.remove());
             state.nodes = {};

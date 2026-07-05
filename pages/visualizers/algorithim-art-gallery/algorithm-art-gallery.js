@@ -72,12 +72,22 @@ function initArtGallery() {
 
   randomBtn.addEventListener("click", () => {
     const algorithms = ["bubble", "selection", "insertion", "merge", "quick"];
+    const styles = ["particles", "spiral", "wave", "galaxy", "mandala"];
 
     algorithmSelect.value =
       algorithms[Math.floor(Math.random() * algorithms.length)];
 
+    const artStyle = document.getElementById("artStyle").value;
+      styles[Math.floor(Math.random() * styles.length)];
+
+    sizeSlider.value = Math.floor(Math.random() * 191) + 10;
+
+    speedSlider.value = Math.floor(Math.random() * 10) + 1;
+
+    document.getElementById("sizeValue").textContent = sizeSlider.value;
+
     generateArtwork();
-  });
+});
 
   const sizeSlider = document.getElementById("sizeSlider");
   const shapeCount = document.getElementById("shapeCount");
@@ -110,26 +120,27 @@ let stopDrawing = false;
     );
 
     const algorithm = algorithmSelect.value;
+    const artStyle = document.getElementById("artStyle").value;
 
     switch (algorithm) {
       case "bubble":
-        await bubbleArt(arr);
+       await bubbleArt(arr, artStyle);
         break;
 
       case "selection":
-        await selectionArt(arr);
+        await selectionArt(arr, artStyle);
         break;
 
       case "merge":
-        await mergeArt(arr);
+        await mergeArt(arr, artStyle);
         break;
 
       case "quick":
-        await quickArt(arr);
+        await quickArt(arr, artStyle);
         break;
 
       case "insertion":
-        await insertionArt(arr);
+        await insertionArt(arr, artStyle);
         break;
     }
   }
@@ -142,14 +153,14 @@ let stopDrawing = false;
       Bubble Sort Painting
   -------------------------- */
 
-  async function bubbleArt(arr) {
+  async function bubbleArt(arr,style) {
     const delay = parseInt(speedSlider.value);
 
     for (let i = 0; i < arr.length; i++) {
       if (stopDrawing) return;
       for (let j = 0; j < arr.length - i - 1; j++) {
         if (stopDrawing) return;
-        drawBubbleStroke(j, arr[j]);
+        drawBubbleStroke(j, arr[j], artStyle);
 
         if (arr[j] > arr[j + 1]) {
           [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
@@ -160,24 +171,76 @@ let stopDrawing = false;
     }
   }
 
-  function drawBubbleStroke(x, value) {
+  function drawBubbleStroke(x, value, style) {
     ctx.beginPath();
 
-    ctx.arc(x * 10, canvas.height - value, value / 30, 0, Math.PI * 2);
+switch (style) {
 
+case "particles":
+    ctx.arc(x * 10, canvas.height - value, value / 30, 0, Math.PI * 2);
     ctx.stroke();
+    break;
+
+case "spiral":
+    ctx.arc(
+        canvas.width / 2 + Math.cos(x * 0.3) * value,
+        canvas.height / 2 + Math.sin(x * 0.3) * value,
+        3,
+        0,
+        Math.PI * 2
+    );
+    ctx.fill();
+    break;
+
+case "wave":
+    ctx.arc(
+        x * 10,
+        canvas.height / 2 + Math.sin(x * 0.2) * value * 0.4,
+        3,
+        0,
+        Math.PI * 2
+    );
+    ctx.fill();
+    break;
+
+case "galaxy":
+    ctx.arc(
+        canvas.width / 2 + Math.cos(x) * value,
+        canvas.height / 2 + Math.sin(x) * value,
+        2,
+        0,
+        Math.PI * 2
+    );
+    ctx.fill();
+    break;
+
+case "mandala":
+    for(let i=0;i<8;i++){
+        ctx.moveTo(canvas.width/2,canvas.height/2);
+        ctx.lineTo(
+            canvas.width/2+Math.cos(i*Math.PI/4)*value,
+            canvas.height/2+Math.sin(i*Math.PI/4)*value
+        );
+    }
+    ctx.stroke();
+    break;
+}
     shapes++;
 
     if (shapeCount) {
       shapeCount.textContent = shapes;
     }
+    const generatedShapeCount = document.getElementById("generatedShapeCount");
+if (generatedShapeCount) {
+  generatedShapeCount.textContent = shapes;
+}
   }
 
   /* -------------------------
       Selection Art
   -------------------------- */
 
-  async function selectionArt(arr) {
+  async function selectionArt(arr, style) {
     const delay = parseInt(speedSlider.value);
 
     for (let i = 0; i < arr.length; i++) {
@@ -212,13 +275,17 @@ let stopDrawing = false;
     if (shapeCount) {
       shapeCount.textContent = shapes;
     }
+    const generatedShapeCount = document.getElementById("generatedShapeCount");
+if (generatedShapeCount) {
+  generatedShapeCount.textContent = shapes;
+}
   }
 
   /* -------------------------
       Merge Sort Waves
   -------------------------- */
 
-  async function mergeArt(arr) {
+  async function mergeArt(arr, style) {
     for (let i = 0; i < arr.length; i++) {
       if (stopDrawing) return;
       const x = i * 8;
@@ -237,6 +304,10 @@ let stopDrawing = false;
       }
 
       await sleep(10);
+      const generatedShapeCount = document.getElementById("generatedShapeCount");
+if (generatedShapeCount) {
+  generatedShapeCount.textContent = shapes;
+}
     }
   }
 
@@ -244,7 +315,7 @@ let stopDrawing = false;
       Quick Sort Fractal
   -------------------------- */
 
-  async function quickArt(arr) {
+  async function quickArt(arr, style) {
     for (let i = 0; i < arr.length; i++) {
       if (stopDrawing) return;
       const angle = (i / arr.length) * Math.PI * 10;
@@ -261,12 +332,15 @@ let stopDrawing = false;
 
       ctx.fill();
       shapes++;
-      if (shapeCount) shapeCount.textContent = shapes;
+      const generatedShapeCount = document.getElementById("generatedShapeCount");
+if (generatedShapeCount) {
+  generatedShapeCount.textContent = shapes;
+} 
 
       await sleep(8);
     }
   }
-  async function insertionArt(arr) {
+  async function insertionArt(arr, style) {
     const delay = parseInt(speedSlider.value);
 
     for (let i = 1; i < arr.length; i++) {
@@ -303,3 +377,27 @@ if (downloadBtn) {
     link.click();
   });
 }
+
+const shareBtn = document.getElementById("shareBtn");
+
+shareBtn?.addEventListener("click", async () => {
+    const canvas = document.getElementById("artCanvas");
+
+    const dataUrl = canvas.toDataURL("image/png");
+
+    if (navigator.share) {
+        const blob = await (await fetch(dataUrl)).blob();
+
+        const file = new File([blob], "algorithm-art.png", {
+            type: "image/png",
+        });
+
+        await navigator.share({
+            title: "Algorithm Artwork",
+            files: [file],
+        });
+    } else {
+        await navigator.clipboard.writeText(dataUrl);
+        console.warn("Alert:", "Artwork copied as image data URL.");
+    }
+});

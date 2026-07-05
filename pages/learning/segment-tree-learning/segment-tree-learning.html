@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
         <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -171,8 +171,8 @@
 
                         <div class="seg-code-block seg-lang-container">
                             <div class="seg-lang-switcher-tabs">
-                                <button class="seg-lang-tab-btn active" onclick="switchSegLang(this, 'py')">Python</button>
-                                <button class="seg-lang-tab-btn" onclick="switchSegLang(this, 'cpp')">C++</button>
+                                <button type="button" class="seg-lang-tab-btn active" onclick="switchSegLang(this, 'py')">Python</button>
+                                <button type="button" class="seg-lang-tab-btn" onclick="switchSegLang(this, 'cpp')">C++</button>
                             </div>
                             <div class="seg-lang-pane active" data-lang="py">
                                 <div class="seg-code-header"><span class="seg-code-lang">Python (Sum Tree)</span></div>
@@ -236,8 +236,8 @@
 
                         <div class="seg-code-block seg-lang-container">
                             <div class="seg-lang-switcher-tabs">
-                                <button class="seg-lang-tab-btn active" onclick="switchSegLang(this, 'py')">Python</button>
-                                <button class="seg-lang-tab-btn" onclick="switchSegLang(this, 'cpp')">C++</button>
+                                <button type="button" class="seg-lang-tab-btn active" onclick="switchSegLang(this, 'py')">Python</button>
+                                <button type="button" class="seg-lang-tab-btn" onclick="switchSegLang(this, 'cpp')">C++</button>
                             </div>
                             <div class="seg-lang-pane active" data-lang="py">
                                 <div class="seg-code-header"><span class="seg-code-lang">Python</span></div>
@@ -323,7 +323,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="segment-tree-learning.js"></script>
     <script>

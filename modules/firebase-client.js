@@ -148,3 +148,13 @@ window.__firebaseClient = {
   sendPasswordReset,
   isConfigured
 };
+
+// Legacy global exports
+window.getRedirectUser = getRedirectUser;
+window.signInWithGoogle = signInWithGoogle;
+window.signOutUser = signOutUser;
+window.getCurrentUser = getCurrentUser;
+window.onAuthChange = onAuthChange;
+window.getIdToken = getIdToken;
+window.sendPasswordReset = sendPasswordReset;
+window.isConfigured = isConfigured;

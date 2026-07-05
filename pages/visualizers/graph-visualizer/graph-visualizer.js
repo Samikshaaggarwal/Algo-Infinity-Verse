@@ -183,7 +183,7 @@ function initVisualizer() {
     const y = e.clientY - rect.top;
 
     if (nextLabelCode > 90) {
-      alert("Maximum node limit (26 nodes) reached!");
+      console.warn("Alert:", "Maximum node limit (26 nodes) reached!");
       return;
     }
 
@@ -296,7 +296,7 @@ function initVisualizer() {
         // Click weight to edit
         g.addEventListener("dblclick", (e) => {
           e.stopPropagation();
-          const val = prompt(`Enter new weight for edge ${edge.source} → ${edge.target}:`, edge.weight || 1);
+          const val = null /* prompt removed */;
           const parsed = parseInt(val);
           if (!isNaN(parsed) && parsed >= 0) {
             edge.weight = parsed;
@@ -376,7 +376,7 @@ function initVisualizer() {
             if (!exists) {
               let weightVal = 1;
               if (isWeighted) {
-                const val = prompt(`Enter weight for edge ${edgeSourceNode.id} → ${node.id}:`, "1");
+                const val = null /* prompt removed */;
                 const parsed = parseInt(val);
                 if (!isNaN(parsed) && parsed >= 0) {
                   weightVal = parsed;
@@ -789,7 +789,7 @@ function initVisualizer() {
   if (startBtn) {
     startBtn.addEventListener("click", () => {
       if (animationSteps.length === 0) {
-        alert("Please click a node on the canvas to set start node first!");
+        console.warn("Alert:", "Please click a node on the canvas to set start node first!");
         return;
       }
       playAnimation();
@@ -806,7 +806,7 @@ function initVisualizer() {
   if (stepBtn) {
     stepBtn.addEventListener("click", () => {
       if (animationSteps.length === 0) {
-        alert("Please click a node on the canvas to set start node first!");
+        console.warn("Alert:", "Please click a node on the canvas to set start node first!");
         return;
       }
       playStep();

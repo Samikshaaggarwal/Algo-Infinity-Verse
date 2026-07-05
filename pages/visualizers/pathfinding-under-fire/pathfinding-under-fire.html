@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -59,10 +59,10 @@
         <div class="puf-tool-group">
           <span class="puf-tool-label">Algorithm</span>
           <div class="puf-algo-btns">
-            <button class="puf-algo-btn active" data-algo="astar"    style="--ac:#00d4ff">A*</button>
-            <button class="puf-algo-btn"        data-algo="bfs"      style="--ac:#22c55e">BFS</button>
-            <button class="puf-algo-btn"        data-algo="dijkstra" style="--ac:#f59e0b">Dijkstra</button>
-            <button class="puf-algo-btn"        data-algo="dfs"      style="--ac:#a855f7">DFS</button>
+            <button type="button" class="puf-algo-btn active" data-algo="astar"    style="--ac:#00d4ff">A*</button>
+            <button type="button" class="puf-algo-btn"        data-algo="bfs"      style="--ac:#22c55e">BFS</button>
+            <button type="button" class="puf-algo-btn"        data-algo="dijkstra" style="--ac:#f59e0b">Dijkstra</button>
+            <button type="button" class="puf-algo-btn"        data-algo="dfs"      style="--ac:#a855f7">DFS</button>
           </div>
         </div>
 
@@ -70,19 +70,19 @@
         <div class="puf-tool-group">
           <span class="puf-tool-label">Draw Mode</span>
           <div class="puf-mode-btns">
-            <button class="puf-mode-btn active" data-mode="wall"   aria-label="Draw walls" title="Draw Walls">
+            <button type="button" class="puf-mode-btn active" data-mode="wall"   aria-label="Draw walls" title="Draw Walls">
               <i class="fas fa-square"></i> Wall
             </button>
-            <button class="puf-mode-btn" data-mode="erase"  aria-label="Erase" title="Erase">
+            <button type="button" class="puf-mode-btn" data-mode="erase"  aria-label="Erase" title="Erase">
               <i class="fas fa-eraser"></i> Erase
             </button>
-            <button class="puf-mode-btn" data-mode="source" aria-label="Move source" title="Move Source">
+            <button type="button" class="puf-mode-btn" data-mode="source" aria-label="Move source" title="Move Source">
               <i class="fas fa-play"></i> Source
             </button>
-            <button class="puf-mode-btn" data-mode="target" aria-label="Move target" title="Move Target">
+            <button type="button" class="puf-mode-btn" data-mode="target" aria-label="Move target" title="Move Target">
               <i class="fas fa-flag"></i> Target
             </button>
-            <button class="puf-mode-btn puf-fire-btn" data-mode="fire" aria-label="Fire obstacle on path" title="Fire Obstacle on Path">
+            <button type="button" class="puf-mode-btn puf-fire-btn" data-mode="fire" aria-label="Fire obstacle on path" title="Fire Obstacle on Path">
               <i class="fas fa-fire"></i> Fire!
             </button>
           </div>
@@ -92,16 +92,16 @@
         <div class="puf-tool-group">
           <span class="puf-tool-label">Playback</span>
           <div class="puf-pb-btns">
-            <button class="puf-pb-btn puf-run-btn" id="pufRunBtn">
+            <button type="button" class="puf-pb-btn puf-run-btn" id="pufRunBtn">
               <i class="fas fa-play"></i> Run
             </button>
-            <button class="puf-pb-btn" id="pufStepBtn" disabled>
+            <button type="button" class="puf-pb-btn" id="pufStepBtn" disabled>
               <i class="fas fa-step-forward"></i> Step
             </button>
-            <button class="puf-pb-btn" id="pufPauseBtn" disabled>
+            <button type="button" class="puf-pb-btn" id="pufPauseBtn" disabled>
               <i class="fas fa-pause"></i> Pause
             </button>
-            <button class="puf-pb-btn" id="pufResetBtn">
+            <button type="button" class="puf-pb-btn" id="pufResetBtn">
               <i class="fas fa-undo"></i> Reset
             </button>
           </div>
@@ -135,10 +135,10 @@
         <div class="puf-tool-group">
           <span class="puf-tool-label">Presets</span>
           <div class="puf-preset-btns">
-            <button class="puf-preset-btn" data-preset="clear">Clear</button>
-            <button class="puf-preset-btn" data-preset="maze">Maze</button>
-            <button class="puf-preset-btn" data-preset="spiral">Spiral</button>
-            <button class="puf-preset-btn" data-preset="rooms">Rooms</button>
+            <button type="button" class="puf-preset-btn" data-preset="clear">Clear</button>
+            <button type="button" class="puf-preset-btn" data-preset="maze">Maze</button>
+            <button type="button" class="puf-preset-btn" data-preset="spiral">Spiral</button>
+            <button type="button" class="puf-preset-btn" data-preset="rooms">Rooms</button>
           </div>
         </div>
 
@@ -316,7 +316,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="pathfinding-under-fire.js"></script>

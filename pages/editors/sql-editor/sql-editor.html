@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -80,12 +80,12 @@
             </select>
           </div>
           <div class="sq-toolbar-right">
-            <button id="sqNewFileBtn" class="sq-icon-btn" title="New file" aria-label="Create new SQL file"><i class="fas fa-file"></i></button>
-            <button id="sqDownloadBtn" class="sq-icon-btn" title="Download .sql file" aria-label="Download SQL file"><i class="fas fa-download"></i></button>
-            <button id="sqRunBtn" class="btn btn-primary sq-run-btn"><i class="fas fa-play"></i> Run Query</button>
-            <button id="sqResetBtn" class="sq-icon-btn" title="Reset" aria-label="Reset to example"><i class="fas fa-undo"></i></button>
-            <button id="sqCopyBtn" class="sq-icon-btn" title="Copy code" aria-label="Copy code to clipboard"><i class="fas fa-copy"></i></button>
-            <button id="sqSaveBtn" class="sq-icon-btn" title="Save to localStorage" aria-label="Save code to browser storage"><i class="fas fa-save"></i></button>
+            <button type="button" id="sqNewFileBtn" class="sq-icon-btn" title="New file" aria-label="Create new SQL file"><i class="fas fa-file"></i></button>
+            <button type="button" id="sqDownloadBtn" class="sq-icon-btn" title="Download .sql file" aria-label="Download SQL file"><i class="fas fa-download"></i></button>
+            <button type="button" id="sqRunBtn" class="btn btn-primary sq-run-btn"><i class="fas fa-play"></i> Run Query</button>
+            <button type="button" id="sqResetBtn" class="sq-icon-btn" title="Reset" aria-label="Reset to example"><i class="fas fa-undo"></i></button>
+            <button type="button" id="sqCopyBtn" class="sq-icon-btn" title="Copy code" aria-label="Copy code to clipboard"><i class="fas fa-copy"></i></button>
+            <button type="button" id="sqSaveBtn" class="sq-icon-btn" title="Save to localStorage" aria-label="Save code to browser storage"><i class="fas fa-save"></i></button>
           </div>
         </div>
 
@@ -117,7 +117,7 @@
         <div class="sq-console">
           <div class="sq-console-header">
             <span><i class="fas fa-terminal"></i> Messages / Errors</span>
-            <button class="sq-console-clear" id="sqConsoleClear"><i class="fas fa-trash"></i> Clear</button>
+            <button type="button" class="sq-console-clear" id="sqConsoleClear"><i class="fas fa-trash"></i> Clear</button>
           </div>
           <div class="sq-console-body" id="sqConsoleBody">
             <span class="sq-console-placeholder">No messages to display.</span>
@@ -129,7 +129,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./sql-editor.js"></script>
   

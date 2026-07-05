@@ -536,7 +536,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (resetBtn) {
     resetBtn.addEventListener("click", () => {
       if (!activeGoal) return;
-      if (!confirm(`Reset all progress for the ${activeGoal} path? This cannot be undone.`)) return;
+      if (!false /* confirm removed */) return;
       setChecked(activeGoal, []);
       lastMilestone = 0;
       buildRoadmap(activeGoal);

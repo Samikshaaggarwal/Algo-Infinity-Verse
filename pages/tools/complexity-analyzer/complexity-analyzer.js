@@ -7,14 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── Complexity levels ─── */
-var CA_LEVELS = ['O(1)','O(log n)','O(n)','O(n log n)','O(n²)','O(n³)','O(2ⁿ)','O(n!)'];
-var CA_RANK   = { 'O(1)':0,'O(log n)':1,'O(n)':2,'O(n log n)':3,'O(n²)':4,'O(n³)':5,'O(2ⁿ)':6,'O(n!)':7 };
-var CA_CLASS  = { 'O(1)':'ca-o1','O(log n)':'ca-ologn','O(n)':'ca-on','O(n log n)':'ca-onlogn','O(n²)':'ca-on2','O(n³)':'ca-on3','O(2ⁿ)':'ca-o2n','O(n!)':'ca-ofact' };
-var CA_DANGER = {
+let CA_LEVELS = ['O(1)','O(log n)','O(n)','O(n log n)','O(n²)','O(n³)','O(2ⁿ)','O(n!)'];
+let CA_RANK   = { 'O(1)':0,'O(log n)':1,'O(n)':2,'O(n log n)':3,'O(n²)':4,'O(n³)':5,'O(2ⁿ)':6,'O(n!)':7 };
+let CA_CLASS  = { 'O(1)':'ca-o1','O(log n)':'ca-ologn','O(n)':'ca-on','O(n log n)':'ca-onlogn','O(n²)':'ca-on2','O(n³)':'ca-on3','O(2ⁿ)':'ca-o2n','O(n!)':'ca-ofact' };
+let CA_DANGER = {
   'O(1)':'ok','O(log n)':'ok','O(n)':'ok','O(n log n)':'ok',
   'O(n²)':'warn','O(n³)':'bad','O(2ⁿ)':'bad','O(n!)':'bad'
 };
-var CA_DANGER_LABEL = {
+let CA_DANGER_LABEL = {
   'O(1)':'✅ Excellent','O(log n)':'✅ Excellent','O(n)':'✅ Good',
   'O(n log n)':'✅ Good','O(n²)':'⚠️ Warning — slow on large n',
   'O(n³)':'❌ Danger — avoid for n > 500','O(2ⁿ)':'❌ Critical — exponential growth',
@@ -22,7 +22,7 @@ var CA_DANGER_LABEL = {
 };
 
 /* ─── Code presets ─── */
-var CA_PRESETS = [
+let CA_PRESETS = [
   {
     label: 'Linear Search',
     code: [
@@ -159,23 +159,23 @@ var CA_PRESETS = [
 /* ─── Pattern detectors ─── */
 // Returns array of {lineIdx, complexity, reason, pattern}
 function caAnalyzeCode(code) {
-  var lines   = code.split('\n');
-  var results = [];
-  var loopStack = []; // track nesting: each entry = 'loop'|'halving'|'recurse'|'other'
+  let lines   = code.split('\n');
+  let results = [];
+  let loopStack = []; // track nesting: each entry = 'loop'|'halving'|'recurse'|'other'
 
   // Heuristics per line
   lines.forEach(function(raw, idx) {
-    var line    = raw.trim();
-    var lineNum = idx + 1;
+    let line    = raw.trim();
+    let lineNum = idx + 1;
 
     if (!line || line.startsWith('//') || line.startsWith('#') || line.startsWith('/*') || line.startsWith('*')) {
       results.push({ lineNum: lineNum, complexity: null, reason: null, pattern: 'comment' });
       return;
     }
 
-    var complexity = null;
-    var reason     = null;
-    var pattern    = null;
+    let complexity = null;
+    let reason     = null;
+    let pattern    = null;
 
     // ── Closing brace: pop loop stack ──
     if (/^\}/.test(line) || /^end$/.test(line)) {
@@ -185,7 +185,7 @@ function caAnalyzeCode(code) {
     }
 
     // ── Recursion with two calls (exponential) ──
-    var twoRecurse = line.match(/\b(\w+)\s*\(.*\)\s*\+\s*\1\s*\(/);
+    let twoRecurse = line.match(/\b(\w+)\s*\(.*\)\s*\+\s*\1\s*\(/);
     if (!twoRecurse) {
       twoRecurse = line.match(/return\s+\w+\(.*\)\s*[+\-\*\/]\s*\w+\(/);
     }
@@ -214,15 +214,15 @@ function caAnalyzeCode(code) {
     // ── for/while loop ──
     else if (!complexity && /^\s*(for|while)\s*\(/.test(raw)) {
       // Detect halving: lo = mid+1 / hi = mid-1 / i *= 2 / i >>= 1
-      var halvingInBody = false;
+      let halvingInBody = false;
       // Look ahead up to 5 lines for halving signals
-      for (var k = idx+1; k < Math.min(idx+6, lines.length); k++) {
+      for (let k = idx+1; k < Math.min(idx+6, lines.length); k++) {
         if (/mid\s*[+\-]\s*1|i\s*\*=\s*2|i\s*>>=\s*1|n\s*\/=\s*2|hi\s*=\s*mid|lo\s*=\s*mid/.test(lines[k])) {
           halvingInBody = true; break;
         }
       }
 
-      var depth = loopStack.filter(function(t) { return t === 'loop' || t === 'halving'; }).length;
+      let depth = loopStack.filter(function(t) { return t === 'loop' || t === 'halving'; }).length;
 
       if (halvingInBody) {
         loopStack.push('halving');
@@ -260,7 +260,7 @@ function caAnalyzeCode(code) {
 
     // ── Sort call ──
     else if (!complexity && /\.sort\(/.test(line)) {
-      var depth = loopStack.filter(function(t) { return t === 'loop'; }).length;
+      let depth = loopStack.filter(function(t) { return t === 'loop'; }).length;
       complexity = depth === 0 ? 'O(n log n)' : 'O(n² log n)';
       reason     = depth === 0 ? 'Built-in sort — O(n log n)' : 'Sort inside loop → O(n² log n)';
       pattern    = 'builtin-sort';
@@ -268,7 +268,7 @@ function caAnalyzeCode(code) {
 
     // ── Queue shift (common BFS) ──
     else if (!complexity && /\.shift\(\)/.test(line)) {
-      var shiftDepth = loopStack.filter(function(t) { return t === 'loop' || t === 'halving'; }).length;
+      let shiftDepth = loopStack.filter(function(t) { return t === 'loop' || t === 'halving'; }).length;
       complexity = shiftDepth === 0 ? 'O(n)' : shiftDepth === 1 ? 'O(n²)' : 'O(n³)';
       reason     = shiftDepth > 0
         ? 'Array.shift() inside a loop is O(n) per iteration. Use a proper queue/head index for O(1) dequeue.'
@@ -298,10 +298,10 @@ function caAnalyzeCode(code) {
 
 /* ─── Derive overall complexity ─── */
 function caDeriveOverall(lineResults) {
-  var maxTime  = 'O(1)';
-  var maxSpace = 'O(1)';
-  var steps    = [];
-  var patterns = [];
+  let maxTime  = 'O(1)';
+  let maxSpace = 'O(1)';
+  let steps    = [];
+  let patterns = [];
 
   lineResults.forEach(function(r) {
     if (!r.complexity) return;
@@ -318,12 +318,12 @@ function caDeriveOverall(lineResults) {
   });
 
   // Build derivation steps
-  var seenPatterns = {};
+  let seenPatterns = {};
   lineResults.forEach(function(r) {
     if (!r.complexity || !r.reason || seenPatterns[r.pattern]) return;
     seenPatterns[r.pattern] = true;
 
-    var type = 'ca-deriv-base';
+    let type = 'ca-deriv-base';
     if (r.pattern === 'nested-loop' || r.pattern === 'double-recursion') type = 'ca-deriv-multiply';
     if (r.pattern === 'single-loop' || r.pattern === 'tail-recursion') type = 'ca-deriv-add';
 
@@ -348,7 +348,7 @@ function caDeriveOverall(lineResults) {
 }
 
 function caPatternIcon(p) {
-  var map = {
+  let map = {
     'double-recursion':'🌳','tail-recursion':'🔄','single-loop':'➰','nested-loop':'🔁',
     'triple-nested':'🔂','halving':'✂️','binary-search-pattern':'🔍','divide-conquer':'⚡',
     'constant':'⚡','constant-access':'📦','builtin-sort':'🔃','factorial':'🌌',
@@ -358,7 +358,7 @@ function caPatternIcon(p) {
 }
 
 function caPatternName(p) {
-  var map = {
+  let map = {
     'double-recursion':'Exponential Branching Recursion',
     'tail-recursion':'Linear Recursion',
     'single-loop':'Single Loop (O(n))',
@@ -377,9 +377,9 @@ function caPatternName(p) {
 
 /* ─── Render line numbers ─── */
 function caRenderLineNums(code) {
-  var el = document.getElementById('caLineNums');
+  let el = document.getElementById('caLineNums');
   if (!el) return;
-  var count = code.split('\n').length;
+  let count = code.split('\n').length;
   el.innerHTML = Array.from({ length: count }, function(_, i) {
     return '<span class="ca-line-num">' + (i+1) + '</span>';
   }).join('');
@@ -387,28 +387,28 @@ function caRenderLineNums(code) {
 
 /* ─── Render annotations ─── */
 function caRenderAnnotations(lineResults) {
-  var el = document.getElementById('caAnnotations');
+  let el = document.getElementById('caAnnotations');
   if (!el) return;
   el.innerHTML = lineResults.map(function(r) {
     if (!r.complexity) return '<div class="ca-anno-line"></div>';
-    var cls = CA_CLASS[r.complexity] || 'ca-o1';
-    var title = r.reason ? 'title="' + caEsc(r.reason) + '"' : '';
+    let cls = CA_CLASS[r.complexity] || 'ca-o1';
+    let title = r.reason ? 'title="' + caEsc(r.reason) + '"' : '';
     return '<div class="ca-anno-line"><span class="ca-badge ' + cls + '" ' + title + '>' + caEsc(r.complexity) + '</span></div>';
   }).join('');
 }
 
 /* ─── Render verdict ─── */
 function caRenderVerdict(result) {
-  var card = document.getElementById('caVerdictCard');
+  let card = document.getElementById('caVerdictCard');
   if (!card) return;
   card.setAttribute('role', 'status');
   card.setAttribute('aria-live', 'polite');
   card.setAttribute('aria-atomic', 'true');
 
-  var timeCls   = CA_CLASS[result.time]  || 'ca-on';
-  var spaceCls  = CA_CLASS[result.space] || 'ca-on';
-  var dangerCls = 'ca-danger-' + (CA_DANGER[result.time] || 'ok');
-  var dangerLbl = CA_DANGER_LABEL[result.time] || '';
+  let timeCls   = CA_CLASS[result.time]  || 'ca-on';
+  let spaceCls  = CA_CLASS[result.space] || 'ca-on';
+  let dangerCls = 'ca-danger-' + (CA_DANGER[result.time] || 'ok');
+  let dangerLbl = CA_DANGER_LABEL[result.time] || '';
 
   card.innerHTML =
     '<div class="ca-card-title"><i class="fas fa-gavel"></i> Complexity Verdict</div>' +
@@ -433,12 +433,12 @@ function caRenderVerdict(result) {
 
 
 function caGetBorderColor(c) {
-  var map = { 'O(1)':'rgba(100,116,139,0.35)','O(log n)':'rgba(34,197,94,0.35)','O(n)':'rgba(6,182,212,0.35)','O(n log n)':'rgba(168,85,247,0.35)','O(n²)':'rgba(245,158,11,0.45)','O(n³)':'rgba(249,115,22,0.45)','O(2ⁿ)':'rgba(239,68,68,0.45)','O(n!)':'rgba(236,72,153,0.5)' };
+  let map = { 'O(1)':'rgba(100,116,139,0.35)','O(log n)':'rgba(34,197,94,0.35)','O(n)':'rgba(6,182,212,0.35)','O(n log n)':'rgba(168,85,247,0.35)','O(n²)':'rgba(245,158,11,0.45)','O(n³)':'rgba(249,115,22,0.45)','O(2ⁿ)':'rgba(239,68,68,0.45)','O(n!)':'rgba(236,72,153,0.5)' };
   return map[c] || 'var(--glass-border)';
 }
 
 function caGetExplanation(c) {
-  var map = {
+  let map = {
     'O(1)':'Constant time — no loops, no recursion. Executes the same number of operations regardless of input size.',
     'O(log n)':'Logarithmic — the search space is halved each step. For n=1,000,000, only ~20 iterations needed.',
     'O(n)':'Linear — one pass through the input. For n=1,000,000, about 1M operations. Fast and scalable.',
@@ -453,7 +453,7 @@ function caGetExplanation(c) {
 
 /* ─── Render derivation ─── */
 function caRenderDerivation(steps) {
-  var el = document.getElementById('caDerivationBody');
+  let el = document.getElementById('caDerivationBody');
   if (!el) return;
 
   if (steps.length === 0) {
@@ -462,8 +462,8 @@ function caRenderDerivation(steps) {
   }
 
   el.innerHTML = steps.map(function(s) {
-    var linePart = s.lineNum ? '<span class="ca-pattern-line">line ' + s.lineNum + '</span>' : '';
-    var comp = s.complexity ? '<span class="ca-badge ' + (CA_CLASS[s.complexity] || 'ca-on') + '">' + caEsc(s.complexity) + '</span>' : '';
+    let linePart = s.lineNum ? '<span class="ca-pattern-line">line ' + s.lineNum + '</span>' : '';
+    let comp = s.complexity ? '<span class="ca-badge ' + (CA_CLASS[s.complexity] || 'ca-on') + '">' + caEsc(s.complexity) + '</span>' : '';
     return '<div class="ca-deriv-step ' + s.type + '">' +
       '<span class="ca-deriv-icon">' + (s.icon || '▶️') + '</span>' +
       '<span class="ca-deriv-text">' + caEsc(s.text) + ' ' + linePart + '</span>' +
@@ -474,7 +474,7 @@ function caRenderDerivation(steps) {
 
 /* ─── Render patterns ─── */
 function caRenderPatterns(patterns) {
-  var el = document.getElementById('caPatternsBody');
+  let el = document.getElementById('caPatternsBody');
   if (!el) return;
 
   if (patterns.length === 0) {
@@ -494,21 +494,21 @@ function caRenderPatterns(patterns) {
 
 /* ─── Main analyze function ─── */
 function caAnalyze() {
-  var editor = document.getElementById('caEditor');
+  let editor = document.getElementById('caEditor');
   if (!editor) return;
-  var code = editor.value;
+  let code = editor.value;
   if (!code.trim()) {
-    var verdictCard = document.getElementById('caVerdictCard');
+    let verdictCard = document.getElementById('caVerdictCard');
     if (verdictCard) verdictCard.innerHTML = '<div class="ca-verdict-placeholder"><i class="fas fa-exclamation-circle"></i><p>Paste some code first!</p></div>';
-    var annos = document.getElementById('caAnnotations');
+    let annos = document.getElementById('caAnnotations');
     if (annos) annos.innerHTML = '';
     caRenderDerivation([]);
     caRenderPatterns([]);
     return;
   }
 
-  var lineResults = caAnalyzeCode(code);
-  var overall     = caDeriveOverall(lineResults);
+  let lineResults = caAnalyzeCode(code);
+  let overall     = caDeriveOverall(lineResults);
 
   caRenderLineNums(code);
   caRenderAnnotations(lineResults);
@@ -519,9 +519,9 @@ function caAnalyze() {
 
 /* ─── Sync line numbers on scroll/type ─── */
 function caSyncLineNums() {
-  var editor  = document.getElementById('caEditor');
-  var lineNums = document.getElementById('caLineNums');
-  var annos   = document.getElementById('caAnnotations');
+  let editor  = document.getElementById('caEditor');
+  let lineNums = document.getElementById('caLineNums');
+  let annos   = document.getElementById('caAnnotations');
   if (!editor || !lineNums) return;
   lineNums.scrollTop = editor.scrollTop;
   if (annos) annos.scrollTop = editor.scrollTop;
@@ -529,16 +529,16 @@ function caSyncLineNums() {
 
 /* ─── Init ─── */
 function caInit() {
-  var editor     = document.getElementById('caEditor');
-  var analyzeBtn = document.getElementById('caAnalyzeBtn');
-  var clearBtn   = document.getElementById('caClearBtn');
-  var copyBtn    = document.getElementById('caCopyBtn');
-  var presetWrap = document.getElementById('caPresetBtns');
+  let editor     = document.getElementById('caEditor');
+  let analyzeBtn = document.getElementById('caAnalyzeBtn');
+  let clearBtn   = document.getElementById('caClearBtn');
+  let copyBtn    = document.getElementById('caCopyBtn');
+  let presetWrap = document.getElementById('caPresetBtns');
 
   // Presets
   if (presetWrap) {
     CA_PRESETS.forEach(function(p, i) {
-      var btn = document.createElement('button');
+      let btn = document.createElement('button');
       btn.className = 'ca-preset-btn';
       btn.type = 'button';
       btn.setAttribute('aria-pressed', 'false');
@@ -554,7 +554,7 @@ function caInit() {
           editor.value = p.code;
           caRenderLineNums(p.code);
           // Clear annotations until user re-analyzes
-          var annos = document.getElementById('caAnnotations');
+          let annos = document.getElementById('caAnnotations');
           if (annos) annos.innerHTML = '';
           caAnalyze();
         }
@@ -579,15 +579,15 @@ function caInit() {
   if (clearBtn) {
     clearBtn.addEventListener('click', function() {
       if (editor) editor.value = '';
-      var lineNums = document.getElementById('caLineNums');
-      var annos    = document.getElementById('caAnnotations');
+      let lineNums = document.getElementById('caLineNums');
+      let annos    = document.getElementById('caAnnotations');
       if (lineNums) lineNums.innerHTML = '';
       if (annos)    annos.innerHTML = '';
-      var verdict = document.getElementById('caVerdictCard');
+      let verdict = document.getElementById('caVerdictCard');
       if (verdict) verdict.innerHTML = '<div class="ca-verdict-placeholder"><i class="fas fa-magnifying-glass-chart"></i><p>Paste code and click Analyze to see your complexity verdict.</p></div>';
-      var deriv = document.getElementById('caDerivationBody');
+      let deriv = document.getElementById('caDerivationBody');
       if (deriv) deriv.innerHTML = '<div class="ca-deriv-placeholder">Derivation steps will appear here after analysis.</div>';
-      var pats = document.getElementById('caPatternsBody');
+      let pats = document.getElementById('caPatternsBody');
       if (pats) pats.innerHTML = '<div class="ca-deriv-placeholder">Recognized code patterns appear here.</div>';
       presetWrap && presetWrap.querySelectorAll('.ca-preset-btn').forEach(function(b) { b.classList.remove('active'); });
     });
@@ -606,14 +606,14 @@ function caInit() {
 
   // Load first preset by default
   if (presetWrap) {
-    var first = presetWrap.querySelector('.ca-preset-btn');
+    let first = presetWrap.querySelector('.ca-preset-btn');
     if (first) first.click();
   }
 }
 
 /* ─── Escape ─── */
 function caEsc(str) {
-  var d = document.createElement('div');
+  let d = document.createElement('div');
   d.textContent = String(str);
   return d.innerHTML;
 }

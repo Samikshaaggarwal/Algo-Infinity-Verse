@@ -42,7 +42,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
         <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -176,11 +176,11 @@
                         
                         <div class="string-code-block string-lang-container">
                             <div class="string-lang-switcher-tabs">
-                                <button class="string-lang-tab-btn active" onclick="switchStringLang(this, 'py')">Python</button>
-                                <button class="string-lang-tab-btn" onclick="switchStringLang(this, 'cpp')">C++</button>
+                                <button type="button" class="string-lang-tab-btn active" onclick="switchStringLang(this, 'py')">Python</button>
+                                <button type="button" class="string-lang-tab-btn" onclick="switchStringLang(this, 'cpp')">C++</button>
                             </div>
                             <div class="string-lang-pane active" data-lang="py">
-                                <div class="string-code-header"><span class="string-code-lang">Python</span><button class="string-code-copy" aria-label="Copy code" data-code="class TrieNode:
+                                <div class="string-code-header"><span class="string-code-lang">Python</span><button type="button" class="string-code-copy" aria-label="Copy code" data-code="class TrieNode:
     def __init__(self):
         self.children = {}
         self.is_end_of_word = False
@@ -246,7 +246,7 @@ class Trie:
         <span class="tok-kw">return True</span></code></pre>
                             </div>
                             <div class="string-lang-pane" data-lang="cpp">
-                                <div class="string-code-header"><span class="string-code-lang">C++</span><button class="string-code-copy" aria-label="Copy code" data-code="class TrieNode {
+                                <div class="string-code-header"><span class="string-code-lang">C++</span><button type="button" class="string-code-copy" aria-label="Copy code" data-code="class TrieNode {
 public:
     unordered_map<char, TrieNode*> children;
     bool isEndOfWord = false;
@@ -308,10 +308,10 @@ public:
                         
                         <div class="string-code-block string-lang-container">
                             <div class="string-lang-switcher-tabs">
-                                <button class="string-lang-tab-btn active" onclick="switchStringLang(this, 'py')">Python</button>
+                                <button type="button" class="string-lang-tab-btn active" onclick="switchStringLang(this, 'py')">Python</button>
                             </div>
                             <div class="string-lang-pane active" data-lang="py">
-                                <div class="string-code-header"><span class="string-code-lang">Python</span><button class="string-code-copy" aria-label="Copy code" data-code="def compute_lps(pat):
+                                <div class="string-code-header"><span class="string-code-lang">Python</span><button type="button" class="string-code-copy" aria-label="Copy code" data-code="def compute_lps(pat):
     lps = [0] * len(pat)
     length = 0
     i = 1
@@ -410,7 +410,7 @@ public:
                         <div class="string-exercise">
                             <div class="string-exercise-title"><i class="fas fa-search"></i> 1. Implement Trie (Prefix Tree)</div>
                             <p>Implement the <code>Trie</code> class with <code>insert(word)</code>, <code>search(word)</code>, and <code>startsWith(prefix)</code> methods.</p>
-                            <button class="string-exercise-toggle" aria-controls="sol-1" aria-expanded="false">Show Solution</button>
+                            <button type="button" class="string-exercise-toggle" aria-controls="sol-1" aria-expanded="false">Show Solution</button>
                             <div class="string-exercise-solution" id="sol-1">
                                 <p>Refer to the <strong>Trie (Prefix Tree)</strong> section above. Ensure you maintain a dictionary of children and an <code>is_end_of_word</code> boolean at every node.</p>
                             </div>
@@ -419,10 +419,10 @@ public:
                         <div class="string-exercise">
                             <div class="string-exercise-title"><i class="fas fa-search"></i> 2. Implement strStr() via KMP</div>
                             <p>Given two strings <code>needle</code> and <code>haystack</code>, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.</p>
-                            <button class="string-exercise-toggle" aria-controls="sol-2" aria-expanded="false">Show Solution</button>
+                            <button type="button" class="string-exercise-toggle" aria-controls="sol-2" aria-expanded="false">Show Solution</button>
                             <div class="string-exercise-solution" id="sol-2">
                                 <div class="string-code-block">
-                                    <div class="string-code-header"><span class="string-code-lang">Python</span><button class="string-code-copy" aria-label="Copy code" data-code="def strStr(haystack, needle):
+                                    <div class="string-code-header"><span class="string-code-lang">Python</span><button type="button" class="string-code-copy" aria-label="Copy code" data-code="def strStr(haystack, needle):
     if not needle: return 0
     lps = compute_lps(needle)
     i = j = 0
@@ -459,7 +459,10 @@ public:
     
     <!-- External Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script type="module" src="trie-string-learning.js"></script>
 

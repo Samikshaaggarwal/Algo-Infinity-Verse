@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+  <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
     <i class="fas fa-circle-chevron-up"></i>
   </button>
 
@@ -55,8 +55,8 @@
       </li>
     </ul>
     <div class="nav-buttons">
-      <button id="darkModeToggle" class="dark-mode-btn" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
-      <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+      <button type="button" id="darkModeToggle" class="dark-mode-btn" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+      <button type="button" id="menuToggle" class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
     </div>
   </nav>
 
@@ -96,7 +96,10 @@
 
   <script src="/theme.js"></script>
   <script type="module" src="dsa-glossary.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
 </body>
 </html>
 

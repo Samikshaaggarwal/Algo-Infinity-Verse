@@ -51,7 +51,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -188,7 +188,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Understanding BI Components
                 </div>
                 <p>Which component of the Power BI ecosystem is primarily used to perform data ingestion, cleaning, and model development?</p>
-                <button class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Solution</button>
+                <button type="button" class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-intro">Show Solution</button>
                 <div class="pbi-exercise-solution" id="solution-intro">
                   <p><strong>Answer:</strong> Power BI Desktop</p>
                   <p><strong>Explanation:</strong> While the cloud-based Power BI Service allows for minor edits and sharing, all core data preparation, transformation (Power Query), table modeling, and expression writing (DAX) are executed in the desktop tool.</p>
@@ -233,7 +233,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Installation OS Compatibility
                 </div>
                 <p>True or False: A developer running macOS can install Power BI Desktop directly without any virtual machine or emulation layer.</p>
-                <button class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-setup">Show Solution</button>
+                <button type="button" class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-setup">Show Solution</button>
                 <div class="pbi-exercise-solution">
                   <p><strong>Answer:</strong> False</p>
                   <p><strong>Explanation:</strong> Power BI Desktop is strictly a Windows-native application. Mac developers must utilize emulation tools (like Boot Camp or Parallels) or a cloud-hosted Windows environment to run Power BI Desktop.</p>
@@ -275,7 +275,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: In-Memory Storage Modes
                 </div>
                 <p>Which storage mode provides the fastest visual rendering speed by caching tables directly in the local system RAM?</p>
-                <button class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-import">Show Solution</button>
+                <button type="button" class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-import">Show Solution</button>
                 <div class="pbi-exercise-solution" id="solution-import">
                   <p><strong>Answer:</strong> Import Mode</p>
                   <p><strong>Explanation:</strong> Import Mode uses the VertiPaq database engine to compress and store data in-memory, resulting in extremely fast analytical aggregations compared to DirectQuery which sends SQL statements on every click.</p>
@@ -307,7 +307,7 @@
               <div class="pbi-code-block">
                 <div class="pbi-code-header">
                   <span class="pbi-code-lang">M Language Query</span>
-                  <button class="pbi-code-copy" aria-label="Copy M query" data-code="let
+                  <button type="button" class="pbi-code-copy" aria-label="Copy M query" data-code="let
     Source = Csv.Document(File.Contents(&quot;C:\data\sales.csv&quot;), [Delimiter=&quot;,&quot;, Columns=3, Encoding=1252]),
     PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
     ChangedType = Table.TransformColumnTypes(PromotedHeaders, {{&quot;SalesAmount&quot;, type number}, {&quot;OrderDate&quot;, type date}})
@@ -328,7 +328,7 @@ in
                   <i class="fas fa-dumbbell"></i> Practice: Under the Hood of Power Query
                 </div>
                 <p>What scripting language is written in the background as you click buttons in the Power Query Editor?</p>
-                <button class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-powerquery">Show Solution</button>
+                <button type="button" class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-powerquery">Show Solution</button>
                 <div class="pbi-exercise-solution" id="solution-powerquery">
                   <p><strong>Answer:</strong> M Formula Language (often shortened to "M")</p>
                   <p><strong>Explanation:</strong> M is a functional, case-sensitive language designed specifically for data mashup and extraction. The query steps recorded in the "Applied Steps" pane are just GUI representations of M code blocks.</p>
@@ -378,7 +378,7 @@ in
                   <i class="fas fa-dumbbell"></i> Practice: Unpivoting Use Case
                 </div>
                 <p>If you import a financial table that has 12 columns for monthly budget figures (Jan-Dec), which Power Query operation should you apply to consolidate these into a single "Month" column and a single "BudgetAmount" column?</p>
-                <button class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-cleaning">Show Solution</button>
+                <button type="button" class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-cleaning">Show Solution</button>
                 <div class="pbi-exercise-solution" id="solution-cleaning">
                   <p><strong>Answer:</strong> Unpivot Columns (or Unpivot Other Columns)</p>
                   <p><strong>Explanation:</strong> Unpivoting rotates the columns into attribute-value pairs, converting your wide dataset into a clean vertical table, which is the preferred format for analytical modeling.</p>
@@ -418,7 +418,7 @@ in
                   <i class="fas fa-dumbbell"></i> Practice: Fact vs Dimension
                 </div>
                 <p>Classify the following tables as either a Fact table or a Dimension table: (1) `ProductList` (containing names, weights, and categories), (2) `InternetSalesTransactions` (containing timestamps, order numbers, and quantities sold).</p>
-                <button class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-modeling">Show Solution</button>
+                <button type="button" class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-modeling">Show Solution</button>
                 <div class="pbi-exercise-solution" id="solution-modeling">
                   <p><strong>Answer:</strong> (1) `ProductList` is a Dimension table; (2) `InternetSalesTransactions` is a Fact table.</p>
                   <p><strong>Explanation:</strong> `ProductList` contains descriptive context metadata about products, whereas `InternetSalesTransactions` stores quantitative records of events that occur continuously over time.</p>
@@ -464,7 +464,7 @@ in
                   <i class="fas fa-dumbbell"></i> Practice: Relationship Flows
                 </div>
                 <p>You have a `Customers` table (with unique customer keys) and an `Orders` table. How should the cardinality and cross filter direction be configured for optimal design?</p>
-                <button class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-relationships">Show Solution</button>
+                <button type="button" class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-relationships">Show Solution</button>
                 <div class="pbi-exercise-solution" id="solution-relationships">
                   <p><strong>Answer:</strong> Cardinality: One-to-Many (1:*) from `Customers` (1) to `Orders` (*); Cross Filter Direction: Single.</p>
                   <p><strong>Explanation:</strong> A single customer can place multiple orders, and filtering customer attributes (like City) should filter the orders table, not vice versa.</p>
@@ -493,7 +493,7 @@ in
               <div class="pbi-code-block">
                 <div class="pbi-code-header">
                   <span class="pbi-code-lang">DAX Measure Calculations</span>
-                  <button class="pbi-code-copy" aria-label="Copy DAX code" data-code="Total Revenue = SUM(Sales[SalesAmount])
+                  <button type="button" class="pbi-code-copy" aria-label="Copy DAX code" data-code="Total Revenue = SUM(Sales[SalesAmount])
 
 Profit Margin = DIVIDE([Total Profit], [Total Revenue], 0)
 
@@ -515,12 +515,12 @@ USA Revenue = <span class="tok-fn">CALCULATE</span>([Total Revenue], Customers[C
                   <i class="fas fa-dumbbell"></i> Practice: Writing DAX
                 </div>
                 <p>Write a DAX measure named `AverageUnitCost` that calculates the average of the `UnitCost` column in the `Products` table, utilizing safe division to handle empty states.</p>
-                <button class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-dax">Show Solution</button>
+                <button type="button" class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-dax">Show Solution</button>
                 <div class="pbi-exercise-solution" id="solution-dax">
                   <div class="pbi-code-block">
                     <div class="pbi-code-header">
                       <span class="pbi-code-lang">DAX</span>
-                      <button class="pbi-code-copy" aria-label="Copy code" data-code="AverageUnitCost = AVERAGE(Products[UnitCost])">Copy</button>
+                      <button type="button" class="pbi-code-copy" aria-label="Copy code" data-code="AverageUnitCost = AVERAGE(Products[UnitCost])">Copy</button>
                     </div>
                     <pre><code>AverageUnitCost = <span class="tok-fn">AVERAGE</span>(Products[UnitCost])</code></pre>
                   </div>
@@ -528,7 +528,7 @@ USA Revenue = <span class="tok-fn">CALCULATE</span>([Total Revenue], Customers[C
                   <div class="pbi-code-block">
                     <div class="pbi-code-header">
                       <span class="pbi-code-lang">DAX (Alternative)</span>
-                      <button class="pbi-code-copy" aria-label="Copy code" data-code="AverageUnitCost = DIVIDE(SUM(Products[TotalCost]), SUM(Products[Units]), 0)">Copy</button>
+                      <button type="button" class="pbi-code-copy" aria-label="Copy code" data-code="AverageUnitCost = DIVIDE(SUM(Products[TotalCost]), SUM(Products[Units]), 0)">Copy</button>
                     </div>
                     <pre><code>AverageUnitCost = <span class="tok-fn">DIVIDE</span>(<span class="tok-fn">SUM</span>(Products[TotalCost]), <span class="tok-fn">SUM</span>(Products[Units]), <span class="tok-num">0</span>)</code></pre>
                   </div>
@@ -563,7 +563,7 @@ USA Revenue = <span class="tok-fn">CALCULATE</span>([Total Revenue], Customers[C
                   <i class="fas fa-dumbbell"></i> Practice: Selecting Visuals
                 </div>
                 <p>Which visualization type is most effective for displaying a single numerical summary value like "Total Customer Count"?</p>
-                <button class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-visuals">Show Solution</button>
+                <button type="button" class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-visuals">Show Solution</button>
                 <div class="pbi-exercise-solution" id="solution-visuals">
                   <p><strong>Answer:</strong> Card Visual (or KPI Card)</p>
                   <p><strong>Explanation:</strong> Card visuals display a single big number, making them ideal for high-level summary KPIs that users need to digest instantly at the top of the dashboard page.</p>
@@ -601,7 +601,7 @@ USA Revenue = <span class="tok-fn">CALCULATE</span>([Total Revenue], Customers[C
                   <i class="fas fa-dumbbell"></i> Practice: Filter Scopes
                 </div>
                 <p>If you want to filter out a defunct store branch across all 5 pages of your report, which filter scope should you apply in the Filter Pane?</p>
-                <button class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-filters">Show Solution</button>
+                <button type="button" class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-filters">Show Solution</button>
                 <div class="pbi-exercise-solution" id="solution-filters">
                   <p><strong>Answer:</strong> Filter on all pages (Report-level filter)</p>
                   <p><strong>Explanation:</strong> Placing the store branch filter under the "Filter on all pages" section ensures that it is applied uniformly across the entire report file without needing to configure it manually on every page.</p>
@@ -638,7 +638,7 @@ USA Revenue = <span class="tok-fn">CALCULATE</span>([Total Revenue], Customers[C
                   <i class="fas fa-dumbbell"></i> Practice: Design Rules
                 </div>
                 <p>According to reading hierarchy guidelines, where is the best position on the report page to display high-level KPI cards?</p>
-                <button class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-dashboards">Show Solution</button>
+                <button type="button" class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-dashboards">Show Solution</button>
                 <div class="pbi-exercise-solution" id="solution-dashboards">
                   <p><strong>Answer:</strong> The top-left corner / top row of the page.</p>
                   <p><strong>Explanation:</strong> In Western culture, users read from top-left to bottom-right. Positioning core KPI numbers at the top ensure they are the first metrics seen when a user opens the report.</p>
@@ -677,7 +677,7 @@ USA Revenue = <span class="tok-fn">CALCULATE</span>([Total Revenue], Customers[C
                   <i class="fas fa-dumbbell"></i> Practice: License Sharing Requirements
                 </div>
                 <p>True or False: Any user with a free Power BI account can view a report shared securely by another user, even if the report is not hosted on Premium capacity.</p>
-                <button class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-publishing">Show Solution</button>
+                <button type="button" class="pbi-exercise-toggle" aria-expanded="false" aria-controls="solution-publishing">Show Solution</button>
                 <div class="pbi-exercise-solution" id="solution-publishing">
                   <p><strong>Answer:</strong> False</p>
                   <p><strong>Explanation:</strong> Secure sharing in standard workspaces requires both the publisher and the viewer to hold a Pro or PPU license. Free users can only view reports if they are published to public webs (unsecure) or hosted on Premium capacity nodes.</p>
@@ -694,7 +694,10 @@ USA Revenue = <span class="tok-fn">CALCULATE</span>([Total Revenue], Customers[C
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./powerbi-learning.js"></script>
   

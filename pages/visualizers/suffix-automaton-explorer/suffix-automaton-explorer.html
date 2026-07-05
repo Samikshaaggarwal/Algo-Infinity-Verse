@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -48,13 +48,13 @@
 
         <!-- Mode tabs -->
         <div class="sae-mode-tabs">
-          <button class="sae-mode-tab active" data-mode="build">
+          <button type="button" class="sae-mode-tab active" data-mode="build">
             <i class="fas fa-hammer"></i> Build & Explore
           </button>
-          <button class="sae-mode-tab" data-mode="query">
+          <button type="button" class="sae-mode-tab" data-mode="query">
             <i class="fas fa-magnifying-glass"></i> Substring Query
           </button>
-          <button class="sae-mode-tab" data-mode="lcs">
+          <button type="button" class="sae-mode-tab" data-mode="lcs">
             <i class="fas fa-link"></i> LCS Mode
           </button>
         </div>
@@ -67,20 +67,20 @@
               <span class="sae-row-label">String</span>
               <input type="text" id="saeInputString" class="sae-text-input" value="abcbc" maxlength="14" aria-label="Input string" />
               <div class="sae-preset-btns">
-                <button class="sae-preset-btn" data-str="abcbc">abcbc</button>
-                <button class="sae-preset-btn" data-str="banana">banana</button>
-                <button class="sae-preset-btn" data-str="aabaa">aabaa</button>
-                <button class="sae-preset-btn" data-str="abcabcabc">abcabcabc</button>
+                <button type="button" class="sae-preset-btn" data-str="abcbc">abcbc</button>
+                <button type="button" class="sae-preset-btn" data-str="banana">banana</button>
+                <button type="button" class="sae-preset-btn" data-str="aabaa">aabaa</button>
+                <button type="button" class="sae-preset-btn" data-str="abcabcabc">abcabcabc</button>
               </div>
             </div>
             <div class="sae-row">
-              <button class="btn sae-btn-primary sae-build-btn" id="saeBuildBtn">
+              <button type="button" class="btn sae-btn-primary sae-build-btn" id="saeBuildBtn">
                 <i class="fas fa-play"></i> Build Online
               </button>
-              <button class="btn btn-secondary sae-step-btn" id="saeStepBtn" disabled>
+              <button type="button" class="btn btn-secondary sae-step-btn" id="saeStepBtn" disabled>
                 <i class="fas fa-step-forward"></i> Step
               </button>
-              <button class="btn btn-secondary sae-reset-btn" id="saeResetBtn">
+              <button type="button" class="btn btn-secondary sae-reset-btn" id="saeResetBtn">
                 <i class="fas fa-undo"></i> Reset
               </button>
               <label class="sae-toggle-label">
@@ -148,7 +148,7 @@
             <div class="sae-row">
               <span class="sae-row-label">Query substring</span>
               <input type="text" id="saeQueryInput" class="sae-text-input" placeholder="type a substring to test" maxlength="14" aria-label="Query substring" />
-              <button class="btn sae-btn-primary sae-query-run-btn" id="saeQueryRunBtn">
+              <button type="button" class="btn sae-btn-primary sae-query-run-btn" id="saeQueryRunBtn">
                 <i class="fas fa-search"></i> Check Membership
               </button>
             </div>
@@ -180,7 +180,7 @@
               <input type="text" id="saeLcsB" class="sae-text-input" value="xyzbcdq" maxlength="16" aria-label="String B" />
             </div>
             <div class="sae-row">
-              <button class="btn sae-btn-primary sae-lcs-run-btn" id="saeLcsRunBtn">
+              <button type="button" class="btn sae-btn-primary sae-lcs-run-btn" id="saeLcsRunBtn">
                 <i class="fas fa-bolt"></i> Find LCS in O(n+m)
               </button>
             </div>
@@ -232,7 +232,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="suffix-automaton-explorer.js"></script>

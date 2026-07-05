@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -120,7 +120,7 @@
         <div class="fss-topics-card">
           <div class="fss-dashboard-header">
             <div class="fss-dashboard-title"><i class="fas fa-layer-group"></i> All Tracked Topics</div>
-            <button id="fssClearBtn" class="fss-clear-btn"><i class="fas fa-trash"></i> Clear All Data</button>
+            <button type="button" id="fssClearBtn" class="fss-clear-btn"><i class="fas fa-trash"></i> Clear All Data</button>
           </div>
           <div class="fss-topics-list" id="fssTopicsList">
             <p class="fss-empty-state">No topics tracked yet.</p>
@@ -133,7 +133,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./future-self-simulator.js"></script>
   

@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+  <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
     <i class="fas fa-circle-chevron-up"></i>
   </button>
 
@@ -117,13 +117,13 @@
           <!-- Playback Actions -->
           <div class="playback-actions border-top pt-3 mt-3">
             <div class="mc-playback-grid">
-              <button id="btn-play" class="btn btn-primary mc-icon-btn" aria-label="Play sequence">
+              <button type="button" id="btn-play" class="btn btn-primary mc-icon-btn" aria-label="Play sequence">
                 <i class="fas fa-play"></i>
               </button>
-              <button id="btn-pause" class="btn btn-outline mc-icon-btn" disabled aria-label="Pause sequence">
+              <button type="button" id="btn-pause" class="btn btn-outline mc-icon-btn" disabled aria-label="Pause sequence">
                 <i class="fas fa-pause"></i>
               </button>
-              <button id="btn-reset" class="btn btn-secondary mc-icon-btn" aria-label="Reset sequence">
+              <button type="button" id="btn-reset" class="btn btn-secondary mc-icon-btn" aria-label="Reset sequence">
                 <i class="fas fa-rotate-left"></i>
               </button>
             </div>
@@ -186,6 +186,7 @@
 
   <script src="/auth.js"></script>
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   <script src="./algorithm-music-composer.js"></script>
 

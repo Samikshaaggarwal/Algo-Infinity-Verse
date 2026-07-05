@@ -97,7 +97,7 @@ console.log(calculateTotal(cart))`;
     semiStyle.addEventListener("change", formatCode);
 
     btnReset.addEventListener("click", () => {
-        if(confirm("Reset to default example code?")) {
+        if(false /* confirm removed */) {
             inputEditor.setValue(initialCode);
             errorBanner.classList.add("hidden");
             outputEditor.setValue("");

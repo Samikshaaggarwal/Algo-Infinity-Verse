@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -79,10 +79,10 @@
             </select>
           </div>
           <div class="se-toolbar-right">
-            <button id="seRunBtn" class="btn btn-primary se-run-btn"><i class="fas fa-play"></i> Run</button>
-            <button id="seResetBtn" class="ce-icon-btn" title="Reset to example" aria-label="Reset to example"><i class="fas fa-undo"></i></button>
-            <button id="seCopyBtn" class="ce-icon-btn" title="Copy code" aria-label="Copy code to clipboard"><i class="fas fa-copy"></i></button>
-            <button id="seSaveBtn" class="ce-icon-btn" title="Save to browser storage" aria-label="Save code to browser storage"><i class="fas fa-save"></i></button>
+            <button type="button" id="seRunBtn" class="btn btn-primary se-run-btn"><i class="fas fa-play"></i> Run</button>
+            <button type="button" id="seResetBtn" class="ce-icon-btn" title="Reset to example" aria-label="Reset to example"><i class="fas fa-undo"></i></button>
+            <button type="button" id="seCopyBtn" class="ce-icon-btn" title="Copy code" aria-label="Copy code to clipboard"><i class="fas fa-copy"></i></button>
+            <button type="button" id="seSaveBtn" class="ce-icon-btn" title="Save to browser storage" aria-label="Save code to browser storage"><i class="fas fa-save"></i></button>
           </div>
         </div>
 
@@ -112,7 +112,7 @@
         <div class="se-console">
           <div class="se-console-header">
             <span><i class="fas fa-exclamation-triangle"></i> Errors / Warnings</span>
-            <button class="ce-console-clear" id="ceConsoleClear" aria-label="Clear error console"><i class="fas fa-trash"></i> Clear</button>
+            <button type="button" class="ce-console-clear" id="ceConsoleClear" aria-label="Clear error console"><i class="fas fa-trash"></i> Clear</button>
           </div>
           <div class="se-console-body" id="ceConsoleBody">
             <span class="ce-console-placeholder">No errors detected.</span>
@@ -124,7 +124,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./scala-editor.js"></script>
   

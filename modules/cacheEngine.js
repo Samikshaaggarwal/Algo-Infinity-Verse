@@ -57,18 +57,14 @@ export async function fetchWithCache(key, fetcher, options = {}) {
                 const newRecord = { id: key, data, timestamp: Date.now() };
                 // Update RAM cache
                 cache.set(key, newRecord);
-                
-            .then(async data => {
                 // Update IndexedDB cache
-                await offlineStore.put(opts.offlineStoreName, newRecord).catch(err => {
+                offlineStore.put(opts.offlineStoreName, newRecord).catch(err => {
                     console.warn('[OfflineStore] Failed to persist cache record:', err);
                 });
-                
                 // Trigger callback if data changed
                 if (cachedRecord && isDifferent && typeof opts.onRevalidate === 'function') {
                     opts.onRevalidate(data);
                 }
-                
                 return data;
             })
             .finally(() => {
@@ -107,3 +103,7 @@ export function mutate(key) {
 export function clearCache() {
     cache.clear();
 }
+// Legacy global exports
+window.fetchWithCache = fetchWithCache;
+window.mutate = mutate;
+window.clearCache = clearCache;

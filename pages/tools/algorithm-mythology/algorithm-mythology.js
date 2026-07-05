@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── Legend Data ─── */
-var AM_LEGENDS = [
+let AM_LEGENDS = [
   {
     id: 'mergesort',
     mythName: 'Krakatoa the Unbreakable',
@@ -444,15 +444,15 @@ var AM_LEGENDS = [
 
 /* ─── Helpers ─── */
 function amEscape(str) {
-  var d = document.createElement('div');
+  let d = document.createElement('div');
   d.textContent = str;
   return d.innerHTML;
 }
 
 /* ─── Render Grid ─── */
 function amRenderGrid(legends) {
-  var grid  = document.getElementById('amGrid');
-  var empty = document.getElementById('amEmpty');
+  let grid  = document.getElementById('amGrid');
+  let empty = document.getElementById('amEmpty');
   if (!grid) return;
 
   if (legends.length === 0) {
@@ -464,15 +464,15 @@ function amRenderGrid(legends) {
   if (empty) empty.classList.add('hidden');
 
   grid.innerHTML = legends.map(function(leg) {
-    var chips = leg.complexity.map(function(c) {
+    let chips = leg.complexity.map(function(c) {
       return '<span class="am-power-chip">' + amEscape(c) + '</span>';
     }).join('');
 
-    var abilityBadges = leg.abilities.slice(0, 3).map(function(a) {
+    let abilityBadges = leg.abilities.slice(0, 3).map(function(a) {
       return '<span class="am-ability-badge">' + amEscape(a.name) + '</span>';
     }).join('');
 
-    var classLabel = {
+    let classLabel = {
       sorting:   '⚔️ Sorting God',
       search:    '🔍 Oracle Seeker',
       graph:     '🌐 Graph Walker',
@@ -498,8 +498,8 @@ function amRenderGrid(legends) {
   }).join('');
 
   grid.querySelectorAll('.am-card').forEach(function(card) {
-    var open = function() {
-      var id = card.getAttribute('data-id');
+    let open = function() {
+      let id = card.getAttribute('data-id');
       amOpenModal(id);
     };
     card.addEventListener('click', open);
@@ -511,8 +511,8 @@ function amRenderGrid(legends) {
 
 /* ─── Modal ─── */
 function amInitModal() {
-  var modal    = document.getElementById('amModal');
-  var closeBtn = document.getElementById('amModalClose');
+  let modal    = document.getElementById('amModal');
+  let closeBtn = document.getElementById('amModalClose');
   if (!modal || !closeBtn) return;
 
   closeBtn.addEventListener('click', function() { modal.classList.remove('active'); });
@@ -525,18 +525,18 @@ function amInitModal() {
 }
 
 function amOpenModal(id) {
-  var leg = null;
-  for (var i = 0; i < AM_LEGENDS.length; i++) {
+  let leg = null;
+  for (let i = 0; i < AM_LEGENDS.length; i++) {
     if (AM_LEGENDS[i].id === id) { leg = AM_LEGENDS[i]; break; }
   }
   if (!leg) return;
 
-  var modal = document.getElementById('amModal');
-  var body  = document.getElementById('amModalBody');
+  let modal = document.getElementById('amModal');
+  let body  = document.getElementById('amModalBody');
   if (!modal || !body) return;
 
   // Build abilities grid
-  var abilitiesHtml = leg.abilities.map(function(a) {
+  let abilitiesHtml = leg.abilities.map(function(a) {
     return '<div class="am-ability-card">' +
       '<div class="am-ability-name">' + a.icon + ' ' + amEscape(a.name) + '</div>' +
       '<div class="am-ability-desc">' + amEscape(a.desc) + '</div>' +
@@ -544,12 +544,12 @@ function amOpenModal(id) {
   }).join('');
 
   // Build weaknesses
-  var weakHtml = leg.weaknesses.map(function(w) {
+  let weakHtml = leg.weaknesses.map(function(w) {
     return '<div class="am-weakness-item">' + amEscape(w) + '</div>';
   }).join('');
 
   // Build power levels
-  var powerHtml = leg.powers.map(function(p) {
+  let powerHtml = leg.powers.map(function(p) {
     return '<div class="am-power-row">' +
       '<span class="am-power-label">' + amEscape(p.label) + '</span>' +
       '<div class="am-power-bar-track">' +
@@ -560,11 +560,11 @@ function amOpenModal(id) {
   }).join('');
 
   // Battles
-  var battlesHtml = leg.battles.map(function(b) {
+  let battlesHtml = leg.battles.map(function(b) {
     return '<div class="am-battle-item">' + amEscape(b) + '</div>';
   }).join('');
 
-  var classLabel = {
+  let classLabel = {
     sorting:   '⚔️ Sorting God',
     search:    '🔍 Oracle Seeker',
     graph:     '🌐 Graph Walker',
@@ -622,16 +622,16 @@ function amOpenModal(id) {
 
 /* ─── Filter & Search ─── */
 function amInitFilter() {
-  var filterBtns = document.querySelectorAll('.am-filter-btn');
-  var searchEl   = document.getElementById('amSearch');
+  let filterBtns = document.querySelectorAll('.am-filter-btn');
+  let searchEl   = document.getElementById('amSearch');
 
-  var activeClass = 'all';
-  var searchQuery = '';
+  let activeClass = 'all';
+  let searchQuery = '';
 
   function applyFilter() {
-    var filtered = AM_LEGENDS.filter(function(leg) {
-      var matchClass  = activeClass === 'all' || leg.class === activeClass;
-      var matchSearch = !searchQuery ||
+    let filtered = AM_LEGENDS.filter(function(leg) {
+      let matchClass  = activeClass === 'all' || leg.class === activeClass;
+      let matchSearch = !searchQuery ||
         leg.realName.toLowerCase().indexOf(searchQuery) !== -1 ||
         leg.mythName.toLowerCase().indexOf(searchQuery) !== -1 ||
         leg.epithet.toLowerCase().indexOf(searchQuery) !== -1;

@@ -45,7 +45,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -192,7 +192,7 @@
                     <div class="two-pointer-code-block">
                             <div class="two-pointer-code-header">
                                 <span class="two-pointer-code-lang">C++</span>
-                                <button
+                                <button type="button"
                                     class="two-pointer-code-copy"
                                     data-code="vector<int> twoSum(vector<int>& nums, int target){ int left=0; int right=nums.size()-1; while(left<right){ int sum=nums[left]+nums[right]; if(sum==target) return {left,right}; if(sum<target) left++; else right--; } return {}; }">
                                     Copy
@@ -253,7 +253,7 @@
                     <div class="two-pointer-code-block">
                         <div class="two-pointer-code-header">
                             <span class="two-pointer-code-lang">C++</span>
-                            <button
+                            <button type="button"
                                 class="two-pointer-code-copy"
                                 data-code="bool hasCycle(ListNode* head){ ListNode* slow=head; ListNode* fast=head; while(fast && fast->next){ slow=slow->next; fast=fast->next->next; if(slow==fast) return true; } return false; }">
                                 Copy
@@ -409,7 +409,7 @@
                     Given a sorted array [2,7,11,15] and target = 9,
                     find the indices of the pair.
                     </p>
-                <button class="two-pointer-exercise-toggle" aria-expanded="false" aria-controls="solution-ex1">Show Solution</button>
+                <button type="button" class="two-pointer-exercise-toggle" aria-expanded="false" aria-controls="solution-ex1">Show Solution</button>
                 <div class="two-pointer-exercise-solution" id="solution-ex1">
                   <p><strong>Answer: [0,1]</strong></p>
                   <p>Explanation:   Using the Two Pointers technique, place one pointer at the
@@ -430,7 +430,7 @@
                     <p>
                     Is "racecar" a palindrome?
                     </p>
-                <button class="two-pointer-exercise-toggle" aria-expanded="false" aria-controls="solution-ex2">Show Solution</button>
+                <button type="button" class="two-pointer-exercise-toggle" aria-expanded="false" aria-controls="solution-ex2">Show Solution</button>
                 <div class="two-pointer-exercise-solution" id="solution-ex2">
                   <p><strong>Answer: Yes</strong></p>
                   <p>Explanation:   Compare characters from both ends of the string using two pointers.
@@ -452,7 +452,7 @@
                         Which technique is used to find the middle node of a linked list in one traversal?
                     </p>
 
-                    <button class="two-pointer-exercise-toggle"
+                    <button type="button" class="two-pointer-exercise-toggle"
                             aria-expanded="false"
                             aria-controls="solution-ex3">
                         Show Solution
@@ -479,7 +479,10 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="/auth-gate.js"></script>

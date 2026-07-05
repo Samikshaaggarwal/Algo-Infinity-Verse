@@ -68,20 +68,20 @@
             <label>Insert Value</label>
             <div class="input-row">
               <input type="number" id="node-value" placeholder="e.g., 25" min="1" max="999" />
-              <button class="btn-vis btn-insert" id="btn-insert"><i class="fas fa-plus"></i> Insert</button>
+              <button type="button" class="btn-vis btn-insert" id="btn-insert"><i class="fas fa-plus"></i> Insert</button>
             </div>
             <div class="button-grid">
-              <button class="btn-vis" id="btn-random"><i class="fas fa-random"></i> Add Random</button>
-              <button class="btn-vis btn-danger" id="btn-clear"><i class="fas fa-trash-alt"></i> Clear Tree</button>
+              <button type="button" class="btn-vis" id="btn-random"><i class="fas fa-random"></i> Add Random</button>
+              <button type="button" class="btn-vis btn-danger" id="btn-clear"><i class="fas fa-trash-alt"></i> Clear Tree</button>
             </div>
           </div>
 
           <div class="control-group">
             <label>Simulation Controls</label>
             <div class="simulation-controls">
-              <button class="btn-ctrl" id="btn-prev" title="Step Backward" disabled><i class="fas fa-step-backward"></i></button>
-              <button class="btn-ctrl" id="btn-play" title="Auto Play"><i class="fas fa-play"></i></button>
-              <button class="btn-ctrl" id="btn-next" title="Step Forward" disabled><i class="fas fa-step-forward"></i></button>
+              <button type="button" class="btn-ctrl" id="btn-prev" title="Step Backward" disabled><i class="fas fa-step-backward"></i></button>
+              <button type="button" class="btn-ctrl" id="btn-play" title="Auto Play"><i class="fas fa-play"></i></button>
+              <button type="button" class="btn-ctrl" id="btn-next" title="Step Forward" disabled><i class="fas fa-step-forward"></i></button>
             </div>
           </div>
 
@@ -109,10 +109,10 @@
           <!-- Floating Action Overlay for node options -->
           <div id="node-menu" class="floating-menu" style="display: none;">
             <div class="menu-header">Node Operations</div>
-            <button class="menu-btn" id="menu-rot-left"><i class="fas fa-undo"></i> Rotate Left</button>
-            <button class="menu-btn" id="menu-rot-right"><i class="fas fa-redo"></i> Rotate Right</button>
-            <button class="menu-btn" id="menu-rot-lr"><i class="fas fa-sync"></i> Left-Right Rotation</button>
-            <button class="menu-btn" id="menu-rot-rl"><i class="fas fa-sync"></i> Right-Left Rotation</button>
+            <button type="button" class="menu-btn" id="menu-rot-left"><i class="fas fa-undo"></i> Rotate Left</button>
+            <button type="button" class="menu-btn" id="menu-rot-right"><i class="fas fa-redo"></i> Rotate Right</button>
+            <button type="button" class="menu-btn" id="menu-rot-lr"><i class="fas fa-sync"></i> Left-Right Rotation</button>
+            <button type="button" class="menu-btn" id="menu-rot-rl"><i class="fas fa-sync"></i> Right-Left Rotation</button>
           </div>
 
           <div id="tree-canvas" class="tree-canvas">
@@ -124,7 +124,11 @@
 
     <div id="footer-placeholder"></div>
     
+    <script src="/bootstrap-legacy.js"></script>
+
+    
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="self-balancing-trees.js"></script>

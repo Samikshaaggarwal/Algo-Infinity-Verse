@@ -51,7 +51,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -230,7 +230,7 @@
                   Which category of traversal visits all nodes on level 1 before
                   visiting nodes on level 2?
                 </p>
-                <button
+                <button type="button"
                   class="tree-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-intro"
@@ -285,7 +285,7 @@
               <div class="tree-code-block">
                 <div class="tree-code-header">
                   <span class="tree-code-lang">Pseudocode (Recursive)</span>
-                  <button
+                  <button type="button"
                     class="tree-code-copy"
                     data-code="function preorder(Node root)
     if root is null then return
@@ -315,7 +315,7 @@ end function"
                   For a tree with root node `A`, left child `B`, and right child
                   `C`, what is the Preorder traversal order?
                 </p>
-                <button
+                <button type="button"
                   class="tree-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-preorder"
@@ -364,7 +364,7 @@ end function"
               <div class="tree-code-block">
                 <div class="tree-code-header">
                   <span class="tree-code-lang">Pseudocode (Recursive)</span>
-                  <button
+                  <button type="button"
                     class="tree-code-copy"
                     data-code="function inorder(Node root)
     if root is null then return
@@ -394,7 +394,7 @@ end function"
                   True or False: Performing an Inorder traversal on any binary
                   tree always yields a sorted sequence of keys.
                 </p>
-                <button
+                <button type="button"
                   class="tree-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-inorder"
@@ -445,7 +445,7 @@ end function"
               <div class="tree-code-block">
                 <div class="tree-code-header">
                   <span class="tree-code-lang">Pseudocode (Recursive)</span>
-                  <button
+                  <button type="button"
                     class="tree-code-copy"
                     data-code="function postorder(Node root)
     if root is null then return
@@ -475,7 +475,7 @@ end function"
                   Why is postorder traversal preferred when deleting a tree from
                   memory?
                 </p>
-                <button
+                <button type="button"
                   class="tree-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-postorder"
@@ -535,7 +535,7 @@ end function"
                   <span class="tree-code-lang"
                     >Pseudocode (Iterative Queue)</span
                   >
-                  <button
+                  <button type="button"
                     class="tree-code-copy"
                     data-code="function levelOrder(Node root)
     if root is null then return
@@ -587,7 +587,7 @@ end function"
                   Which data structure is essential to perform Level-Order
                   traversal iteratively?
                 </p>
-                <button
+                <button type="button"
                   class="tree-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-levelorder"
@@ -710,7 +710,7 @@ end function"
                   In Inorder traversal of the diagrammed tree above, which node
                   is visited immediately after node `5`?
                 </p>
-                <button
+                <button type="button"
                   class="tree-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-diagrams"
@@ -750,7 +750,7 @@ end function"
                   <code>[D, B, E, A, C]</code>. Reconstruct the tree and
                   identify the root's right child.
                 </p>
-                <button
+                <button type="button"
                   class="tree-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-comp-1"
@@ -779,7 +779,7 @@ end function"
                   keys <code>[15, 10, 20, 8, 12]</code>. What sequence is output
                   by performing an Inorder traversal?
                 </p>
-                <button
+                <button type="button"
                   class="tree-exercise-toggle"
                   aria-expanded="false"
                   aria-controls="solution-comp-2"
@@ -977,10 +977,10 @@ end function"
               </div>
 
               <div class="tree-quiz-actions">
-                <button class="tree-quiz-btn" id="submitQuizBtn">
+                <button type="button" class="tree-quiz-btn" id="submitQuizBtn">
                   Submit Quiz
                 </button>
-                <button
+                <button type="button"
                   class="tree-quiz-btn-secondary"
                   id="resetQuizBtn"
                   style="display: none"
@@ -1009,7 +1009,10 @@ end function"
 
     <!-- Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="tree-traversal.js"></script>
   

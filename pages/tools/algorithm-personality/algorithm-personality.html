@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -55,7 +55,7 @@
         </h1>
         <p class="section-subtitle">Every algorithm has a personality — methodical or chaotic, greedy or patient, a team player or a lone ranger. Take the quiz and discover which one matches yours.</p>
         <div class="hero-buttons">
-          <button class="btn btn-primary ap-btn-primary" id="apStartHeroBtn">
+          <button type="button" class="btn btn-primary ap-btn-primary" id="apStartHeroBtn">
             <i class="fas fa-brain"></i> Take the Quiz
           </button>
           <a href="#personalities" class="btn btn-secondary">
@@ -88,7 +88,7 @@
             <div class="ap-peek-item" style="--c:#8b5cf6">🔗 Linked List</div>
             <div class="ap-peek-item" style="--c:#14b8a6">🔍 Binary Search</div>
           </div>
-          <button class="btn btn-primary ap-btn-primary ap-start-main-btn" id="apStartMainBtn">
+          <button type="button" class="btn btn-primary ap-btn-primary ap-start-main-btn" id="apStartMainBtn">
             <i class="fas fa-play"></i> Begin Assessment
           </button>
         </div>
@@ -112,11 +112,11 @@
 
           <!-- Navigation -->
           <div class="ap-quiz-nav">
-            <button class="btn btn-secondary ap-nav-btn" id="apPrevBtn" disabled>
+            <button type="button" class="btn btn-secondary ap-nav-btn" id="apPrevBtn" disabled>
               <i class="fas fa-arrow-left"></i> Back
             </button>
             <div class="ap-quiz-dots" id="apQuizDots"></div>
-            <button class="btn btn-primary ap-btn-primary ap-nav-btn" id="apNextBtn" disabled>
+            <button type="button" class="btn btn-primary ap-btn-primary ap-nav-btn" id="apNextBtn" disabled>
               Next <i class="fas fa-arrow-right"></i>
             </button>
           </div>
@@ -148,10 +148,10 @@
 
           <!-- Actions -->
           <div class="ap-result-actions">
-            <button class="btn btn-primary ap-btn-primary" id="apRetakeBtn">
+            <button type="button" class="btn btn-primary ap-btn-primary" id="apRetakeBtn">
               <i class="fas fa-redo"></i> Retake Quiz
             </button>
-            <button class="btn btn-secondary" id="apShareBtn">
+            <button type="button" class="btn btn-secondary" id="apShareBtn">
               <i class="fas fa-share-alt"></i> Share Result
             </button>
           </div>
@@ -174,7 +174,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="algorithm-personality.js"></script>

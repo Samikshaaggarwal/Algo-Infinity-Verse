@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -77,11 +77,11 @@
         <div class="am-filter-inner">
           <span class="am-filter-label"><i class="fas fa-shield-alt"></i> Class:</span>
           <div class="am-filter-btns">
-            <button class="am-filter-btn active" data-class="all">All Legends</button>
-            <button class="am-filter-btn" data-class="sorting">⚔️ Sorting Gods</button>
-            <button class="am-filter-btn" data-class="search">🔍 Oracle Seekers</button>
-            <button class="am-filter-btn" data-class="graph">🌐 Graph Walkers</button>
-            <button class="am-filter-btn" data-class="structure">🏛️ Structure Keepers</button>
+            <button type="button" class="am-filter-btn active" data-class="all">All Legends</button>
+            <button type="button" class="am-filter-btn" data-class="sorting">⚔️ Sorting Gods</button>
+            <button type="button" class="am-filter-btn" data-class="search">🔍 Oracle Seekers</button>
+            <button type="button" class="am-filter-btn" data-class="graph">🌐 Graph Walkers</button>
+            <button type="button" class="am-filter-btn" data-class="structure">🏛️ Structure Keepers</button>
           </div>
           <div class="am-search-wrap">
             <i class="fas fa-search"></i>
@@ -105,7 +105,7 @@
     <!-- Detail Modal -->
     <div class="modal am-modal" id="amModal">
       <div class="modal-content am-modal-content" id="amModalContent">
-        <button class="modal-close am-modal-close" id="amModalClose" aria-label="Close">&times;</button>
+        <button type="button" class="modal-close am-modal-close" id="amModalClose" aria-label="Close">&times;</button>
         <div id="amModalBody"></div>
       </div>
     </div>
@@ -147,7 +147,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="algorithm-mythology.js"></script>

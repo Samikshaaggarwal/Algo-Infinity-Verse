@@ -50,7 +50,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -189,7 +189,7 @@
               </div>
 
               <!-- Control Buttons -->
-              <button
+              <button type="button"
                 id="newArrayBtn"
                 class="btn btn-secondary"
                 style="
@@ -205,17 +205,17 @@
               </button>
 
               <div class="btn-control-row">
-                <button id="startBtn" class="btn btn-primary btn-control">
+                <button type="button" id="startBtn" class="btn btn-primary btn-control">
                   <i class="fas fa-play"></i> Play
                 </button>
-                <button
+                <button type="button"
                   id="pauseBtn"
                   class="btn btn-secondary btn-control"
                   disabled
                 >
                   <i class="fas fa-pause"></i> Pause
                 </button>
-                <button id="resetBtn" class="btn btn-secondary btn-control">
+                <button type="button" id="resetBtn" class="btn btn-secondary btn-control">
                   <i class="fas fa-undo"></i> Reset
                 </button>
               </div>
@@ -228,10 +228,10 @@
                 <span id="dbgStepCounter" class="step-counter">Step 0 / 0</span>
               </div>
               <div class="debugger-controls">
-                <button id="dbgPrevBtn" class="btn btn-secondary btn-control-mini" disabled><i class="fas fa-step-backward"></i> Prev</button>
-                <button id="dbgPlayBtn" class="btn btn-primary btn-control-mini"><i class="fas fa-play"></i> Play</button>
-                <button id="dbgPauseBtn" class="btn btn-secondary btn-control-mini" style="display: none;"><i class="fas fa-pause"></i> Pause</button>
-                <button id="dbgNextBtn" class="btn btn-secondary btn-control-mini"><i class="fas fa-step-forward"></i> Next</button>
+                <button type="button" id="dbgPrevBtn" class="btn btn-secondary btn-control-mini" disabled><i class="fas fa-step-backward"></i> Prev</button>
+                <button type="button" id="dbgPlayBtn" class="btn btn-primary btn-control-mini"><i class="fas fa-play"></i> Play</button>
+                <button type="button" id="dbgPauseBtn" class="btn btn-secondary btn-control-mini" style="display: none;"><i class="fas fa-pause"></i> Pause</button>
+                <button type="button" id="dbgNextBtn" class="btn btn-secondary btn-control-mini"><i class="fas fa-step-forward"></i> Next</button>
               </div>
               <div class="debugger-slider-group">
                 <input type="range" id="dbgStepSlider" min="0" max="0" value="0" class="slider-custom">
@@ -278,7 +278,7 @@
 
     <!-- Chatbot Widget -->
     <div class="chatbot-widget">
-      <button
+      <button type="button"
         class="chatbot-toggle"
         id="chatbotToggle"
         aria-label="Toggle chat"
@@ -289,7 +289,7 @@
       <div class="chatbot-window hidden" id="chatbotWindow">
         <div class="chatbot-header">
           <h4>Algo Assistant</h4>
-          <button
+          <button type="button"
             class="chatbot-close"
             id="chatbotClose"
             aria-label="Close chat"
@@ -308,24 +308,24 @@
             id="chatbotInput"
             placeholder="Type your question..."
           />
-          <button id="chatbotSend" aria-label="Send message">
+          <button type="button" id="chatbotSend" aria-label="Send message">
             <i class="fas fa-paper-plane"></i>
           </button>
         </div>
         <div class="quick-questions">
-          <button
+          <button type="button"
             class="quick-q"
             data-question="What is the time complexity of this problem?"
           >
             Time Complexity
           </button>
-          <button
+          <button type="button"
             class="quick-q"
             data-question="Can you give me a hint for this problem?"
           >
             Hint
           </button>
-          <button class="quick-q" data-question="What approach should I use?">
+          <button type="button" class="quick-q" data-question="What approach should I use?">
             Approach
           </button>
         </div>
@@ -334,7 +334,10 @@
 
     <!-- Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="sorting-visualizer.js"></script>
   

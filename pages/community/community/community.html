@@ -99,7 +99,7 @@
                                     id="searchInput"
                                     placeholder="Search posts..."
                                     class="search-input">
-                                <button id="clearFilterBtn" class="btn btn-secondary btn-sm hidden-filter-btn">
+                                <button type="button" id="clearFilterBtn" class="btn btn-secondary btn-sm hidden-filter-btn">
                                     <i class="fas fa-times"></i> Clear Filter
                                 </button>
                             </div>
@@ -144,6 +144,7 @@
     <script type="module" src="/modules/domSanitizer.js"></script>
     <script src="community.js"></script>
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script>
       loadPartial('navbar-placeholder', '/partials/navbar.html');
       loadPartial('footer-placeholder', '/partials/footer.html');

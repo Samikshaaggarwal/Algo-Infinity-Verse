@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   ceInit();
 });
 
-var CE_KEYWORDS = new Set([
+let CE_KEYWORDS = new Set([
   'function','var','let','const','return','if','else','for','while','do',
   'break','continue','new','delete','typeof','instanceof','in','of',
   'class','extends','import','export','default','switch','case','throw',
@@ -10,25 +10,25 @@ var CE_KEYWORDS = new Set([
   'async','await','yield','static','super','void',
 ]);
 
-var CE_BUILTINS = new Set([
+let CE_BUILTINS = new Set([
   'console','Math','Array','Object','String','Number','Boolean','JSON',
   'Promise','Set','Map','Date','RegExp','Error','parseInt','parseFloat',
   'isNaN','isFinite','setTimeout','setInterval','clearTimeout','clearInterval',
 ]);
 
 /* ─── Presets ─── */
-var CE_PRESETS = [
+let CE_PRESETS = [
   {
     label: 'Simple Assignment',
-    code: 'var x = 10;\nvar y = 20;\nvar sum = x + y;\nconsole.log(sum);',
+    code: 'let x = 10;\nvar y = 20;\nvar sum = x + y;\nconsole.log(sum);',
   },
   {
     label: 'For Loop',
-    code: 'function sumArray(arr) {\n  var total = 0;\n  for (var i = 0; i < arr.length; i++) {\n    total = total + arr[i];\n  }\n  return total;\n}',
+    code: 'function sumArray(arr) {\n  let total = 0;\n  for (let i = 0; i < arr.length; i++) {\n    total = total + arr[i];\n  }\n  return total;\n}',
   },
   {
     label: 'Binary Search',
-    code: 'function binarySearch(arr, target) {\n  var lo = 0;\n  var hi = arr.length - 1;\n  while (lo <= hi) {\n    var mid = Math.floor((lo + hi) / 2);\n    if (arr[mid] === target) return mid;\n    else if (arr[mid] < target) lo = mid + 1;\n    else hi = mid - 1;\n  }\n  return -1;\n}',
+    code: 'function binarySearch(arr, target) {\n  let lo = 0;\n  let hi = arr.length - 1;\n  while (lo <= hi) {\n    let mid = Math.floor((lo + hi) / 2);\n    if (arr[mid] === target) return mid;\n    else if (arr[mid] < target) lo = mid + 1;\n    else hi = mid - 1;\n  }\n  return -1;\n}',
   },
   {
     label: 'Recursion (Fibonacci)',
@@ -36,11 +36,11 @@ var CE_PRESETS = [
   },
   {
     label: 'Bubble Sort',
-    code: 'function bubbleSort(arr) {\n  var n = arr.length;\n  for (var i = 0; i < n; i++) {\n    for (var j = 0; j < n - i - 1; j++) {\n      if (arr[j] > arr[j + 1]) {\n        var temp = arr[j];\n        arr[j] = arr[j + 1];\n        arr[j + 1] = temp;\n      }\n    }\n  }\n  return arr;\n}',
+    code: 'function bubbleSort(arr) {\n  let n = arr.length;\n  for (let i = 0; i < n; i++) {\n    for (let j = 0; j < n - i - 1; j++) {\n      if (arr[j] > arr[j + 1]) {\n        let temp = arr[j];\n        arr[j] = arr[j + 1];\n        arr[j + 1] = temp;\n      }\n    }\n  }\n  return arr;\n}',
   },
   {
     label: 'Closure',
-    code: 'function makeCounter() {\n  var count = 0;\n  return function() {\n    count = count + 1;\n    return count;\n  };\n}\nvar counter = makeCounter();\ncounter();\ncounter();',
+    code: 'function makeCounter() {\n  let count = 0;\n  return function() {\n    count = count + 1;\n    return count;\n  };\n}\nvar counter = makeCounter();\ncounter();\ncounter();',
   },
   {
     label: 'If-Else Chain',
@@ -48,40 +48,40 @@ var CE_PRESETS = [
   },
   {
     label: 'Constant Folding (Demo)',
-    code: 'var x = 2 + 3;\nvar y = x * 10;\nif (false) {\n  console.log("dead code");\n}\nvar PI = 3.14159;\nfor (var i = 0; i < 100; i++) {\n  var area = PI * 5 * 5;\n}',
+    code: 'let x = 2 + 3;\nvar y = x * 10;\nif (false) {\n  console.log("dead code");\n}\nvar PI = 3.14159;\nfor (let i = 0; i < 100; i++) {\n  let area = PI * 5 * 5;\n}',
   },
 ];
 
 /* ─── Tokenizer ─── */
 function ceTokenize(code) {
-  var tokens = [];
-  var i = 0;
-  var len = code.length;
+  let tokens = [];
+  let i = 0;
+  let len = code.length;
 
   while (i < len) {
-    var ch = code[i];
+    let ch = code[i];
 
     // Newline
     if (ch === '\n') { tokens.push({ type: 'newline', value: '\n', line: tokens.filter(function(t){return t.type==='newline';}).length + 1 }); i++; continue; }
 
     // Whitespace
-    if (/\s/.test(ch)) { var ws = ''; while (i < len && /[ \t\r]/.test(code[i])) ws += code[i++]; tokens.push({ type: 'whitespace', value: ws }); continue; }
+    if (/\s/.test(ch)) { let ws = ''; while (i < len && /[ \t\r]/.test(code[i])) ws += code[i++]; tokens.push({ type: 'whitespace', value: ws }); continue; }
 
     // Line comment
     if (code[i] === '/' && code[i+1] === '/') {
-      var cmt = ''; while (i < len && code[i] !== '\n') cmt += code[i++];
+      let cmt = ''; while (i < len && code[i] !== '\n') cmt += code[i++];
       tokens.push({ type: 'comment', value: cmt }); continue;
     }
 
     // Block comment
     if (code[i] === '/' && code[i+1] === '*') {
-      var cmt = ''; i += 2; while (i < len && !(code[i] === '*' && code[i+1] === '/')) cmt += code[i++]; i += 2;
+      let cmt = ''; i += 2; while (i < len && !(code[i] === '*' && code[i+1] === '/')) cmt += code[i++]; i += 2;
       tokens.push({ type: 'comment', value: '/*' + cmt + '*/' }); continue;
     }
 
     // String
     if (ch === '"' || ch === "'" || ch === '`') {
-      var q = ch; var str = q; i++;
+      let q = ch; let str = q; i++;
       while (i < len && code[i] !== q) { if (code[i] === '\\') str += code[i++]; str += code[i++]; }
       str += q; i++;
       tokens.push({ type: 'string', value: str }); continue;
@@ -89,20 +89,20 @@ function ceTokenize(code) {
 
     // Number
     if (/[0-9]/.test(ch) || (ch === '.' && /[0-9]/.test(code[i+1]))) {
-      var num = ''; while (i < len && /[0-9._]/.test(code[i])) num += code[i++];
+      let num = ''; while (i < len && /[0-9._]/.test(code[i])) num += code[i++];
       tokens.push({ type: 'number', value: num }); continue;
     }
 
     // Identifier or keyword
     if (/[a-zA-Z_$]/.test(ch)) {
-      var word = ''; while (i < len && /[a-zA-Z0-9_$]/.test(code[i])) word += code[i++];
-      var type = CE_KEYWORDS.has(word) ? 'keyword' : CE_BUILTINS.has(word) ? 'builtin' : 'identifier';
+      let word = ''; while (i < len && /[a-zA-Z0-9_$]/.test(code[i])) word += code[i++];
+      let type = CE_KEYWORDS.has(word) ? 'keyword' : CE_BUILTINS.has(word) ? 'builtin' : 'identifier';
       if (word === 'true' || word === 'false' || word === 'null' || word === 'undefined') type = 'boolean';
       tokens.push({ type: type, value: word }); continue;
     }
 
     // Operators
-    var twoChar = code.substring(i, i+2);
+    let twoChar = code.substring(i, i+2);
     if (['===','!==','>>>','**=','<<=','>>='].includes(code.substring(i,i+3))) {
       tokens.push({ type: 'operator', value: code.substring(i,i+3) }); i+=3; continue;
     }
@@ -127,9 +127,9 @@ function ceTokenize(code) {
 // Produces a lightweight tree for visualization, not a full spec-compliant parser
 
 function ceParse(tokens) {
-  var filtered = tokens.filter(function(t) { return t.type !== 'whitespace' && t.type !== 'newline' && t.type !== 'comment'; });
-  var pos = 0;
-  var nodeCount = 0;
+  let filtered = tokens.filter(function(t) { return t.type !== 'whitespace' && t.type !== 'newline' && t.type !== 'comment'; });
+  let pos = 0;
+  let nodeCount = 0;
 
   function peek()    { return filtered[pos]; }
   function consume() { return filtered[pos++]; }
@@ -138,53 +138,53 @@ function ceParse(tokens) {
   function makeNode(type, children, value) { nodeCount++; return { type: type, children: children || [], value: value || null, id: nodeCount }; }
 
   function parseProgram() {
-    var body = [];
-    while (pos < filtered.length) { var s = parseStatement(); if (s) body.push(s); else pos++; }
+    let body = [];
+    while (pos < filtered.length) { let s = parseStatement(); if (s) body.push(s); else pos++; }
     return makeNode('Program', body);
   }
 
   function parseStatement() {
-    var tok = peek();
+    let tok = peek();
     if (!tok) return null;
 
     if (tok.type === 'keyword') {
       if (tok.value === 'function') return parseFunctionDecl();
       if (tok.value === 'var' || tok.value === 'let' || tok.value === 'const') return parseVarDecl();
-      if (tok.value === 'return') { consume(); var arg = parseExpr(); return makeNode('ReturnStatement', arg ? [arg] : []); }
+      if (tok.value === 'return') { consume(); let arg = parseExpr(); return makeNode('ReturnStatement', arg ? [arg] : []); }
       if (tok.value === 'if') return parseIf();
       if (tok.value === 'for') return parseFor();
       if (tok.value === 'while') return parseWhile();
-      if (tok.value === 'break' || tok.value === 'continue') { var v = consume().value; return makeNode(v === 'break' ? 'BreakStatement' : 'ContinueStatement', []); }
+      if (tok.value === 'break' || tok.value === 'continue') { let v = consume().value; return makeNode(v === 'break' ? 'BreakStatement' : 'ContinueStatement', []); }
     }
 
     if (tok.type === 'punctuation' && tok.value === '{') return parseBlock();
 
-    var expr = parseExpr();
+    let expr = parseExpr();
     if (peek() && peek().value === ';') consume();
     return expr ? makeNode('ExprStatement', [expr]) : null;
   }
 
   function parseFunctionDecl() {
     consume(); // 'function'
-    var name = peek() && peek().type === 'identifier' ? consume().value : '(anonymous)';
+    let name = peek() && peek().type === 'identifier' ? consume().value : '(anonymous)';
     expect('(');
-    var params = [];
+    let params = [];
     while (peek() && peek().value !== ')') {
       if (peek().type === 'identifier') params.push(makeNode('Identifier', [], peek().value));
       if (peek() && peek().value === ',') consume();
       else if (peek() && peek().value !== ')') consume();
     }
     expect(')');
-    var body = parseBlock();
-    var node = makeNode('FunctionDecl', [body], name);
+    let body = parseBlock();
+    let node = makeNode('FunctionDecl', [body], name);
     node.params = params;
     return node;
   }
 
   function parseVarDecl() {
-    var kind = consume().value; // var/let/const
-    var name = peek() && peek().type === 'identifier' ? consume().value : '?';
-    var init = null;
+    let kind = consume().value; // var/let/const
+    let name = peek() && peek().type === 'identifier' ? consume().value : '?';
+    let init = null;
     if (peek() && peek().value === '=') { consume(); init = parseExpr(); }
     if (peek() && peek().value === ';') consume();
     return makeNode('VarDecl', init ? [init] : [], kind + ' ' + name);
@@ -193,10 +193,10 @@ function ceParse(tokens) {
   function parseIf() {
     consume(); // 'if'
     expect('(');
-    var test = parseExpr();
+    let test = parseExpr();
     expect(')');
-    var consequent = parseStatement();
-    var alternate = null;
+    let consequent = parseStatement();
+    let alternate = null;
     if (peek() && peek().value === 'else') { consume(); alternate = parseStatement(); }
     return makeNode('IfStatement', [test, consequent, alternate].filter(Boolean));
   }
@@ -204,26 +204,26 @@ function ceParse(tokens) {
   function parseFor() {
     consume(); // 'for'
     expect('(');
-    var init = parseStatement();
-    var test = parseExpr(); expect(';');
-    var update = parseExpr(); expect(')');
-    var body = parseStatement();
+    let init = parseStatement();
+    let test = parseExpr(); expect(';');
+    let update = parseExpr(); expect(')');
+    let body = parseStatement();
     return makeNode('ForStatement', [init, test, update, body].filter(Boolean));
   }
 
   function parseWhile() {
     consume(); // 'while'
     expect('(');
-    var test = parseExpr(); expect(')');
-    var body = parseStatement();
+    let test = parseExpr(); expect(')');
+    let body = parseStatement();
     return makeNode('WhileStatement', [test, body].filter(Boolean));
   }
 
   function parseBlock() {
     expect('{');
-    var stmts = [];
+    let stmts = [];
     while (pos < filtered.length && !(peek() && peek().value === '}')) {
-      var s = parseStatement(); if (s) stmts.push(s); else if (peek() && peek().value !== '}') pos++;
+      let s = parseStatement(); if (s) stmts.push(s); else if (peek() && peek().value !== '}') pos++;
     }
     expect('}');
     return makeNode('Block', stmts);
@@ -234,37 +234,37 @@ function ceParse(tokens) {
   }
 
   function parseAssign() {
-    var left = parseComparison();
+    let left = parseComparison();
     if (!left) return null;
     if (peek() && /^(=|\+=|-=|\*=|\/=|%=)$/.test(peek().value)) {
-      var op = consume().value; var right = parseAssign();
+      let op = consume().value; let right = parseAssign();
       return makeNode('AssignExpr', [left, right].filter(Boolean), op);
     }
     return left;
   }
 
   function parseComparison() {
-    var left = parseAddSub();
+    let left = parseAddSub();
     while (peek() && /^(===|!==|==|!=|<=|>=|<|>|\|\||&&)$/.test(peek().value)) {
-      var op = consume().value; var right = parseAddSub();
+      let op = consume().value; let right = parseAddSub();
       left = makeNode('BinaryExpr', [left, right].filter(Boolean), op);
     }
     return left;
   }
 
   function parseAddSub() {
-    var left = parseMulDiv();
+    let left = parseMulDiv();
     while (peek() && /^[+\-]$/.test(peek().value)) {
-      var op = consume().value; var right = parseMulDiv();
+      let op = consume().value; let right = parseMulDiv();
       left = makeNode('BinaryExpr', [left, right].filter(Boolean), op);
     }
     return left;
   }
 
   function parseMulDiv() {
-    var left = parseUnary();
+    let left = parseUnary();
     while (peek() && /^[*\/\%]$/.test(peek().value)) {
-      var op = consume().value; var right = parseUnary();
+      let op = consume().value; let right = parseUnary();
       left = makeNode('BinaryExpr', [left, right].filter(Boolean), op);
     }
     return left;
@@ -272,20 +272,20 @@ function ceParse(tokens) {
 
   function parseUnary() {
     if (peek() && /^(!|-|\+\+|--)$/.test(peek().value)) {
-      var op = consume().value; var arg = parseCall();
+      let op = consume().value; let arg = parseCall();
       return makeNode('UnaryExpr', [arg].filter(Boolean), op);
     }
     return parseCall();
   }
 
   function parseCall() {
-    var callee = parsePrimary();
+    let callee = parsePrimary();
     while (peek() && (peek().value === '(' || peek().value === '.' || peek().value === '[')) {
       if (peek().value === '(') {
         consume();
-        var args = [];
+        let args = [];
         while (peek() && peek().value !== ')') {
-          var a = parseExpr(); if (a) args.push(a);
+          let a = parseExpr(); if (a) args.push(a);
           if (peek() && peek().value === ',') consume();
           else if (peek() && peek().value !== ')') break;
         }
@@ -293,11 +293,11 @@ function ceParse(tokens) {
         callee = makeNode('CallExpression', [callee].concat(args).filter(Boolean), callee ? callee.value : '');
       } else if (peek().value === '.') {
         consume();
-        var prop = peek() && peek().type === 'identifier' ? consume().value : '?';
+        let prop = peek() && peek().type === 'identifier' ? consume().value : '?';
         callee = makeNode('MemberExpr', [callee].filter(Boolean), '.' + prop);
       } else {
         consume();
-        var idx = parseExpr(); expect(']');
+        let idx = parseExpr(); expect(']');
         callee = makeNode('MemberExpr', [callee, idx].filter(Boolean), '[]');
       }
     }
@@ -305,7 +305,7 @@ function ceParse(tokens) {
   }
 
   function parsePrimary() {
-    var tok = peek();
+    let tok = peek();
     if (!tok) return null;
     if (tok.type === 'number')  { consume(); return makeNode('Literal', [], tok.value); }
     if (tok.type === 'string')  { consume(); return makeNode('Literal', [], tok.value); }
@@ -314,11 +314,11 @@ function ceParse(tokens) {
     if (tok.type === 'identifier' || tok.type === 'builtin') { consume(); return makeNode('Identifier', [], tok.value); }
     if (tok.type === 'keyword' && tok.value === 'new') { consume(); return makeNode('NewExpr', [parsePrimary()].filter(Boolean)); }
     if (tok.type === 'keyword' && tok.value === 'function') return parseFunctionDecl();
-    if (tok.value === '(') { consume(); var e = parseExpr(); expect(')'); return e; }
+    if (tok.value === '(') { consume(); let e = parseExpr(); expect(')'); return e; }
     if (tok.value === '[') {
       consume();
-      var els = [];
-      while (peek() && peek().value !== ']') { var el = parseExpr(); if (el) els.push(el); if (peek() && peek().value === ',') consume(); else break; }
+      let els = [];
+      while (peek() && peek().value !== ']') { let el = parseExpr(); if (el) els.push(el); if (peek() && peek().value === ',') consume(); else break; }
       expect(']');
       return makeNode('ArrayExpr', els);
     }
@@ -332,15 +332,15 @@ function ceParse(tokens) {
 
 /* ─── Optimizer ─── */
 function ceOptimize(code, ast) {
-  var hints = [];
-  var lines  = code.split('\n');
+  let hints = [];
+  let lines  = code.split('\n');
 
   // 1. Constant folding: detect "2 + 3" or similar numeric literals in binary expr
   lines.forEach(function(line, idx) {
-    var foldMatch = line.match(/(\d+\.?\d*)\s*([+\-\*\/])\s*(\d+\.?\d*)/);
+    let foldMatch = line.match(/(\d+\.?\d*)\s*([+\-\*\/])\s*(\d+\.?\d*)/);
     if (foldMatch && !line.trim().startsWith('//')) {
-      var a = parseFloat(foldMatch[1]); var op = foldMatch[2]; var b = parseFloat(foldMatch[3]);
-      var result = op === '+' ? a+b : op === '-' ? a-b : op === '*' ? a*b : op === '/' && b!==0 ? a/b : null;
+      let a = parseFloat(foldMatch[1]); let op = foldMatch[2]; let b = parseFloat(foldMatch[3]);
+      let result = op === '+' ? a+b : op === '-' ? a-b : op === '*' ? a*b : op === '/' && b!==0 ? a/b : null;
       if (result !== null) {
         hints.push({ type: 'ok', icon: '🔁', title: 'Constant Folding', desc: 'This binary expression uses two literals and can be evaluated at compile time — no need to compute at runtime.', before: foldMatch[0], after: String(result), line: idx + 1 });
       }
@@ -355,7 +355,7 @@ function ceOptimize(code, ast) {
   });
 
   // 3. Loop invariant: variable assigned constant inside loop
-  var loopStart = -1;
+  let loopStart = -1;
   lines.forEach(function(line, idx) {
     if (/^\s*(for|while)\s*\(/.test(line)) loopStart = idx;
     if (loopStart >= 0 && /var\s+\w+\s*=\s*[\d.]+\s*\*\s*[\d.]+/.test(line)) {
@@ -365,13 +365,13 @@ function ceOptimize(code, ast) {
   });
 
   // 4. Unused variable detection (declared but never referenced after)
-  var declared = {};
+  let declared = {};
   lines.forEach(function(line, idx) {
-    var m = line.match(/(?:var|let|const)\s+(\w+)\s*=/);
+    let m = line.match(/(?:var|let|const)\s+(\w+)\s*=/);
     if (m) declared[m[1]] = { name: m[1], line: idx + 1, used: false };
   });
   Object.keys(declared).forEach(function(name) {
-    var occurrences = (code.match(new RegExp('\\b' + name + '\\b', 'g')) || []).length;
+    let occurrences = (code.match(new RegExp('\\b' + name + '\\b', 'g')) || []).length;
     if (occurrences <= 1) {
       hints.push({ type: 'warn', icon: '👻', title: 'Potentially Unused Variable', desc: '"' + name + '" is declared but may never be read. Consider removing it to reduce memory footprint.', before: 'var/let/const ' + name + ' = ...', after: '// (potentially removable)', line: declared[name].line });
     }
@@ -408,19 +408,19 @@ function ceOptimize(code, ast) {
 }
 
 /* ─── Bytecode generator ─── */
-var CE_BC_ADDR = 0;
+let CE_BC_ADDR = 0;
 
 function ceGenBytecode(ast, code) {
   CE_BC_ADDR = 0;
-  var instructions = [];
-  var labels = {};
+  let instructions = [];
+  let labels = {};
 
   function addr() { return '0x' + (CE_BC_ADDR++).toString(16).toUpperCase().padStart(4,'0'); }
   function emit(op, operand, comment, cls) { instructions.push({ addr: addr(), op: op, operand: operand || '', comment: comment || '', cls: cls || 'ce-op-special' }); }
 
   function walkNode(node, depth) {
     if (!node || depth > 8) return;
-    var type = node.type;
+    let type = node.type;
 
     if (type === 'Program') {
       emit('ENTER_SCOPE', 'global', 'Enter global scope', 'ce-op-scope');
@@ -430,7 +430,7 @@ function ceGenBytecode(ast, code) {
     }
 
     if (type === 'FunctionDecl') {
-      var lbl = 'fn_' + (node.value || 'anon');
+      let lbl = 'fn_' + (node.value || 'anon');
       emit('DEF_FUNC', lbl, 'Define function "' + node.value + '"', 'ce-op-scope');
       emit('ENTER_SCOPE', lbl, 'Function scope start', 'ce-op-scope');
       node.children.forEach(function(c) { walkNode(c, depth+1); });
@@ -440,8 +440,8 @@ function ceGenBytecode(ast, code) {
     }
 
     if (type === 'VarDecl') {
-      var parts = (node.value || '').split(' ');
-      var name  = parts[1] || '?';
+      let parts = (node.value || '').split(' ');
+      let name  = parts[1] || '?';
       if (node.children.length) { walkNode(node.children[0], depth+1); emit('STORE', name, 'Store into ' + name, 'ce-op-store'); }
       else { emit('LOAD_UNDEF', name, 'Initialize ' + name + ' = undefined', 'ce-op-load'); emit('STORE', name, 'Store into ' + name, 'ce-op-store'); }
       return;
@@ -449,8 +449,8 @@ function ceGenBytecode(ast, code) {
 
     if (type === 'AssignExpr') {
       node.children.slice(1).forEach(function(c){walkNode(c,depth+1);});
-      var target = (node.children[0] && node.children[0].value) || '?';
-      var opStr  = node.value === '=' ? '' : node.value.replace('=','');
+      let target = (node.children[0] && node.children[0].value) || '?';
+      let opStr  = node.value === '=' ? '' : node.value.replace('=','');
       if (opStr) { emit('LOAD', target, 'Load ' + target + ' for compound assign', 'ce-op-load'); emit(opStr === '+' ? 'ADD' : opStr === '-' ? 'SUB' : opStr === '*' ? 'MUL' : 'DIV', '', 'Compute ' + node.value, 'ce-op-arith'); }
       emit('STORE', target, 'Store result into ' + target, 'ce-op-store');
       return;
@@ -458,13 +458,13 @@ function ceGenBytecode(ast, code) {
 
     if (type === 'BinaryExpr') {
       node.children.forEach(function(c){walkNode(c,depth+1);});
-      var opMap = { '+':'ADD', '-':'SUB', '*':'MUL', '/':'DIV', '%':'MOD', '===':'EQ_STRICT', '!==':'NEQ_STRICT', '<':'LT', '>':'GT', '<=':'LTE', '>=':'GTE', '&&':'AND', '||':'OR' };
+      let opMap = { '+':'ADD', '-':'SUB', '*':'MUL', '/':'DIV', '%':'MOD', '===':'EQ_STRICT', '!==':'NEQ_STRICT', '<':'LT', '>':'GT', '<=':'LTE', '>=':'GTE', '&&':'AND', '||':'OR' };
       emit(opMap[node.value] || 'OP_' + node.value, '', 'Binary ' + node.value, 'ce-op-arith');
       return;
     }
 
     if (type === 'Literal') {
-      var isStr = /^['"`]/.test(String(node.value));
+      let isStr = /^['"`]/.test(String(node.value));
       emit(isStr ? 'LOAD_CONST_STR' : 'LOAD_CONST', node.value, 'Push literal ' + node.value, 'ce-op-load');
       return;
     }
@@ -482,7 +482,7 @@ function ceGenBytecode(ast, code) {
 
     if (type === 'ForStatement') {
       node.children.forEach(function(c,i){ if(i===0) walkNode(c,depth+1); }); // init
-      var loopLbl = 'for_' + CE_BC_ADDR;
+      let loopLbl = 'for_' + CE_BC_ADDR;
       emit('LABEL', loopLbl, 'Loop start', 'ce-op-jump');
       if (node.children[1]) { walkNode(node.children[1], depth+1); emit('JUMP_IF_FALSE', 'exit_' + loopLbl, 'Exit if condition false', 'ce-op-jump'); }
       if (node.children[3]) walkNode(node.children[3], depth+1); // body
@@ -493,7 +493,7 @@ function ceGenBytecode(ast, code) {
     }
 
     if (type === 'WhileStatement') {
-      var loopLbl = 'while_' + CE_BC_ADDR;
+      let loopLbl = 'while_' + CE_BC_ADDR;
       emit('LABEL', loopLbl, 'While loop start', 'ce-op-jump');
       if (node.children[0]) { walkNode(node.children[0], depth+1); emit('JUMP_IF_FALSE', 'exit_' + loopLbl, 'Exit if false', 'ce-op-jump'); }
       if (node.children[1]) walkNode(node.children[1], depth+1);
@@ -504,7 +504,7 @@ function ceGenBytecode(ast, code) {
 
     if (type === 'IfStatement') {
       if (node.children[0]) { walkNode(node.children[0], depth+1); }
-      var elseLbl = 'else_' + CE_BC_ADDR; var endLbl = 'endif_' + CE_BC_ADDR;
+      let elseLbl = 'else_' + CE_BC_ADDR; let endLbl = 'endif_' + CE_BC_ADDR;
       emit('JUMP_IF_FALSE', node.children[2] ? elseLbl : endLbl, 'Jump to else/end', 'ce-op-jump');
       if (node.children[1]) walkNode(node.children[1], depth+1);
       if (node.children[2]) { emit('JUMP', endLbl, 'Skip else', 'ce-op-jump'); emit('LABEL', elseLbl, 'Else branch', 'ce-op-jump'); walkNode(node.children[2], depth+1); }
@@ -514,8 +514,8 @@ function ceGenBytecode(ast, code) {
 
     if (type === 'CallExpression') {
       node.children.slice(1).forEach(function(c){walkNode(c,depth+1);});
-      var argCount = Math.max(0, node.children.length - 1);
-      var fnName   = (node.children[0] && node.children[0].value) || '(unknown)';
+      let argCount = Math.max(0, node.children.length - 1);
+      let fnName   = (node.children[0] && node.children[0].value) || '(unknown)';
       emit('PUSH_ARGC', String(argCount), 'Push ' + argCount + ' argument(s)', 'ce-op-call');
       if (node.children[0]) walkNode(node.children[0], depth+1);
       emit('CALL', fnName + '/' + argCount, 'Call ' + fnName, 'ce-op-call');
@@ -547,18 +547,18 @@ function ceGenBytecode(ast, code) {
 /* ─── Render functions ─── */
 
 function ceRenderTokens(tokens) {
-  var stream = document.getElementById('ceTokenStream');
-  var countEl = document.getElementById('ceTokenCount');
+  let stream = document.getElementById('ceTokenStream');
+  let countEl = document.getElementById('ceTokenCount');
   if (!stream) return;
 
-  var visible = tokens.filter(function(t) { return t.type !== 'whitespace'; });
+  let visible = tokens.filter(function(t) { return t.type !== 'whitespace'; });
   if (countEl) countEl.textContent = visible.length;
 
   stream.innerHTML = tokens.map(function(tok) {
     if (tok.type === 'whitespace') return '';
     if (tok.type === 'newline') return '<span class="ce-tok newline"></span>';
-    var val = tok.value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    var title = 'title="' + tok.type.toUpperCase() + '"';
+    let val = tok.value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    let title = 'title="' + tok.type.toUpperCase() + '"';
     return '<span class="ce-tok ' + tok.type + '" ' + title + '>' +
       val +
       '<span class="ce-tok-type">' + tok.type.substring(0,3).toUpperCase() + '</span>' +
@@ -569,13 +569,13 @@ function ceRenderTokens(tokens) {
 }
 
 function ceRenderAST(ast, nodeCount) {
-  var treeEl = document.getElementById('ceAstTree');
-  var countEl = document.getElementById('ceAstCount');
+  let treeEl = document.getElementById('ceAstTree');
+  let countEl = document.getElementById('ceAstCount');
   if (!treeEl) return;
   if (countEl) countEl.textContent = nodeCount;
 
   function nodeClass(type) {
-    var map = {
+    let map = {
       'Program':'ce-nt-Program','FunctionDecl':'ce-nt-FunctionDecl','VarDecl':'ce-nt-VarDecl',
       'ForStatement':'ce-nt-ForStatement','WhileStatement':'ce-nt-WhileStatement',
       'IfStatement':'ce-nt-IfStatement','ReturnStatement':'ce-nt-ReturnStatement',
@@ -587,11 +587,11 @@ function ceRenderAST(ast, nodeCount) {
   }
 
   function buildNode(node, depth) {
-    var hasChildren = node.children && node.children.length > 0;
-    var toggleHtml  = hasChildren ? '<span class="ce-ast-toggle open">▶</span>' : '<span class="ce-ast-toggle" style="visibility:hidden">▶</span>';
-    var val = node.value !== null && node.value !== undefined ? '<span class="ce-ast-value">' + String(node.value).substring(0,30).replace(/</g,'&lt;') + '</span>' : '';
+    let hasChildren = node.children && node.children.length > 0;
+    let toggleHtml  = hasChildren ? '<span class="ce-ast-toggle open">▶</span>' : '<span class="ce-ast-toggle" style="visibility:hidden">▶</span>';
+    let val = node.value !== null && node.value !== undefined ? '<span class="ce-ast-value">' + String(node.value).substring(0,30).replace(/</g,'&lt;') + '</span>' : '';
 
-    var html = '<div class="ce-ast-node" data-nodeid="' + node.id + '">' +
+    let html = '<div class="ce-ast-node" data-nodeid="' + node.id + '">' +
       '<div class="ce-ast-row" data-nodeid="' + node.id + '">' +
         toggleHtml +
         '<span class="ce-ast-type ' + nodeClass(node.type) + '">' + node.type + '</span>' +
@@ -613,11 +613,11 @@ function ceRenderAST(ast, nodeCount) {
   // Toggle clicks
   treeEl.querySelectorAll('.ce-ast-row').forEach(function(row) {
     row.addEventListener('click', function(e) {
-      var nodeEl   = row.parentElement;
-      var children = nodeEl.querySelector('.ce-ast-children');
-      var toggle   = row.querySelector('.ce-ast-toggle');
+      let nodeEl   = row.parentElement;
+      let children = nodeEl.querySelector('.ce-ast-children');
+      let toggle   = row.querySelector('.ce-ast-toggle');
       if (!children) return;
-      var collapsed = children.classList.toggle('collapsed');
+      let collapsed = children.classList.toggle('collapsed');
       if (toggle) toggle.classList.toggle('open', !collapsed);
     });
   });
@@ -626,24 +626,24 @@ function ceRenderAST(ast, nodeCount) {
 }
 
 function ceRenderOptimizer(hints) {
-  var listEl  = document.getElementById('ceOptList');
-  var countEl = document.getElementById('ceOptCount');
+  let listEl  = document.getElementById('ceOptList');
+  let countEl = document.getElementById('ceOptCount');
   if (!listEl) return;
 
-  var warnCount = hints.filter(function(h) { return h.type !== 'ok'; }).length;
+  let warnCount = hints.filter(function(h) { return h.type !== 'ok'; }).length;
   if (countEl) countEl.textContent = warnCount || '✓';
 
   if (hints.length === 0) { listEl.innerHTML = '<div class="ce-opt-none">No optimization hints for this code.</div>'; return; }
 
   listEl.innerHTML = hints.map(function(h) {
-    var codeBlock = '';
+    let codeBlock = '';
     if (h.before) {
       codeBlock = '<div class="ce-opt-code">' +
         '<span class="ce-opt-before">' + h.before.replace(/</g,'&lt;') + '</span><br>' +
         '<span class="ce-opt-after">→ ' + h.after.replace(/</g,'&lt;') + '</span>' +
       '</div>';
     }
-    var lineRef = h.line ? '<div class="ce-opt-line">Line ' + h.line + '</div>' : '';
+    let lineRef = h.line ? '<div class="ce-opt-line">Line ' + h.line + '</div>' : '';
     return '<div class="ce-opt-item ce-opt-' + h.type + '">' +
       '<span class="ce-opt-icon">' + h.icon + '</span>' +
       '<div class="ce-opt-body">' +
@@ -658,8 +658,8 @@ function ceRenderOptimizer(hints) {
 }
 
 function ceRenderBytecode(instructions) {
-  var wrapEl  = document.getElementById('ceBytecodeWrap');
-  var countEl = document.getElementById('ceBcCount');
+  let wrapEl  = document.getElementById('ceBytecodeWrap');
+  let countEl = document.getElementById('ceBcCount');
   if (!wrapEl) return;
   if (countEl) countEl.textContent = instructions.length;
 
@@ -667,9 +667,9 @@ function ceRenderBytecode(instructions) {
     '<thead><tr><th>Addr</th><th>Opcode</th><th>Operand</th><th>Comment</th></tr></thead>' +
     '<tbody>' +
     instructions.map(function(instr) {
-      var opEsc = instr.op.replace(/</g,'&lt;');
-      var opEscOp = instr.operand.replace(/</g,'&lt;');
-      var opEscCmt = instr.comment.replace(/</g,'&lt;');
+      let opEsc = instr.op.replace(/</g,'&lt;');
+      let opEscOp = instr.operand.replace(/</g,'&lt;');
+      let opEscCmt = instr.comment.replace(/</g,'&lt;');
       return '<tr>' +
         '<td class="ce-bc-addr">' + instr.addr + '</td>' +
         '<td class="ce-bc-op"><span class="' + instr.cls + '">' + opEsc + '</span></td>' +
@@ -708,9 +708,9 @@ function ceSwitchTab(stage) {
 
 /* ─── Gutter / line numbers ─── */
 function ceUpdateGutter(code) {
-  var gutter = document.getElementById('ceGutter');
+  let gutter = document.getElementById('ceGutter');
   if (!gutter) return;
-  var count = code.split('\n').length;
+  let count = code.split('\n').length;
   gutter.innerHTML = Array.from({ length: count }, function(_, i) {
     return '<span class="ce-gutter-line">' + (i+1) + '</span>';
   }).join('');
@@ -718,43 +718,43 @@ function ceUpdateGutter(code) {
 
 /* ─── Status bar ─── */
 function ceSetStatus(msg) {
-  var el = document.getElementById('ceStatusMsg');
+  let el = document.getElementById('ceStatusMsg');
   if (el) el.textContent = msg;
 }
 
 /* ─── Main compile function ─── */
 function ceCompile() {
-  var sourceEl = document.getElementById('ceSource');
+  let sourceEl = document.getElementById('ceSource');
   if (!sourceEl) return;
-  var code = sourceEl.value.trim();
+  let code = sourceEl.value.trim();
   if (!code) { ceSetStatus('No code to compile. Paste some code or load an example.'); return; }
 
-  var runBtn = document.getElementById('ceRunBtn');
+  let runBtn = document.getElementById('ceRunBtn');
   if (runBtn) runBtn.classList.add('ce-running');
   ceSetStatus('Compiling...');
 
   // Stage 0: Tokenize
   ceSetPipStage(0);
   setTimeout(function() {
-    var tokens = ceTokenize(code);
+    let tokens = ceTokenize(code);
     ceRenderTokens(tokens);
 
     // Stage 1: Parse AST
     ceSetPipStage(1);
     setTimeout(function() {
-      var parsed = ceParse(tokens);
+      let parsed = ceParse(tokens);
       ceRenderAST(parsed.ast, parsed.nodeCount);
 
       // Stage 2: Optimize
       ceSetPipStage(2);
       setTimeout(function() {
-        var hints = ceOptimize(code, parsed.ast);
+        let hints = ceOptimize(code, parsed.ast);
         ceRenderOptimizer(hints);
 
         // Stage 3: Bytecode
         ceSetPipStage(3);
         setTimeout(function() {
-          var instructions = ceGenBytecode(parsed.ast, code);
+          let instructions = ceGenBytecode(parsed.ast, code);
           ceRenderBytecode(instructions);
 
           ceSetPipDone();
@@ -772,9 +772,9 @@ function ceCompile() {
 
 /* ─── Syntax highlight overlay ─── */
 function ceHighlight(code) {
-  var hl = document.getElementById('ceHighlight');
+  let hl = document.getElementById('ceHighlight');
   if (!hl) return;
-  var escaped = code
+  let escaped = code
     .replace(/&/g,'&amp;')
     .replace(/</g,'&lt;')
     .replace(/>/g,'&gt;');
@@ -785,10 +785,10 @@ function ceHighlight(code) {
   escaped = escaped.replace(/(["'`])(?:\\.|[^\\])*?\1/g, function(m) { return '<span class="ce-hl-string">' + m + '</span>'; });
   escaped = escaped.replace(/\b(\d+\.?\d*)\b/g, '<span class="ce-hl-number">$1</span>');
 
-  var kws = Array.from(CE_KEYWORDS).join('|');
+  let kws = Array.from(CE_KEYWORDS).join('|');
   escaped = escaped.replace(new RegExp('\\b(' + kws + ')\\b', 'g'), '<span class="ce-hl-keyword">$1</span>');
 
-  var builtins = Array.from(CE_BUILTINS).join('|');
+  let builtins = Array.from(CE_BUILTINS).join('|');
   escaped = escaped.replace(new RegExp('\\b(' + builtins + ')\\b', 'g'), '<span class="ce-hl-builtin">$1</span>');
 
   hl.innerHTML = escaped;
@@ -798,11 +798,11 @@ function ceHighlight(code) {
 
 /* ─── Resize handle ─── */
 function ceInitResize() {
-  var handle    = document.getElementById('ceResizeHandle');
-  var editorPane = document.getElementById('ceEditorPane');
+  let handle    = document.getElementById('ceResizeHandle');
+  let editorPane = document.getElementById('ceEditorPane');
   if (!handle || !editorPane) return;
 
-  var dragging = false; var startX = 0; var startW = 0;
+  let dragging = false; let startX = 0; let startW = 0;
 
   handle.addEventListener('mousedown', function(e) {
     dragging = true; startX = e.clientX; startW = editorPane.offsetWidth;
@@ -812,8 +812,8 @@ function ceInitResize() {
 
   document.addEventListener('mousemove', function(e) {
     if (!dragging) return;
-    var delta = e.clientX - startX;
-    var newW  = Math.max(180, Math.min(startW + delta, window.innerWidth - 300));
+    let delta = e.clientX - startX;
+    let newW  = Math.max(180, Math.min(startW + delta, window.innerWidth - 300));
     editorPane.style.width = newW + 'px';
   });
 
@@ -827,27 +827,27 @@ function ceInitResize() {
 
 /* ─── Init ─── */
 function ceInit() {
-  var sourceEl = document.getElementById('ceSource');
-  var runBtn   = document.getElementById('ceRunBtn');
-  var selectEl = document.getElementById('cePresetSelect');
+  let sourceEl = document.getElementById('ceSource');
+  let runBtn   = document.getElementById('ceRunBtn');
+  let selectEl = document.getElementById('cePresetSelect');
 
   // Populate preset dropdown
   if (selectEl) {
     CE_PRESETS.forEach(function(p, i) {
-      var opt = document.createElement('option');
+      let opt = document.createElement('option');
       opt.value = i; opt.textContent = p.label;
       selectEl.appendChild(opt);
     });
 
     selectEl.addEventListener('change', function() {
-      var idx = parseInt(selectEl.value);
+      let idx = parseInt(selectEl.value);
       if (isNaN(idx) || !CE_PRESETS[idx]) return;
       if (sourceEl) {
         sourceEl.value = CE_PRESETS[idx].value || CE_PRESETS[idx].code;
         ceUpdateGutter(sourceEl.value);
         ceHighlight(sourceEl.value);
         // Update file tab name
-        var tab = document.getElementById('ceCurrentFile');
+        let tab = document.getElementById('ceCurrentFile');
         if (tab) tab.textContent = CE_PRESETS[idx].label.toLowerCase().replace(/ /g,'-') + '.js';
       }
       ceCompile();
@@ -866,8 +866,8 @@ function ceInit() {
     });
 
     sourceEl.addEventListener('scroll', function() {
-      var gutter = document.getElementById('ceGutter');
-      var hl     = document.getElementById('ceHighlight');
+      let gutter = document.getElementById('ceGutter');
+      let hl     = document.getElementById('ceHighlight');
       if (gutter) gutter.scrollTop = sourceEl.scrollTop;
       if (hl) { hl.scrollTop = sourceEl.scrollTop; hl.scrollLeft = sourceEl.scrollLeft; }
     });
@@ -879,8 +879,8 @@ function ceInit() {
       // Tab key inserts 2 spaces
       if (e.key === 'Tab') {
         e.preventDefault();
-        var start = sourceEl.selectionStart;
-        var end   = sourceEl.selectionEnd;
+        let start = sourceEl.selectionStart;
+        let end   = sourceEl.selectionEnd;
         sourceEl.value = sourceEl.value.substring(0, start) + '  ' + sourceEl.value.substring(end);
         sourceEl.selectionStart = sourceEl.selectionEnd = start + 2;
         ceUpdateGutter(sourceEl.value);
@@ -899,8 +899,8 @@ function ceInit() {
   });
 
   // Expand/Collapse all AST buttons
-  var expandAll   = document.getElementById('ceAstExpandAll');
-  var collapseAll = document.getElementById('ceAstCollapseAll');
+  let expandAll   = document.getElementById('ceAstExpandAll');
+  let collapseAll = document.getElementById('ceAstCollapseAll');
   if (expandAll) {
     expandAll.addEventListener('click', function() {
       document.querySelectorAll('#ceAstTree .ce-ast-children').forEach(function(c) { c.classList.remove('collapsed'); });
@@ -927,12 +927,12 @@ function ceInit() {
 }
 
 function ceUpdateCursorPos() {
-  var sourceEl = document.getElementById('ceSource');
-  var el = document.getElementById('ceLinCol');
+  let sourceEl = document.getElementById('ceSource');
+  let el = document.getElementById('ceLinCol');
   if (!sourceEl || !el) return;
-  var text   = sourceEl.value.substring(0, sourceEl.selectionStart);
-  var lines  = text.split('\n');
-  var ln     = lines.length;
-  var col    = lines[lines.length - 1].length + 1;
+  let text   = sourceEl.value.substring(0, sourceEl.selectionStart);
+  let lines  = text.split('\n');
+  let ln     = lines.length;
+  let col    = lines[lines.length - 1].length + 1;
   el.textContent = 'Ln ' + ln + ', Col ' + col;
 }

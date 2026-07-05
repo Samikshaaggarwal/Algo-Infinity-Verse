@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── Common Interview Questions Data ─── */
-var IPM_QUESTIONS = [
+let IPM_QUESTIONS = [
   {
     topic: '🔢 Arrays',
     questions: [
@@ -102,11 +102,11 @@ var IPM_QUESTIONS = [
 
 /* ─── Render Questions ─── */
 function ipmRenderQuestions() {
-  var grid = document.getElementById('ipmQGrid');
+  let grid = document.getElementById('ipmQGrid');
   if (!grid) return;
 
   grid.innerHTML = IPM_QUESTIONS.map(function(cat) {
-    var items = cat.questions.map(function(q) {
+    let items = cat.questions.map(function(q) {
       return '<li class="ipm-q-item">' + ipmEscape(q) + '</li>';
     }).join('');
 
@@ -126,43 +126,43 @@ function ipmRenderQuestions() {
 }
 
 function ipmEscape(str) {
-  var d = document.createElement('div');
+  let d = document.createElement('div');
   d.textContent = str;
   return d.innerHTML;
 }
 
 /* ─── Progress Tracker ─── */
-var ipmTotalChecks  = 0;
-var ipmCheckedCount = 0;
+let ipmTotalChecks  = 0;
+let ipmCheckedCount = 0;
 
 function ipmBindCheckboxes() {
-  var allChecks = document.querySelectorAll('.ipm-check');
+  let allChecks = document.querySelectorAll('.ipm-check');
   ipmTotalChecks = allChecks.length;
 
-  var totalEl = document.getElementById('ipmTotalCount');
+  let totalEl = document.getElementById('ipmTotalCount');
   if (totalEl) totalEl.textContent = ipmTotalChecks;
 
   allChecks.forEach(function(chk) {
     chk.addEventListener('change', ipmUpdateProgress);
     // Mark parent card as checked
     chk.addEventListener('change', function() {
-      var card = chk.closest('.ipm-card, .ipm-q-card, .ipm-sd-card, .ipm-table-card');
+      let card = chk.closest('.ipm-card, .ipm-q-card, .ipm-sd-card, .ipm-table-card');
       if (card) card.classList.toggle('checked', chk.checked);
     });
   });
 }
 
 function ipmUpdateProgress() {
-  var allChecks = document.querySelectorAll('.ipm-check');
-  var checked   = 0;
+  let allChecks = document.querySelectorAll('.ipm-check');
+  let checked   = 0;
   allChecks.forEach(function(c) { if (c.checked) checked++; });
   ipmCheckedCount = checked;
 
-  var pct    = ipmTotalChecks > 0 ? Math.round((checked / ipmTotalChecks) * 100) : 0;
-  var fill   = document.getElementById('ipmProgressFill');
-  var countEl = document.getElementById('ipmCheckedCount');
-  var finalCk  = document.getElementById('ipmFinalChecked');
-  var finalPct = document.getElementById('ipmFinalPct');
+  let pct    = ipmTotalChecks > 0 ? Math.round((checked / ipmTotalChecks) * 100) : 0;
+  let fill   = document.getElementById('ipmProgressFill');
+  let countEl = document.getElementById('ipmCheckedCount');
+  let finalCk  = document.getElementById('ipmFinalChecked');
+  let finalPct = document.getElementById('ipmFinalPct');
 
   if (fill)    fill.style.width    = pct + '%';
   if (countEl) countEl.textContent = checked;
@@ -172,22 +172,22 @@ function ipmUpdateProgress() {
 
 function ipmInitProgress() {
   // Bind after questions are already rendered
-  var allChecks = document.querySelectorAll('.ipm-check');
+  let allChecks = document.querySelectorAll('.ipm-check');
   ipmTotalChecks = allChecks.length;
-  var totalEl = document.getElementById('ipmTotalCount');
+  let totalEl = document.getElementById('ipmTotalCount');
   if (totalEl) totalEl.textContent = ipmTotalChecks;
 
   allChecks.forEach(function(chk) {
     chk.addEventListener('change', ipmUpdateProgress);
     chk.addEventListener('change', function() {
-      var card = chk.closest('.ipm-card, .ipm-q-card, .ipm-sd-card, .ipm-table-card');
+      let card = chk.closest('.ipm-card, .ipm-q-card, .ipm-sd-card, .ipm-table-card');
       if (card) card.classList.toggle('checked', chk.checked);
     });
   });
 }
 
 /* ─── Timer ─── */
-var ipmTimer = {
+let ipmTimer = {
   total    : 30 * 60,
   left     : 30 * 60,
   running  : false,
@@ -196,16 +196,16 @@ var ipmTimer = {
 };
 
 function ipmFmt(s) {
-  var m   = Math.floor(s / 60);
-  var sec = s % 60;
+  let m   = Math.floor(s / 60);
+  let sec = s % 60;
   return (m < 10 ? '0' : '') + m + ':' + (sec < 10 ? '0' : '') + sec;
 }
 
 function ipmUpdateTimerUI() {
-  var displayEl = document.getElementById('ipmTimerDisplay');
-  var barEl     = document.getElementById('ipmTimerBar');
-  var labelEl   = document.getElementById('ipmTimerLabel');
-  var finalTimeEl = document.getElementById('ipmFinalTime');
+  let displayEl = document.getElementById('ipmTimerDisplay');
+  let barEl     = document.getElementById('ipmTimerBar');
+  let labelEl   = document.getElementById('ipmTimerLabel');
+  let finalTimeEl = document.getElementById('ipmFinalTime');
 
   if (displayEl) {
     displayEl.textContent = ipmFmt(ipmTimer.left);
@@ -215,7 +215,7 @@ function ipmUpdateTimerUI() {
   }
 
   if (barEl) {
-    var pct = (ipmTimer.left / ipmTimer.total) * 100;
+    let pct = (ipmTimer.left / ipmTimer.total) * 100;
     barEl.style.width = pct + '%';
   }
 
@@ -227,7 +227,7 @@ function ipmUpdateTimerUI() {
     } else if (ipmTimer.left <= 0) {
       labelEl.textContent = '⏰ Time\'s up! Go get that offer!';
     } else {
-      var spent = ipmTimer.total - ipmTimer.left;
+      let spent = ipmTimer.total - ipmTimer.left;
       if (spent < 8 * 60)       labelEl.textContent = '📐 Focus: DSA Formulas';
       else if (spent < 13 * 60) labelEl.textContent = '⚡ Focus: Complexity Table';
       else if (spent < 23 * 60) labelEl.textContent = '🎯 Focus: Common Questions';
@@ -245,21 +245,21 @@ function ipmStartTimer() {
   ipmTimer.running = true;
   ipmTimer.deadline = Date.now() + (ipmTimer.left * 1000);
 
-  var startBtn  = document.getElementById('ipmStartBtn');
-  var pauseBtn  = document.getElementById('ipmPauseBtn');
+  let startBtn  = document.getElementById('ipmStartBtn');
+  let pauseBtn  = document.getElementById('ipmPauseBtn');
   if (startBtn) startBtn.classList.add('hidden');
   if (pauseBtn) pauseBtn.classList.remove('hidden');
 
   ipmTimer.interval = setInterval(function() {
-    var remaining = Math.max(0, Math.ceil((ipmTimer.deadline - Date.now()) / 1000));
+    let remaining = Math.max(0, Math.ceil((ipmTimer.deadline - Date.now()) / 1000));
     ipmTimer.left = remaining;
     ipmUpdateTimerUI();
     if (ipmTimer.left <= 0) {
       clearInterval(ipmTimer.interval);
       ipmTimer.interval = null;
       ipmTimer.running = false;
-      var pBtn = document.getElementById('ipmPauseBtn');
-      var sBtn = document.getElementById('ipmStartBtn');
+      let pBtn = document.getElementById('ipmPauseBtn');
+      let sBtn = document.getElementById('ipmStartBtn');
       if (pBtn) pBtn.classList.add('hidden');
       if (sBtn) { sBtn.classList.remove('hidden'); sBtn.innerHTML = '<i class="fas fa-check"></i> Time\'s Up!'; sBtn.disabled = true; }
     }
@@ -270,8 +270,8 @@ function ipmPauseTimer() {
   ipmTimer.running = false;
   if (ipmTimer.interval) { clearInterval(ipmTimer.interval); ipmTimer.interval = null; }
 
-  var startBtn = document.getElementById('ipmStartBtn');
-  var pauseBtn = document.getElementById('ipmPauseBtn');
+  let startBtn = document.getElementById('ipmStartBtn');
+  let pauseBtn = document.getElementById('ipmPauseBtn');
   if (startBtn) { startBtn.classList.remove('hidden'); startBtn.innerHTML = '<i class="fas fa-play"></i> Resume'; }
   if (pauseBtn) pauseBtn.classList.add('hidden');
 
@@ -283,8 +283,8 @@ function ipmResetTimer() {
   if (ipmTimer.interval) { clearInterval(ipmTimer.interval); ipmTimer.interval = null; }
   ipmTimer.left = ipmTimer.total;
 
-  var startBtn = document.getElementById('ipmStartBtn');
-  var pauseBtn = document.getElementById('ipmPauseBtn');
+  let startBtn = document.getElementById('ipmStartBtn');
+  let pauseBtn = document.getElementById('ipmPauseBtn');
   if (startBtn) { startBtn.classList.remove('hidden'); startBtn.innerHTML = '<i class="fas fa-play"></i> Start 30-Min Revision'; startBtn.disabled = false; }
   if (pauseBtn) pauseBtn.classList.add('hidden');
 
@@ -294,9 +294,9 @@ function ipmResetTimer() {
 function ipmInitTimer() {
   ipmUpdateTimerUI();
 
-  var startBtn = document.getElementById('ipmStartBtn');
-  var pauseBtn = document.getElementById('ipmPauseBtn');
-  var resetBtn = document.getElementById('ipmResetBtn');
+  let startBtn = document.getElementById('ipmStartBtn');
+  let pauseBtn = document.getElementById('ipmPauseBtn');
+  let resetBtn = document.getElementById('ipmResetBtn');
 
   if (startBtn) startBtn.addEventListener('click', ipmStartTimer);
   if (pauseBtn) pauseBtn.addEventListener('click', ipmPauseTimer);

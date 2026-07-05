@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -56,12 +56,12 @@
           <div class="mp-row">
             <span class="mp-row-label">Data Structure:</span>
             <div class="mp-ds-btns">
-              <button class="mp-ds-btn active" data-ds="array">Array</button>
-              <button class="mp-ds-btn" data-ds="linkedlist">Linked List</button>
-              <button class="mp-ds-btn" data-ds="stack">Stack</button>
-              <button class="mp-ds-btn" data-ds="queue">Queue (Ring Buffer)</button>
-              <button class="mp-ds-btn" data-ds="hashmap">Hash Map</button>
-              <button class="mp-ds-btn" data-ds="binarytree">Binary Tree</button>
+              <button type="button" class="mp-ds-btn active" data-ds="array">Array</button>
+              <button type="button" class="mp-ds-btn" data-ds="linkedlist">Linked List</button>
+              <button type="button" class="mp-ds-btn" data-ds="stack">Stack</button>
+              <button type="button" class="mp-ds-btn" data-ds="queue">Queue (Ring Buffer)</button>
+              <button type="button" class="mp-ds-btn" data-ds="hashmap">Hash Map</button>
+              <button type="button" class="mp-ds-btn" data-ds="binarytree">Binary Tree</button>
             </div>
           </div>
 
@@ -75,10 +75,10 @@
           <div class="mp-row">
             <span class="mp-row-label">Value:</span>
             <input type="number" id="mpValue" class="mp-val-input" value="42" aria-label="Value to insert" />
-            <button class="btn mp-btn-primary mp-exec-btn" id="mpExecBtn">
+            <button type="button" class="btn mp-btn-primary mp-exec-btn" id="mpExecBtn">
               <i class="fas fa-bolt"></i> Execute
             </button>
-            <button class="btn btn-secondary mp-exec-btn" id="mpResetBtn">
+            <button type="button" class="btn btn-secondary mp-exec-btn" id="mpResetBtn">
               <i class="fas fa-undo"></i> Reset Memory
             </button>
           </div>
@@ -204,7 +204,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="memory-palace.js"></script>

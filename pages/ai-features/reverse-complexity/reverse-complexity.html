@@ -95,7 +95,7 @@
                 <div id="feedback-icon"></div>
                 <h2 id="feedback-title">Correct!</h2>
                 <div id="feedback-explanation" class="explanation-box"></div>
-                <button id="next-btn" class="btn-primary" autofocus>Next Challenge</button>
+                <button type="button" id="next-btn" class="btn-primary" autofocus>Next Challenge</button>
             </div>
         </div>
 
@@ -114,7 +114,10 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script> <!-- Reuses addXP and userProgress logic -->
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="reverse-complexity.js"></script>
 </body>
 </html>

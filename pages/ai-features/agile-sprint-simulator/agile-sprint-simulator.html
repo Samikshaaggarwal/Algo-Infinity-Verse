@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+  <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
     <i class="fas fa-circle-chevron-up"></i>
   </button>
 
@@ -61,7 +61,7 @@
         <a href="#sprint-planner" class="btn btn-primary">
           <i class="fas fa-rocket"></i> Open Simulator
         </a>
-        <button class="btn sps-btn-outline-hero" data-action="reset-data">
+        <button type="button" class="btn sps-btn-outline-hero" data-action="reset-data">
           <i class="fas fa-rotate-left"></i> Reset All Data
         </button>
       </div>
@@ -108,7 +108,7 @@
         <aside class="sps-panel sps-backlog-panel">
           <div class="sps-panel-hdr">
             <h3><i class="fas fa-layer-group"></i> Product Backlog</h3>
-            <button class="sps-add-toggle-btn" id="spsAddToggleBtn">
+            <button type="button" class="sps-add-toggle-btn" id="spsAddToggleBtn">
               <i class="fas fa-plus"></i> Story
             </button>
           </div>
@@ -266,7 +266,10 @@
   <div id="footer-placeholder"></div>
 
   <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   <script src="./agile-sprint-simulator.js"></script>
   <script>

@@ -30,8 +30,12 @@ self.addEventListener('fetch', (event) => {
 
   function tryCache(request, response, cacheName) {
     try {
-      const cloned = response.clone();
-      caches.open(cacheName).then((cache) => cache.put(request, cloned)).catch(() => {});
+
+
+      if (request.method === 'GET') { // Only cache GET requests
+        const cloned = response.clone();
+        caches.open(cacheName).then((cache) => cache.put(request, cloned)).catch(() => {});
+      }
     } catch (e) {}
   }
 
@@ -52,13 +56,18 @@ self.addEventListener('fetch', (event) => {
 
   // API
   if (url.pathname.startsWith('/api/')) {
+    if (event.request.method !== 'GET') {
+      event.respondWith(fetch(event.request));
+      return;
+    }
+
     event.respondWith(
       fetch(event.request)
         .then((res) => {
           if (isCacheable(res)) tryCache(event.request, res, DYNAMIC_CACHE);
           return res;
         })
-        .catch(() => caches.match(event.request))
+        .catch(() => caches.match(event.request).then(cached => cached || new Response('Offline', { status: 503 })))
     );
     return;
   }
@@ -71,7 +80,7 @@ self.addEventListener('fetch', (event) => {
           if (isCacheable(res)) tryCache(event.request, res, CACHE_NAME);
           return res;
         })
-        .catch(() => undefined);
+        .catch(() => new Response('Offline', { status: 503 }));
 
       return cached || fetchPromise;
     })

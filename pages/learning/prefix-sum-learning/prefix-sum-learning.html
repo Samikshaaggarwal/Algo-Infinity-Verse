@@ -45,7 +45,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -187,7 +187,7 @@
                   <i class="fas fa-dumbbell"></i> Practice: Introduction
                 </div>
                 <p>If the original array is <code>[1, 3, 5, 7]</code>, what is the prefix sum array?</p>
-                <button class="prefix-sum-exercise-toggle" aria-expanded="false" aria-controls="solution-introduction">Show Solution</button>
+                <button type="button" class="prefix-sum-exercise-toggle" aria-expanded="false" aria-controls="solution-introduction">Show Solution</button>
                 <div class="prefix-sum-exercise-solution" id="solution-introduction">
                   <p><strong>Answer: [1, 4, 9, 16]</strong></p>
                   <p>Explanation: P[0] = 1. P[1] = 1 + 3 = 4. P[2] = 1 + 3 + 5 = 9. P[3] = 1 + 3 + 5 + 7 = 16.</p>
@@ -218,7 +218,7 @@
               <div class="prefix-sum-code-block">
                 <div class="prefix-sum-code-header">
                   <span class="prefix-sum-code-lang">Python</span>
-                  <button class="prefix-sum-code-copy" aria-label="Copy code" data-code="def build_prefix_sum(arr):
+                  <button type="button" class="prefix-sum-code-copy" aria-label="Copy code" data-code="def build_prefix_sum(arr):
     n = len(arr)
     if n == 0: return []
     
@@ -277,7 +277,7 @@ print(P) # Output: [2, 6, 12, 20, 30]">Copy</button>
               <div class="prefix-sum-code-block">
                 <div class="prefix-sum-code-header">
                   <span class="prefix-sum-code-lang">JavaScript</span>
-                  <button class="prefix-sum-code-copy" aria-label="Copy code" data-code="function rangeQuery(prefix, L, R) {
+                  <button type="button" class="prefix-sum-code-copy" aria-label="Copy code" data-code="function rangeQuery(prefix, L, R) {
   if (L === 0) return prefix[R];
   return prefix[R] - prefix[L - 1];
 }
@@ -298,7 +298,7 @@ console.log(rangeQuery(P, 1, 3)); // Sum of A[1...3] (4+6+8) -> P[3] - P[0] = 20
                   <i class="fas fa-dumbbell"></i> Practice: Range Query
                 </div>
                 <p>Given <code>P = [1, 4, 9, 16]</code>, what is the sum of elements from index 1 to 2 inclusive?</p>
-                <button class="prefix-sum-exercise-toggle" aria-expanded="false" aria-controls="solution-range">Show Solution</button>
+                <button type="button" class="prefix-sum-exercise-toggle" aria-expanded="false" aria-controls="solution-range">Show Solution</button>
                 <div class="prefix-sum-exercise-solution" id="solution-range">
                   <p><strong>Answer: 8</strong></p>
                   <p>Explanation: Sum from L=1 to R=2 is P[2] - P[0] = 9 - 1 = 8. (The original array is [1, 3, 5, 7], and A[1]+A[2] = 3+5 = 8).</p>
@@ -351,7 +351,7 @@ console.log(rangeQuery(P, 1, 3)); // Sum of A[1...3] (4+6+8) -> P[3] - P[0] = 20
                   <i class="fas fa-dumbbell"></i> Exercise 1: Finding Equilibrium
                 </div>
                 <p>Given the array <code>[-7, 1, 5, 2, -4, 3, 0]</code>, what is the equilibrium index? (Use the prefix sum approach).</p>
-                <button class="prefix-sum-exercise-toggle" aria-expanded="false" aria-controls="solution-ex1">Show Solution</button>
+                <button type="button" class="prefix-sum-exercise-toggle" aria-expanded="false" aria-controls="solution-ex1">Show Solution</button>
                 <div class="prefix-sum-exercise-solution" id="solution-ex1">
                   <p><strong>Answer: Index 3</strong></p>
                   <p>Explanation: At index 3 (value is 2), the sum of elements to the left is <code>-7 + 1 + 5 = -1</code>. The sum to the right is <code>-4 + 3 + 0 = -1</code>. Since both sides equal -1, index 3 is an equilibrium index.</p>
@@ -363,7 +363,7 @@ console.log(rangeQuery(P, 1, 3)); // Sum of A[1...3] (4+6+8) -> P[3] - P[0] = 20
                   <i class="fas fa-dumbbell"></i> Exercise 2: Time Complexity
                 </div>
                 <p>If you have an array of N elements and need to answer Q range queries, what is the time complexity of using the prefix sum method versus calculating the sum directly each time?</p>
-                <button class="prefix-sum-exercise-toggle" aria-expanded="false" aria-controls="solution-ex2">Show Solution</button>
+                <button type="button" class="prefix-sum-exercise-toggle" aria-expanded="false" aria-controls="solution-ex2">Show Solution</button>
                 <div class="prefix-sum-exercise-solution" id="solution-ex2">
                   <p><strong>Answer: O(N + Q) vs O(Q * N)</strong></p>
                   <p>Explanation: Prefix sum takes O(N) to build and O(1) per query, leading to O(N + Q). Direct calculation takes O(N) per query, leading to O(Q * N).</p>
@@ -381,7 +381,10 @@ console.log(rangeQuery(P, 1, 3)); // Sum of A[1...3] (4+6+8) -> P[3] - P[0] = 20
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="prefix-sum-learning.js"></script>

@@ -180,8 +180,8 @@ function buildPipelines() {
     // 1. Splat Shader
     splatPipeline = createCompute(`
         struct SplatUniforms { pos: vec2<f32>, radius: f32, pad: f32, color: vec4<f32> };
-        @group(0) @binding(0) var targetIn: texture_2d<f32>;
-        @group(0) @binding(1) var targetOut: texture_storage_2d<rgba16float, write>;
+        @group(0) @binding(0) let targetIn: texture_2d<f32>;
+        @group(0) @binding(1) let targetOut: texture_storage_2d<rgba16float, write>;
         @group(0) @binding(2) var<uniform> config: SplatUniforms;
 
         @compute @workgroup_size(16, 16)
@@ -200,10 +200,10 @@ function buildPipelines() {
     // 2. Advection Shader (Semi-Lagrangian)
     advectPipeline = createCompute(`
         struct AdvectUniforms { dt: f32, decay: f32, pad1: f32, pad2: f32 };
-        @group(0) @binding(0) var samp: sampler;
-        @group(0) @binding(1) var velocityTex: texture_2d<f32>;
-        @group(0) @binding(2) var targetIn: texture_2d<f32>;
-        @group(0) @binding(3) var targetOut: texture_storage_2d<rgba16float, write>;
+        @group(0) @binding(0) let samp: sampler;
+        @group(0) @binding(1) let velocityTex: texture_2d<f32>;
+        @group(0) @binding(2) let targetIn: texture_2d<f32>;
+        @group(0) @binding(3) let targetOut: texture_storage_2d<rgba16float, write>;
         @group(0) @binding(4) var<uniform> config: AdvectUniforms;
 
         @compute @workgroup_size(16, 16)
@@ -222,8 +222,8 @@ function buildPipelines() {
 
     // 3. Divergence Shader
     divergencePipeline = createCompute(`
-        @group(0) @binding(0) var velocityTex: texture_2d<f32>;
-        @group(0) @binding(1) var divOut: texture_storage_2d<rgba16float, write>;
+        @group(0) @binding(0) let velocityTex: texture_2d<f32>;
+        @group(0) @binding(1) let divOut: texture_storage_2d<rgba16float, write>;
 
         @compute @workgroup_size(16, 16)
         fn main(@builtin(global_invocation_id) id: vec3<u32>) {
@@ -243,9 +243,9 @@ function buildPipelines() {
 
     // 4. Jacobi Pressure Solver
     jacobiPipeline = createCompute(`
-        @group(0) @binding(0) var pressureIn: texture_2d<f32>;
-        @group(0) @binding(1) var divTex: texture_2d<f32>;
-        @group(0) @binding(2) var pressureOut: texture_storage_2d<rgba16float, write>;
+        @group(0) @binding(0) let pressureIn: texture_2d<f32>;
+        @group(0) @binding(1) let divTex: texture_2d<f32>;
+        @group(0) @binding(2) let pressureOut: texture_storage_2d<rgba16float, write>;
 
         @compute @workgroup_size(16, 16)
         fn main(@builtin(global_invocation_id) id: vec3<u32>) {
@@ -266,9 +266,9 @@ function buildPipelines() {
 
     // 5. Gradient Subtraction
     subtractPipeline = createCompute(`
-        @group(0) @binding(0) var pressureTex: texture_2d<f32>;
-        @group(0) @binding(1) var velocityIn: texture_2d<f32>;
-        @group(0) @binding(2) var velocityOut: texture_storage_2d<rgba16float, write>;
+        @group(0) @binding(0) let pressureTex: texture_2d<f32>;
+        @group(0) @binding(1) let velocityIn: texture_2d<f32>;
+        @group(0) @binding(2) let velocityOut: texture_storage_2d<rgba16float, write>;
 
         @compute @workgroup_size(16, 16)
         fn main(@builtin(global_invocation_id) id: vec3<u32>) {
@@ -296,7 +296,7 @@ function buildPipelines() {
                     struct VertexOutput { @builtin(position) pos: vec4<f32>, @location(0) uv: vec2<f32> };
                     @vertex fn main(@builtin(vertex_index) id: u32) -> VertexOutput {
                         let uv = vec2<f32>(vec2<u32>((id << 1u) & 2u, id & 2u));
-                        var out: VertexOutput;
+                        let out: VertexOutput;
                         out.uv = vec2<f32>(uv.x, 1.0 - uv.y); // Flip Y to match WebGPU texture format
                         out.pos = vec4<f32>(uv * 2.0 - 1.0, 0.0, 1.0);
                         return out;
@@ -309,8 +309,8 @@ function buildPipelines() {
             module: device.createShaderModule({
                 code: `
                     struct RenderConfig { mode: u32, pad1: u32, pad2: u32, pad3: u32 };
-                    @group(0) @binding(0) var tex: texture_2d<f32>;
-                    @group(0) @binding(1) var samp: sampler;
+                    @group(0) @binding(0) let tex: texture_2d<f32>;
+                    @group(0) @binding(1) let samp: sampler;
                     @group(0) @binding(2) var<uniform> config: RenderConfig;
 
                     @fragment fn main(@location(0) uv: vec2<f32>) -> @location(0) vec4<f32> {

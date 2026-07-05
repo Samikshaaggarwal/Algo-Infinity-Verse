@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -69,10 +69,10 @@
               <option value="modules">Modules & Imports</option>
               <option value="datatypes">Algebraic Data Types</option>
             </select>
-            <button id="hsCopyBtn" class="hs-icon-btn" title="Copy Code" aria-label="Copy Code"><i class="fas fa-copy"></i></button>
-            <button id="hsSaveBtn" class="hs-icon-btn" title="Save Project" aria-label="Save Project"><i class="fas fa-save"></i></button>
-            <button id="hsResetBtn" class="hs-icon-btn hs-reset-btn" title="Reset Editor" aria-label="Reset Editor"><i class="fas fa-undo"></i></button>
-            <button id="hsRunBtn" class="hs-run-btn"><i class="fas fa-play"></i> Run Code</button>
+            <button type="button" id="hsCopyBtn" class="hs-icon-btn" title="Copy Code" aria-label="Copy Code"><i class="fas fa-copy"></i></button>
+            <button type="button" id="hsSaveBtn" class="hs-icon-btn" title="Save Project" aria-label="Save Project"><i class="fas fa-save"></i></button>
+            <button type="button" id="hsResetBtn" class="hs-icon-btn hs-reset-btn" title="Reset Editor" aria-label="Reset Editor"><i class="fas fa-undo"></i></button>
+            <button type="button" id="hsRunBtn" class="hs-run-btn"><i class="fas fa-play"></i> Run Code</button>
           </div>
         </div>
 
@@ -81,7 +81,7 @@
           <aside class="file-explorer">
             <div class="explorer-header">
               <span><i class="fas fa-folder-open"></i> FILES</span>
-              <button id="hsNewFileBtn" class="explorer-action-btn" title="New File" aria-label="New File">
+              <button type="button" id="hsNewFileBtn" class="explorer-action-btn" title="New File" aria-label="New File">
                 <i class="fas fa-file-circle-plus"></i>
               </button>
             </div>
@@ -121,7 +121,7 @@
           <div class="panel-header">
             <i class="fas fa-exclamation-triangle" style="color: #ea580c;"></i>
             <span>GHC Compiler / Type Errors</span>
-            <button id="hsConsoleClear" class="console-clear-btn" title="Clear Console" aria-label="Clear Console"><i class="fas fa-trash-alt"></i></button>
+            <button type="button" id="hsConsoleClear" class="console-clear-btn" title="Clear Console" aria-label="Clear Console"><i class="fas fa-trash-alt"></i></button>
           </div>
           <div id="hsConsoleBody" class="panel-body">
             <span class="hs-console-placeholder">No compilation errors.</span>
@@ -138,7 +138,10 @@
       loadPartial('footer-placeholder', '/partials/footer.html');
     </script>
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
   </body>
 </html>

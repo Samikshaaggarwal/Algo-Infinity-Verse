@@ -59,23 +59,23 @@
 
                 <div class="scenario-actions">
                     <h4 class="section-heading">Scenarios</h4>
-                    <button class="btn btn-outline w-100" id="btnScenNormal">
+                    <button type="button" class="btn btn-outline w-100" id="btnScenNormal">
                         <i class="fas fa-link"></i> 1. Standard Allocation
                     </button>
-                    <button class="btn btn-outline w-100" id="btnScenCircular">
+                    <button type="button" class="btn btn-outline w-100" id="btnScenCircular">
                         <i class="fas fa-recycle"></i> 2. Circular Reference (Island)
                     </button>
-                    <button class="btn btn-danger w-100" id="btnScenSever">
+                    <button type="button" class="btn btn-danger w-100" id="btnScenSever">
                         <i class="fas fa-cut"></i> 3. Sever Root Reference
                     </button>
                 </div>
 
                 <div class="gc-actions">
                     <h4 class="section-heading">Garbage Collector</h4>
-                    <button class="btn btn-primary w-100" id="btnRunGC">
+                    <button type="button" class="btn btn-primary w-100" id="btnRunGC">
                         <i class="fas fa-broom"></i> Run Mark-and-Sweep
                     </button>
-                    <button class="btn btn-secondary w-100" id="btnClearHeap">
+                    <button type="button" class="btn btn-secondary w-100" id="btnClearHeap">
                         <i class="fas fa-trash-alt"></i> Empty Heap
                     </button>
                 </div>
@@ -120,7 +120,10 @@
     </main>
 
     <!-- Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="gc-visualizer.js"></script>
 </body>
 </html>

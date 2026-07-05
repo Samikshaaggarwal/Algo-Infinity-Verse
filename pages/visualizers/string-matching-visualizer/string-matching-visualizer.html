@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
+    <button type="button" id="scrollTopBtn" aria-label="Scroll to top" class="scroll-top-btn">
       <i class="fas fa-circle-chevron-up"></i>
     </button>
 
@@ -68,28 +68,28 @@
           <div class="sm-algo-row">
             <span class="sm-algo-label">Algorithm:</span>
             <div class="sm-algo-btns">
-              <button class="sm-algo-btn active" data-algo="kmp">KMP</button>
-              <button class="sm-algo-btn" data-algo="z">Z-Algorithm</button>
-              <button class="sm-algo-btn" data-algo="rk">Rabin-Karp</button>
+              <button type="button" class="sm-algo-btn active" data-algo="kmp">KMP</button>
+              <button type="button" class="sm-algo-btn" data-algo="z">Z-Algorithm</button>
+              <button type="button" class="sm-algo-btn" data-algo="rk">Rabin-Karp</button>
             </div>
           </div>
 
           <!-- Presets -->
           <div class="sm-preset-row">
             <span class="sm-preset-label">Presets:</span>
-            <button class="sm-preset-btn" data-text="AABAACAADAABAABA" data-pat="AABA">AABA in AABAAC...</button>
-            <button class="sm-preset-btn" data-text="GEEKSFORGEEKS" data-pat="GEEK">GEEK in GEEKSFORGEEKS</button>
-            <button class="sm-preset-btn" data-text="AAAAABAAABA" data-pat="AAAA">AAAA (partial match)</button>
-            <button class="sm-preset-btn" data-text="ABCXABCDABXABCDABCDABCY" data-pat="ABCDABCY">Long pattern</button>
-            <button class="sm-preset-btn" data-text="HELLO WORLD" data-pat="WORLD">Simple search</button>
+            <button type="button" class="sm-preset-btn" data-text="AABAACAADAABAABA" data-pat="AABA">AABA in AABAAC...</button>
+            <button type="button" class="sm-preset-btn" data-text="GEEKSFORGEEKS" data-pat="GEEK">GEEK in GEEKSFORGEEKS</button>
+            <button type="button" class="sm-preset-btn" data-text="AAAAABAAABA" data-pat="AAAA">AAAA (partial match)</button>
+            <button type="button" class="sm-preset-btn" data-text="ABCXABCDABXABCDABCDABCY" data-pat="ABCDABCY">Long pattern</button>
+            <button type="button" class="sm-preset-btn" data-text="HELLO WORLD" data-pat="WORLD">Simple search</button>
           </div>
 
           <!-- Playback -->
           <div class="sm-playback-row">
-            <button class="btn sm-btn-primary sm-pb-btn" id="smRunBtn"><i class="fas fa-play"></i> Run</button>
-            <button class="btn btn-secondary sm-pb-btn" id="smStepBtn" disabled><i class="fas fa-step-forward"></i> Step</button>
-            <button class="btn btn-secondary sm-pb-btn" id="smPauseBtn" disabled><i class="fas fa-pause"></i> Pause</button>
-            <button class="btn btn-secondary sm-pb-btn" id="smResetBtn"><i class="fas fa-undo"></i> Reset</button>
+            <button type="button" class="btn sm-btn-primary sm-pb-btn" id="smRunBtn"><i class="fas fa-play"></i> Run</button>
+            <button type="button" class="btn btn-secondary sm-pb-btn" id="smStepBtn" disabled><i class="fas fa-step-forward"></i> Step</button>
+            <button type="button" class="btn btn-secondary sm-pb-btn" id="smPauseBtn" disabled><i class="fas fa-pause"></i> Pause</button>
+            <button type="button" class="btn btn-secondary sm-pb-btn" id="smResetBtn"><i class="fas fa-undo"></i> Reset</button>
             <div class="sm-speed-wrap">
               <span class="sm-speed-label">Speed:</span>
               <input type="range" id="smSpeed" class="sm-range" min="1" max="5" value="3" aria-label="Speed" />
@@ -227,7 +227,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="../../../auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="../../../script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="../../../theme.js"></script>
     <script src="../../../auth-gate.js"></script>
     <script src="string-matching-visualizer.js"></script>

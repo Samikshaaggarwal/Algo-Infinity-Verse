@@ -61,7 +61,7 @@
             <!-- View 2: Active Quiz -->
             <div id="view-active-quiz" class="quiz-view hidden">
                 <div class="quiz-header">
-                    <button class="btn-exit" id="btnExitQuiz" aria-label="Exit quiz and return to categories"><i class="fas fa-times"></i> Exit</button>
+                    <button type="button" class="btn-exit" id="btnExitQuiz" aria-label="Exit quiz and return to categories"><i class="fas fa-times"></i> Exit</button>
                     <div class="quiz-progress-container">
                         <div class="progress-text">
                             <span id="quizTopicLabel">Topic</span>
@@ -103,7 +103,7 @@
                             </div>
                         </div>
 
-                        <a class="retry-link" id="retryLink" href="#" target="_blank" rel="noopener noreferrer">
+                        <a class="retry-link" id="retryLink" href="javascript:void(0)" target="_blank" rel="noopener noreferrer">
                             <i class="fas fa-redo-alt"></i>
                             <span>Review: <strong id="retryLabel"></strong></span>
                             <i class="fas fa-external-link-alt retry-ext-icon"></i>
@@ -112,7 +112,7 @@
 
                     <div class="quiz-controls">
                         <div class="feedback-msg" id="feedbackMsg"></div>
-                        <button class="btn-next" id="btnNextQuestion" disabled aria-label="Next question">Next <i class="fas fa-arrow-right"></i></button>
+                        <button type="button" class="btn-next" id="btnNextQuestion" disabled aria-label="Next question">Next <i class="fas fa-arrow-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -141,8 +141,8 @@
                     </div>
                     
                     <div class="results-actions">
-                        <button class="btn-restart" id="btnRestartQuiz" aria-label="Retry this quiz module"><i class="fas fa-redo"></i> Retry Module</button>
-                        <button class="btn-return" id="btnReturnHome" aria-label="Return to category selection"><i class="fas fa-home"></i> Back to Categories</button>
+                        <button type="button" class="btn-restart" id="btnRestartQuiz" aria-label="Retry this quiz module"><i class="fas fa-redo"></i> Retry Module</button>
+                        <button type="button" class="btn-return" id="btnReturnHome" aria-label="Return to category selection"><i class="fas fa-home"></i> Back to Categories</button>
                     </div>
                 </div>
             </div>
@@ -151,7 +151,10 @@
     </section>
     
     <!-- External Scripts -->
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/auth.js"></script>
     <script src="/theme.js"></script>
     <script src="quiz-system.js"></script>

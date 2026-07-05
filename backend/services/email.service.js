@@ -41,7 +41,7 @@ export async function sendVerificationEmail(toEmail, name, token) {
     return;
   }
 
-  const appUrl = process.env.APP_URL || "http://localhost:3000";
+  const appUrl = process.env.APP_URL || "";
   const verifyUrl = `${appUrl}/verify-email?token=${encodeURIComponent(token)}&email=${encodeURIComponent(toEmail)}`;
 
   const html = `

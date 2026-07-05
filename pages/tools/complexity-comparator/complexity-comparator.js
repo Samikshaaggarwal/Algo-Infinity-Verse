@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /* ─── Complexity Definitions ─── */
-var CC_COMPLEXITIES = [
+let CC_COMPLEXITIES = [
   {
     key   : 'o1',
     label : 'O(1)',
@@ -81,7 +81,7 @@ var CC_COMPLEXITIES = [
 ];
 
 /* ─── State ─── */
-var ccState = {
+let ccState = {
   n         : 100,
   logScale  : false,
   canvasW   : 0,
@@ -104,7 +104,7 @@ function ccFmt(val) {
 
 function ccFmtTime(ops) {
   if (!isFinite(ops) || ops > 1e30) return '∞';
-  var sec = ops / 1e9;
+  let sec = ops / 1e9;
   if (sec < 1e-6) return '< 1μs';
   if (sec < 1e-3) return (sec * 1e6).toFixed(1) + 'μs';
   if (sec < 1)    return (sec * 1e3).toFixed(1) + 'ms';
@@ -125,7 +125,7 @@ function ccFeasibility(ops) {
 
 /* ─── Render Toggles ─── */
 function ccRenderToggles() {
-  var wrap = document.getElementById('ccToggles');
+  let wrap = document.getElementById('ccToggles');
   if (!wrap) return;
 
   wrap.innerHTML = CC_COMPLEXITIES.map(function(c) {
@@ -139,7 +139,7 @@ function ccRenderToggles() {
 
   wrap.querySelectorAll('.cc-toggle-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      var key = btn.getAttribute('data-key');
+      let key = btn.getAttribute('data-key');
       CC_COMPLEXITIES.forEach(function(c) {
         if (c.key === key) c.visible = !c.visible;
       });
@@ -152,11 +152,11 @@ function ccRenderToggles() {
 
 /* ─── Render Examples Grid ─── */
 function ccRenderExamples() {
-  var grid = document.getElementById('ccExamplesGrid');
+  let grid = document.getElementById('ccExamplesGrid');
   if (!grid) return;
 
   grid.innerHTML = CC_COMPLEXITIES.map(function(c) {
-    var algosHtml = c.algos.map(function(a) {
+    let algosHtml = c.algos.map(function(a) {
       return '<div class="cc-example-algo">' + a + '</div>';
     }).join('');
 
@@ -170,9 +170,9 @@ function ccRenderExamples() {
 
   // Apply top border gradient
   grid.querySelectorAll('.cc-example-card').forEach(function(card, i) {
-    var c = CC_COMPLEXITIES[i];
+    let c = CC_COMPLEXITIES[i];
     if (c) card.style.setProperty('--cc-color', c.color);
-    var topBar = document.createElement('div');
+    let topBar = document.createElement('div');
     topBar.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:4px;background:' + (c ? c.color : '#f59e0b') + ';border-radius:16px 16px 0 0';
     card.style.position = 'relative';
     card.insertBefore(topBar, card.firstChild);
@@ -181,27 +181,27 @@ function ccRenderExamples() {
 
 /* ─── Update Table ─── */
 function ccUpdateTable(n) {
-  var tbody = document.getElementById('ccTableBody');
-  var titleN = document.getElementById('ccTableN');
+  let tbody = document.getElementById('ccTableBody');
+  let titleN = document.getElementById('ccTableN');
   if (!tbody) return;
   if (titleN) titleN.textContent = 'n = ' + n.toLocaleString();
 
   // Max ops among visible for bar scaling
-  var maxOps = 0;
+  let maxOps = 0;
   CC_COMPLEXITIES.forEach(function(c) {
     if (!c.visible) return;
-    var v = c.fn(n);
+    let v = c.fn(n);
     if (isFinite(v) && v > maxOps) maxOps = v;
   });
   if (maxOps <= 0) maxOps = 1;
 
   tbody.innerHTML = CC_COMPLEXITIES.map(function(c) {
-    var ops     = c.fn(n);
-    var feas    = ccFeasibility(ops);
-    var barPct  = !isFinite(ops) || ops > 1e30 ? 100 : Math.min(100, (Math.log(ops + 1) / Math.log(maxOps + 1)) * 100);
-    var opsStr  = ccFmt(ops);
-    var timeStr = ccFmtTime(ops);
-    var algoStr = c.algos.slice(0, 2).join(', ');
+    let ops     = c.fn(n);
+    let feas    = ccFeasibility(ops);
+    let barPct  = !isFinite(ops) || ops > 1e30 ? 100 : Math.min(100, (Math.log(ops + 1) / Math.log(maxOps + 1)) * 100);
+    let opsStr  = ccFmt(ops);
+    let timeStr = ccFmtTime(ops);
+    let algoStr = c.algos.slice(0, 2).join(', ');
 
     return '<tr class="' + (c.visible ? '' : 'cc-row-hidden') + '">' +
       '<td style="color:' + c.color + '">' + c.label + '</td>' +
@@ -222,16 +222,16 @@ function ccUpdateTable(n) {
 
 /* ─── Annotation ─── */
 function ccUpdateAnnotation(n) {
-  var el = document.getElementById('ccAnnotationText');
+  let el = document.getElementById('ccAnnotationText');
   if (!el) return;
 
-  var o1   = 1;
-  var ologn = Math.log2(n);
-  var on   = n;
-  var onlogn = n * Math.log2(n);
-  var on2  = n * n;
+  let o1   = 1;
+  let ologn = Math.log2(n);
+  let on   = n;
+  let onlogn = n * Math.log2(n);
+  let on2  = n * n;
 
-  var msg = '';
+  let msg = '';
 
   if (n <= 10) {
     msg = 'At n = ' + n + ', even O(n²) = ' + ccFmt(on2) + ' operations — everything is fast at tiny inputs. Size doesn\'t matter here yet.';
@@ -248,36 +248,36 @@ function ccUpdateAnnotation(n) {
   el.textContent = msg;
 
   // Danger badge
-  var o2n = Math.pow(2, n);
-  var badge = document.getElementById('ccDangerBadge');
+  let o2n = Math.pow(2, n);
+  let badge = document.getElementById('ccDangerBadge');
   if (badge) badge.classList.toggle('visible', !isFinite(o2n) || o2n > 1e15);
 }
 
 /* ─── Canvas Chart ─── */
 function ccDrawChart(n) {
-  var canvas = document.getElementById('ccCanvas');
+  let canvas = document.getElementById('ccCanvas');
   if (!canvas) return;
-  var wrap = canvas.parentElement;
-  var W    = wrap ? wrap.clientWidth : 800;
-  var H    = Math.min(400, Math.max(280, W * 0.45));
+  let wrap = canvas.parentElement;
+  let W    = wrap ? wrap.clientWidth : 800;
+  let H    = Math.min(400, Math.max(280, W * 0.45));
   canvas.width  = W;
   canvas.height = H;
 
-  var ctx   = canvas.getContext('2d');
-  var PAD_L = 60, PAD_R = 20, PAD_T = 20, PAD_B = 40;
-  var cW    = W - PAD_L - PAD_R;
-  var cH    = H - PAD_T - PAD_B;
+  let ctx   = canvas.getContext('2d');
+  let PAD_L = 60, PAD_R = 20, PAD_T = 20, PAD_B = 40;
+  let cW    = W - PAD_L - PAD_R;
+  let cH    = H - PAD_T - PAD_B;
 
   ctx.clearRect(0, 0, W, H);
 
   // Background grid
   ctx.strokeStyle = 'rgba(255,255,255,0.04)';
   ctx.lineWidth   = 1;
-  var gridLines = 6;
-  for (var i = 0; i <= gridLines; i++) {
-    var y = PAD_T + (cH / gridLines) * i;
+  let gridLines = 6;
+  for (let i = 0; i <= gridLines; i++) {
+    let y = PAD_T + (cH / gridLines) * i;
     ctx.beginPath(); ctx.moveTo(PAD_L, y); ctx.lineTo(PAD_L + cW, y); ctx.stroke();
-    var x = PAD_L + (cW / gridLines) * i;
+    let x = PAD_L + (cW / gridLines) * i;
     ctx.beginPath(); ctx.moveTo(x, PAD_T); ctx.lineTo(x, PAD_T + cH); ctx.stroke();
   }
 
@@ -304,21 +304,21 @@ function ccDrawChart(n) {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
   [0.25, 0.5, 0.75, 1.0].forEach(function(frac) {
-    var tx = PAD_L + frac * cW;
-    var tv = Math.round(frac * n);
+    let tx = PAD_L + frac * cW;
+    let tv = Math.round(frac * n);
     ctx.fillStyle = 'rgba(148,163,184,0.5)';
     ctx.fillText(tv >= 1000 ? (tv / 1000) + 'K' : tv, tx, PAD_T + cH + 6);
   });
 
   // Compute max visible value for y scaling
-  var STEPS  = 200;
-  var maxVal = 0;
+  let STEPS  = 200;
+  let maxVal = 0;
 
   CC_COMPLEXITIES.forEach(function(c) {
     if (!c.visible) return;
-    for (var s = 1; s <= STEPS; s++) {
-      var nx  = Math.max(1, Math.round((s / STEPS) * n));
-      var val = c.fn(nx);
+    for (let s = 1; s <= STEPS; s++) {
+      let nx  = Math.max(1, Math.round((s / STEPS) * n));
+      let val = c.fn(nx);
       if (isFinite(val) && val > maxVal) maxVal = val;
     }
   });
@@ -326,13 +326,13 @@ function ccDrawChart(n) {
   if (maxVal <= 0) maxVal = 1;
 
   // Cap exponential for display
-  var displayMax = Math.min(maxVal, 1e15);
+  let displayMax = Math.min(maxVal, 1e15);
 
   function toY(val) {
     if (!isFinite(val) || val > displayMax) return PAD_T;
-    var frac;
+    let frac;
     if (ccState.logScale) {
-      var logMax = Math.log(displayMax + 1);
+      let logMax = Math.log(displayMax + 1);
       frac = logMax > 0 ? Math.log(val + 1) / logMax : 0;
     } else {
       frac = val / displayMax;
@@ -344,14 +344,14 @@ function ccDrawChart(n) {
   ctx.textAlign    = 'right';
   ctx.textBaseline = 'middle';
   [0, 0.25, 0.5, 0.75, 1.0].forEach(function(frac) {
-    var ty = PAD_T + (1 - frac) * cH;
-    var tv = frac * displayMax;
+    let ty = PAD_T + (1 - frac) * cH;
+    let tv = frac * displayMax;
     ctx.fillStyle = 'rgba(148,163,184,0.5)';
     ctx.fillText(ccFmt(tv), PAD_L - 6, ty);
   });
 
   // Current n vertical marker
-  var nX = PAD_L + cW;
+  let nX = PAD_L + cW;
   ctx.strokeStyle = 'rgba(245,158,11,0.3)';
   ctx.lineWidth   = 1;
   ctx.setLineDash([4, 4]);
@@ -368,12 +368,12 @@ function ccDrawChart(n) {
     ctx.shadowBlur  = 4;
     ctx.beginPath();
 
-    var started = false;
-    for (var s = 1; s <= STEPS; s++) {
-      var nx2  = Math.max(1, Math.round((s / STEPS) * n));
-      var val2 = c.fn(nx2);
-      var px   = PAD_L + (s / STEPS) * cW;
-      var py   = toY(val2);
+    let started = false;
+    for (let s = 1; s <= STEPS; s++) {
+      let nx2  = Math.max(1, Math.round((s / STEPS) * n));
+      let val2 = c.fn(nx2);
+      let px   = PAD_L + (s / STEPS) * cW;
+      let py   = toY(val2);
 
       if (!started) { ctx.moveTo(px, py); started = true; }
       else ctx.lineTo(px, py);
@@ -383,8 +383,8 @@ function ccDrawChart(n) {
     ctx.shadowBlur = 0;
 
     // Dot at current n
-    var dotVal = c.fn(n);
-    var dotY   = toY(dotVal);
+    let dotVal = c.fn(n);
+    let dotY   = toY(dotVal);
     ctx.beginPath();
     ctx.arc(nX, dotY, 5, 0, Math.PI * 2);
     ctx.fillStyle = c.color;
@@ -404,7 +404,7 @@ function ccDrawChart(n) {
 
 /* ─── Update everything ─── */
 function ccUpdate() {
-  var n = ccState.n;
+  let n = ccState.n;
   ccDrawChart(n);
   ccUpdateTable(n);
   ccUpdateAnnotation(n);
@@ -415,10 +415,10 @@ function ccInit() {
   ccRenderToggles();
   ccRenderExamples();
 
-  var slider   = document.getElementById('ccNSlider');
-  var display  = document.getElementById('ccNDisplay');
-  var linearBtn = document.getElementById('ccLinearBtn');
-  var logBtn   = document.getElementById('ccLogBtn');
+  let slider   = document.getElementById('ccNSlider');
+  let display  = document.getElementById('ccNDisplay');
+  let linearBtn = document.getElementById('ccLinearBtn');
+  let logBtn   = document.getElementById('ccLogBtn');
 
   if (slider) {
     slider.addEventListener('input', function() {

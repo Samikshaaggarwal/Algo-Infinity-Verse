@@ -67,7 +67,7 @@
       <div class="ps-card">
         <div class="ps-card-hdr">
           <h3><i class="fas fa-table"></i> Process Table</h3>
-          <button id="addProcessBtn" class="ps-icon-btn" title="Add process">
+          <button type="button" id="addProcessBtn" class="ps-icon-btn" title="Add process">
             <i class="fas fa-plus"></i>
           </button>
         </div>
@@ -110,13 +110,13 @@
 
       <!-- Control Buttons -->
       <div class="ps-controls">
-        <button id="playBtn"  class="ps-btn-primary">
+        <button type="button" id="playBtn"  class="ps-btn-primary">
           <i class="fas fa-play"></i> Play
         </button>
-        <button id="pauseBtn" class="ps-btn-sec">
+        <button type="button" id="pauseBtn" class="ps-btn-sec">
           <i class="fas fa-pause"></i> Pause
         </button>
-        <button id="resetBtn" class="ps-btn-sec">
+        <button type="button" id="resetBtn" class="ps-btn-sec">
           <i class="fas fa-rotate-left"></i> Reset
         </button>
       </div>
@@ -194,7 +194,7 @@
       <div class="ps-card ps-code-card">
         <div class="ps-card-hdr">
           <h3><i class="fas fa-code"></i> Algorithm — C++</h3>
-          <button id="copyCodeBtn" class="ps-btn-sec ps-btn-sm">
+          <button type="button" id="copyCodeBtn" class="ps-btn-sec ps-btn-sm">
             <i class="far fa-copy"></i> Copy
           </button>
         </div>
@@ -253,7 +253,10 @@ void priorityScheduling(vector&lt;Process&gt;&amp; procs)
   </div>
 
   <!-- Project global script (theme, navbar loader, etc.) -->
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <!-- Visualizer logic -->
   <script src="priority-scheduling-visualizer.js"></script>
 

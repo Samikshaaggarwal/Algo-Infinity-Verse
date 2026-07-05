@@ -48,7 +48,7 @@
     </div>
 
     <!-- Scroll to Top -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -159,10 +159,10 @@
 
             <!-- Action buttons -->
             <div class="ri-action-row">
-              <button id="riRunBtn" class="ri-btn-run">
+              <button type="button" id="riRunBtn" class="ri-btn-run">
                 <i class="fas fa-play"></i> Run Code
               </button>
-              <button id="riGenerateBtn" class="ri-btn-generate">
+              <button type="button" id="riGenerateBtn" class="ri-btn-generate">
                 <i class="fas fa-user-tie"></i> &nbsp;Generate Interview Questions
               </button>
             </div>
@@ -177,7 +177,7 @@
               </div>
               <div class="ri-session-controls">
                 <span class="ri-timer" id="riSessionTimer">00:00</span>
-                <button class="ri-btn-share" id="riCopyBtn" title="Copy questions to clipboard">
+                <button type="button" class="ri-btn-share" id="riCopyBtn" title="Copy questions to clipboard">
                   <i class="fas fa-copy"></i> Copy
                 </button>
               </div>
@@ -201,15 +201,15 @@
 
             <!-- Tabs -->
             <div class="ri-tabs" id="riTabs">
-              <button class="ri-tab-btn tab-code active" data-tab="code" id="tabBtnCode">
+              <button type="button" class="ri-tab-btn tab-code active" data-tab="code" id="tabBtnCode">
                 <i class="fas fa-code"></i> Code-Specific
                 <span class="ri-tab-count" id="tabCountCode">0</span>
               </button>
-              <button class="ri-tab-btn tab-edge" data-tab="edge" id="tabBtnEdge">
+              <button type="button" class="ri-tab-btn tab-edge" data-tab="edge" id="tabBtnEdge">
                 <i class="fas fa-exclamation-circle"></i> Edge Cases
                 <span class="ri-tab-count" id="tabCountEdge">0</span>
               </button>
-              <button class="ri-tab-btn tab-opt" data-tab="opt" id="tabBtnOpt">
+              <button type="button" class="ri-tab-btn tab-opt" data-tab="opt" id="tabBtnOpt">
                 <i class="fas fa-bolt"></i> Optimization
                 <span class="ri-tab-count" id="tabCountOpt">0</span>
               </button>
@@ -263,14 +263,14 @@
 
     <!-- Chatbot Widget -->
     <div class="chatbot-widget">
-      <button class="chatbot-toggle" id="chatbotToggle" aria-label="Toggle chat">
+      <button type="button" class="chatbot-toggle" id="chatbotToggle" aria-label="Toggle chat">
         <i class="fas fa-comments"></i>
         <span class="chatbot-badge">3</span>
       </button>
       <div class="chatbot-window hidden" id="chatbotWindow">
         <div class="chatbot-header">
           <h4>Algo Assistant</h4>
-          <button class="chatbot-close" id="chatbotClose" aria-label="Close chat">
+          <button type="button" class="chatbot-close" id="chatbotClose" aria-label="Close chat">
             <i class="fas fa-times"></i>
           </button>
         </div>
@@ -281,21 +281,24 @@
         </div>
         <div class="chatbot-input">
           <input type="text" id="chatbotInput" placeholder="Type your question..." />
-          <button id="chatbotSend" aria-label="Send message">
+          <button type="button" id="chatbotSend" aria-label="Send message">
             <i class="fas fa-paper-plane"></i>
           </button>
         </div>
         <div class="quick-questions">
-          <button class="quick-q" data-question="What is the time complexity of this problem?">Time Complexity</button>
-          <button class="quick-q" data-question="Can you give me a hint for this problem?">Hint</button>
-          <button class="quick-q" data-question="What approach should I use?">Approach</button>
+          <button type="button" class="quick-q" data-question="What is the time complexity of this problem?">Time Complexity</button>
+          <button type="button" class="quick-q" data-question="Can you give me a hint for this problem?">Hint</button>
+          <button type="button" class="quick-q" data-question="What approach should I use?">Approach</button>
         </div>
       </div>
     </div>
 
     <!-- Scripts -->
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="reverse-interview.js"></script>
   

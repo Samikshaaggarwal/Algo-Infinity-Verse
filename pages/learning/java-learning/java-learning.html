@@ -45,7 +45,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -162,7 +162,7 @@
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="public class HelloWorld {
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="public class HelloWorld {
     public static void main(String[] args) {
         System.out.println(&quot;Hello, World!&quot;);
     }
@@ -200,7 +200,7 @@
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Bash</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="# Verify your Java installation
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="# Verify your Java installation
 java -version
 javac -version">Copy</button>
                 </div>
@@ -219,7 +219,7 @@ javac -version</code></pre>
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Bash</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="# Compile and run a Java program
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="# Compile and run a Java program
 javac HelloWorld.java    # compiles to HelloWorld.class
 java HelloWorld          # runs the compiled bytecode">Copy</button>
                 </div>
@@ -245,7 +245,7 @@ java HelloWorld          <span class="tok-cmt"># runs the compiled bytecode</spa
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="String name = &quot;Alice&quot;;    // Text
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="String name = &quot;Alice&quot;;    // Text
 int age = 25;                // Whole number
 double height = 5.7;         // Decimal number
 boolean isStudent = true;    // true / false
@@ -307,12 +307,12 @@ System.out.println(age);">Copy</button>
                   <li>Create a <code>boolean</code> variable <code>passed</code> set to <code>true</code></li>
                   <li>Print each variable using <code>System.out.println()</code></li>
                 </ol>
-                <button class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-variables">Show Solution</button>
+                <button type="button" class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-variables">Show Solution</button>
                 <div class="java-exercise-solution" id="solution-variables">
                   <div class="java-code-block">
                     <div class="java-code-header">
                       <span class="java-code-lang">Java</span>
-                      <button class="java-code-copy" aria-label="Copy code" data-code="int score = 95;
+                      <button type="button" class="java-code-copy" aria-label="Copy code" data-code="int score = 95;
 double gpa = 3.85;
 String city = &quot;New York&quot;;
 boolean passed = true;
@@ -352,7 +352,7 @@ System.out.println(&quot;Passed: &quot; + passed);">Copy</button>
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="String name = &quot;Alice&quot;;
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="String name = &quot;Alice&quot;;
 int age = 25;
 
 System.out.println(&quot;My name is &quot; + name + &quot; and I am &quot; + age + &quot; years old.&quot;);
@@ -376,7 +376,7 @@ Name: Alice | Age: 25</pre>
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="import java.util.Scanner;
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="import java.util.Scanner;
 
 public class Greeting {
     public static void main(String[] args) {
@@ -426,12 +426,12 @@ public class Greeting {
                   <li>Ask for name and favorite color using <code>nextLine()</code></li>
                   <li>Print: <code>"Hello {name}, your favorite color is {color}!"</code></li>
                 </ol>
-                <button class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-io">Show Solution</button>
+                <button type="button" class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-io">Show Solution</button>
                 <div class="java-exercise-solution" id="solution-io">
                   <div class="java-code-block">
                     <div class="java-code-header">
                       <span class="java-code-lang">Java</span>
-                      <button class="java-code-copy" aria-label="Copy code" data-code="import java.util.Scanner;
+                      <button type="button" class="java-code-copy" aria-label="Copy code" data-code="import java.util.Scanner;
 
 public class Greeting {
     public static void main(String[] args) {
@@ -499,7 +499,7 @@ public class Greeting {
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="int a = 10;
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="int a = 10;
 int b = 5;
 
 // Arithmetic
@@ -556,12 +556,12 @@ Both positive? true</pre>
                   <li>Calculate <code>perimeter = 2 * (width + length)</code></li>
                   <li>Print both results</li>
                 </ol>
-                <button class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-operators">Show Solution</button>
+                <button type="button" class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-operators">Show Solution</button>
                 <div class="java-exercise-solution" id="solution-operators">
                   <div class="java-code-block">
                     <div class="java-code-header">
                       <span class="java-code-lang">Java</span>
-                      <button class="java-code-copy" aria-label="Copy code" data-code="int width = 8;
+                      <button type="button" class="java-code-copy" aria-label="Copy code" data-code="int width = 8;
 int length = 12;
 int area = width * length;
 int perimeter = 2 * (width + length);
@@ -593,7 +593,7 @@ System.out.println(&quot;Perimeter: &quot; + perimeter);">Copy</button>
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="int score = 85;
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="int score = 85;
 char grade;
 
 if (score >= 90) {
@@ -634,7 +634,7 @@ System.out.println(&quot;Score: &quot; + score + &quot; → Grade: &quot; + grad
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="int day = 3;
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="int day = 3;
 String dayName;
 
 switch (day) {
@@ -678,12 +678,12 @@ System.out.println(dayName);">Copy</button>
                   <li>Use <code>if</code>/<code>else if</code>/<code>else</code> to check the number</li>
                   <li>Print the result</li>
                 </ol>
-                <button class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-conditionals">Show Solution</button>
+                <button type="button" class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-conditionals">Show Solution</button>
                 <div class="java-exercise-solution" id="solution-conditionals">
                   <div class="java-code-block">
                     <div class="java-code-header">
                       <span class="java-code-lang">Java</span>
-                      <button class="java-code-copy" aria-label="Copy code" data-code="import java.util.Scanner;
+                      <button type="button" class="java-code-copy" aria-label="Copy code" data-code="import java.util.Scanner;
 
 public class CheckNumber {
     public static void main(String[] args) {
@@ -741,7 +741,7 @@ public class CheckNumber {
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="// Count from 0 to 4
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="// Count from 0 to 4
 for (int i = 0; i &lt; 5; i++) {
     System.out.println(&quot;Count: &quot; + i);
 }
@@ -781,7 +781,7 @@ cherry</pre>
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="// while loop
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="// while loop
 int count = 0;
 while (count &lt; 5) {
     System.out.println(&quot;While: &quot; + count);
@@ -824,12 +824,12 @@ do {
                   <li>Use a <code>for</code> loop to print all even numbers from 2 to 20</li>
                   <li>Use a <code>while</code> loop to calculate the sum of numbers from 1 to 100</li>
                 </ol>
-                <button class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-loops">Show Solution</button>
+                <button type="button" class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-loops">Show Solution</button>
                 <div class="java-exercise-solution" id="solution-loops">
                   <div class="java-code-block">
                     <div class="java-code-header">
                       <span class="java-code-lang">Java</span>
-                      <button class="java-code-copy" aria-label="Copy code" data-code="// Even numbers 2-20
+                      <button type="button" class="java-code-copy" aria-label="Copy code" data-code="// Even numbers 2-20
 for (int i = 2; i &lt;= 20; i += 2) {
     System.out.println(i);
 }
@@ -873,7 +873,7 @@ System.out.println(&quot;Sum: &quot; + sum);">Copy</button>
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="public class MethodExamples {
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="public class MethodExamples {
 
     // Method with parameters and return value
     public static int add(int a, int b) {
@@ -925,7 +925,7 @@ Hello, Alice!</pre>
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="public static int multiply(int a, int b) {
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="public static int multiply(int a, int b) {
     return a * b;
 }
 
@@ -960,12 +960,12 @@ System.out.println(multiply(2.5, 4.0));     // 10.0">Copy</button>
                   <li>Write a method <code>factorial(int n)</code> that returns the factorial of n</li>
                   <li>Write a method <code>reverseString(String s)</code> that returns the reversed string</li>
                 </ol>
-                <button class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-methods">Show Solution</button>
+                <button type="button" class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-methods">Show Solution</button>
                 <div class="java-exercise-solution" id="solution-methods">
                   <div class="java-code-block">
                     <div class="java-code-header">
                       <span class="java-code-lang">Java</span>
-                      <button class="java-code-copy" aria-label="Copy code" data-code="public static boolean isEven(int n) {
+                      <button type="button" class="java-code-copy" aria-label="Copy code" data-code="public static boolean isEven(int n) {
     return n % 2 == 0;
 }
 
@@ -1019,7 +1019,7 @@ System.out.println(reverseString(&quot;hello&quot;)); // olleh">Copy</button>
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="// Creating arrays
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="// Creating arrays
 int[] numbers = new int[5];         // [0, 0, 0, 0, 0]
 String[] fruits = {&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;};
 
@@ -1046,7 +1046,7 @@ numbers[<span class="tok-num">0</span>] = <span class="tok-num">10</span>;
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="String text = &quot;Hello, Java!&quot;;
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="String text = &quot;Hello, Java!&quot;;
 
 System.out.println(text.length());             // 12
 System.out.println(text.toUpperCase());        // HELLO, JAVA!
@@ -1074,12 +1074,12 @@ System.out.println(text.contains(&quot;Java&quot;));     // true">Copy</button>
                   <li>Create an array of 5 integers and calculate their sum using a for loop</li>
                   <li>Write code to count how many vowels are in a given string</li>
                 </ol>
-                <button class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-arrays-strings">Show Solution</button>
+                <button type="button" class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-arrays-strings">Show Solution</button>
                 <div class="java-exercise-solution" id="solution-arrays-strings">
                   <div class="java-code-block">
                     <div class="java-code-header">
                       <span class="java-code-lang">Java</span>
-                      <button class="java-code-copy" aria-label="Copy code" data-code="// Sum of array
+                      <button type="button" class="java-code-copy" aria-label="Copy code" data-code="// Sum of array
 int[] nums = {10, 20, 30, 40, 50};
 int sum = 0;
 for (int n : nums) {
@@ -1131,7 +1131,7 @@ System.out.println(&quot;Vowels: &quot; + vowels);">Copy</button>
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="// Define a class
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="// Define a class
 class Student {
     String name;
     int age;
@@ -1193,12 +1193,12 @@ Hi, I'm Bob and I'm 22 years old.</pre>
                   <i class="fas fa-dumbbell"></i> Practice: Classes &amp; Objects
                 </div>
                 <p>Create a <code>Book</code> class with fields <code>title</code>, <code>author</code>, and <code>year</code>. Add a constructor and a method <code>displayInfo()</code> that prints the book details. Then create two book objects.</p>
-                <button class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-classes">Show Solution</button>
+                <button type="button" class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-classes">Show Solution</button>
                 <div class="java-exercise-solution" id="solution-classes">
                   <div class="java-code-block">
                     <div class="java-code-header">
                       <span class="java-code-lang">Java</span>
-                      <button class="java-code-copy" aria-label="Copy code" data-code="class Book {
+                      <button type="button" class="java-code-copy" aria-label="Copy code" data-code="class Book {
     String title;
     String author;
     int year;
@@ -1262,7 +1262,7 @@ book2.<span class="tok-fn">displayInfo</span>();</code></pre>
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="class Person {
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="class Person {
     private String name;
     private int age;
 
@@ -1301,7 +1301,7 @@ book2.<span class="tok-fn">displayInfo</span>();</code></pre>
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="// Parent class
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="// Parent class
 class Animal {
     String name;
 
@@ -1354,7 +1354,7 @@ a.<span class="tok-fn">speak</span>();  <span class="tok-cmt">// Buddy barks! (r
               <div class="java-code-block">
                 <div class="java-code-header">
                   <span class="java-code-lang">Java</span>
-                  <button class="java-code-copy" aria-label="Copy code" data-code="// Abstract class
+                  <button type="button" class="java-code-copy" aria-label="Copy code" data-code="// Abstract class
 abstract class Shape {
     abstract double area();
 }
@@ -1426,12 +1426,12 @@ for (Shape s : shapes) {
                   <li>Override <code>honk()</code> in Car to print a car-specific sound</li>
                   <li>Create a Car object and call its methods</li>
                 </ol>
-                <button class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-oop">Show Solution</button>
+                <button type="button" class="java-exercise-toggle" aria-expanded="false" aria-controls="solution-oop">Show Solution</button>
                 <div class="java-exercise-solution" id="solution-oop">
                   <div class="java-code-block">
                     <div class="java-code-header">
                       <span class="java-code-lang">Java</span>
-                      <button class="java-code-copy" aria-label="Copy code" data-code="class Vehicle {
+                      <button type="button" class="java-code-copy" aria-label="Copy code" data-code="class Vehicle {
     String brand;
 
     Vehicle(String brand) {
@@ -1494,7 +1494,10 @@ myCar.<span class="tok-fn">honk</span>();  <span class="tok-cmt">// Toyota Camry
     <div id="footer-placeholder"></div>
 
     <script src="/auth.js"></script>
+    <script src="/bootstrap-legacy.js"></script>
+
     <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
     <script src="/theme.js"></script>
     <script src="./java-learning.js"></script>
   

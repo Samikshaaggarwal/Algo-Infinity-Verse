@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+    <button type="button" id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -69,10 +69,10 @@
               <option value="function">Methods</option>
               <option value="class">Classes & Objects</option>
             </select>
-            <button id="jeCopyBtn" class="je-icon-btn" title="Copy Code" aria-label="Copy Code"><i class="fas fa-copy"></i></button>
-            <button id="jeSaveBtn" class="je-icon-btn" title="Save Draft" aria-label="Save Draft"><i class="fas fa-save"></i></button>
-            <button id="jeResetBtn" class="je-icon-btn je-reset-btn" title="Reset Editor" aria-label="Reset Editor"><i class="fas fa-undo"></i></button>
-            <button id="jeRunBtn" class="je-run-btn"><i class="fas fa-play"></i> Run Code</button>
+            <button type="button" id="jeCopyBtn" class="je-icon-btn" title="Copy Code" aria-label="Copy Code"><i class="fas fa-copy"></i></button>
+            <button type="button" id="jeSaveBtn" class="je-icon-btn" title="Save Draft" aria-label="Save Draft"><i class="fas fa-save"></i></button>
+            <button type="button" id="jeResetBtn" class="je-icon-btn je-reset-btn" title="Reset Editor" aria-label="Reset Editor"><i class="fas fa-undo"></i></button>
+            <button type="button" id="jeRunBtn" class="je-run-btn"><i class="fas fa-play"></i> Run Code</button>
           </div>
         </div>
 
@@ -97,7 +97,7 @@
           <div class="panel-header">
             <i class="fas fa-exclamation-triangle"></i>
             <span>Console / Errors</span>
-            <button id="jeConsoleClear" class="console-clear-btn" title="Clear Console" aria-label="Clear Console"><i class="fas fa-trash-alt"></i></button>
+            <button type="button" id="jeConsoleClear" class="console-clear-btn" title="Clear Console" aria-label="Clear Console"><i class="fas fa-trash-alt"></i></button>
           </div>
           <div id="jeConsoleBody" class="panel-body">
             <span class="je-console-placeholder">No errors detected.</span>
@@ -115,7 +115,10 @@
     loadPartial('footer-placeholder', '/partials/footer.html');
   </script>
 <script src="/auth.js"></script>
+  <script src="/bootstrap-legacy.js"></script>
+
   <script src="/script.js"></script>
+    <script type="module" src="/dist/legacy-bundle.mjs"></script>
   <script src="/theme.js"></script>
   </body>
 </html>

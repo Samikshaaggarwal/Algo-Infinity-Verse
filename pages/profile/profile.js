@@ -396,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 link.click();
             } catch (e) {
                 console.error("Error generating PNG:", e);
-                alert("Failed to export PNG. Please try again.");
+                console.warn("Alert:", "Failed to export PNG. Please try again.");
             } finally {
                 downloadPngBtn.innerHTML = prevText;
                 downloadPngBtn.disabled = false;
@@ -442,7 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pdf.save(`${(typeof userProgress !== 'undefined' ? userProgress.name : 'learner')}_coding_card.pdf`);
             } catch (e) {
                 console.error("Error generating PDF:", e);
-                alert("Failed to export PDF. Please try again.");
+                console.warn("Alert:", "Failed to export PDF. Please try again.");
             } finally {
                 downloadPdfBtn.innerHTML = prevText;
                 downloadPdfBtn.disabled = false;
