@@ -48,7 +48,7 @@ function renderLeaderboard(contributors) {
     const ranks = ['1', '2', '3'];
 
     leaderboardEl.innerHTML = top3.map((contributor, index) => `
-        <div class="leaderboard-item" onclick="viewProfile('${contributor.username}')">
+        <div class="leaderboard-item" data-username="${contributor.username}">
             <span class="leaderboard-rank">${ranks[index] || `#${index + 1}`}</span>
             <div class="leaderboard-avatar">
                 <img src="${contributor.avatar}" alt="${contributor.name}" loading="lazy">
@@ -69,7 +69,7 @@ function renderContributors(contributors) {
     const grid = document.getElementById('contributorsGrid');
 
     grid.innerHTML = contributors.map(contributor => `
-        <div class="contributor-card" onclick="viewProfile('${contributor.username}')">
+        <div class="contributor-card" data-username="${contributor.username}">
             <div class="contributor-avatar">
                 <img src="${contributor.avatar}" alt="${contributor.name}" loading="lazy">
             </div>
@@ -102,7 +102,27 @@ function viewProfile(username) {
     window.location.href = `profile.html?username=${username}`;
 }
 
+function attachProfileNavigation() {
+    const leaderboard = document.getElementById("leaderboard");
+    const contributorsGrid = document.getElementById("contributorsGrid");
+
+    leaderboard?.addEventListener("click", (event) => {
+        const item = event.target.closest(".leaderboard-item");
+        if (!item) return;
+
+        viewProfile(item.dataset.username);
+    });
+
+    contributorsGrid?.addEventListener("click", (event) => {
+        const card = event.target.closest(".contributor-card");
+        if (!card) return;
+
+        viewProfile(card.dataset.username);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     renderLeaderboard(contributorsData);
     renderContributors(contributorsData);
+    attachProfileNavigation();
 });

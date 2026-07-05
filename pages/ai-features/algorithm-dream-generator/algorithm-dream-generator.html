@@ -69,7 +69,7 @@
         <p>Select your algorithmic structure and synthesize a surreal dream dimension.</p>
       </div>
       <div class="card-body">
-        <form id="dream-form" onsubmit="event.preventDefault();">
+        <form id="dream-form">
           <div class="form-grid">
             <!-- Col 1: Algorithm -->
             <div class="form-group">
@@ -295,6 +295,14 @@
   <script>
     loadPartial('navbar-placeholder', '/partials/navbar.html');
     loadPartial('footer-placeholder', '/partials/footer.html');
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const dreamForm = document.getElementById("dream-form");
+
+      dreamForm?.addEventListener("submit", (event) => {
+        event.preventDefault();
+      });
+    });
   </script>
 </body>
 </html>
