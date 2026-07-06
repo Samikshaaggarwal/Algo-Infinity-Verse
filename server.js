@@ -69,6 +69,7 @@ import { sendVerificationEmail } from "./backend/services/email.service.js";
 import {
   createBattle,
   joinBattle,
+  startBattle,
   submitSolution,
   getBattle,
   getHistory,
@@ -2363,9 +2364,9 @@ if (pathname === "/api/forgot-password" && req.method === "POST") {
     }
   }
  
-  // Dynamic battle routes: /api/battles/:id and /api/battles/:id/(join|submit|result)
+  // Dynamic battle routes: /api/battles/:id and /api/battles/:id/(join|start|submit|result)
   const battleMatch = pathname.match(
-    /^\/api\/battles\/([^/]+?)(?:\/(join|submit|result))?$/
+    /^\/api\/battles\/([^/]+?)(?:\/(join|start|submit|result))?$/
   );
  
   if (battleMatch) {
@@ -2394,7 +2395,17 @@ if (pathname === "/api/forgot-password" && req.method === "POST") {
         return sendJson(res, 400, { error: err.message });
       }
     }
- 
+
+    // POST /api/battles/:id/start
+    if (action === "start" && req.method === "POST") {
+      try {
+        const result = await startBattle(battleId, session.sub);
+        return sendJson(res, 200, result);
+      } catch (err) {
+        return sendJson(res, 400, { error: err.message });
+      }
+    }
+
     // POST /api/battles/:id/submit
     if (action === "submit" && req.method === "POST") {
       try {
@@ -3353,6 +3364,48 @@ socket.on('voice-ice', (data) => {
   if (!valid) return;
   const targetSocketId = userSocketMap.get(valid.to);
   if (targetSocketId) io.to(targetSocketId).emit('voice-ice', { candidate: valid.candidate, from: valid.from });
+});
+
+// ── BATTLE ROYALE MODE ──
+
+socket.on('battle-join', (data) => {
+  const valid = validateSocketInput(data, {
+    battleId: { type: 'string', required: true },
+    userId: { type: 'string', string: true }
+  });
+  if (!valid) return;
+  socket.join(`battle_${valid.battleId}`);
+  socket.to(`battle_${valid.battleId}`).emit('battle-user-joined', { userId: valid.userId });
+});
+
+socket.on('battle-code-update', (data) => {
+  const valid = validateSocketInput(data, {
+    battleId: { type: 'string', required: true },
+    userId: { type: 'string', required: true },
+    code: { type: 'string', string: true }
+  });
+  if (!valid) return;
+  socket.to(`battle_${valid.battleId}`).emit('battle-code-update', valid);
+});
+
+socket.on('battle-cursor-update', (data) => {
+  const valid = validateSocketInput(data, {
+    battleId: { type: 'string', required: true },
+    userId: { type: 'string', required: true },
+    position: { type: 'object', required: true }
+  });
+  if (!valid) return;
+  socket.to(`battle_${valid.battleId}`).emit('battle-cursor-update', valid);
+});
+
+socket.on('battle-progress-update', (data) => {
+  const valid = validateSocketInput(data, {
+    battleId: { type: 'string', required: true },
+    userId: { type: 'string', required: true },
+    progress: { type: 'number', required: true }
+  });
+  if (!valid) return;
+  socket.to(`battle_${valid.battleId}`).emit('battle-progress-update', valid);
 });
 
 // ── END OF ADDITIONS ──

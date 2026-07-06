@@ -174,168 +174,100 @@ Match History
 
 <!-- Battle Lobby -->
 <section id="battle-lobby" class="battle-lobby">
-    <h2 class="section-title">Battle Lobby</h2>
+    <h2 class="section-title">Battle Royale Lobby</h2>
 
-    <div class="input-group" style="margin-top:2rem">
-      <label for="joinBattleId">Got a Battle ID? Join here</label>
-      <input type="text" id="joinBattleId" class="search-bar" placeholder="Paste Battle ID">
-    </div>
-    <button type="button" id="joinBattleBtn" class="btn btn-secondary" style="margin:auto; min-width:250px;">
-      Join Battle
-    </button>
     <div class="battle-card">
-
         <!-- Lobby Header -->
         <div class="lobby-header">
             <i class="fas fa-trophy"></i>
-            <h3>Create New Battle</h3>
-            <p>
-                Challenge your friends, test your DSA skills,
-                and earn XP rewards by solving coding problems.
-            </p>
-        </div>
-
-        <!-- Opponent Input -->
-        <div class="input-group">
-            <label for="opponentEmail">Opponent Email</label>
-              <input
-                  type="email"
-                  id="opponentEmail"
-                  class="search-bar"
-                  placeholder="Enter opponent's registered email"
-              >
+            <h3>Host a Lobby</h3>
+            <p>Create a room, share the code, and battle your friends!</p>
         </div>
 
         <!-- Difficulty Selection -->
         <div class="input-group">
-            <label for="difficultySelect">
-                Difficulty Level
-            </label>
-
-            <select
-                id="difficultySelect"
-                class="search-bar"
-            >
-                <option value="Easy">
-                    🟢 Easy • 50 XP
-                </option>
-
-                <option value="Medium">
-                    🟡 Medium • 100 XP
-                </option>
-
-                <option value="Hard">
-                    🔴 Hard • 150 XP
-                </option>
+            <label for="difficultySelect">Difficulty Level</label>
+            <select id="difficultySelect" class="search-bar">
+                <option value="Easy">🟢 Easy • 50 XP</option>
+                <option value="Medium">🟡 Medium • 100 XP</option>
+                <option value="Hard">🔴 Hard • 150 XP</option>
             </select>
         </div>
 
-        <!-- Difficulty Preview -->
-        <div class="difficulty-preview">
-
-            <div class="difficulty-box easy-box">
-                <span>🟢</span>
-                <h4>Easy</h4>
-                <p>50 XP</p>
-            </div>
-
-            <div class="difficulty-box medium-box">
-                <span>🟡</span>
-                <h4>Medium</h4>
-                <p>100 XP</p>
-            </div>
-
-            <div class="difficulty-box hard-box">
-                <span>🔴</span>
-                <h4>Hard</h4>
-                <p>150 XP</p>
-            </div>
-
-        </div>
-
-        <!-- Start Button -->
-        <button type="button"
-            id="startBattleBtn"
-            class="btn btn-primary"
-        >
-            ⚔️ Start Challenge
+        <button type="button" id="startBattleBtn" class="btn btn-primary">
+            Create Lobby
         </button>
+    </div>
 
-        <!-- Status + Join (added for backend integration) -->
-        <p id="battleStatusMsg" style="color:#06b6d4;text-align:center;margin-top:1rem;"></p>
-
-        <div class="input-group" style="margin-top:2rem">
-            <label for="joinBattleId">Got a Battle ID? Join here</label>
-            <input type="text" id="joinBattleId-1" class="search-bar" placeholder="Paste Battle ID">
+    <div class="battle-card" style="margin-top: 2rem;">
+        <div class="lobby-header">
+            <i class="fas fa-sign-in-alt"></i>
+            <h3>Join a Lobby</h3>
         </div>
-        <button type="button" id="joinBattleBtn" class="btn btn-secondary"
-                style="margin:auto;min-width:250px;">
-            Join Battle
+        <div class="input-group">
+            <label for="joinBattleId">Enter Lobby Code</label>
+            <input type="text" id="joinBattleId" class="search-bar" placeholder="e.g. A1B2C3">
+        </div>
+        <button type="button" id="joinBattleBtn" class="btn btn-secondary">
+            Join Lobby
         </button>
-        <p
-            id="battleStatusMsg-1"
-            role="status"
-            aria-live="polite"
-            style="color:`#06b6d4`;text-align:center;margin-top:1rem;"
-        ></p>
+    </div>
 
+    <div id="waitingRoom" class="battle-card" style="display: none; margin-top: 2rem;">
+        <h3>Waiting Room</h3>
+        <p>Lobby Code: <strong id="lobbyCodeDisplay" style="font-size: 1.2rem; color: var(--primary-color);"></strong></p>
+        <ul id="participantsList" class="participants-list" style="list-style:none; padding:0; margin: 1rem 0;">
+           <!-- Participants injected here -->
+        </ul>
+        <button type="button" id="hostStartBtn" class="btn btn-primary" style="display: none; margin-top: 1rem;">
+            Start Match!
+        </button>
+        <p id="battleStatusMsg" style="color:var(--primary-color);text-align:center;margin-top:1rem;"></p>
     </div>
 </section>
 
-<section class="section">
+<section id="active-battle" class="section" style="display: none;">
   <div class="container">
-
     <h2 class="section-title">Active Battle</h2>
 
     <div class="battle-container">
-
       <div class="battle-info-card">
-
         <h3 id="problemTitle">Two Sum Challenge</h3>
-        <p id="problemDescription">
-        Find two numbers whose sum equals the target.
-        </p>
-
-        <p>
-          Opponent:
-          <span id="currentOpponent">
-            Waiting...
-          </span>
-        </p>
-
-        <p>
-          Difficulty:
-          <span id="difficultyBadge" class="difficulty-badge">
-            Easy
-          </span>
-        </p>
-
-        <div class="timer-box">
-          ⏳ <span id="timer">300</span>s
+        <p id="problemDescription">Find two numbers whose sum equals the target.</p>
+        <p>Difficulty: <span id="difficultyBadge" class="difficulty-badge">Easy</span></p>
+        <div class="timer-box">⏳ <span id="timer">300</span>s</div>
+        
+        <!-- Scoreboard -->
+        <div class="scoreboard" style="margin-top: 2rem;">
+            <h4>Scoreboard</h4>
+            <div id="scoreboardList" style="display:flex; flex-direction:column; gap:10px;">
+                <!-- Scoreboard items injected here -->
+            </div>
         </div>
-
       </div>
-
+      
       <div class="battle-editor">
-
-        <textarea
-          id="solutionCode"
-          placeholder="Write your solution here..."
-        ></textarea>
-
-        <button type="button"
-          id="submitSolutionBtn"
-          class="btn btn-primary"
-        >
-          Submit Solution
-        </button>
-
+        <textarea id="solutionCode" placeholder="Write your solution here..."></textarea>
+        <button type="button" id="submitSolutionBtn" class="btn btn-primary">Submit Solution</button>
       </div>
-
     </div>
-
   </div>
 </section>
+
+<!-- Spectator Modal -->
+<div id="spectatorModal" class="modal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; align-items:center; justify-content:center;">
+    <div class="modal-content" style="background:var(--bg-card); padding: 2rem; border-radius: 12px; width: 80%; max-width: 800px; position:relative;">
+        <h3>Spectating: <span id="spectatorTargetName"></span></h3>
+        <div class="spectator-editor-container" style="position: relative; margin-top: 1rem;">
+            <textarea id="spectatorCode" readonly style="width: 100%; height: 400px; background: #1e1e1e; color: #d4d4d4; font-family: monospace; padding: 1rem; border: 1px solid var(--border-color);"></textarea>
+            <!-- Cursor Overlay -->
+            <div id="spectatorCursor" style="position: absolute; top: 0; left: 0; width: 2px; height: 1.2em; background: cyan; display: none; pointer-events: none;">
+                <span style="position:absolute; top: -1.2em; left: 0; background: cyan; color: black; font-size: 10px; padding: 2px; border-radius: 4px; white-space: nowrap;">Cursor</span>
+            </div>
+        </div>
+        <button type="button" id="closeSpectatorBtn" class="btn btn-secondary" style="margin-top: 1rem;">Close</button>
+    </div>
+</div>
 
 <section class="section">
 
@@ -380,6 +312,7 @@ Match History
 
 <div id="footer-placeholder"></div>
 
+<script src="/socket.io/socket.io.js"></script>
 <script src="dsa-battle-mode.js"></script>
 <script src="/bootstrap-legacy.js"></script>
 
