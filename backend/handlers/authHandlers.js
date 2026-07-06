@@ -7,9 +7,7 @@ import {
 } from "../utils/helpers.js";
 import { getClientIdentifier } from "../services/auth.service.js";
 import { applyRateLimit, signupLimiter, loginLimiter } from "../utils/rateLimiter.js";
-
-let db = null;
-let useFirestore = false;
+import { initializeFirebase, COLLECTIONS } from "../../firebase.js";
 
 function validateSignup({ name, email, password, confirmPassword }) {
   const cleanName = String(name || "").trim();
@@ -58,11 +56,12 @@ export async function handleSignup(req, res) {
   const validationError = validateSignup(payload);
   if (validationError) return sendJson(res, 400, { error: validationError });
 
+  const db = initializeFirebase();
+  const useFirestore = !!db;
+
   const email = String(payload.email).trim().toLowerCase();
-  const existing = useFirestore
-    ? await getUserByEmail(email)
-    : (await readUsers()).find((user) => user.email === email);
-  
+  const existing = await getUserByEmail(email, useFirestore, db);
+
   if (existing) {
     await normalizeAuthDelay();
     void 0;
@@ -78,7 +77,7 @@ export async function handleSignup(req, res) {
     isDeactivated: false,
     deactivatedAt: null,
   };
-  await createUser(user);
+  await createUser(user, useFirestore, db);
 
   const token = createSessionToken(user);
   return sendJson(
@@ -109,9 +108,11 @@ export async function handleLogin(req, res) {
   const payload = await readJsonBody(req);
   const email = String(payload.email || "").trim().toLowerCase();
   const password = String(payload.password || "");
-  const user = useFirestore
-    ? await getUserByEmail(email)
-    : (await readUsers()).find((candidate) => candidate.email === email);
+
+  const db = initializeFirebase();
+  const useFirestore = !!db;
+
+  const user = await getUserByEmail(email, useFirestore, db);
 
   if (!user || !passwordMatches(password, user.password)) {
     await normalizeAuthDelay();
@@ -123,7 +124,12 @@ export async function handleLogin(req, res) {
     user.deactivatedAt = null;
   }
 
-  if (!useFirestore) {
+  if (useFirestore) {
+    await db.collection(COLLECTIONS.USERS).doc(user.id).update({
+      isDeactivated: user.isDeactivated,
+      deactivatedAt: user.deactivatedAt,
+    });
+  } else {
     const users = await readUsers();
     const index = users.findIndex((u) => u.id === user.id);
     if (index !== -1) {
