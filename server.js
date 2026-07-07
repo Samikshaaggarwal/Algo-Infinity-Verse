@@ -1030,8 +1030,8 @@ async function handleApi(req, res, pathname) {
   if (pathname === "/api/logout" && req.method === "POST") {
     const rToken = getRefreshToken(req);
     if (rToken) {
-      const decoded = verifyRefreshToken(rToken);
-      if (decoded) revokeTokenFamily(decoded.familyId);
+      const decoded = await verifyRefreshToken(rToken);
+      if (decoded) await revokeTokenFamily(decoded.familyId);
     }
     return sendJson(res, 200, { success: true }, { "Set-Cookie": clearAuthCookies() });
   }
@@ -1040,9 +1040,9 @@ async function handleApi(req, res, pathname) {
     const rToken = getRefreshToken(req);
     if (!rToken) return sendJson(res, 401, { error: "No refresh token" });
     
-    const decoded = verifyRefreshToken(rToken);
+    const decoded = await verifyRefreshToken(rToken);
     if (!decoded) return sendJson(res, 401, { error: "Invalid or expired refresh token" }, { "Set-Cookie": clearAuthCookies() });
-    revokeTokenFamily(decoded.familyId);
+    await revokeTokenFamily(decoded.familyId);
 
     // Find user
     const users = useFirestore ? [] : await readUsers();
@@ -1062,7 +1062,7 @@ async function handleApi(req, res, pathname) {
     if (!user) return sendJson(res, 401, { error: "User not found" }, { "Set-Cookie": clearAuthCookies() });
 
     const accessToken = createAccessToken(user);
-    const refreshToken = createRefreshToken(user, decoded.familyId);
+    const refreshToken = await createRefreshToken(user, decoded.familyId);
     
     return sendJson(res, 200, { success: true }, { "Set-Cookie": authCookies(accessToken, refreshToken, req) });
   }
@@ -1076,7 +1076,7 @@ async function handleApi(req, res, pathname) {
         email: `guest-${guestId}@local`,
       };
       const token = createAccessToken(guestUser);
-      const refreshToken = createRefreshToken(guestUser);
+      const refreshToken = await createRefreshToken(guestUser);
       return sendJson(
         res, 200,
         { user: { id: guestUser.id, name: guestUser.name, email: guestUser.email } },
@@ -1147,7 +1147,7 @@ async function handleApi(req, res, pathname) {
       );
 
       const token = createAccessToken(user);
-      const refreshToken = createRefreshToken(user);
+      const refreshToken = await createRefreshToken(user);
       loginLimiter.reset(getClientIdentifier(req));
       return sendJson(
         res, 200,
@@ -1201,7 +1201,7 @@ async function handleApi(req, res, pathname) {
       }
 
       const token = createAccessToken(user);
-      const refreshToken = createRefreshToken(user);
+      const refreshToken = await createRefreshToken(user);
       loginLimiter.reset(getClientIdentifier(req));
       return sendJson(
         res, 200,
@@ -1317,7 +1317,7 @@ async function handleApi(req, res, pathname) {
       }
 
       const token = createAccessToken(user);
-      const refreshToken = createRefreshToken(user);
+      const refreshToken = await createRefreshToken(user);
       const cookie = authCookies(token, refreshToken, req);
 
       return sendJson(res, 200, {
@@ -2456,7 +2456,7 @@ if (pathname === "/api/forgot-password" && req.method === "POST") {
     await writeUsers(users);
 
     const sessionToken = createAccessToken(users[idx]);
-    const refreshToken = createRefreshToken(users[idx]);
+    const refreshToken = await createRefreshToken(users[idx]);
     res.setHeader("Set-Cookie", authCookies(sessionToken, refreshToken, req));
     return sendJson(res, 200, { ok: true });
   }
